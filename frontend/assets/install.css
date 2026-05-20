@@ -1,0 +1,103 @@
+/* ============================================================
+   APlusZ — Install Banner Styles
+   File: frontend/assets/install.css
+   Save: D:\Destop\AplusZ\frontend\assets\install.css
+   ============================================================ */
+
+#install-banner {
+  position: fixed;
+  left: 50%;
+  bottom: var(--sp-4);
+  transform: translateX(-50%) translateY(120%);
+  width: calc(100% - var(--sp-8));
+  max-width: 480px;
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  padding: var(--sp-3) var(--sp-4);
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  box-shadow: var(--shadow-lg), var(--glow);
+  z-index: var(--z-toast);
+  opacity: 0;
+  transition: transform var(--dur-slow) var(--ease-spring),
+              opacity var(--dur-base) var(--ease-ios);
+}
+
+#install-banner.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+.ib-icon {
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+
+.ib-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.ib-title {
+  font-size: var(--fs-base);
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+.ib-sub {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+.ib-sub strong {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.ib-install {
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  color: var(--bg);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-sm);
+  transition: transform var(--dur-base) var(--ease-spring);
+}
+.ib-install:hover {
+  transform: scale(1.05);
+}
+
+.ib-close {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--r-pill);
+  display: grid;
+  place-items: center;
+  color: var(--text-dim);
+  font-size: 1.25rem;
+  flex-shrink: 0;
+  transition: background var(--dur-base) var(--ease-spring),
+              color var(--dur-base) var(--ease-spring);
+}
+.ib-close:hover {
+  background: var(--bg-elevated);
+  color: var(--text);
+}
+
+@media (max-width: 420px) {
+  #install-banner {
+    bottom: var(--sp-2);
+    width: calc(100% - var(--sp-4));
+    padding: var(--sp-3);
+  }
+  .ib-title { font-size: var(--fs-sm); }
+  .ib-sub { font-size: var(--fs-xs); }
+}
