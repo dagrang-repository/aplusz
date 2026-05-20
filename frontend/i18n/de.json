@@ -1,0 +1,48 @@
+{
+  "app_name": "APlusZ",
+  "motto": "APlusZ.app lässt dich für WENIGER fliegen.",
+  "search": {
+    "origin": "Abflug",
+    "destination": "Ziel",
+    "placeholder_origin": "Stadt oder Flughafen",
+    "placeholder_destination": "Stadt oder Flughafen",
+    "button": "Günstigsten Preis finden",
+    "swap": "Tauschen"
+  },
+  "result": {
+    "best_departure": "Optimales Abflugdatum",
+    "best_booking": "Optimales Buchungsdatum",
+    "price_label": "Geschätzter niedrigster Preis (ohne Steuern)",
+    "confidence_high": "Hohe Zuverlässigkeit",
+    "confidence_medium": "Mittlere Zuverlässigkeit",
+    "confidence_low": "Niedrige Zuverlässigkeit",
+    "cta_book": "Buche an diesem Tag für den günstigsten Flugpreis des Jahres",
+    "add_calendar": "Zum Kalender hinzufügen",
+    "add_google": "Google Kalender",
+    "download_ics": ".ics herunterladen"
+  },
+  "nav": {
+    "home": "Start",
+    "alerts": "Benachrichtigungen",
+    "settings": "Einstellungen",
+    "legal": "Impressum"
+  },
+  "settings": {
+    "theme": "Design",
+    "language": "Sprache",
+    "currency": "Währung",
+    "theme_dark_glass": "Dunkles Glas",
+    "theme_light_expressive": "Helles Expressiv",
+    "theme_sepia_reader": "Sepia Lesen",
+    "theme_sepia_night": "Sepia Nacht"
+  },
+  "offline": {
+    "title": "Du bist offline",
+    "message": "Hier sind die zuletzt gespeicherten Ergebnisse deiner Routen."
+  },
+  "errors": {
+    "no_data": "Für diese Strecke sind noch keine Daten verfügbar.",
+    "rate_limit": "Zu viele Suchanfragen. Bitte versuche es gleich erneut.",
+    "generic": "Etwas ist schiefgelaufen. Bitte erneut versuchen."
+  }
+}

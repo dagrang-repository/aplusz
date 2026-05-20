@@ -1,0 +1,25 @@
+# Static headers for Cloudflare Pages
+# File: frontend/_headers
+
+/*
+  X-Frame-Options: DENY
+  X-Content-Type-Options: nosniff
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+  Strict-Transport-Security: max-age=31536000; includeSubDomains
+
+/sw.js
+  Cache-Control: no-cache
+
+/apz.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=3600
+
+/assets/*
+  Cache-Control: public, max-age=31536000, immutable
+
+/i18n/*
+  Cache-Control: public, max-age=86400
+
+/data/*
+  Cache-Control: public, max-age=3600

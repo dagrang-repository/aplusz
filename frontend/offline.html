@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Offline · APlusZ</title>
+<link rel="manifest" href="/apz.webmanifest">
+<link rel="stylesheet" href="/assets/tokens.css">
+<script src="/assets/detect.js"></script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body {
+    height: 100%;
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--sp-6);
+  }
+  .wrap {
+    max-width: 420px;
+    text-align: center;
+    background: var(--bg-glass);
+    backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+    border: 1px solid var(--border);
+    border-radius: var(--r-lg);
+    padding: var(--sp-8);
+    box-shadow: var(--shadow-lg);
+  }
+  .icon {
+    font-size: 3rem;
+    margin-bottom: var(--sp-4);
+  }
+  h1 {
+    font-size: var(--fs-2xl);
+    color: var(--accent);
+    margin-bottom: var(--sp-3);
+  }
+  p {
+    color: var(--text-muted);
+    line-height: 1.6;
+    margin-bottom: var(--sp-6);
+  }
+  button {
+    background: var(--accent);
+    color: var(--bg);
+    border: none;
+    padding: var(--sp-3) var(--sp-6);
+    border-radius: var(--r-pill);
+    font-size: var(--fs-base);
+    font-weight: 600;
+    cursor: pointer;
+    transition: background var(--dur-base) var(--ease-spring);
+  }
+  button:hover { background: var(--accent-hover); }
+  #cached-routes {
+    margin-top: var(--sp-6);
+    text-align: left;
+  }
+  #cached-routes:empty { display: none; }
+  .route-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--r-md);
+    padding: var(--sp-3);
+    margin-bottom: var(--sp-2);
+    font-size: var(--fs-sm);
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <div class="icon">✈️</div>
+  <h1 data-i18n="offline.title">You're offline</h1>
+  <p data-i18n="offline.message">Last cached results for your saved routes are below.</p>
+  <button onclick="location.reload()">Retry</button>
+  <div id="cached-routes"></div>
+</div>
+
+<script src="/assets/i18n.js"></script>
+<script>
+  // Load saved routes from localStorage if any
+  try {
+    var saved = JSON.parse(localStorage.getItem('aplusz-saved-routes') || '[]');
+    var box = document.getElementById('cached-routes');
+    saved.forEach(function (r) {
+      var el = document.createElement('div');
+      el.className = 'route-card';
+      el.textContent = r.origin + ' → ' + r.destination + ' · ' + (r.lastPrice || '—');
+      box.appendChild(el);
+    });
+  } catch (e) {}
+</script>
+
+</body>
+</html>

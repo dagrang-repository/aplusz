@@ -1,0 +1,48 @@
+{
+  "app_name": "APlusZ",
+  "motto": "APlusZ.app vous fait voler pour MOINS.",
+  "search": {
+    "origin": "Départ",
+    "destination": "Destination",
+    "placeholder_origin": "Ville ou aéroport",
+    "placeholder_destination": "Ville ou aéroport",
+    "button": "Trouver le prix le plus bas",
+    "swap": "Inverser"
+  },
+  "result": {
+    "best_departure": "Date de départ optimale",
+    "best_booking": "Date de réservation optimale",
+    "price_label": "Prix estimé le plus bas (hors taxes)",
+    "confidence_high": "Confiance élevée",
+    "confidence_medium": "Confiance moyenne",
+    "confidence_low": "Confiance faible",
+    "cta_book": "Réservez ce jour-là pour obtenir le prix le plus bas de l'année",
+    "add_calendar": "Ajouter au calendrier",
+    "add_google": "Google Agenda",
+    "download_ics": "Télécharger .ics"
+  },
+  "nav": {
+    "home": "Accueil",
+    "alerts": "Alertes",
+    "settings": "Paramètres",
+    "legal": "Mentions"
+  },
+  "settings": {
+    "theme": "Thème",
+    "language": "Langue",
+    "currency": "Devise",
+    "theme_dark_glass": "Verre Sombre",
+    "theme_light_expressive": "Clair Expressif",
+    "theme_sepia_reader": "Sépia Lecture",
+    "theme_sepia_night": "Sépia Nuit"
+  },
+  "offline": {
+    "title": "Vous êtes hors ligne",
+    "message": "Voici les derniers résultats en cache pour vos trajets enregistrés."
+  },
+  "errors": {
+    "no_data": "Aucune donnée disponible pour ce trajet pour l'instant.",
+    "rate_limit": "Trop de recherches. Réessayez dans un instant.",
+    "generic": "Une erreur est survenue. Veuillez réessayer."
+  }
+}

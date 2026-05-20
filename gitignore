@@ -1,0 +1,39 @@
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Editors
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Node (in case tooling added later)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# Build artifacts
+dist/
+build/
+.cache/
+
+# Environment & secrets
+.env
+.env.*
+!.env.example
+*.key
+*.pem
+
+# Logs
+logs/
+*.log
+
+# Local-only
+*.local
+.tmp/
+.temp/

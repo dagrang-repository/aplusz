@@ -1,0 +1,48 @@
+{
+  "app_name": "APlusZ",
+  "motto": "APlusZ.app makes you fly for LESS.",
+  "search": {
+    "origin": "Origin",
+    "destination": "Destination",
+    "placeholder_origin": "City or airport",
+    "placeholder_destination": "City or airport",
+    "button": "Find lowest fare",
+    "swap": "Swap"
+  },
+  "result": {
+    "best_departure": "Optimal departure date",
+    "best_booking": "Optimal booking date",
+    "price_label": "Estimated lowest price (pre-tax)",
+    "confidence_high": "High confidence",
+    "confidence_medium": "Medium confidence",
+    "confidence_low": "Low confidence",
+    "cta_book": "Book on this day to get the year-round lowest air ticket price",
+    "add_calendar": "Add to calendar",
+    "add_google": "Google Calendar",
+    "download_ics": "Download .ics"
+  },
+  "nav": {
+    "home": "Home",
+    "alerts": "Alerts",
+    "settings": "Settings",
+    "legal": "Legal"
+  },
+  "settings": {
+    "theme": "Theme",
+    "language": "Language",
+    "currency": "Currency",
+    "theme_dark_glass": "Dark Glass",
+    "theme_light_expressive": "Light Expressive",
+    "theme_sepia_reader": "Sepia Reader",
+    "theme_sepia_night": "Sepia Night"
+  },
+  "offline": {
+    "title": "You're offline",
+    "message": "Last cached results for your saved routes are below."
+  },
+  "errors": {
+    "no_data": "No data available for this route yet.",
+    "rate_limit": "Too many searches. Try again in a moment.",
+    "generic": "Something went wrong. Please retry."
+  }
+}

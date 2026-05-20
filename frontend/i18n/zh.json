@@ -1,0 +1,48 @@
+{
+  "app_name": "APlusZ",
+  "motto": "APlusZ.app 让你用更少的钱飞行。",
+  "search": {
+    "origin": "出发地",
+    "destination": "目的地",
+    "placeholder_origin": "城市或机场",
+    "placeholder_destination": "城市或机场",
+    "button": "查找最低票价",
+    "swap": "交换"
+  },
+  "result": {
+    "best_departure": "最佳出发日期",
+    "best_booking": "最佳预订日期",
+    "price_label": "预计最低价格(不含税)",
+    "confidence_high": "高可信度",
+    "confidence_medium": "中等可信度",
+    "confidence_low": "低可信度",
+    "cta_book": "在此日预订即可获得全年最低机票价格",
+    "add_calendar": "添加到日历",
+    "add_google": "Google 日历",
+    "download_ics": "下载 .ics"
+  },
+  "nav": {
+    "home": "首页",
+    "alerts": "提醒",
+    "settings": "设置",
+    "legal": "法律"
+  },
+  "settings": {
+    "theme": "主题",
+    "language": "语言",
+    "currency": "货币",
+    "theme_dark_glass": "暗色玻璃",
+    "theme_light_expressive": "明亮表达",
+    "theme_sepia_reader": "棕褐阅读",
+    "theme_sepia_night": "棕褐夜间"
+  },
+  "offline": {
+    "title": "您已离线",
+    "message": "以下是您已保存路线的最新缓存结果。"
+  },
+  "errors": {
+    "no_data": "此路线暂无数据。",
+    "rate_limit": "搜索次数过多。请稍后再试。",
+    "generic": "出错了。请重试。"
+  }
+}

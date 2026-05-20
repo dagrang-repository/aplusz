@@ -1,0 +1,48 @@
+{
+  "app_name": "APlusZ",
+  "motto": "APlusZ.app でもっと安く空を飛ぼう。",
+  "search": {
+    "origin": "出発地",
+    "destination": "目的地",
+    "placeholder_origin": "都市または空港",
+    "placeholder_destination": "都市または空港",
+    "button": "最安値を探す",
+    "swap": "入れ替え"
+  },
+  "result": {
+    "best_departure": "最適な出発日",
+    "best_booking": "最適な予約日",
+    "price_label": "推定最安価格(税抜)",
+    "confidence_high": "高信頼度",
+    "confidence_medium": "中信頼度",
+    "confidence_low": "低信頼度",
+    "cta_book": "この日に予約して年間最安値で航空券を入手",
+    "add_calendar": "カレンダーに追加",
+    "add_google": "Google カレンダー",
+    "download_ics": ".ics をダウンロード"
+  },
+  "nav": {
+    "home": "ホーム",
+    "alerts": "アラート",
+    "settings": "設定",
+    "legal": "法的情報"
+  },
+  "settings": {
+    "theme": "テーマ",
+    "language": "言語",
+    "currency": "通貨",
+    "theme_dark_glass": "ダークガラス",
+    "theme_light_expressive": "ライト エクスプレッシブ",
+    "theme_sepia_reader": "セピア リーダー",
+    "theme_sepia_night": "セピア ナイト"
+  },
+  "offline": {
+    "title": "オフラインです",
+    "message": "保存したルートの最新キャッシュ結果はこちらです。"
+  },
+  "errors": {
+    "no_data": "このルートのデータはまだありません。",
+    "rate_limit": "検索回数が多すぎます。しばらくしてから再試行してください。",
+    "generic": "問題が発生しました。再試行してください。"
+  }
+}

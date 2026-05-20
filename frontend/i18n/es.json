@@ -1,0 +1,48 @@
+{
+  "app_name": "APlusZ",
+  "motto": "APlusZ.app te hace volar por MENOS.",
+  "search": {
+    "origin": "Origen",
+    "destination": "Destino",
+    "placeholder_origin": "Ciudad o aeropuerto",
+    "placeholder_destination": "Ciudad o aeropuerto",
+    "button": "Buscar tarifa más baja",
+    "swap": "Intercambiar"
+  },
+  "result": {
+    "best_departure": "Fecha óptima de salida",
+    "best_booking": "Fecha óptima de reserva",
+    "price_label": "Precio estimado más bajo (sin impuestos)",
+    "confidence_high": "Alta confianza",
+    "confidence_medium": "Confianza media",
+    "confidence_low": "Baja confianza",
+    "cta_book": "Reserva este día para obtener el precio más bajo del año",
+    "add_calendar": "Añadir al calendario",
+    "add_google": "Google Calendar",
+    "download_ics": "Descargar .ics"
+  },
+  "nav": {
+    "home": "Inicio",
+    "alerts": "Alertas",
+    "settings": "Ajustes",
+    "legal": "Legal"
+  },
+  "settings": {
+    "theme": "Tema",
+    "language": "Idioma",
+    "currency": "Moneda",
+    "theme_dark_glass": "Cristal Oscuro",
+    "theme_light_expressive": "Claro Expresivo",
+    "theme_sepia_reader": "Sepia Lectura",
+    "theme_sepia_night": "Sepia Noche"
+  },
+  "offline": {
+    "title": "Sin conexión",
+    "message": "Aquí están los últimos resultados en caché de tus rutas guardadas."
+  },
+  "errors": {
+    "no_data": "No hay datos disponibles para esta ruta todavía.",
+    "rate_limit": "Demasiadas búsquedas. Inténtalo en un momento.",
+    "generic": "Algo salió mal. Inténtalo de nuevo."
+  }
+}

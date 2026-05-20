@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="APlusZ — find the absolute lowest air ticket price. Exact day, every route. Free forever.">
+<title>APlusZ · Fly for LESS</title>
+
+<link rel="manifest" href="/apz.webmanifest">
+<link rel="icon" type="image/png" sizes="192x192" href="/assets/icons/icon-192.png">
+<link rel="apple-touch-icon" href="/assets/icons/icon-192.png">
+<link rel="stylesheet" href="/assets/tokens.css">
+<link rel="stylesheet" href="/assets/app.css">
+<link rel="stylesheet" href="/assets/result.css">
+
+<script src="/assets/detect.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand">
+    <span class="brand-mark">A+Z</span>
+    <span class="brand-name">APlusZ</span>
+  </div>
+  <nav class="topnav">
+    <button class="icon-btn" id="theme-toggle" aria-label="Theme">◐</button>
+    <button class="icon-btn" id="lang-btn" aria-label="Language">🌐</button>
+    <button class="icon-btn" id="menu-btn" aria-label="Menu">☰</button>
+  </nav>
+</header>
+
+<main class="hero">
+  <div class="hero-glow"></div>
+
+  <h1 class="hero-title">
+    Fly for <span class="accent">LESS</span>.
+  </h1>
+  <p class="hero-sub" data-i18n="motto">APlusZ.app makes you fly for LESS.</p>
+
+  <section class="search-card" aria-label="Flight search">
+    <div class="field">
+      <label for="origin" data-i18n="search.origin">Origin</label>
+      <input id="origin" type="text" autocomplete="off" spellcheck="false"
+        placeholder="City or airport"
+        data-i18n-attr="placeholder:search.placeholder_origin">
+    </div>
+
+    <button class="swap-btn" id="swap" aria-label="Swap" data-i18n-attr="title:search.swap">⇅</button>
+
+    <div class="field">
+      <label for="destination" data-i18n="search.destination">Destination</label>
+      <input id="destination" type="text" autocomplete="off" spellcheck="false"
+        placeholder="City or airport"
+        data-i18n-attr="placeholder:search.placeholder_destination">
+    </div>
+
+    <button class="primary-btn" id="search-btn" data-i18n="search.button">
+      Find lowest fare
+    </button>
+  </section>
+
+  <section class="result hidden" id="result" aria-live="polite"></section>
+
+  <div class="trust">
+    <span>✓ Free forever</span>
+    <span>✓ No signup</span>
+    <span>✓ Works offline</span>
+  </div>
+</main>
+
+<footer class="footer">
+  <a href="/legal/" data-i18n="nav.legal">Legal</a>
+  <span>·</span>
+  <span>© <span id="year"></span> APlusZ</span>
+</footer>
+
+<script src="/assets/i18n.js"></script>
+<script src="/assets/result.js"></script>
+<script src="/assets/sw-register.js"></script>
+<script src="/assets/app.js"></script>
+
+</body>
+</html>
