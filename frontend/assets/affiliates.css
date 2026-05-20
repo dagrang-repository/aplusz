@@ -1,0 +1,38 @@
+/* ============================================================
+   APlusZ — Affiliate Fan-out Styles (append to result.css)
+   File: frontend/assets/affiliates.css
+   Save: D:\Destop\AplusZ\frontend\assets\affiliates.css
+   ============================================================ */
+
+.also-check {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-2);
+  padding: var(--sp-3);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  font-size: var(--fs-sm);
+}
+.also-check .also-label {
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-right: var(--sp-1);
+}
+.also-check a {
+  color: var(--link);
+  padding: var(--sp-1) var(--sp-2);
+  border-radius: var(--r-sm);
+  text-decoration: none;
+  transition: background var(--dur-base) var(--ease-spring);
+}
+.also-check a:hover {
+  background: var(--bg-elevated);
+  text-decoration: none;
+}
+.also-check a:not(:last-child)::after {
+  content: " ·";
+  color: var(--text-dim);
+  margin-left: var(--sp-2);
+}
