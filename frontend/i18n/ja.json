@@ -9,7 +9,7 @@
     "button": "最安値を探す",
     "swap": "入れ替え",
     "pick": "候補から都市を選んでください。",
-    "live": "ライブ"
+    "live": "ライブ価格"
   },
   "result": {
     "best_departure": "最適な出発日",

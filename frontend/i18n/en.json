@@ -9,7 +9,7 @@
     "button": "Find lowest fare",
     "swap": "Swap",
     "pick": "Choose your cities from the suggestions.",
-    "live": "Live"
+    "live": "Live Price"
   },
   "result": {
     "best_departure": "Optimal departure date",

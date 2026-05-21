@@ -9,7 +9,7 @@
     "button": "Trouver le tarif le plus bas",
     "swap": "Inverser",
     "pick": "Choisissez vos villes dans les suggestions.",
-    "live": "En direct"
+    "live": "Prix en direct"
   },
   "result": {
     "best_departure": "Date de départ optimale",

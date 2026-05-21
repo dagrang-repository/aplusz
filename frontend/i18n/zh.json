@@ -9,7 +9,7 @@
     "button": "查找最低票价",
     "swap": "交换",
     "pick": "请从建议中选择城市。",
-    "live": "实时"
+    "live": "实时价格"
   },
   "result": {
     "best_departure": "最佳出发日期",
