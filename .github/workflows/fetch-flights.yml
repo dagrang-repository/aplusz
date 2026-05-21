@@ -1,0 +1,42 @@
+name: Weekly Flight Data Refresh
+
+on:
+  schedule:
+    # Every Sunday at 03:00 UTC
+    - cron: '0 3 * * 0'
+  workflow_dispatch:  # Manual trigger button in GitHub Actions tab
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run flight data fetcher
+        run: node scripts/fetch-flights.js
+        env:
+          TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
+          TRAVELPAYOUTS_MARKER: ${{ secrets.TRAVELPAYOUTS_MARKER }}
+
+      - name: Commit & push updated data
+        run: |
+          git config user.name "APlusZ Bot"
+          git config user.email "bot@aplusz.app"
+          git add frontend/data/
+          if git diff --staged --quiet; then
+            echo "No changes to commit"
+          else
+            git commit -m "🤖 Weekly data refresh — $(date -u +%Y-%m-%d)"
+            git push
+          fi

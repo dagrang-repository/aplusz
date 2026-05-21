@@ -1,0 +1,86 @@
+/* How it works — modal (no page leave). Colors hardcoded to neutral slate
+   so site --card/--accent (blue) tokens can't override them. */
+
+.hiw-link{
+  background:none;border:none;cursor:pointer;
+  font:inherit;color:inherit;opacity:.85;
+  text-decoration:underline;text-underline-offset:3px;padding:0;
+}
+.hiw-link:hover{opacity:1}
+
+#hiw-modal{
+  border:none;padding:0;background:transparent;color:#e8eef7;
+  width:min(440px,calc(100vw - 32px));
+  max-width:none;max-height:calc(100dvh - 40px);
+  margin:auto;overflow:visible;
+}
+#hiw-modal::backdrop{
+  background:rgba(15,23,42,.55);        /* same slate tone as page, translucent */
+  backdrop-filter:blur(3px);
+  opacity:0;transition:opacity .4s ease;
+}
+#hiw-modal[open]::backdrop{opacity:1}
+
+.hiw-card{
+  background:rgba(15,23,42,.92);         /* index page tone #0f172a + opacity */
+  backdrop-filter:blur(14px);
+  border:1px solid rgba(255,255,255,.08);
+  border-radius:18px;padding:24px 24px 20px;
+  box-shadow:0 24px 60px rgba(0,0,0,.45);
+  max-height:calc(100dvh - 40px);overflow-y:auto;
+  transform:translateY(14px) scale(.985);opacity:0;
+  transition:transform .5s cubic-bezier(.22,1,.36,1),opacity .5s ease;
+}
+#hiw-modal[open] .hiw-card{transform:none;opacity:1}
+
+.hiw-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+.hiw-title{font-size:1.2rem;font-weight:700}
+.hiw-x{background:none;border:none;color:inherit;opacity:.55;font-size:1.45rem;line-height:1;cursor:pointer;padding:4px}
+.hiw-x:hover{opacity:1}
+
+.hiw-concept{font-size:1rem;line-height:1.55;opacity:.9;margin:0 0 18px}
+.hiw-concept em{font-style:italic}
+.hiw-concept .hiw-less{color:#f5b942;font-weight:800;letter-spacing:.5px}  /* gold pop */
+
+.hiw-stage{display:grid}
+.hiw-slide{grid-area:1/1;opacity:0;transform:translateX(22px);transition:opacity .55s ease,transform .55s cubic-bezier(.22,1,.36,1);pointer-events:none}
+.hiw-slide.is-active{opacity:1;transform:none;pointer-events:auto}
+.hiw-slide.is-prev{transform:translateX(-22px)}
+
+.hiw-step{font-size:.78rem;letter-spacing:1.5px;text-transform:uppercase;opacity:.5;margin-bottom:10px}
+.hiw-head{font-size:1.4rem;font-weight:700;margin-bottom:10px}
+.hiw-body{font-size:1rem;line-height:1.55;opacity:.85;margin:0}
+.hiw-route{display:flex;align-items:center;gap:14px;font-size:1.55rem;font-weight:700}
+.hiw-route .arr{color:#f5b942}
+
+/* card 3 demo */
+.hiw-demo{margin-top:14px;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:13px 15px;background:rgba(255,255,255,.04)}
+.hiw-demo-route{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;margin-bottom:8px;transition:opacity .8s ease}
+.hiw-demo-route .arr{color:#f5b942}
+.hiw-price{font-size:1.7rem;font-weight:800;color:#f5b942;line-height:1.1;transition:opacity .8s ease}
+.hiw-date{font-size:.9rem;opacity:.8;margin-top:2px;transition:opacity .8s ease}
+.hiw-timer{font-size:.8rem;opacity:.55;margin-top:6px}
+.hiw-demo.fading .hiw-price,.hiw-demo.fading .hiw-demo-route,.hiw-demo.fading .hiw-date{opacity:0}  /* Telegram-delete fade */
+.hiw-book{margin-top:11px;width:100%;border:none;border-radius:10px;background:#2563eb;color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:12px;cursor:pointer;transition:filter .2s ease}
+.hiw-book:hover{filter:brightness(1.08)}
+
+.hiw-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;gap:10px}
+.hiw-dots{display:flex;gap:7px;flex:1;justify-content:center}
+.hiw-dot{width:7px;height:7px;border-radius:50%;background:#33415c;transition:background .4s ease,width .4s ease}
+.hiw-dot.on{background:#f5b942;width:18px;border-radius:4px}
+.hiw-back,.hiw-next{background:none;border:1px solid #1f2c41;color:inherit;border-radius:9px;padding:8px 18px;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;transition:background .2s ease;min-width:78px}
+.hiw-back:hover,.hiw-next:hover{background:rgba(255,255,255,.05)}
+.hiw-back[hidden]{visibility:hidden}
+
+.hiw-foot{margin-top:18px;padding-top:14px;border-top:1px solid #1f2c41;font-size:.85rem;opacity:.6;line-height:1.45}
+
+/* RTL (Arabic, Persian): mirror text, but keep A→B route order intact */
+#hiw-modal[dir=rtl]{text-align:right}
+#hiw-modal[dir=rtl] .hiw-route,
+#hiw-modal[dir=rtl] .hiw-demo-route{direction:ltr;justify-content:flex-end}
+
+@media (max-width:520px){
+  #hiw-modal{width:100%;margin:0;position:fixed;left:0;right:0;bottom:0;top:auto;max-height:92dvh}
+  .hiw-card{border-radius:20px 20px 0 0;padding:22px 18px calc(20px + env(safe-area-inset-bottom));max-height:92dvh;transform:translateY(100%)}
+  #hiw-modal[open] .hiw-card{transform:none}
+}

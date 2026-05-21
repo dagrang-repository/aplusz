@@ -1,0 +1,12 @@
+# Copy to .dev.vars for local `wrangler dev`. NEVER commit real values.
+# Production values are set via `wrangler secret put ...` (see wrangler.toml).
+
+STRIPE_SECRET="sk_live_xxx"            # Stripe → Developers → API keys (Secret)
+STRIPE_WEBHOOK_SECRET="whsec_xxx"      # Stripe → Developers → Webhooks → your endpoint
+PRICE_PRO="price_xxx"                  # Pro €4.99 price ID
+PRICE_PROPLUS="price_xxx"              # Pro+ €9.99 price ID
+RESEND_KEY="re_xxx"                    # Resend → API Keys
+SIGNING_SECRET="long_random_string"    # any long random string (token signing)
+ADMIN_PASS="another_long_random_string" # used to call /admin/pause
+APP_URL="https://aplusz.app"
+OWNER_EMAIL="dagrang@gmail.com"

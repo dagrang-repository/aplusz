@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f172a">
+<meta name="description" content="APlusZ — Plans. Free forever. Pro and Pro+ for power users.">
+<title>Plans · APlusZ</title>
+
+<link rel="manifest" href="apz.webmanifest">
+<link rel="stylesheet" href="assets/tokens.css">
+<link rel="stylesheet" href="assets/app.css">
+<link rel="stylesheet" href="assets/pricing.css">
+<link rel="stylesheet" href="assets/profile.css">
+<link rel="stylesheet" href="assets/referral.css">
+
+<script src="assets/detect.js"></script>
+<script src="assets/config.js"></script>
+</head>
+<body>
+
+<header class="topbar">
+  <a class="brand" href="index.html" style="text-decoration:none;color:inherit;">
+    <span class="brand-mark">A+Z</span>
+    <span class="brand-name">APlusZ</span>
+  </a>
+  <nav class="topnav">
+    <a class="icon-btn" href="index.html" aria-label="Home" style="text-decoration:none;">←</a>
+  </nav>
+</header>
+
+<main class="hero">
+  <div class="hero-glow"></div>
+
+  <h1 class="hero-title">
+    Pick your <span class="accent">plan</span>.
+  </h1>
+  <p class="hero-sub">Free forever. Upgrade only if you fly often.</p>
+
+  <section class="tiers">
+
+    <article class="tier">
+      <div class="tier-name">Free</div>
+      <div class="tier-price"><span class="amount">€0</span><span class="period">forever</span></div>
+      <ul class="tier-features">
+        <li>✓ Unlimited route searches</li>
+        <li>✓ Exact best date + price</li>
+        <li>✓ 1 saved route</li>
+        <li>✓ 1 alert per week</li>
+        <li>✓ Calendar export</li>
+        <li>✓ Works offline</li>
+      </ul>
+      <button class="tier-cta tier-cta-ghost" disabled>Current plan</button>
+    </article>
+
+    <article class="tier tier-featured" id="pro">
+      <div class="tier-badge">Most popular</div>
+      <div class="tier-name">Pro</div>
+      <div class="tier-price"><span class="amount">€4.99</span><span class="period">/ month</span></div>
+      <ul class="tier-features">
+        <li>✓ Everything in Free</li>
+        <li>✓ <strong>3 alerts per day</strong></li>
+        <li>✓ <strong>2 custom route sets</strong></li>
+        <li>✓ Priority data refresh</li>
+        <li>✓ Cancel anytime</li>
+      </ul>
+      <button class="tier-cta" data-tier="pro" data-price="4.99">Subscribe Pro</button>
+    </article>
+
+    <article class="tier" id="proplus">
+      <div class="tier-name">Pro+</div>
+      <div class="tier-price"><span class="amount">€9.99</span><span class="period">/ month</span></div>
+      <ul class="tier-features">
+        <li>✓ Everything in Pro</li>
+        <li>✓ <strong>5 alerts/day or custom frequency</strong></li>
+        <li>✓ <strong>Unlimited route sets</strong></li>
+        <li>✓ Early access to new features</li>
+        <li>✓ Cancel anytime</li>
+      </ul>
+      <button class="tier-cta" data-tier="proplus" data-price="9.99">Subscribe Pro+</button>
+    </article>
+
+  </section>
+
+  <!-- Free-for-all promise -->
+  <section class="cap-promise">
+    <div class="cp-icon">🏆</div>
+    <div class="cp-title">The yearly free-for-all</div>
+    <div class="cp-text">
+      When the progress bar reaches 100%, every paid plan becomes
+      completely free until January 1 of next year.
+    </div>
+    <button class="cp-cta" id="see-bar-btn">See the progress bar →</button>
+  </section>
+
+  <div class="trust" style="margin-top:var(--sp-8)">
+    <span>✓ Stripe secure</span>
+    <span>✓ Card · Apple Pay · Google Pay · SEPA</span>
+    <span>✓ EU VAT-compliant</span>
+  </div>
+</main>
+
+<footer class="footer">
+  <a href="legal/index.html">Legal</a>
+  <span class="footer-sep"></span>
+  <span>© <span id="year"></span> APlusZ</span>
+</footer>
+
+<script src="assets/referral.js"></script>
+<script src="assets/profile.js"></script>
+<script src="assets/billing.js"></script>
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+  document.getElementById('see-bar-btn').addEventListener('click', function () {
+    if (window.APlusZ.profile) window.APlusZ.profile.open();
+  });
+</script>
+
+</body>
+</html>

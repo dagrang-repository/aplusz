@@ -1,0 +1,158 @@
+{
+  "app_name": "APlusZ",
+  "motto": "A+Z.app로 더 저렴하게 날아오르세요.",
+  "search": {
+    "origin": "출발지",
+    "destination": "도착지",
+    "placeholder_origin": "도시 또는 공항",
+    "placeholder_destination": "도시 또는 공항",
+    "button": "최저가 찾기",
+    "swap": "교체"
+  },
+  "result": {
+    "best_departure": "최적 출발일",
+    "best_booking": "최적 예약일",
+    "price_label": "예상 최저가 (세전)",
+    "confidence_high": "신뢰도 높음",
+    "confidence_medium": "신뢰도 보통",
+    "confidence_low": "신뢰도 낮음",
+    "cta_book": "이 날 예약하고 연중 최저 항공권 가격을 잡으세요",
+    "add_calendar": "캘린더에 추가",
+    "add_google": "Google 캘린더",
+    "download_ics": ".ics 다운로드",
+    "days_out": "{n}일 후",
+    "also_check": "이것도 확인:",
+    "hotel_near": "{city} 근처 호텔",
+    "share_title": "친구에게 알리고 돈을 아껴주세요",
+    "share_sub": "카르마 적립 · 혜택 잠금 해제",
+    "share_btn": "공유"
+  },
+  "nav": {
+    "home": "홈",
+    "alerts": "알림",
+    "settings": "설정",
+    "legal": "법적 고지"
+  },
+  "settings": {
+    "theme": "테마",
+    "language": "언어",
+    "currency": "통화",
+    "theme_dark_glass": "다크 글래스",
+    "theme_light_expressive": "라이트",
+    "theme_sepia_reader": "세피아 리더",
+    "theme_sepia_night": "세피아 나이트"
+  },
+  "offline": {
+    "title": "오프라인 상태입니다",
+    "message": "저장한 경로의 최신 캐시 결과가 아래에 있습니다."
+  },
+  "errors": {
+    "no_data": "이 경로의 데이터가 아직 없습니다.",
+    "rate_limit": "검색이 너무 많습니다. 잠시 후 다시 시도하세요.",
+    "generic": "문제가 발생했습니다. 다시 시도해 주세요."
+  },
+  "hero": {
+    "fly": "",
+    "less": "더 저렴하게 날다."
+  },
+  "trust": {
+    "free_hero": "영원히 무료, 무제한 검색",
+    "no_signup": "가입 불필요",
+    "works_offline": "오프라인 작동"
+  },
+  "plans": {
+    "free_head": "영원히 무료",
+    "f_unlimited": "무제한 경로 검색",
+    "f_exact": "정확한 최적 날짜 + 가격",
+    "f_saved1": "저장 경로 1개",
+    "f_alert1": "주 1회 알림",
+    "f_calendar": "캘린더 내보내기",
+    "f_offline": "오프라인 작동",
+    "pro_head": "Pro",
+    "p_everything_free": "무료의 모든 기능",
+    "p_alerts3": "하루 3회 알림",
+    "p_routes2": "맞춤 경로 2세트",
+    "p_priority": "우선 데이터 새로고침",
+    "proplus_head": "Pro+",
+    "pp_everything_pro": "Pro의 모든 기능",
+    "pp_alerts5": "하루 5회 알림 또는 맞춤 빈도",
+    "pp_routes_unlim": "무제한 경로 세트",
+    "pp_early": "새 기능 우선 이용"
+  },
+  "hiw": {
+    "link": "이용 방법",
+    "title": "이용 방법",
+    "concept": "A+Z.app가 당신의 모든 항공 여행을 책임집니다. 두 도시를 설정하면 가장 낮은 가격과 예약하기 가장 좋은 날짜를 찾아드립니다. 번거로운 일은 저희가 하니, 당신은 더 {hl}저렴하게{/hl} 날아오르세요.",
+    "foot": "두 도시는 자동으로 저장됩니다 — 변경하기 전까지.",
+    "nav": {
+      "back": "뒤로",
+      "next": "다음",
+      "done": "확인"
+    },
+    "s1": {
+      "step": "A → Z",
+      "body": "두 도시를 선택하세요."
+    },
+    "s2": {
+      "step": "검색",
+      "head": "검색",
+      "body": "몇 달치 날짜를 훑어 가장 저렴한 항공권을 찾습니다."
+    },
+    "s3": {
+      "step": "이 항공편 예약",
+      "head": "이 항공편 예약",
+      "body": "최저가와 최적의 날짜를 표시합니다. 가격이 사라지기까지 10분 타이머."
+    },
+    "demo": {
+      "untaxed": "역대 최저가, 세금 별도",
+      "book": "이 항공편 예약"
+    },
+    "cities": {
+      "paris": "파리",
+      "newyork": "뉴욕",
+      "bangkok": "방콕",
+      "tokyo": "도쿄",
+      "marrakech": "마라케시",
+      "london": "런던",
+      "bali": "발리",
+      "madrid": "마드리드",
+      "cancun": "칸쿤",
+      "lisbon": "리스본"
+    }
+  },
+  "billing": {
+    "email_prompt": "계속하려면 이메일을 입력하세요",
+    "email_note": "이메일은 플랜을 유지하고 복원하는 방법입니다. 실제로 확인하는 메일함을 사용하세요.",
+    "email_ph": "you@email.com",
+    "continue": "계속",
+    "restore": "이미 결제하셨나요? 액세스 복원",
+    "have_plan": "이미 {tier} 플랜이 있습니다 — 액세스 링크를 이메일로 보냈습니다.",
+    "check_inbox": "받은편지함에서 액세스 링크를 확인하세요.",
+    "not_found": "해당 이메일에 활성 플랜이 없습니다.",
+    "cap_banner": "1월 1일까지 모든 기능이 모두에게 무료입니다.",
+    "pro_active": "Pro 사용 중",
+    "proplus_active": "Pro+ 사용 중",
+    "free_upgrade": "무료 플랜 — 매일 알림은 업그레이드",
+    "invalid_email": "유효한 이메일을 입력하세요.",
+    "processing": "처리 중…",
+    "error": "문제가 발생했습니다. 다시 시도하세요.",
+    "unlocked": "잠금 해제 — 이 기기에서 {tier} 사용 중.",
+    "close": "닫기"
+  },
+  "alerts": {
+    "remind": "알림 설정",
+    "title": "내 알림",
+    "empty": "아직 알림이 없습니다. 결과에서 \"알림 설정\"을 눌러 추가하세요.",
+    "resend": "다시 보내기",
+    "remove": "삭제",
+    "limit": "플랜의 알림 한도에 도달했습니다 — 업그레이드하세요.",
+    "sent": "메일 앱에 알림이 준비되었습니다.",
+    "cap_label": "하루 최대 알림 (비우면 무제한)",
+    "book": "지금 예약",
+    "rescan": "최신 가격 다시 스캔",
+    "mail_subject": "✈️ 가격 알림: {route}",
+    "mail_intro": "A+Z.app 가격 알림:",
+    "mail_price": "최저가",
+    "mail_outro": "— A+Z.app · 더 저렴하게"
+  }
+}

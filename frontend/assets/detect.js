@@ -90,12 +90,14 @@
     setLang: function (code) {
       if (!code || typeof code !== 'string') return false;
       var c = code.toLowerCase().split('-')[0];
+      /* prefer the i18n switch: validates to the 20 supported, persists, sets lang+dir */
+      if (window.APlusZ.i18n && typeof window.APlusZ.i18n.setLang === 'function') {
+        window.APlusZ.i18n.setLang(c);
+        return true;
+      }
       html.lang = c;
       try { localStorage.setItem('aplusz-lang', c); } catch (e) {}
       window.APlusZ.detect.lang = c;
-      if (window.APlusZ.i18n && typeof window.APlusZ.i18n.load === 'function') {
-        window.APlusZ.i18n.load(c);
-      }
       return true;
     },
 
@@ -109,8 +111,10 @@
     },
 
     formatPrice: function (amount, cur) {
+      var loc = (window.APlusZ.i18n && window.APlusZ.i18n.locale)
+        ? window.APlusZ.i18n.locale() : (navigator.language || 'en');
       try {
-        return new Intl.NumberFormat(navigator.language || 'en', {
+        return new Intl.NumberFormat(loc, {
           style: 'currency',
           currency: cur || window.APlusZ.detect.currency,
           maximumFractionDigits: 0

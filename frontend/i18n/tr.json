@@ -1,0 +1,158 @@
+{
+  "app_name": "APlusZ",
+  "motto": "A+Z.app sizi daha ucuza uçurur.",
+  "search": {
+    "origin": "Kalkış",
+    "destination": "Varış",
+    "placeholder_origin": "Şehir veya havalimanı",
+    "placeholder_destination": "Şehir veya havalimanı",
+    "button": "En düşük ücreti bul",
+    "swap": "Değiştir"
+  },
+  "result": {
+    "best_departure": "En uygun kalkış tarihi",
+    "best_booking": "En uygun rezervasyon tarihi",
+    "price_label": "Tahmini en düşük fiyat (vergisiz)",
+    "confidence_high": "Yüksek güven",
+    "confidence_medium": "Orta güven",
+    "confidence_low": "Düşük güven",
+    "cta_book": "Yıl boyunca en düşük bilet fiyatı için bu gün rezervasyon yapın",
+    "add_calendar": "Takvime ekle",
+    "add_google": "Google Takvim",
+    "download_ics": ".ics indir",
+    "days_out": "{n} gün içinde",
+    "also_check": "Şunları da kontrol et:",
+    "hotel_near": "{city} yakınında otel",
+    "share_title": "Bir arkadaşına söyle, para kazandır",
+    "share_sub": "Karma kazan · ayrıcalıkların kilidini aç",
+    "share_btn": "Paylaş"
+  },
+  "nav": {
+    "home": "Ana sayfa",
+    "alerts": "Uyarılar",
+    "settings": "Ayarlar",
+    "legal": "Yasal"
+  },
+  "settings": {
+    "theme": "Tema",
+    "language": "Dil",
+    "currency": "Para birimi",
+    "theme_dark_glass": "Koyu Cam",
+    "theme_light_expressive": "Açık",
+    "theme_sepia_reader": "Sepya Okuma",
+    "theme_sepia_night": "Sepya Gece"
+  },
+  "offline": {
+    "title": "Çevrimdışısınız",
+    "message": "Kayıtlı rotalarınızın son önbellek sonuçları aşağıdadır."
+  },
+  "errors": {
+    "no_data": "Bu rota için henüz veri yok.",
+    "rate_limit": "Çok fazla arama. Birazdan tekrar deneyin.",
+    "generic": "Bir şeyler ters gitti. Lütfen tekrar deneyin."
+  },
+  "hero": {
+    "fly": "Daha ",
+    "less": "UCUZA uç."
+  },
+  "trust": {
+    "free_hero": "Sonsuza dek ücretsiz, sınırsız arama",
+    "no_signup": "Kayıt yok",
+    "works_offline": "Çevrimdışı çalışır"
+  },
+  "plans": {
+    "free_head": "Sonsuza dek ücretsiz",
+    "f_unlimited": "Sınırsız rota araması",
+    "f_exact": "Tam en iyi tarih + fiyat",
+    "f_saved1": "1 kayıtlı rota",
+    "f_alert1": "Haftada 1 uyarı",
+    "f_calendar": "Takvim dışa aktarma",
+    "f_offline": "Çevrimdışı çalışır",
+    "pro_head": "Pro",
+    "p_everything_free": "Ücretsizdeki her şey",
+    "p_alerts3": "Günde 3 uyarı",
+    "p_routes2": "2 özel rota seti",
+    "p_priority": "Öncelikli veri yenileme",
+    "proplus_head": "Pro+",
+    "pp_everything_pro": "Pro'daki her şey",
+    "pp_alerts5": "Günde 5 uyarı veya özel sıklık",
+    "pp_routes_unlim": "Sınırsız rota seti",
+    "pp_early": "Yeni özelliklere erken erişim"
+  },
+  "hiw": {
+    "link": "Nasıl çalışır",
+    "title": "Nasıl çalışır",
+    "concept": "A+Z.app tüm uçuş ihtiyaçlarınızı karşılar. İki şehir girin — en düşük fiyatı ve rezervasyon için en iyi tarihi buluruz. Zor işi biz yaparız, siz {hl}daha ucuza{/hl} uçun.",
+    "foot": "İki şehriniz otomatik olarak kaydedilir — siz değiştirene kadar.",
+    "nav": {
+      "back": "Geri",
+      "next": "İleri",
+      "done": "Anladım"
+    },
+    "s1": {
+      "step": "A → Z",
+      "body": "İki şehrinizi seçin."
+    },
+    "s2": {
+      "step": "Tarama",
+      "head": "Tarama",
+      "body": "En ucuz bileti bulmak için aylarca tarihi tararız."
+    },
+    "s3": {
+      "step": "Bu uçuşu rezerve et",
+      "head": "Bu uçuşu rezerve et",
+      "body": "En düşük fiyat + en iyi gün gösterilir. Fiyat kaybolmadan önce 10 dakikalık sayaç."
+    },
+    "demo": {
+      "untaxed": "tüm zamanların en düşüğü, vergisiz",
+      "book": "Bu uçuşu rezerve et"
+    },
+    "cities": {
+      "paris": "Paris",
+      "newyork": "New York",
+      "bangkok": "Bangkok",
+      "tokyo": "Tokyo",
+      "marrakech": "Marakeş",
+      "london": "Londra",
+      "bali": "Bali",
+      "madrid": "Madrid",
+      "cancun": "Cancún",
+      "lisbon": "Lizbon"
+    }
+  },
+  "billing": {
+    "email_prompt": "Devam etmek için e-postanı gir",
+    "email_note": "E-posta, planını saklama ve geri alma yolundur — gerçekten kullandığın bir kutu gir.",
+    "email_ph": "sen@email.com",
+    "continue": "Devam et",
+    "restore": "Zaten ödedin mi? Erişimi geri al",
+    "have_plan": "Zaten bir {tier} planın var — erişim bağlantını e-postayla gönderdik.",
+    "check_inbox": "Erişim bağlantın için gelen kutunu kontrol et.",
+    "not_found": "Bu e-posta için aktif plan bulunamadı.",
+    "cap_banner": "1 Ocak'a kadar tüm özellikler herkese ücretsiz.",
+    "pro_active": "Pro aktif",
+    "proplus_active": "Pro+ aktif",
+    "free_upgrade": "Ücretsiz plan — günlük uyarılar için yükselt",
+    "invalid_email": "Lütfen geçerli bir e-posta gir.",
+    "processing": "İşleniyor…",
+    "error": "Bir şeyler ters gitti. Lütfen tekrar dene.",
+    "unlocked": "Açıldı — bu cihazda {tier} aktif.",
+    "close": "Kapat"
+  },
+  "alerts": {
+    "remind": "Hatırlat",
+    "title": "Uyarılarım",
+    "empty": "Henüz uyarı yok. Bir sonuçta \"Hatırlat\"a dokunarak ekle.",
+    "resend": "Yeniden gönder",
+    "remove": "Kaldır",
+    "limit": "Planının hatırlatma sınırına ulaşıldı — daha fazlası için yükselt.",
+    "sent": "Hatırlatma posta uygulamanda hazır.",
+    "cap_label": "Günlük en fazla hatırlatma (boş = sınırsız)",
+    "book": "Hemen rezerve et",
+    "rescan": "Fiyatı yeniden tara",
+    "mail_subject": "✈️ Fiyat takibi: {route}",
+    "mail_intro": "A+Z.app fiyat takibin:",
+    "mail_price": "Görülen en düşük",
+    "mail_outro": "— A+Z.app · daha ucuza uç"
+  }
+}

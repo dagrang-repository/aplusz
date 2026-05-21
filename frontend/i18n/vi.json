@@ -1,0 +1,158 @@
+{
+  "app_name": "APlusZ",
+  "motto": "A+Z.app giúp bạn bay với chi phí thấp hơn.",
+  "search": {
+    "origin": "Điểm đi",
+    "destination": "Điểm đến",
+    "placeholder_origin": "Thành phố hoặc sân bay",
+    "placeholder_destination": "Thành phố hoặc sân bay",
+    "button": "Tìm giá thấp nhất",
+    "swap": "Hoán đổi"
+  },
+  "result": {
+    "best_departure": "Ngày khởi hành tối ưu",
+    "best_booking": "Ngày đặt vé tối ưu",
+    "price_label": "Giá thấp nhất ước tính (chưa thuế)",
+    "confidence_high": "Độ tin cậy cao",
+    "confidence_medium": "Độ tin cậy trung bình",
+    "confidence_low": "Độ tin cậy thấp",
+    "cta_book": "Đặt vào ngày này để có giá vé thấp nhất cả năm",
+    "add_calendar": "Thêm vào lịch",
+    "add_google": "Google Lịch",
+    "download_ics": "Tải .ics",
+    "days_out": "trong {n} ngày",
+    "also_check": "Cũng nên xem:",
+    "hotel_near": "Khách sạn gần {city}",
+    "share_title": "Mách bạn bè, giúp họ tiết kiệm",
+    "share_sub": "Kiếm karma · mở khóa ưu đãi",
+    "share_btn": "Chia sẻ"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "alerts": "Thông báo",
+    "settings": "Cài đặt",
+    "legal": "Pháp lý"
+  },
+  "settings": {
+    "theme": "Giao diện",
+    "language": "Ngôn ngữ",
+    "currency": "Tiền tệ",
+    "theme_dark_glass": "Kính tối",
+    "theme_light_expressive": "Sáng",
+    "theme_sepia_reader": "Nâu đọc sách",
+    "theme_sepia_night": "Nâu ban đêm"
+  },
+  "offline": {
+    "title": "Bạn đang ngoại tuyến",
+    "message": "Dưới đây là kết quả đã lưu gần nhất cho các tuyến của bạn."
+  },
+  "errors": {
+    "no_data": "Chưa có dữ liệu cho tuyến này.",
+    "rate_limit": "Quá nhiều lượt tìm. Thử lại sau giây lát.",
+    "generic": "Đã xảy ra lỗi. Vui lòng thử lại."
+  },
+  "hero": {
+    "fly": "Bay với giá ",
+    "less": "THẤP HƠN."
+  },
+  "trust": {
+    "free_hero": "Miễn phí mãi mãi, tìm kiếm không giới hạn",
+    "no_signup": "Không cần đăng ký",
+    "works_offline": "Hoạt động ngoại tuyến"
+  },
+  "plans": {
+    "free_head": "Miễn phí mãi mãi",
+    "f_unlimited": "Tìm tuyến không giới hạn",
+    "f_exact": "Ngày và giá tốt nhất chính xác",
+    "f_saved1": "1 tuyến đã lưu",
+    "f_alert1": "1 thông báo mỗi tuần",
+    "f_calendar": "Xuất ra lịch",
+    "f_offline": "Hoạt động ngoại tuyến",
+    "pro_head": "Pro",
+    "p_everything_free": "Mọi thứ của bản Miễn phí",
+    "p_alerts3": "3 thông báo mỗi ngày",
+    "p_routes2": "2 bộ tuyến tùy chỉnh",
+    "p_priority": "Làm mới dữ liệu ưu tiên",
+    "proplus_head": "Pro+",
+    "pp_everything_pro": "Mọi thứ của Pro",
+    "pp_alerts5": "5 thông báo/ngày hoặc tần suất tùy chỉnh",
+    "pp_routes_unlim": "Bộ tuyến không giới hạn",
+    "pp_early": "Truy cập sớm tính năng mới"
+  },
+  "hiw": {
+    "link": "Cách hoạt động",
+    "title": "Cách hoạt động",
+    "concept": "A+Z.app đáp ứng mọi nhu cầu bay của bạn. Chọn hai thành phố — chúng tôi tìm mức giá thấp nhất và ngày đặt vé tốt nhất. Chúng tôi lo phần khó, để bạn bay với chi phí {hl}thấp hơn{/hl}.",
+    "foot": "Hai thành phố của bạn được lưu tự động — cho đến khi bạn thay đổi.",
+    "nav": {
+      "back": "Quay lại",
+      "next": "Tiếp",
+      "done": "Đã hiểu"
+    },
+    "s1": {
+      "step": "A → Z",
+      "body": "Chọn hai thành phố của bạn."
+    },
+    "s2": {
+      "step": "Quét",
+      "head": "Quét",
+      "body": "Chúng tôi quét nhiều tháng ngày để tìm vé rẻ nhất."
+    },
+    "s3": {
+      "step": "Đặt chuyến bay đó",
+      "head": "Đặt chuyến bay đó",
+      "body": "Hiển thị giá rẻ nhất + ngày tốt nhất. Bộ đếm 10 phút trước khi giá biến mất."
+    },
+    "demo": {
+      "untaxed": "thấp nhất từ trước đến nay, chưa gồm thuế",
+      "book": "Đặt chuyến bay đó"
+    },
+    "cities": {
+      "paris": "Paris",
+      "newyork": "New York",
+      "bangkok": "Bangkok",
+      "tokyo": "Tokyo",
+      "marrakech": "Marrakech",
+      "london": "Luân Đôn",
+      "bali": "Bali",
+      "madrid": "Madrid",
+      "cancun": "Cancún",
+      "lisbon": "Lisbon"
+    }
+  },
+  "billing": {
+    "email_prompt": "Nhập email của bạn để tiếp tục",
+    "email_note": "Email là cách bạn giữ và khôi phục gói — hãy dùng hộp thư thật mà bạn kiểm tra.",
+    "email_ph": "ban@email.com",
+    "continue": "Tiếp tục",
+    "restore": "Đã thanh toán? Khôi phục quyền truy cập",
+    "have_plan": "Bạn đã có gói {tier} — chúng tôi đã gửi liên kết truy cập qua email.",
+    "check_inbox": "Kiểm tra hộp thư để lấy liên kết truy cập.",
+    "not_found": "Không tìm thấy gói đang hoạt động cho email này.",
+    "cap_banner": "Mọi tính năng miễn phí cho tất cả đến ngày 1 tháng 1.",
+    "pro_active": "Pro đang bật",
+    "proplus_active": "Pro+ đang bật",
+    "free_upgrade": "Gói miễn phí — nâng cấp để nhận thông báo hằng ngày",
+    "invalid_email": "Vui lòng nhập email hợp lệ.",
+    "processing": "Đang xử lý…",
+    "error": "Đã xảy ra lỗi. Vui lòng thử lại.",
+    "unlocked": "Đã mở — {tier} đang hoạt động trên thiết bị này.",
+    "close": "Đóng"
+  },
+  "alerts": {
+    "remind": "Nhắc tôi",
+    "title": "Cảnh báo của tôi",
+    "empty": "Chưa có cảnh báo. Chạm \"Nhắc tôi\" trên một kết quả để thêm.",
+    "resend": "Gửi lại",
+    "remove": "Xóa",
+    "limit": "Đã đạt giới hạn nhắc của gói — nâng cấp để có thêm.",
+    "sent": "Lời nhắc đã sẵn trong ứng dụng email của bạn.",
+    "cap_label": "Số nhắc tối đa mỗi ngày (để trống = không giới hạn)",
+    "book": "Đặt ngay",
+    "rescan": "Quét lại giá mới nhất",
+    "mail_subject": "✈️ Theo dõi giá: {route}",
+    "mail_intro": "Theo dõi giá A+Z.app của bạn:",
+    "mail_price": "Thấp nhất đã thấy",
+    "mail_outro": "— A+Z.app · bay rẻ hơn"
+  }
+}

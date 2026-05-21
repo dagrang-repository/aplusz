@@ -1,0 +1,158 @@
+{
+  "app_name": "APlusZ",
+  "motto": "A+Z.app membuat Anda terbang lebih murah.",
+  "search": {
+    "origin": "Asal",
+    "destination": "Tujuan",
+    "placeholder_origin": "Kota atau bandara",
+    "placeholder_destination": "Kota atau bandara",
+    "button": "Cari tarif terendah",
+    "swap": "Tukar"
+  },
+  "result": {
+    "best_departure": "Tanggal keberangkatan optimal",
+    "best_booking": "Tanggal pemesanan optimal",
+    "price_label": "Perkiraan harga terendah (sebelum pajak)",
+    "confidence_high": "Keyakinan tinggi",
+    "confidence_medium": "Keyakinan sedang",
+    "confidence_low": "Keyakinan rendah",
+    "cta_book": "Pesan pada hari ini untuk harga tiket terendah sepanjang tahun",
+    "add_calendar": "Tambahkan ke kalender",
+    "add_google": "Google Kalender",
+    "download_ics": "Unduh .ics",
+    "days_out": "dalam {n} hari",
+    "also_check": "Cek juga:",
+    "hotel_near": "Hotel dekat {city}",
+    "share_title": "Beri tahu teman, bantu mereka hemat",
+    "share_sub": "Dapatkan karma · buka manfaat",
+    "share_btn": "Bagikan"
+  },
+  "nav": {
+    "home": "Beranda",
+    "alerts": "Peringatan",
+    "settings": "Pengaturan",
+    "legal": "Hukum"
+  },
+  "settings": {
+    "theme": "Tema",
+    "language": "Bahasa",
+    "currency": "Mata uang",
+    "theme_dark_glass": "Kaca Gelap",
+    "theme_light_expressive": "Terang",
+    "theme_sepia_reader": "Sepia Baca",
+    "theme_sepia_night": "Sepia Malam"
+  },
+  "offline": {
+    "title": "Anda sedang offline",
+    "message": "Berikut hasil cache terakhir untuk rute tersimpan Anda."
+  },
+  "errors": {
+    "no_data": "Belum ada data untuk rute ini.",
+    "rate_limit": "Terlalu banyak pencarian. Coba lagi sebentar.",
+    "generic": "Terjadi kesalahan. Silakan coba lagi."
+  },
+  "hero": {
+    "fly": "Terbang lebih ",
+    "less": "MURAH."
+  },
+  "trust": {
+    "free_hero": "Gratis selamanya, pencarian tak terbatas",
+    "no_signup": "Tanpa pendaftaran",
+    "works_offline": "Berfungsi offline"
+  },
+  "plans": {
+    "free_head": "Gratis selamanya",
+    "f_unlimited": "Pencarian rute tak terbatas",
+    "f_exact": "Tanggal & harga terbaik yang tepat",
+    "f_saved1": "1 rute tersimpan",
+    "f_alert1": "1 peringatan per minggu",
+    "f_calendar": "Ekspor kalender",
+    "f_offline": "Berfungsi offline",
+    "pro_head": "Pro",
+    "p_everything_free": "Semua di Gratis",
+    "p_alerts3": "3 peringatan per hari",
+    "p_routes2": "2 set rute khusus",
+    "p_priority": "Penyegaran data prioritas",
+    "proplus_head": "Pro+",
+    "pp_everything_pro": "Semua di Pro",
+    "pp_alerts5": "5 peringatan/hari atau frekuensi khusus",
+    "pp_routes_unlim": "Set rute tak terbatas",
+    "pp_early": "Akses awal fitur baru"
+  },
+  "hiw": {
+    "link": "Cara kerja",
+    "title": "Cara kerja",
+    "concept": "A+Z.app memenuhi semua kebutuhan terbang Anda. Tetapkan dua kota — kami temukan harga terendah dan tanggal terbaik untuk memesan. Kami yang bekerja keras, agar Anda terbang lebih {hl}murah{/hl}.",
+    "foot": "Kedua kota Anda disimpan otomatis — sampai Anda mengubahnya.",
+    "nav": {
+      "back": "Kembali",
+      "next": "Lanjut",
+      "done": "Mengerti"
+    },
+    "s1": {
+      "step": "A → Z",
+      "body": "Pilih dua kota Anda."
+    },
+    "s2": {
+      "step": "Pindai",
+      "head": "Pindai",
+      "body": "Kami menyisir berbulan-bulan tanggal untuk tarif termurah."
+    },
+    "s3": {
+      "step": "Pesan penerbangan itu",
+      "head": "Pesan penerbangan itu",
+      "body": "Harga termurah + hari terbaik ditampilkan. Pengatur waktu 10 menit sebelum harga hilang."
+    },
+    "demo": {
+      "untaxed": "terendah sepanjang masa, tanpa pajak",
+      "book": "Pesan penerbangan itu"
+    },
+    "cities": {
+      "paris": "Paris",
+      "newyork": "New York",
+      "bangkok": "Bangkok",
+      "tokyo": "Tokyo",
+      "marrakech": "Marrakesh",
+      "london": "London",
+      "bali": "Bali",
+      "madrid": "Madrid",
+      "cancun": "Cancún",
+      "lisbon": "Lisbon"
+    }
+  },
+  "billing": {
+    "email_prompt": "Masukkan email Anda untuk lanjut",
+    "email_note": "Email adalah cara Anda menyimpan dan memulihkan paket — gunakan kotak masuk asli yang Anda cek.",
+    "email_ph": "anda@email.com",
+    "continue": "Lanjutkan",
+    "restore": "Sudah bayar? Pulihkan akses",
+    "have_plan": "Anda sudah memiliki paket {tier} — kami mengirim tautan akses ke email Anda.",
+    "check_inbox": "Cek kotak masuk untuk tautan akses Anda.",
+    "not_found": "Tidak ada paket aktif untuk email itu.",
+    "cap_banner": "Semua fitur gratis untuk semua orang hingga 1 Januari.",
+    "pro_active": "Pro aktif",
+    "proplus_active": "Pro+ aktif",
+    "free_upgrade": "Paket gratis — tingkatkan untuk peringatan harian",
+    "invalid_email": "Masukkan email yang valid.",
+    "processing": "Memproses…",
+    "error": "Terjadi kesalahan. Silakan coba lagi.",
+    "unlocked": "Terbuka — {tier} aktif di perangkat ini.",
+    "close": "Tutup"
+  },
+  "alerts": {
+    "remind": "Ingatkan saya",
+    "title": "Peringatan saya",
+    "empty": "Belum ada peringatan. Ketuk \"Ingatkan saya\" pada hasil untuk menambah.",
+    "resend": "Kirim ulang",
+    "remove": "Hapus",
+    "limit": "Batas pengingat paket Anda tercapai — tingkatkan untuk lebih banyak.",
+    "sent": "Pengingat siap di aplikasi email Anda.",
+    "cap_label": "Maks pengingat per hari (kosong = tak terbatas)",
+    "book": "Pesan sekarang",
+    "rescan": "Pindai ulang harga terbaru",
+    "mail_subject": "✈️ Pantau harga: {route}",
+    "mail_intro": "Pantauan harga A+Z.app Anda:",
+    "mail_price": "Terendah terlihat",
+    "mail_outro": "— A+Z.app · terbang lebih murah"
+  }
+}

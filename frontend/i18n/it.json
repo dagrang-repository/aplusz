@@ -1,0 +1,158 @@
+{
+  "app_name": "APlusZ",
+  "motto": "A+Z.app ti fa volare spendendo MENO.",
+  "search": {
+    "origin": "Partenza",
+    "destination": "Destinazione",
+    "placeholder_origin": "Città o aeroporto",
+    "placeholder_destination": "Città o aeroporto",
+    "button": "Trova la tariffa più bassa",
+    "swap": "Inverti"
+  },
+  "result": {
+    "best_departure": "Data di partenza ottimale",
+    "best_booking": "Data di prenotazione ottimale",
+    "price_label": "Prezzo più basso stimato (tasse escluse)",
+    "confidence_high": "Affidabilità alta",
+    "confidence_medium": "Affidabilità media",
+    "confidence_low": "Affidabilità bassa",
+    "cta_book": "Prenota in questo giorno per il prezzo più basso dell'anno",
+    "add_calendar": "Aggiungi al calendario",
+    "add_google": "Google Calendar",
+    "download_ics": "Scarica .ics",
+    "days_out": "tra {n} giorni",
+    "also_check": "Controlla anche:",
+    "hotel_near": "Hotel vicino a {city}",
+    "share_title": "Dillo a un amico, fagli risparmiare",
+    "share_sub": "Guadagna karma · sblocca vantaggi",
+    "share_btn": "Condividi"
+  },
+  "nav": {
+    "home": "Home",
+    "alerts": "Avvisi",
+    "settings": "Impostazioni",
+    "legal": "Note legali"
+  },
+  "settings": {
+    "theme": "Tema",
+    "language": "Lingua",
+    "currency": "Valuta",
+    "theme_dark_glass": "Vetro scuro",
+    "theme_light_expressive": "Chiaro espressivo",
+    "theme_sepia_reader": "Seppia lettura",
+    "theme_sepia_night": "Seppia notte"
+  },
+  "offline": {
+    "title": "Sei offline",
+    "message": "Di seguito gli ultimi risultati in cache dei tuoi percorsi salvati."
+  },
+  "errors": {
+    "no_data": "Nessun dato disponibile per questo percorso al momento.",
+    "rate_limit": "Troppe ricerche. Riprova tra un istante.",
+    "generic": "Qualcosa è andato storto. Riprova."
+  },
+  "hero": {
+    "fly": "Vola per ",
+    "less": "MENO."
+  },
+  "trust": {
+    "free_hero": "Gratis per sempre, ricerche illimitate",
+    "no_signup": "Nessuna registrazione",
+    "works_offline": "Funziona offline"
+  },
+  "plans": {
+    "free_head": "Gratis per sempre",
+    "f_unlimited": "Ricerche di percorsi illimitate",
+    "f_exact": "Data e prezzo migliori esatti",
+    "f_saved1": "1 percorso salvato",
+    "f_alert1": "1 avviso a settimana",
+    "f_calendar": "Esportazione calendario",
+    "f_offline": "Funziona offline",
+    "pro_head": "Pro",
+    "p_everything_free": "Tutto di Gratis",
+    "p_alerts3": "3 avvisi al giorno",
+    "p_routes2": "2 set di percorsi personalizzati",
+    "p_priority": "Aggiornamento dati prioritario",
+    "proplus_head": "Pro+",
+    "pp_everything_pro": "Tutto di Pro",
+    "pp_alerts5": "5 avvisi/giorno o frequenza personalizzata",
+    "pp_routes_unlim": "Set di percorsi illimitati",
+    "pp_early": "Accesso anticipato alle novità"
+  },
+  "hiw": {
+    "link": "Come funziona",
+    "title": "Come funziona",
+    "concept": "A+Z.app soddisfa tutte le tue esigenze di volo. Inserisci due città — troviamo il prezzo più basso e la data migliore per prenotare. Facciamo noi il lavoro pesante, così voli spendendo {hl}MENO{/hl}.",
+    "foot": "Le tue due città vengono salvate automaticamente — finché non le cambi.",
+    "nav": {
+      "back": "Indietro",
+      "next": "Avanti",
+      "done": "Ho capito"
+    },
+    "s1": {
+      "step": "A → Z",
+      "body": "Scegli le tue due città."
+    },
+    "s2": {
+      "step": "Scansione",
+      "head": "Scansione",
+      "body": "Analizziamo mesi di date per trovare la tariffa più bassa."
+    },
+    "s3": {
+      "step": "Prenota quel volo",
+      "head": "Prenota quel volo",
+      "body": "Prezzo più basso + giorno migliore mostrati. Timer di 10 min prima che il prezzo scompaia."
+    },
+    "demo": {
+      "untaxed": "il più basso di sempre, tasse escluse",
+      "book": "Prenota quel volo"
+    },
+    "cities": {
+      "paris": "Parigi",
+      "newyork": "New York",
+      "bangkok": "Bangkok",
+      "tokyo": "Tokyo",
+      "marrakech": "Marrakech",
+      "london": "Londra",
+      "bali": "Bali",
+      "madrid": "Madrid",
+      "cancun": "Cancún",
+      "lisbon": "Lisbona"
+    }
+  },
+  "billing": {
+    "email_prompt": "Inserisci la tua email per continuare",
+    "email_note": "La tua email serve a conservare e ripristinare il piano: usa una casella reale che controlli.",
+    "email_ph": "tu@email.com",
+    "continue": "Continua",
+    "restore": "Già pagato? Ripristina l'accesso",
+    "have_plan": "Hai già un piano {tier}: ti abbiamo inviato il link di accesso.",
+    "check_inbox": "Controlla la tua casella per il link di accesso.",
+    "not_found": "Nessun piano attivo per questa email.",
+    "cap_banner": "Tutte le funzioni sono gratis per tutti fino al 1° gennaio.",
+    "pro_active": "Pro attivo",
+    "proplus_active": "Pro+ attivo",
+    "free_upgrade": "Piano gratuito: passa al livello superiore per gli avvisi giornalieri",
+    "invalid_email": "Inserisci un'email valida.",
+    "processing": "Elaborazione…",
+    "error": "Qualcosa è andato storto. Riprova.",
+    "unlocked": "Sbloccato: {tier} attivo su questo dispositivo.",
+    "close": "Chiudi"
+  },
+  "alerts": {
+    "remind": "Ricordamelo",
+    "title": "I miei avvisi",
+    "empty": "Ancora nessun avviso. Tocca \"Ricordamelo\" su un risultato per aggiungerne uno.",
+    "resend": "Reinvia",
+    "remove": "Rimuovi",
+    "limit": "Limite di promemoria raggiunto per il tuo piano: passa al livello superiore.",
+    "sent": "Promemoria pronto nella tua app di posta.",
+    "cap_label": "Max promemoria al giorno (vuoto = illimitato)",
+    "book": "Prenota ora",
+    "rescan": "Ricontrolla il prezzo",
+    "mail_subject": "✈️ Monitoraggio prezzo: {route}",
+    "mail_intro": "Il tuo monitoraggio prezzo A+Z.app:",
+    "mail_price": "Più basso visto",
+    "mail_outro": "— A+Z.app · vola con MENO"
+  }
+}

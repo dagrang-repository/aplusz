@@ -1,48 +1,158 @@
 {
   "app_name": "APlusZ",
-  "motto": "APlusZ.app vous fait voler pour MOINS.",
+  "motto": "A+Z.app vous fait voler pour MOINS.",
   "search": {
     "origin": "Départ",
     "destination": "Destination",
     "placeholder_origin": "Ville ou aéroport",
     "placeholder_destination": "Ville ou aéroport",
-    "button": "Trouver le prix le plus bas",
+    "button": "Trouver le tarif le plus bas",
     "swap": "Inverser"
   },
   "result": {
     "best_departure": "Date de départ optimale",
     "best_booking": "Date de réservation optimale",
-    "price_label": "Prix estimé le plus bas (hors taxes)",
+    "price_label": "Prix le plus bas estimé (hors taxes)",
     "confidence_high": "Confiance élevée",
     "confidence_medium": "Confiance moyenne",
     "confidence_low": "Confiance faible",
-    "cta_book": "Réservez ce jour-là pour obtenir le prix le plus bas de l'année",
+    "cta_book": "Réservez ce jour-là pour obtenir le tarif le plus bas de l'année",
     "add_calendar": "Ajouter au calendrier",
     "add_google": "Google Agenda",
-    "download_ics": "Télécharger .ics"
+    "download_ics": "Télécharger .ics",
+    "days_out": "dans {n} jours",
+    "also_check": "À vérifier aussi :",
+    "hotel_near": "Hôtel près de {city}",
+    "share_title": "Parlez-en à un ami, faites-lui économiser",
+    "share_sub": "Gagnez du karma · débloquez des avantages",
+    "share_btn": "Partager"
   },
   "nav": {
     "home": "Accueil",
     "alerts": "Alertes",
     "settings": "Paramètres",
-    "legal": "Mentions"
+    "legal": "Mentions légales"
   },
   "settings": {
     "theme": "Thème",
     "language": "Langue",
     "currency": "Devise",
-    "theme_dark_glass": "Verre Sombre",
-    "theme_light_expressive": "Clair Expressif",
-    "theme_sepia_reader": "Sépia Lecture",
-    "theme_sepia_night": "Sépia Nuit"
+    "theme_dark_glass": "Verre sombre",
+    "theme_light_expressive": "Clair expressif",
+    "theme_sepia_reader": "Sépia lecture",
+    "theme_sepia_night": "Sépia nuit"
   },
   "offline": {
     "title": "Vous êtes hors ligne",
-    "message": "Voici les derniers résultats en cache pour vos trajets enregistrés."
+    "message": "Les derniers résultats en cache de vos trajets enregistrés sont ci-dessous."
   },
   "errors": {
     "no_data": "Aucune donnée disponible pour ce trajet pour l'instant.",
     "rate_limit": "Trop de recherches. Réessayez dans un instant.",
     "generic": "Une erreur est survenue. Veuillez réessayer."
+  },
+  "hero": {
+    "fly": "Volez pour ",
+    "less": "MOINS."
+  },
+  "trust": {
+    "free_hero": "Gratuit pour toujours, recherches illimitées",
+    "no_signup": "Sans inscription",
+    "works_offline": "Fonctionne hors ligne"
+  },
+  "plans": {
+    "free_head": "Gratuit pour toujours",
+    "f_unlimited": "Recherches d'itinéraires illimitées",
+    "f_exact": "Date et prix optimaux exacts",
+    "f_saved1": "1 trajet enregistré",
+    "f_alert1": "1 alerte par semaine",
+    "f_calendar": "Export calendrier",
+    "f_offline": "Fonctionne hors ligne",
+    "pro_head": "Pro",
+    "p_everything_free": "Tout de la version gratuite",
+    "p_alerts3": "3 alertes par jour",
+    "p_routes2": "2 jeux d'itinéraires personnalisés",
+    "p_priority": "Actualisation prioritaire des données",
+    "proplus_head": "Pro+",
+    "pp_everything_pro": "Tout de Pro",
+    "pp_alerts5": "5 alertes/jour ou fréquence personnalisée",
+    "pp_routes_unlim": "Jeux d'itinéraires illimités",
+    "pp_early": "Accès anticipé aux nouveautés"
+  },
+  "hiw": {
+    "link": "Comment ça marche",
+    "title": "Comment ça marche",
+    "concept": "A+Z.app répond à tous vos besoins de vol. Indiquez deux villes — nous trouvons le prix le plus bas et la meilleure date pour réserver. Nous faisons le gros du travail pour que vous voliez pour {hl}MOINS{/hl}.",
+    "foot": "Vos deux villes sont enregistrées automatiquement — jusqu'à ce que vous les changiez.",
+    "nav": {
+      "back": "Retour",
+      "next": "Suivant",
+      "done": "Compris"
+    },
+    "s1": {
+      "step": "A → Z",
+      "body": "Choisissez vos deux villes."
+    },
+    "s2": {
+      "step": "Analyse",
+      "head": "Analyse",
+      "body": "Nous balayons des mois de dates pour trouver le tarif le plus bas."
+    },
+    "s3": {
+      "step": "Réservez ce vol",
+      "head": "Réservez ce vol",
+      "body": "Prix le plus bas + meilleur jour affichés. Minuteur de 10 min avant que le prix disparaisse."
+    },
+    "demo": {
+      "untaxed": "le plus bas jamais vu, hors taxes",
+      "book": "Réservez ce vol"
+    },
+    "cities": {
+      "paris": "Paris",
+      "newyork": "New York",
+      "bangkok": "Bangkok",
+      "tokyo": "Tokyo",
+      "marrakech": "Marrakech",
+      "london": "Londres",
+      "bali": "Bali",
+      "madrid": "Madrid",
+      "cancun": "Cancún",
+      "lisbon": "Lisbonne"
+    }
+  },
+  "billing": {
+    "email_prompt": "Saisissez votre e-mail pour continuer",
+    "email_note": "Votre e-mail sert à conserver et restaurer votre abonnement — utilisez une boîte que vous consultez.",
+    "email_ph": "vous@email.com",
+    "continue": "Continuer",
+    "restore": "Déjà payé ? Restaurer l'accès",
+    "have_plan": "Vous avez déjà un abonnement {tier} — nous venons de vous envoyer votre lien d'accès.",
+    "check_inbox": "Consultez votre boîte mail pour votre lien d'accès.",
+    "not_found": "Aucun abonnement actif pour cet e-mail.",
+    "cap_banner": "Toutes les fonctions sont gratuites pour tous jusqu'au 1er janvier.",
+    "pro_active": "Pro actif",
+    "proplus_active": "Pro+ actif",
+    "free_upgrade": "Offre gratuite — passez au niveau supérieur pour les alertes quotidiennes",
+    "invalid_email": "Veuillez saisir un e-mail valide.",
+    "processing": "Traitement…",
+    "error": "Une erreur est survenue. Veuillez réessayer.",
+    "unlocked": "Débloqué — {tier} actif sur cet appareil.",
+    "close": "Fermer"
+  },
+  "alerts": {
+    "remind": "Me rappeler",
+    "title": "Mes alertes",
+    "empty": "Aucune alerte. Touchez « Me rappeler » sur un résultat pour en ajouter une.",
+    "resend": "Renvoyer",
+    "remove": "Supprimer",
+    "limit": "Limite de rappels atteinte pour votre offre — passez au niveau supérieur.",
+    "sent": "Rappel prêt dans votre messagerie.",
+    "cap_label": "Rappels max par jour (vide = illimité)",
+    "book": "Réserver maintenant",
+    "rescan": "Réanalyser le prix",
+    "mail_subject": "✈️ Veille de prix : {route}",
+    "mail_intro": "Votre veille de prix A+Z.app :",
+    "mail_price": "Plus bas vu",
+    "mail_outro": "— A+Z.app · volez pour MOINS"
   }
 }

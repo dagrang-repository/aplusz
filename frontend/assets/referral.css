@@ -1,0 +1,99 @@
+/* ============================================================
+   APlusZ — Referral / Share Styles
+   File: frontend/assets/referral.css
+   Save: D:\Destop\AplusZ\frontend\assets\referral.css
+   ============================================================ */
+
+/* ---------- Share button (added to result card) ---------- */
+.share-row {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3);
+}
+.share-row .share-info {
+  flex: 1;
+  min-width: 0;
+}
+.share-row .share-title {
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  color: var(--text);
+}
+.share-row .share-sub {
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.share-btn {
+  background: var(--surface);
+  border: 1px solid var(--accent);
+  color: var(--accent);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  flex-shrink: 0;
+  transition: background var(--dur-base) var(--ease-spring),
+              color var(--dur-base) var(--ease-spring);
+}
+.share-btn:hover {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+/* ---------- Toast (used by referral.js) ---------- */
+.aplusz-toast {
+  position: fixed;
+  left: 50%;
+  bottom: var(--sp-8);
+  transform: translateX(-50%) translateY(20px);
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  color: var(--text);
+  border: 1px solid var(--border);
+  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  z-index: var(--z-toast);
+  transition: opacity var(--dur-base) var(--ease-ios),
+              transform var(--dur-slow) var(--ease-spring);
+  pointer-events: none;
+  max-width: calc(100% - var(--sp-8));
+  text-align: center;
+}
+.aplusz-toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+
+/* ---------- Karma popup (when user earns karma) ---------- */
+.karma-popup {
+  position: fixed;
+  top: 64px;
+  right: var(--sp-4);
+  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
+  color: var(--bg);
+  padding: var(--sp-2) var(--sp-4);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transform: translateY(-12px);
+  z-index: var(--z-toast);
+  transition: opacity var(--dur-base) var(--ease-ios),
+              transform var(--dur-slow) var(--ease-spring);
+  pointer-events: none;
+}
+.karma-popup.show {
+  opacity: 1;
+  transform: translateY(0);
+}

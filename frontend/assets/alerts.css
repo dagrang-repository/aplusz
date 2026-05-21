@@ -1,0 +1,87 @@
+/* ============================================================
+   APlusZ — Alerts UI (Step 19)
+   File: frontend/assets/alerts.css
+   Save: D:\Destop\AplusZ\frontend\assets\alerts.css
+   ============================================================ */
+
+/* Remind button on the result card */
+.remind-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(245, 185, 66, .12);
+  color: #f5b942;
+  border: 1px solid rgba(245, 185, 66, .4);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  transition: background .15s ease;
+}
+.remind-btn:hover { background: rgba(245, 185, 66, .2); }
+
+/* My alerts list (inside profile drawer) */
+.al-list { display: flex; flex-direction: column; gap: var(--sp-2); }
+.al-empty {
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+  line-height: 1.5;
+  padding: var(--sp-3) 0;
+}
+.al-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-2);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+}
+.al-route { font-size: var(--fs-sm); color: var(--text); }
+.al-price {
+  margin-left: var(--sp-2);
+  color: var(--accent);
+  font-weight: 700;
+}
+.al-actions { display: flex; align-items: center; gap: var(--sp-2); flex-shrink: 0; }
+.al-resend {
+  background: none;
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+  border-radius: var(--r-pill);
+  padding: 5px 12px;
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  cursor: pointer;
+}
+.al-resend:hover { border-color: var(--accent); color: var(--accent); }
+.al-remove {
+  background: none;
+  border: none;
+  color: var(--text-dim);
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+}
+.al-remove:hover { color: var(--text); }
+
+.al-cap { margin-top: var(--sp-3); }
+.al-cap-label {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  margin-bottom: 6px;
+}
+.al-cap-input {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  color: var(--text);
+  font-size: var(--fs-sm);
+  outline: none;
+}
+.al-cap-input:focus { border-color: var(--accent); }

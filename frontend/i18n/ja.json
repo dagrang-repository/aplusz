@@ -1,6 +1,6 @@
 {
   "app_name": "APlusZ",
-  "motto": "APlusZ.app でもっと安く空を飛ぼう。",
+  "motto": "A+Z.app なら、もっと安く飛べます。",
   "search": {
     "origin": "出発地",
     "destination": "目的地",
@@ -12,18 +12,24 @@
   "result": {
     "best_departure": "最適な出発日",
     "best_booking": "最適な予約日",
-    "price_label": "推定最安価格(税抜)",
-    "confidence_high": "高信頼度",
-    "confidence_medium": "中信頼度",
-    "confidence_low": "低信頼度",
-    "cta_book": "この日に予約して年間最安値で航空券を入手",
+    "price_label": "推定最安値（税抜き）",
+    "confidence_high": "信頼度：高",
+    "confidence_medium": "信頼度：中",
+    "confidence_low": "信頼度：低",
+    "cta_book": "この日に予約して年間最安の航空券を手に入れよう",
     "add_calendar": "カレンダーに追加",
     "add_google": "Google カレンダー",
-    "download_ics": ".ics をダウンロード"
+    "download_ics": ".ics をダウンロード",
+    "days_out": "あと{n}日",
+    "also_check": "こちらも確認：",
+    "hotel_near": "{city}付近のホテル",
+    "share_title": "友達に教えて節約させよう",
+    "share_sub": "カルマを獲得 · 特典を解放",
+    "share_btn": "シェア"
   },
   "nav": {
     "home": "ホーム",
-    "alerts": "アラート",
+    "alerts": "通知",
     "settings": "設定",
     "legal": "法的情報"
   },
@@ -31,18 +37,122 @@
     "theme": "テーマ",
     "language": "言語",
     "currency": "通貨",
-    "theme_dark_glass": "ダークガラス",
-    "theme_light_expressive": "ライト エクスプレッシブ",
-    "theme_sepia_reader": "セピア リーダー",
-    "theme_sepia_night": "セピア ナイト"
+    "theme_dark_glass": "ダークグラス",
+    "theme_light_expressive": "ライト",
+    "theme_sepia_reader": "セピア（読書）",
+    "theme_sepia_night": "セピア（夜）"
   },
   "offline": {
     "title": "オフラインです",
-    "message": "保存したルートの最新キャッシュ結果はこちらです。"
+    "message": "保存したルートの最新キャッシュ結果を以下に表示します。"
   },
   "errors": {
     "no_data": "このルートのデータはまだありません。",
-    "rate_limit": "検索回数が多すぎます。しばらくしてから再試行してください。",
-    "generic": "問題が発生しました。再試行してください。"
+    "rate_limit": "検索が多すぎます。少し待って再試行してください。",
+    "generic": "問題が発生しました。もう一度お試しください。"
+  },
+  "hero": {
+    "fly": "",
+    "less": "もっと安く飛ぶ。"
+  },
+  "trust": {
+    "free_hero": "ずっと無料、検索無制限",
+    "no_signup": "登録不要",
+    "works_offline": "オフライン対応"
+  },
+  "plans": {
+    "free_head": "ずっと無料",
+    "f_unlimited": "ルート検索無制限",
+    "f_exact": "正確な最適日と価格",
+    "f_saved1": "保存ルート1件",
+    "f_alert1": "週1回の通知",
+    "f_calendar": "カレンダー書き出し",
+    "f_offline": "オフライン対応",
+    "pro_head": "Pro",
+    "p_everything_free": "無料版のすべて",
+    "p_alerts3": "1日3回の通知",
+    "p_routes2": "カスタムルート2セット",
+    "p_priority": "優先データ更新",
+    "proplus_head": "Pro+",
+    "pp_everything_pro": "Pro のすべて",
+    "pp_alerts5": "1日5回の通知またはカスタム頻度",
+    "pp_routes_unlim": "ルートセット無制限",
+    "pp_early": "新機能への早期アクセス"
+  },
+  "hiw": {
+    "link": "使い方",
+    "title": "使い方",
+    "concept": "A+Z.app があなたの空の旅をすべて叶えます。2つの都市を設定すれば、最安値と予約に最適な日を見つけます。面倒な作業はおまかせ、あなたは{hl}もっと安く{/hl}飛べます。",
+    "foot": "2つの都市は自動的に保存されます — 変更するまでそのままです。",
+    "nav": {
+      "back": "戻る",
+      "next": "次へ",
+      "done": "OK"
+    },
+    "s1": {
+      "step": "A → Z",
+      "body": "2つの都市を選びます。"
+    },
+    "s2": {
+      "step": "スキャン",
+      "head": "スキャン",
+      "body": "数か月分の日付を調べて最安運賃を探します。"
+    },
+    "s3": {
+      "step": "そのフライトを予約",
+      "head": "そのフライトを予約",
+      "body": "最安値と最適な日を表示。価格が消えるまで10分のタイマー。"
+    },
+    "demo": {
+      "untaxed": "過去最安、税抜き",
+      "book": "そのフライトを予約"
+    },
+    "cities": {
+      "paris": "パリ",
+      "newyork": "ニューヨーク",
+      "bangkok": "バンコク",
+      "tokyo": "東京",
+      "marrakech": "マラケシュ",
+      "london": "ロンドン",
+      "bali": "バリ",
+      "madrid": "マドリード",
+      "cancun": "カンクン",
+      "lisbon": "リスボン"
+    }
+  },
+  "billing": {
+    "email_prompt": "続けるにはメールアドレスを入力",
+    "email_note": "メールはプランの保持と復元に使います。普段使う実際の受信箱を入力してください。",
+    "email_ph": "you@email.com",
+    "continue": "続ける",
+    "restore": "購入済みですか？アクセスを復元",
+    "have_plan": "すでに{tier}プランをご利用中です。アクセスリンクをメールで送信しました。",
+    "check_inbox": "受信箱でアクセスリンクをご確認ください。",
+    "not_found": "このメールに有効なプランは見つかりません。",
+    "cap_banner": "1月1日まで、すべての機能が全員無料です。",
+    "pro_active": "Pro 有効",
+    "proplus_active": "Pro+ 有効",
+    "free_upgrade": "無料プラン — 毎日の通知にアップグレード",
+    "invalid_email": "有効なメールアドレスを入力してください。",
+    "processing": "処理中…",
+    "error": "問題が発生しました。もう一度お試しください。",
+    "unlocked": "解除しました — このデバイスで{tier}が有効です。",
+    "close": "閉じる"
+  },
+  "alerts": {
+    "remind": "リマインド",
+    "title": "マイアラート",
+    "empty": "アラートはまだありません。検索結果で「リマインド」をタップして追加してください。",
+    "resend": "再送信",
+    "remove": "削除",
+    "limit": "プランのリマインド上限に達しました。アップグレードで増やせます。",
+    "sent": "メールアプリにリマインドを用意しました。",
+    "cap_label": "1日あたりの上限（空欄＝無制限）",
+    "book": "今すぐ予約",
+    "rescan": "最新価格を再スキャン",
+    "mail_subject": "✈️ 価格ウォッチ：{route}",
+    "mail_intro": "A+Z.app の価格ウォッチ：",
+    "mail_price": "最安値",
+    "mail_outro": "— A+Z.app · もっと安く飛ぶ"
   }
 }

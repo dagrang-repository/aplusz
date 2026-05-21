@@ -1,6 +1,6 @@
 {
   "app_name": "APlusZ",
-  "motto": "APlusZ.app 让你用更少的钱飞行。",
+  "motto": "A+Z.app 让你花更少就能飞。",
   "search": {
     "origin": "出发地",
     "destination": "目的地",
@@ -12,37 +12,147 @@
   "result": {
     "best_departure": "最佳出发日期",
     "best_booking": "最佳预订日期",
-    "price_label": "预计最低价格(不含税)",
+    "price_label": "预计最低价格（不含税）",
     "confidence_high": "高可信度",
     "confidence_medium": "中等可信度",
     "confidence_low": "低可信度",
-    "cta_book": "在此日预订即可获得全年最低机票价格",
+    "cta_book": "在这一天预订，拿下全年最低机票价",
     "add_calendar": "添加到日历",
-    "add_google": "Google 日历",
-    "download_ics": "下载 .ics"
+    "add_google": "谷歌日历",
+    "download_ics": "下载 .ics",
+    "days_out": "还有 {n} 天",
+    "also_check": "也看看：",
+    "hotel_near": "{city}附近的酒店",
+    "share_title": "告诉朋友，帮他省钱",
+    "share_sub": "赚取积分 · 解锁福利",
+    "share_btn": "分享"
   },
   "nav": {
     "home": "首页",
     "alerts": "提醒",
     "settings": "设置",
-    "legal": "法律"
+    "legal": "法律信息"
   },
   "settings": {
     "theme": "主题",
     "language": "语言",
     "currency": "货币",
     "theme_dark_glass": "暗色玻璃",
-    "theme_light_expressive": "明亮表达",
+    "theme_light_expressive": "明亮",
     "theme_sepia_reader": "棕褐阅读",
     "theme_sepia_night": "棕褐夜间"
   },
   "offline": {
-    "title": "您已离线",
-    "message": "以下是您已保存路线的最新缓存结果。"
+    "title": "你已离线",
+    "message": "下方是你保存路线的最新缓存结果。"
   },
   "errors": {
-    "no_data": "此路线暂无数据。",
-    "rate_limit": "搜索次数过多。请稍后再试。",
-    "generic": "出错了。请重试。"
+    "no_data": "该路线暂无数据。",
+    "rate_limit": "搜索次数过多，请稍后再试。",
+    "generic": "出错了，请重试。"
+  },
+  "hero": {
+    "fly": "飞得",
+    "less": "更省。"
+  },
+  "trust": {
+    "free_hero": "永久免费，无限次搜索",
+    "no_signup": "无需注册",
+    "works_offline": "离线可用"
+  },
+  "plans": {
+    "free_head": "永久免费",
+    "f_unlimited": "无限次路线搜索",
+    "f_exact": "精确的最佳日期和价格",
+    "f_saved1": "1 条保存路线",
+    "f_alert1": "每周 1 次提醒",
+    "f_calendar": "日历导出",
+    "f_offline": "离线可用",
+    "pro_head": "Pro",
+    "p_everything_free": "包含免费版全部",
+    "p_alerts3": "每天 3 次提醒",
+    "p_routes2": "2 组自定义路线",
+    "p_priority": "优先数据刷新",
+    "proplus_head": "Pro+",
+    "pp_everything_pro": "包含 Pro 全部",
+    "pp_alerts5": "每天 5 次提醒或自定义频率",
+    "pp_routes_unlim": "无限路线组",
+    "pp_early": "抢先体验新功能"
+  },
+  "hiw": {
+    "link": "使用方法",
+    "title": "使用方法",
+    "concept": "A+Z.app 满足你所有的出行需求。设定两个城市，我们就为你找到最低价格和最佳预订日期。繁琐的工作交给我们，让你花{hl}更少{/hl}就能飞。",
+    "foot": "你的两个城市会自动保存——直到你更改为止。",
+    "nav": {
+      "back": "返回",
+      "next": "下一步",
+      "done": "知道了"
+    },
+    "s1": {
+      "step": "A → Z",
+      "body": "选择你的两个城市。"
+    },
+    "s2": {
+      "step": "扫描",
+      "head": "扫描",
+      "body": "我们扫描数月的日期，寻找最低票价。"
+    },
+    "s3": {
+      "step": "预订该航班",
+      "head": "预订该航班",
+      "body": "显示最低价格和最佳日期。价格消失前有10分钟倒计时。"
+    },
+    "demo": {
+      "untaxed": "史上最低，不含税",
+      "book": "预订该航班"
+    },
+    "cities": {
+      "paris": "巴黎",
+      "newyork": "纽约",
+      "bangkok": "曼谷",
+      "tokyo": "东京",
+      "marrakech": "马拉喀什",
+      "london": "伦敦",
+      "bali": "巴厘岛",
+      "madrid": "马德里",
+      "cancun": "坎昆",
+      "lisbon": "里斯本"
+    }
+  },
+  "billing": {
+    "email_prompt": "输入邮箱以继续",
+    "email_note": "邮箱用于保留和恢复你的套餐，请填写你常用的真实邮箱。",
+    "email_ph": "you@email.com",
+    "continue": "继续",
+    "restore": "已付款？恢复访问",
+    "have_plan": "你已拥有 {tier} 套餐——访问链接已发送到你的邮箱。",
+    "check_inbox": "请查收邮箱中的访问链接。",
+    "not_found": "该邮箱没有有效套餐。",
+    "cap_banner": "1 月 1 日前，所有功能对所有人免费。",
+    "pro_active": "Pro 已激活",
+    "proplus_active": "Pro+ 已激活",
+    "free_upgrade": "免费套餐——升级获取每日提醒",
+    "invalid_email": "请输入有效邮箱。",
+    "processing": "处理中…",
+    "error": "出错了，请重试。",
+    "unlocked": "已解锁——本设备 {tier} 已激活。",
+    "close": "关闭"
+  },
+  "alerts": {
+    "remind": "提醒我",
+    "title": "我的提醒",
+    "empty": "还没有提醒。在结果上点按“提醒我”即可添加。",
+    "resend": "重新发送",
+    "remove": "移除",
+    "limit": "已达到你套餐的提醒上限——升级可获得更多。",
+    "sent": "提醒已在你的邮件应用中备好。",
+    "cap_label": "每日提醒上限（留空＝无限）",
+    "book": "立即预订",
+    "rescan": "重新扫描最新价格",
+    "mail_subject": "✈️ 价格监控：{route}",
+    "mail_intro": "你的 A+Z.app 价格监控：",
+    "mail_price": "最低价",
+    "mail_outro": "— A+Z.app · 花更少就能飞"
   }
 }

@@ -1,0 +1,268 @@
+/* ============================================================
+   APlusZ — Profile Drawer Styles (Step 17 v3 — adoption bar)
+   File: frontend/assets/profile.css
+   Save: D:\Destop\AplusZ\frontend\assets\profile.css
+   ============================================================ */
+
+.profile-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  z-index: var(--z-modal);
+  transition: opacity var(--dur-base) var(--ease-ios);
+}
+.profile-overlay.show { opacity: 1; }
+
+.profile-drawer {
+  position: fixed;
+  top: 0; right: 0;
+  height: 100dvh;
+  width: 100%;
+  max-width: 440px;
+  background: var(--bg);
+  border-left: 1px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  z-index: calc(var(--z-modal) + 1);
+  transform: translateX(100%);
+  transition: transform var(--dur-slow) var(--ease-spring);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+.profile-drawer.show { transform: translateX(0); }
+
+.pd-header {
+  position: sticky;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--sp-4) var(--sp-6);
+  background: var(--bg-glass);
+  backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
+  border-bottom: 1px solid var(--border);
+  z-index: 2;
+}
+.pd-title {
+  font-size: var(--fs-xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+.pd-close {
+  width: 36px; height: 36px;
+  border-radius: var(--r-pill);
+  display: grid; place-items: center;
+  font-size: 1.5rem;
+  color: var(--text-muted);
+  transition: background var(--dur-base) var(--ease-spring);
+}
+.pd-close:hover { background: var(--bg-elevated); color: var(--text); }
+
+.pd-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--sp-2);
+  padding: var(--sp-6);
+}
+.stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-lg);
+  padding: var(--sp-4) var(--sp-2);
+  text-align: center;
+}
+.stat-icon { font-size: 1.5rem; margin-bottom: var(--sp-1); }
+.stat-value {
+  font-size: var(--fs-2xl);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--accent);
+}
+.stat-label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-dim);
+  font-weight: 600;
+  margin-top: 2px;
+}
+
+.pd-section {
+  padding: 0 var(--sp-6) var(--sp-6);
+}
+.pd-label {
+  font-size: var(--fs-xs);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-dim);
+  font-weight: 700;
+  margin-bottom: var(--sp-3);
+}
+
+.ref-link-row {
+  display: flex;
+  gap: var(--sp-2);
+  margin-bottom: var(--sp-3);
+}
+.ref-link-input {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-4);
+  color: var(--text);
+  font-family: var(--font-mono);
+  font-size: var(--fs-sm);
+  outline: none;
+}
+.ref-link-input:focus { border-color: var(--accent); }
+.ref-link-copy {
+  background: var(--accent);
+  color: var(--bg);
+  padding: 0 var(--sp-5);
+  border-radius: var(--r-md);
+  font-weight: 700;
+  font-size: var(--fs-sm);
+  flex-shrink: 0;
+}
+.pd-share { width: 100%; }
+
+/* ============================================================
+   ADOPTION BAR (clean, animated, percentage-marked)
+   ============================================================ */
+.adopt-bar {
+  position: relative;
+  height: 48px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
+}
+
+.adopt-fill {
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0%;
+  background: linear-gradient(
+    90deg,
+    var(--accent) 0%,
+    var(--accent-hover) 50%,
+    var(--accent) 100%
+  );
+  background-size: 200% 100%;
+  border-radius: var(--r-pill);
+  transition: width 1.5s var(--ease-spring);
+  overflow: hidden;
+  animation: adopt-gradient 4s linear infinite;
+}
+
+@keyframes adopt-gradient {
+  0%   { background-position: 0% 0%; }
+  100% { background-position: 200% 0%; }
+}
+
+.adopt-shimmer {
+  position: absolute;
+  top: 0; bottom: 0;
+  left: -40%;
+  width: 30%;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.35) 50%,
+    transparent 100%
+  );
+  animation: adopt-shimmer 2.4s ease-in-out infinite;
+}
+
+@keyframes adopt-shimmer {
+  0%   { left: -40%; }
+  100% { left: 110%; }
+}
+
+.adopt-pct {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.adopt-help {
+  font-size: var(--fs-sm);
+  color: var(--text-muted);
+  margin-top: var(--sp-3);
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* ============================================================
+   MILESTONES
+   ============================================================ */
+.milestones {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: var(--sp-2);
+}
+.milestone {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-md);
+  padding: var(--sp-3) var(--sp-2);
+  text-align: center;
+  opacity: 0.45;
+  transition: opacity var(--dur-base);
+}
+.milestone span {
+  display: block;
+  font-size: var(--fs-lg);
+  font-weight: 800;
+  color: var(--text-dim);
+}
+.milestone small {
+  display: block;
+  font-size: var(--fs-xs);
+  color: var(--text-dim);
+  margin-top: 2px;
+}
+.milestone.unlocked {
+  opacity: 1;
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(250, 204, 21, 0.08), transparent);
+}
+.milestone.unlocked span { color: var(--accent); }
+.milestone.unlocked small { color: var(--text); }
+
+/* ---------- Tier next-unlock block ---------- */
+.stat-tier {
+  font-size: var(--fs-lg) !important;
+}
+.tier-next {
+  margin: 0 var(--sp-6) var(--sp-6);
+  padding: var(--sp-4);
+  background: linear-gradient(135deg, rgba(250,204,21,0.06), transparent);
+  border: 1px solid var(--accent);
+  border-radius: var(--r-md);
+  text-align: center;
+}
+.tier-next-label {
+  font-size: var(--fs-sm);
+  font-weight: 700;
+  color: var(--text);
+}
+.tier-next-reward {
+  font-size: var(--fs-xs);
+  color: var(--accent);
+  font-weight: 600;
+  margin-top: 4px;
+}
