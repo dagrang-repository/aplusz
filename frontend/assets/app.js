@@ -100,17 +100,8 @@
   document.getElementById('swap').addEventListener('click', function () {
     var o = document.getElementById('origin');
     var d = document.getElementById('destination');
-    var oCode = o.dataset.code || '', dCode = d.dataset.code || '';
     var tv = o.value; o.value = d.value; d.value = tv;
-    o.dataset.code = dCode; d.dataset.code = oCode;
-    // destination validity depends on origin → reload list for the new origin
-    if (window.APlusZ.autocomplete && dCode) {
-      window.APlusZ.autocomplete.setOrigin(dCode).then(function () {
-        if (oCode && window.APlusZ.autocomplete.validDestForCurrent(oCode)) {
-          window.APlusZ.autocomplete.setDestination(oCode);
-        } else { d.value = ''; d.dataset.code = ''; }
-      });
-    }
+    var tc = o.dataset.code || ''; o.dataset.code = d.dataset.code || ''; d.dataset.code = tc;
   });
 
   /* ---------- search-hint helper ---------- */

@@ -1,53 +1,29 @@
 /* ============================================================
-   APlusZ — City Autocomplete (guaranteed-data picks)
+   APlusZ — City Autocomplete (live-first, multilingual)
    File: frontend/assets/autocomplete.js
    Save: D:\Destop\AplusZ\frontend\assets\autocomplete.js
 
-   Origin field suggests ONLY cities we have data for (from
-   /data/index.json). Once an origin is picked, the destination
-   field suggests ONLY that origin's real destinations (from its
-   chunk). Selecting binds the IATA code to input.dataset.code.
-   Free-typed text that isn't picked leaves no code -> search blocked.
+   Suggests ANY city (from cities.json), matched in the active
+   language. Live-monitored cities float to the TOP, carry a
+   color accent + "Live" tag. Others are listed below — still
+   selectable & bookable. "Live" is contextual:
+     • origin field      -> cities we monitor flights FROM (index.json)
+     • destination field -> real destinations of the chosen origin
    ============================================================ */
 
 (function () {
   'use strict';
-
   var APZ = window.APlusZ = window.APlusZ || {};
-  var label = function (c) { return (APZ.cities && APZ.cities.label) ? APZ.cities.label(c) : c; };
 
-  var originList = [];          // [{code,label,lc}]
-  var destByOrigin = {};        // origin -> [{code,label,lc}]
-  var ready = false;
+  var originLive = {};      // code -> true (monitored origins)
+  var destLive = {};        // code -> true (destinations of current origin)
 
-  function item(code) { var l = label(code); return { code: code, label: l, lc: (l + ' ' + code).toLowerCase() }; }
-
-  function loadOrigins() {
-    return fetch('/data/index.json', { cache: 'default' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) {
-        var origins = (j && j.origins) || [];
-        originList = origins.map(item).sort(function (a, b) { return a.label < b.label ? -1 : 1; });
-        ready = true;
-      })
-      .catch(function () { originList = []; });
+  function liveTag() {
+    var t = (APZ.i18n && APZ.i18n.t) ? APZ.i18n.t('search.live') : 'Live';
+    return '<span class="ac-live">' + t + '</span>';
   }
 
-  function loadDestinations(origin) {
-    if (destByOrigin[origin]) return Promise.resolve(destByOrigin[origin]);
-    return fetch('/data/' + origin + '.json', { cache: 'default' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .then(function (j) {
-        var routes = (j && j.routes) || {};
-        var list = Object.keys(routes).map(item).sort(function (a, b) { return a.label < b.label ? -1 : 1; });
-        destByOrigin[origin] = list;
-        return list;
-      })
-      .catch(function () { destByOrigin[origin] = []; return []; });
-  }
-
-  /* ---------- dropdown widget bound to one input ---------- */
-  function attach(input, getList, onPick) {
+  function attach(input, getLive, onPick) {
     var box = document.createElement('div');
     box.className = 'ac-menu';
     document.body.appendChild(box);
@@ -64,8 +40,9 @@
       items = matches;
       if (!matches.length) { close(); return; }
       box.innerHTML = matches.map(function (m, i) {
-        return '<div class="ac-opt' + (i === active ? ' on' : '') + '" data-i="' + i + '">' +
-          '<span class="ac-name">' + m.label + '</span><span class="ac-code">' + m.code + '</span></div>';
+        return '<div class="ac-opt' + (m.live ? ' live' : '') + (i === active ? ' on' : '') + '" data-i="' + i + '">' +
+          '<span class="ac-name">' + m.label + (m.live ? ' ' + liveTag() : '') + '</span>' +
+          '<span class="ac-code">' + m.code + '</span></div>';
       }).join('');
       box.querySelectorAll('.ac-opt').forEach(function (el) {
         el.addEventListener('mousedown', function (e) { e.preventDefault(); pick(items[+el.dataset.i]); });
@@ -80,12 +57,13 @@
       if (onPick) onPick(m.code);
     }
     function filter() {
-      input.dataset.code = '';            // typing invalidates a prior pick
-      var q = input.value.trim().toLowerCase();
-      var src = getList() || [];
-      if (!q) { render(src.slice(0, 8)); return; }
-      var hits = src.filter(function (m) { return m.lc.indexOf(q) !== -1; }).slice(0, 8);
-      render(hits);
+      input.dataset.code = '';
+      var raw = (APZ.cities ? APZ.cities.suggest(input.value, 40) : []);
+      var live = getLive() || {};
+      raw.forEach(function (m) { m.live = !!live[m.code]; });
+      // stable sort: live first, keep original (traffic) order within groups
+      raw.sort(function (a, b) { return (b.live ? 1 : 0) - (a.live ? 1 : 0); });
+      render(raw.slice(0, 8));
     }
 
     input.addEventListener('input', filter);
@@ -99,19 +77,31 @@
     });
     input.addEventListener('blur', function () {
       setTimeout(function () {
-        // if text exactly matches one option, auto-bind it; else leave unbound
         if (!input.dataset.code) {
-          var q = input.value.trim().toLowerCase();
-          var exact = (getList() || []).filter(function (m) {
-            return m.label.toLowerCase() === q || m.code.toLowerCase() === q;
-          });
-          if (exact.length === 1) { input.value = exact[0].label; input.dataset.code = exact[0].code; }
+          var code = APZ.cities ? APZ.cities.resolve(input.value) : '';
+          if (code) { input.value = APZ.cities.label(code); input.dataset.code = code; if (onPick) onPick(code); }
         }
         close();
       }, 150);
     });
     window.addEventListener('resize', function () { if (open) position(); });
-    return { setText: function (code) { input.value = label(code); input.dataset.code = code; } };
+
+    return { set: function (code) { input.value = APZ.cities ? APZ.cities.label(code) : code; input.dataset.code = code; } };
+  }
+
+  function loadOriginLive() {
+    return fetch('/data/index.json', { cache: 'default' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { (j && j.origins || []).forEach(function (c) { originLive[c] = true; }); })
+      .catch(function () {});
+  }
+
+  function loadDestLive(origin) {
+    destLive = {};
+    return fetch('/data/' + origin + '.json', { cache: 'default' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { var rt = (j && j.routes) || {}; Object.keys(rt).forEach(function (c) { destLive[c] = true; }); })
+      .catch(function () {});
   }
 
   function init() {
@@ -119,33 +109,26 @@
     var dEl = document.getElementById('destination');
     if (!oEl || !dEl) return;
 
-    loadOrigins().then(function () {
-      var curOriginDests = [];
+    var ready = Promise.all([
+      (APZ.cities && APZ.cities.load) ? APZ.cities.load() : Promise.resolve(),
+      loadOriginLive()
+    ]);
 
-      attach(oEl, function () { return originList; }, function (code) {
-        // origin chosen -> load its destinations, reset destination field
-        dEl.value = ''; dEl.dataset.code = ''; curOriginDests = [];
-        loadDestinations(code).then(function (list) { curOriginDests = list; });
+    ready.then(function () {
+      var o = attach(oEl, function () { return originLive; }, function (code) {
+        dEl.value = ''; dEl.dataset.code = '';
+        loadDestLive(code);
       });
+      var d = attach(dEl, function () { return destLive; }, null);
 
-      attach(dEl, function () { return curOriginDests; }, null);
-
-      // expose helpers for app.js (rescan / restore / swap)
       APZ.autocomplete = {
-        ready: function () { return ready; },
-        setOrigin: function (code) {
-          oEl.value = label(code); oEl.dataset.code = code;
-          return loadDestinations(code).then(function (list) { curOriginDests = list; return list; });
-        },
-        setDestination: function (code) { dEl.value = label(code); dEl.dataset.code = code; },
-        validDestForCurrent: function (code) {
-          return curOriginDests.some(function (m) { return m.code === code; });
-        }
+        ready: function () { return APZ.cities && APZ.cities.ready(); },
+        setOrigin: function (code) { o.set(code); return loadDestLive(code); },
+        setDestination: function (code) { d.set(code); }
       };
     });
   }
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
   else init();
-
 })();

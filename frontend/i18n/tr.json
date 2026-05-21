@@ -8,7 +8,8 @@
     "placeholder_destination": "Şehir veya havalimanı",
     "button": "En düşük ücreti bul",
     "swap": "Değiştir",
-    "pick": "Şehirleri önerilerden seçin."
+    "pick": "Şehirleri önerilerden seçin.",
+    "live": "Canlı"
   },
   "result": {
     "best_departure": "En uygun kalkış tarihi",
@@ -26,7 +27,9 @@
     "hotel_near": "{city} yakınında otel",
     "share_title": "Bir arkadaşına söyle, para kazandır",
     "share_sub": "Karma kazan · ayrıcalıkların kilidini aç",
-    "share_btn": "Paylaş"
+    "share_btn": "Paylaş",
+    "no_live": "Bu rota için canlı kontrol yok — yine de deneyebilirsiniz",
+    "check_live": "Canlı fiyatı gör ve rezervasyon yap"
   },
   "nav": {
     "home": "Ana sayfa",

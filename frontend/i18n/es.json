@@ -8,7 +8,8 @@
     "placeholder_destination": "Ciudad o aeropuerto",
     "button": "Buscar la tarifa más baja",
     "swap": "Intercambiar",
-    "pick": "Elige tus ciudades entre las sugerencias."
+    "pick": "Elige tus ciudades entre las sugerencias.",
+    "live": "En vivo"
   },
   "result": {
     "best_departure": "Fecha de salida óptima",
@@ -26,7 +27,9 @@
     "hotel_near": "Hotel cerca de {city}",
     "share_title": "Cuéntaselo a un amigo y hazle ahorrar",
     "share_sub": "Gana karma · desbloquea ventajas",
-    "share_btn": "Compartir"
+    "share_btn": "Compartir",
+    "no_live": "Sin seguimiento en vivo para esta ruta, pero puedes intentarlo",
+    "check_live": "Ver precio en vivo y reservar"
   },
   "nav": {
     "home": "Inicio",

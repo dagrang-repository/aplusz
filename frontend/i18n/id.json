@@ -8,7 +8,8 @@
     "placeholder_destination": "Kota atau bandara",
     "button": "Cari tarif terendah",
     "swap": "Tukar",
-    "pick": "Pilih kota dari saran."
+    "pick": "Pilih kota dari saran.",
+    "live": "Langsung"
   },
   "result": {
     "best_departure": "Tanggal keberangkatan optimal",
@@ -26,7 +27,9 @@
     "hotel_near": "Hotel dekat {city}",
     "share_title": "Beri tahu teman, bantu mereka hemat",
     "share_sub": "Dapatkan karma · buka manfaat",
-    "share_btn": "Bagikan"
+    "share_btn": "Bagikan",
+    "no_live": "Tidak ada cek langsung untuk rute ini — tapi Anda tetap bisa coba",
+    "check_live": "Lihat harga langsung & pesan"
   },
   "nav": {
     "home": "Beranda",

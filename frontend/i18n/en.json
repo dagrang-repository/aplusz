@@ -8,7 +8,8 @@
     "placeholder_destination": "City or airport",
     "button": "Find lowest fare",
     "swap": "Swap",
-    "pick": "Choose your cities from the suggestions."
+    "pick": "Choose your cities from the suggestions.",
+    "live": "Live"
   },
   "result": {
     "best_departure": "Optimal departure date",
@@ -26,7 +27,9 @@
     "hotel_near": "Hotel near {city}",
     "share_title": "Tell a friend, save them money",
     "share_sub": "Earn karma · unlock perks",
-    "share_btn": "Share"
+    "share_btn": "Share",
+    "no_live": "No live check for this route — but you can still try",
+    "check_live": "Check live price & book"
   },
   "nav": {
     "home": "Home",

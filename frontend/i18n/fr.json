@@ -8,7 +8,8 @@
     "placeholder_destination": "Ville ou aéroport",
     "button": "Trouver le tarif le plus bas",
     "swap": "Inverser",
-    "pick": "Choisissez vos villes dans les suggestions."
+    "pick": "Choisissez vos villes dans les suggestions.",
+    "live": "En direct"
   },
   "result": {
     "best_departure": "Date de départ optimale",
@@ -26,7 +27,9 @@
     "hotel_near": "Hôtel près de {city}",
     "share_title": "Parlez-en à un ami, faites-lui économiser",
     "share_sub": "Gagnez du karma · débloquez des avantages",
-    "share_btn": "Partager"
+    "share_btn": "Partager",
+    "no_live": "Pas de suivi en direct pour cet itinéraire — mais vous pouvez essayer",
+    "check_live": "Voir le prix en direct et réserver"
   },
   "nav": {
     "home": "Accueil",

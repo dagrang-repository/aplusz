@@ -8,7 +8,8 @@
     "placeholder_destination": "都市または空港",
     "button": "最安値を探す",
     "swap": "入れ替え",
-    "pick": "候補から都市を選んでください。"
+    "pick": "候補から都市を選んでください。",
+    "live": "ライブ"
   },
   "result": {
     "best_departure": "最適な出発日",
@@ -26,7 +27,9 @@
     "hotel_near": "{city}付近のホテル",
     "share_title": "友達に教えて節約させよう",
     "share_sub": "カルマを獲得 · 特典を解放",
-    "share_btn": "シェア"
+    "share_btn": "シェア",
+    "no_live": "この路線のライブ確認はありません — でも試せます",
+    "check_live": "ライブ価格を確認して予約"
   },
   "nav": {
     "home": "ホーム",

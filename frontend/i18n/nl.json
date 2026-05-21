@@ -8,7 +8,8 @@
     "placeholder_destination": "Stad of luchthaven",
     "button": "Laagste tarief vinden",
     "swap": "Wisselen",
-    "pick": "Kies je steden uit de suggesties."
+    "pick": "Kies je steden uit de suggesties.",
+    "live": "Live"
   },
   "result": {
     "best_departure": "Optimale vertrekdatum",
@@ -26,7 +27,9 @@
     "hotel_near": "Hotel bij {city}",
     "share_title": "Vertel een vriend, laat hem besparen",
     "share_sub": "Verdien karma · ontgrendel voordelen",
-    "share_btn": "Delen"
+    "share_btn": "Delen",
+    "no_live": "Geen live check voor deze route — je kunt het wel proberen",
+    "check_live": "Live prijs bekijken & boeken"
   },
   "nav": {
     "home": "Home",

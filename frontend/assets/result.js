@@ -21,6 +21,19 @@
     var ms = new Date(iso).getTime() - Date.now();
     return Math.max(0, Math.round(ms / 86400000));
   }
+  function cityLabel(code) {
+    return (window.APlusZ.cities && window.APlusZ.cities.label)
+      ? window.APlusZ.cities.label(code) : code;
+  }
+  function saveRoute(d) {
+    try {
+      var saved = JSON.parse(localStorage.getItem('aplusz-saved-routes') || '[]');
+      var key = d.origin + '-' + d.destination;
+      saved = saved.filter(function (r) { return (r.origin + '-' + r.destination) !== key; });
+      saved.unshift({ origin: d.origin, destination: d.destination, lastPrice: d.priceFormatted || '', savedAt: Date.now() });
+      localStorage.setItem('aplusz-saved-routes', JSON.stringify(saved.slice(0, 5)));
+    } catch (e) {}
+  }
 
   function planHint(t) {
     var tier = (window.APlusZ.billing && window.APlusZ.billing.tier) ? window.APlusZ.billing.tier() : 'free';
@@ -87,6 +100,24 @@
     var box = document.getElementById('result');
     if (!box) return;
 
+    // ---- not live-monitored: still fully bookable (affiliate) ----
+    if (d.noData) {
+      box.innerHTML = [
+        '<article class="result-card result-nolive">',
+        '  <div class="route-line">',
+        '    <span class="city">' + cityLabel(d.origin) + '</span>',
+        '    <span class="arrow">→</span>',
+        '    <span class="city">' + cityLabel(d.destination) + '</span>',
+        '  </div>',
+        '  <div class="nolive-msg">' + t('result.no_live') + '</div>',
+        '  <a class="cta-book" href="' + d.book + '" target="_blank" rel="noopener nofollow">' + t('result.check_live') + '</a>',
+        '</article>'
+      ].join('');
+      box.classList.remove('hidden');
+      saveRoute(d);
+      return;
+    }
+
     d.priceFormatted = window.APlusZ.detect.formatPrice(d.priceBase, d.currency);
     var daysOut = daysFromNow(d.bestDeparture);
     var aff = affiliates(d);
@@ -95,9 +126,9 @@
     box.innerHTML = [
       '<article class="result-card">',
       '  <div class="route-line">',
-      '    <span class="city">' + d.origin + '</span>',
+      '    <span class="city">' + cityLabel(d.origin) + '</span>',
       '    <span class="arrow">→</span>',
-      '    <span class="city">' + d.destination + '</span>',
+      '    <span class="city">' + cityLabel(d.destination) + '</span>',
       '  </div>',
 
       '  <div class="dates">',
@@ -166,13 +197,7 @@
     });
 
     // Save route locally
-    try {
-      var saved = JSON.parse(localStorage.getItem('aplusz-saved-routes') || '[]');
-      var key = d.origin + '-' + d.destination;
-      saved = saved.filter(function (r) { return (r.origin + '-' + r.destination) !== key; });
-      saved.unshift({ origin: d.origin, destination: d.destination, lastPrice: d.priceFormatted, savedAt: Date.now() });
-      localStorage.setItem('aplusz-saved-routes', JSON.stringify(saved.slice(0, 5)));
-    } catch (e) {}
+    saveRoute(d);
   }
 
   function renderEmpty(msg) {

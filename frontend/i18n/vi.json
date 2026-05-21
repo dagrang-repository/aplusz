@@ -8,7 +8,8 @@
     "placeholder_destination": "Thành phố hoặc sân bay",
     "button": "Tìm giá thấp nhất",
     "swap": "Hoán đổi",
-    "pick": "Chọn thành phố từ gợi ý."
+    "pick": "Chọn thành phố từ gợi ý.",
+    "live": "Trực tiếp"
   },
   "result": {
     "best_departure": "Ngày khởi hành tối ưu",
@@ -26,7 +27,9 @@
     "hotel_near": "Khách sạn gần {city}",
     "share_title": "Mách bạn bè, giúp họ tiết kiệm",
     "share_sub": "Kiếm karma · mở khóa ưu đãi",
-    "share_btn": "Chia sẻ"
+    "share_btn": "Chia sẻ",
+    "no_live": "Không có kiểm tra trực tiếp cho tuyến này — nhưng bạn vẫn có thể thử",
+    "check_live": "Xem giá trực tiếp & đặt vé"
   },
   "nav": {
     "home": "Trang chủ",

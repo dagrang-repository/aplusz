@@ -8,7 +8,8 @@
     "placeholder_destination": "Miasto lub lotnisko",
     "button": "Znajdź najniższą cenę",
     "swap": "Zamień",
-    "pick": "Wybierz miasta z podpowiedzi."
+    "pick": "Wybierz miasta z podpowiedzi.",
+    "live": "Na żywo"
   },
   "result": {
     "best_departure": "Optymalna data wylotu",
@@ -26,7 +27,9 @@
     "hotel_near": "Hotel w pobliżu {city}",
     "share_title": "Powiedz znajomemu, pomóż mu zaoszczędzić",
     "share_sub": "Zdobywaj karmę · odblokuj korzyści",
-    "share_btn": "Udostępnij"
+    "share_btn": "Udostępnij",
+    "no_live": "Brak monitoringu na żywo dla tej trasy — ale możesz spróbować",
+    "check_live": "Sprawdź cenę na żywo i zarezerwuj"
   },
   "nav": {
     "home": "Strona główna",

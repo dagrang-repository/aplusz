@@ -8,7 +8,8 @@
     "placeholder_destination": "Stadt oder Flughafen",
     "button": "Günstigsten Tarif finden",
     "swap": "Tauschen",
-    "pick": "Wähle deine Städte aus den Vorschlägen."
+    "pick": "Wähle deine Städte aus den Vorschlägen.",
+    "live": "Live"
   },
   "result": {
     "best_departure": "Optimales Abflugdatum",
@@ -26,7 +27,9 @@
     "hotel_near": "Hotel in der Nähe von {city}",
     "share_title": "Sag's einem Freund, spare ihm Geld",
     "share_sub": "Karma sammeln · Vorteile freischalten",
-    "share_btn": "Teilen"
+    "share_btn": "Teilen",
+    "no_live": "Keine Live-Prüfung für diese Route — du kannst es trotzdem versuchen",
+    "check_live": "Live-Preis prüfen & buchen"
   },
   "nav": {
     "home": "Start",

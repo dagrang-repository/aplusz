@@ -8,7 +8,8 @@
     "placeholder_destination": "城市或机场",
     "button": "查找最低票价",
     "swap": "交换",
-    "pick": "请从建议中选择城市。"
+    "pick": "请从建议中选择城市。",
+    "live": "实时"
   },
   "result": {
     "best_departure": "最佳出发日期",
@@ -26,7 +27,9 @@
     "hotel_near": "{city}附近的酒店",
     "share_title": "告诉朋友，帮他省钱",
     "share_sub": "赚取积分 · 解锁福利",
-    "share_btn": "分享"
+    "share_btn": "分享",
+    "no_live": "此航线暂无实时查询 — 但您仍可尝试",
+    "check_live": "查看实时价格并预订"
   },
   "nav": {
     "home": "首页",

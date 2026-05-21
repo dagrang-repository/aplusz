@@ -52,14 +52,28 @@
     };
   }
 
+  var MARKER = '531148';
+  function ddmm(iso) { return (iso && iso.length >= 10) ? iso.slice(8, 10) + iso.slice(5, 7) : ''; }
+  function bookLink(o, d, dep) {
+    if (!dep) dep = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10); // default ~30d out
+    return 'https://www.aviasales.com/search/' + o + ddmm(dep) + d + '1?marker=' + MARKER;
+  }
+
   function search(origin, dest) {
     if (!origin || !dest) return Promise.resolve(null);
     var o = resolve(origin), d = resolve(dest);
     if (!o || !d || o === d) return Promise.resolve(null);
     return loadChunk(o).then(function (routes) {
-      if (routes && routes[d]) return routes[d];
+      if (routes && routes[d]) {
+        var row = routes[d];
+        row.monitored = true;
+        if (!row.book) row.book = bookLink(o, d, row.bestDeparture);
+        return row;
+      }
       var devDemo = window.APlusZ.config && window.APlusZ.config.allowDemo === true;
-      return devDemo ? demo(o, d) : null;   // honest empty-state in production
+      if (devDemo) return demo(o, d);
+      // not live-monitored — still fully bookable (affiliate, marker 531148)
+      return { origin: o, destination: d, monitored: false, noData: true, book: bookLink(o, d) };
     });
   }
 
