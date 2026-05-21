@@ -200,15 +200,17 @@ a:hover { text-decoration: underline; }
 /* ---------- FOOTER ---------- */
 .footer {
   text-align: center;
-  padding: clamp(var(--sp-6), 6vw, var(--sp-12)) clamp(var(--sp-4), 5vw, var(--sp-8));
+  padding: clamp(var(--sp-6), 6vw, var(--sp-12)) var(--sp-3);
   color: var(--text-dim);
   font-size: var(--fs-sm);
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
   align-items: center;
   gap: clamp(var(--sp-2), 2.5vw, var(--sp-5));
+  white-space: nowrap;
 }
+.footer > * { flex-shrink: 0; }
 
 /* ============================================================
    TABLET (≥720px)
@@ -349,4 +351,9 @@ a:hover { text-decoration: underline; }
   color: var(--text-dim);
   font-size: 0.85em;
   margin-left: 4px;
+}
+
+/* Keep footer on one line on very narrow phones */
+@media (max-width: 360px) {
+  .footer { font-size: var(--fs-xs); gap: var(--sp-2); }
 }
