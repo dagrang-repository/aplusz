@@ -1,0 +1,51 @@
+/* ============================================================
+   APlusZ — Autocomplete styles
+   File: frontend/assets/autocomplete.css
+   Save: D:\Destop\AplusZ\frontend\assets\autocomplete.css
+   ============================================================ */
+
+.ac-menu {
+  position: fixed;
+  z-index: 9998;
+  max-height: 320px;
+  overflow-y: auto;
+  background: var(--bg-elevated, #11192a);
+  border: 1px solid var(--border, rgba(255,255,255,.12));
+  border-radius: var(--r-md, 14px);
+  box-shadow: var(--shadow-lg, 0 24px 60px rgba(0,0,0,.5));
+  backdrop-filter: blur(14px);
+  padding: 6px;
+  opacity: 0;
+  transform: translateY(-6px);
+  pointer-events: none;
+  transition: opacity .15s ease, transform .15s ease;
+}
+.ac-menu.open { opacity: 1; transform: none; pointer-events: auto; }
+
+.ac-opt {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 9px;
+  cursor: pointer;
+}
+.ac-opt:hover, .ac-opt.on { background: var(--surface, rgba(255,255,255,.07)); }
+.ac-name { color: var(--text, #e8eef7); font-size: .95rem; font-weight: 500; }
+.ac-code {
+  color: var(--accent, #f5b942);
+  font-size: .78rem;
+  font-weight: 700;
+  letter-spacing: .04em;
+  flex-shrink: 0;
+}
+
+/* invalid-input hint on the search button area */
+.search-hint {
+  margin-top: 8px;
+  font-size: .85rem;
+  color: #fca5a5;
+  text-align: center;
+}
+html[dir="rtl"] .ac-opt { flex-direction: row-reverse; }

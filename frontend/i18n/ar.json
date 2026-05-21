@@ -7,7 +7,8 @@
     "placeholder_origin": "مدينة أو مطار",
     "placeholder_destination": "مدينة أو مطار",
     "button": "ابحث عن أقل سعر",
-    "swap": "تبديل"
+    "swap": "تبديل",
+    "pick": "اختر مدنك من الاقتراحات."
   },
   "result": {
     "best_departure": "تاريخ المغادرة الأمثل",

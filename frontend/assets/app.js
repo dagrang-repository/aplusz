@@ -96,20 +96,48 @@
     if (window.APlusZ.profile) window.APlusZ.profile.open();
   });
 
-  /* ---------- Swap ---------- */
+  /* ---------- Swap (values + bound codes) ---------- */
   document.getElementById('swap').addEventListener('click', function () {
     var o = document.getElementById('origin');
     var d = document.getElementById('destination');
-    var tmp = o.value;
-    o.value = d.value;
-    d.value = tmp;
+    var oCode = o.dataset.code || '', dCode = d.dataset.code || '';
+    var tv = o.value; o.value = d.value; d.value = tv;
+    o.dataset.code = dCode; d.dataset.code = oCode;
+    // destination validity depends on origin → reload list for the new origin
+    if (window.APlusZ.autocomplete && dCode) {
+      window.APlusZ.autocomplete.setOrigin(dCode).then(function () {
+        if (oCode && window.APlusZ.autocomplete.validDestForCurrent(oCode)) {
+          window.APlusZ.autocomplete.setDestination(oCode);
+        } else { d.value = ''; d.dataset.code = ''; }
+      });
+    }
   });
+
+  /* ---------- search-hint helper ---------- */
+  function showHint(msg) {
+    var card = document.querySelector('.search-card');
+    if (!card) return;
+    var h = document.getElementById('search-hint');
+    if (!h) {
+      h = document.createElement('div');
+      h.id = 'search-hint'; h.className = 'search-hint';
+      card.parentNode.insertBefore(h, card.nextSibling);
+    }
+    h.textContent = msg;
+  }
+  function clearHint() { var h = document.getElementById('search-hint'); if (h) h.textContent = ''; }
 
   /* ---------- Search submit ---------- */
   function runSearch() {
-    var origin = document.getElementById('origin').value.trim().toUpperCase();
-    var dest   = document.getElementById('destination').value.trim().toUpperCase();
-    if (!origin || !dest) return;
+    var oEl = document.getElementById('origin');
+    var dEl = document.getElementById('destination');
+    var origin = oEl.dataset.code || '';
+    var dest   = dEl.dataset.code || '';
+    if (!origin || !dest) {
+      showHint(window.APlusZ.i18n.t('search.pick'));   // "choose cities from the list"
+      return;
+    }
+    clearHint();
 
     var btn = document.getElementById('search-btn');
     btn.disabled = true;
@@ -134,29 +162,52 @@
 
   document.getElementById('search-btn').addEventListener('click', runSearch);
 
+  /* Enter searches only once both cities are picked (lets autocomplete bind first) */
   ['origin', 'destination'].forEach(function (id) {
     document.getElementById(id).addEventListener('keydown', function (e) {
-      if (e.key === 'Enter') runSearch();
+      if (e.key !== 'Enter') return;
+      setTimeout(function () {
+        var o = document.getElementById('origin').dataset.code;
+        var d = document.getElementById('destination').dataset.code;
+        if (o && d) runSearch();
+      }, 0);
     });
   });
 
   /* ---------- Rescan deep-link + restore last route ---------- */
+  function whenAutocompleteReady(fn, tries) {
+    tries = tries || 0;
+    if (window.APlusZ.autocomplete && window.APlusZ.autocomplete.ready && window.APlusZ.autocomplete.ready()) return fn();
+    if (tries > 40) return;                       // ~6s max
+    setTimeout(function () { whenAutocompleteReady(fn, tries + 1); }, 150);
+  }
+
   (function () {
     var qp = new URLSearchParams(window.location.search);
     var o = qp.get('o'), d = qp.get('d');
+    var resolve = (window.APlusZ.cities && window.APlusZ.cities.resolve) || function (x) { return (x || '').toUpperCase(); };
+
     if (o || d) {
-      if (o) document.getElementById('origin').value = o.toUpperCase();
-      if (d) document.getElementById('destination').value = d.toUpperCase();
-      if (o && d) runSearch();
+      whenAutocompleteReady(function () {
+        var oc = resolve(o), dc = resolve(d);
+        var ac = window.APlusZ.autocomplete;
+        if (oc) ac.setOrigin(oc).then(function () {
+          if (dc) ac.setDestination(dc);
+          if (oc && dc) runSearch();
+        });
+      });
       return;
     }
-    /* no rescan params → bring back the last route the user searched
-       (fixes "typed cities lost on refresh"); inputs only, no auto-search */
+    /* no rescan params → restore last searched route (codes) into the fields */
     try {
       var saved = JSON.parse(localStorage.getItem('aplusz-saved-routes') || '[]');
       if (saved.length) {
-        document.getElementById('origin').value = saved[0].origin || '';
-        document.getElementById('destination').value = saved[0].destination || '';
+        whenAutocompleteReady(function () {
+          var ac = window.APlusZ.autocomplete;
+          if (saved[0].origin) ac.setOrigin(saved[0].origin).then(function () {
+            if (saved[0].destination) ac.setDestination(saved[0].destination);
+          });
+        });
       }
     } catch (e) {}
   })();

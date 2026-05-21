@@ -7,7 +7,8 @@
     "placeholder_origin": "도시 또는 공항",
     "placeholder_destination": "도시 또는 공항",
     "button": "최저가 찾기",
-    "swap": "교체"
+    "swap": "교체",
+    "pick": "추천 목록에서 도시를 선택하세요."
   },
   "result": {
     "best_departure": "최적 출발일",

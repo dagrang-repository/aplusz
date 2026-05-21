@@ -7,7 +7,8 @@
     "placeholder_origin": "Miasto lub lotnisko",
     "placeholder_destination": "Miasto lub lotnisko",
     "button": "Znajdź najniższą cenę",
-    "swap": "Zamień"
+    "swap": "Zamień",
+    "pick": "Wybierz miasta z podpowiedzi."
   },
   "result": {
     "best_departure": "Optymalna data wylotu",

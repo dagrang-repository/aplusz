@@ -7,7 +7,8 @@
     "placeholder_origin": "城市或机场",
     "placeholder_destination": "城市或机场",
     "button": "查找最低票价",
-    "swap": "交换"
+    "swap": "交换",
+    "pick": "请从建议中选择城市。"
   },
   "result": {
     "best_departure": "最佳出发日期",

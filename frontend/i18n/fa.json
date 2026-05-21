@@ -7,7 +7,8 @@
     "placeholder_origin": "شهر یا فرودگاه",
     "placeholder_destination": "شهر یا فرودگاه",
     "button": "یافتن کمترین قیمت",
-    "swap": "جابه‌جایی"
+    "swap": "جابه‌جایی",
+    "pick": "شهرها را از پیشنهادها انتخاب کنید."
   },
   "result": {
     "best_departure": "بهترین تاریخ پرواز",

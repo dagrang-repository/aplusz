@@ -7,7 +7,8 @@
     "placeholder_origin": "Ville ou aéroport",
     "placeholder_destination": "Ville ou aéroport",
     "button": "Trouver le tarif le plus bas",
-    "swap": "Inverser"
+    "swap": "Inverser",
+    "pick": "Choisissez vos villes dans les suggestions."
   },
   "result": {
     "best_departure": "Date de départ optimale",

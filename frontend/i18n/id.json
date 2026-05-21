@@ -7,7 +7,8 @@
     "placeholder_origin": "Kota atau bandara",
     "placeholder_destination": "Kota atau bandara",
     "button": "Cari tarif terendah",
-    "swap": "Tukar"
+    "swap": "Tukar",
+    "pick": "Pilih kota dari saran."
   },
   "result": {
     "best_departure": "Tanggal keberangkatan optimal",

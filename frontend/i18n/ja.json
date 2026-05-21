@@ -7,7 +7,8 @@
     "placeholder_origin": "都市または空港",
     "placeholder_destination": "都市または空港",
     "button": "最安値を探す",
-    "swap": "入れ替え"
+    "swap": "入れ替え",
+    "pick": "候補から都市を選んでください。"
   },
   "result": {
     "best_departure": "最適な出発日",

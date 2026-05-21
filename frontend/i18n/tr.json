@@ -7,7 +7,8 @@
     "placeholder_origin": "Şehir veya havalimanı",
     "placeholder_destination": "Şehir veya havalimanı",
     "button": "En düşük ücreti bul",
-    "swap": "Değiştir"
+    "swap": "Değiştir",
+    "pick": "Şehirleri önerilerden seçin."
   },
   "result": {
     "best_departure": "En uygun kalkış tarihi",

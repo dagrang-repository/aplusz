@@ -7,7 +7,8 @@
     "placeholder_origin": "शहर या हवाई अड्डा",
     "placeholder_destination": "शहर या हवाई अड्डा",
     "button": "सबसे कम किराया खोजें",
-    "swap": "अदला-बदली"
+    "swap": "अदला-बदली",
+    "pick": "सुझावों में से अपने शहर चुनें।"
   },
   "result": {
     "best_departure": "सर्वोत्तम प्रस्थान तिथि",

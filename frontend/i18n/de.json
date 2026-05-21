@@ -7,7 +7,8 @@
     "placeholder_origin": "Stadt oder Flughafen",
     "placeholder_destination": "Stadt oder Flughafen",
     "button": "Günstigsten Tarif finden",
-    "swap": "Tauschen"
+    "swap": "Tauschen",
+    "pick": "Wähle deine Städte aus den Vorschlägen."
   },
   "result": {
     "best_departure": "Optimales Abflugdatum",

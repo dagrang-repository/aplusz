@@ -7,7 +7,8 @@
     "placeholder_origin": "Thành phố hoặc sân bay",
     "placeholder_destination": "Thành phố hoặc sân bay",
     "button": "Tìm giá thấp nhất",
-    "swap": "Hoán đổi"
+    "swap": "Hoán đổi",
+    "pick": "Chọn thành phố từ gợi ý."
   },
   "result": {
     "best_departure": "Ngày khởi hành tối ưu",

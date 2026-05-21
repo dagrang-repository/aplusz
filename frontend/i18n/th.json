@@ -7,7 +7,8 @@
     "placeholder_origin": "เมืองหรือสนามบิน",
     "placeholder_destination": "เมืองหรือสนามบิน",
     "button": "ค้นหาราคาต่ำสุด",
-    "swap": "สลับ"
+    "swap": "สลับ",
+    "pick": "เลือกเมืองจากรายการที่แนะนำ"
   },
   "result": {
     "best_departure": "วันออกเดินทางที่ดีที่สุด",
