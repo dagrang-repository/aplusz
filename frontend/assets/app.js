@@ -140,13 +140,25 @@
     });
   });
 
-  /* ---------- Rescan deep-link (?o=ORIGIN&d=DEST from alert emails) ---------- */
+  /* ---------- Rescan deep-link + restore last route ---------- */
   (function () {
     var qp = new URLSearchParams(window.location.search);
     var o = qp.get('o'), d = qp.get('d');
-    if (o) document.getElementById('origin').value = o.toUpperCase();
-    if (d) document.getElementById('destination').value = d.toUpperCase();
-    if (o && d) runSearch();
+    if (o || d) {
+      if (o) document.getElementById('origin').value = o.toUpperCase();
+      if (d) document.getElementById('destination').value = d.toUpperCase();
+      if (o && d) runSearch();
+      return;
+    }
+    /* no rescan params → bring back the last route the user searched
+       (fixes "typed cities lost on refresh"); inputs only, no auto-search */
+    try {
+      var saved = JSON.parse(localStorage.getItem('aplusz-saved-routes') || '[]');
+      if (saved.length) {
+        document.getElementById('origin').value = saved[0].origin || '';
+        document.getElementById('destination').value = saved[0].destination || '';
+      }
+    } catch (e) {}
   })();
 
 })();

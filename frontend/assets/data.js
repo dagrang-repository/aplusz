@@ -4,8 +4,10 @@
    Save: D:\Destop\AplusZ\frontend\assets\data.js
 
    Reads the static JSON committed weekly by GitHub Actions.
-   Falls back to demo data when /data/routes.json is missing
-   (e.g. before the first cron run).
+   Shows ONLY real fetched fares. A route with no data returns null
+   so the UI shows an honest empty-state (no fabricated prices).
+   A demo generator exists only for local dev behind
+   window.APlusZ.config.allowDemo === true (never set in production).
    ============================================================ */
 
 (function () {
@@ -67,10 +69,17 @@
   }
 
   /* ---------- Public API ---------- */
+  /* TRUE TO THE PROMISE: only real, fetched fares are shown.
+     If a route isn't in routes.json, return null → the UI shows the
+     "no data for this route yet" empty-state. The demo generator is
+     kept ONLY for local testing, behind an explicit opt-in flag:
+       window.APlusZ.config.allowDemo = true   (never set in production) */
   function search(origin, dest) {
     if (!origin || !dest) return Promise.resolve(null);
     return lookup(origin, dest).then(function (row) {
-      return row || demo(origin, dest);
+      if (row) return row;
+      var devDemo = window.APlusZ.config && window.APlusZ.config.allowDemo === true;
+      return devDemo ? demo(origin, dest) : null;
     });
   }
 
