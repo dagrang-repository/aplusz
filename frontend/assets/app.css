@@ -142,9 +142,12 @@ a:hover { text-decoration: underline; }
 .field input::placeholder { color: var(--text-dim); }
 
 .swap-btn {
-  position: absolute;
-  left: 50%; top: 50%;
-  transform: translate(-50%, -50%) rotate(0deg);
+  /* Mobile: sits in normal flow ON the seam between the two stacked
+     fields (negative margins tuck it into the gaps so it floats over
+     the divider, horizontally centered — never covers field text). */
+  position: static;
+  align-self: center;
+  margin: calc(-1 * var(--sp-2) - 4px) 0;
   width: 44px; height: 44px;
   border-radius: var(--r-pill);
   background: var(--accent);
@@ -155,7 +158,7 @@ a:hover { text-decoration: underline; }
   transition: transform var(--dur-base) var(--ease-spring);
   z-index: 2;
 }
-.swap-btn:hover { transform: translate(-50%, -50%) rotate(180deg); }
+.swap-btn:hover { transform: rotate(180deg); }
 
 .primary-btn {
   background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
@@ -197,12 +200,14 @@ a:hover { text-decoration: underline; }
 /* ---------- FOOTER ---------- */
 .footer {
   text-align: center;
-  padding: var(--sp-8) var(--sp-4);
+  padding: clamp(var(--sp-6), 6vw, var(--sp-12)) clamp(var(--sp-4), 5vw, var(--sp-8));
   color: var(--text-dim);
   font-size: var(--fs-sm);
   display: flex;
+  flex-wrap: wrap;
   justify-content: center;
-  gap: var(--sp-2);
+  align-items: center;
+  gap: clamp(var(--sp-2), 2.5vw, var(--sp-5));
 }
 
 /* ============================================================
@@ -248,6 +253,7 @@ a:hover { text-decoration: underline; }
     transform: rotate(90deg);
     align-self: center;
     flex-shrink: 0;
+    margin: 0;
   }
   .swap-btn:hover { transform: rotate(270deg); }
   .primary-btn {
