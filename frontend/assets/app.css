@@ -198,6 +198,9 @@ a:hover { text-decoration: underline; }
 }
 
 /* ---------- FOOTER ---------- */
+/* MOBILE: explicit 2 rows.
+   Row 1 = "How it works" (centered, full width).
+   Row 2 = Legal + © (centered, side by side). */
 .footer {
   text-align: center;
   padding: clamp(var(--sp-6), 6vw, var(--sp-12)) var(--sp-3);
@@ -207,28 +210,22 @@ a:hover { text-decoration: underline; }
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
-  gap: var(--sp-2) var(--sp-3);
+  gap: var(--sp-1) var(--sp-3);
 }
-.footer > * { flex-shrink: 0; }
+/* the injected separators add nothing in the 2-row layout */
+.footer .footer-sep { display: none; }
 
-/* separators: thin vertical divider; on MOBILE hide entirely
-   (How it works sits alone on the top row, Legal+© on bottom) */
-.footer .footer-sep {
-  width: 1px;
-  height: 1em;
-  background: var(--border, currentColor);
-  opacity: 0.4;
-  display: none;
-}
-
-/* MOBILE (default): "How it works" forced to its own centered top row;
-   Legal + © sit centered on the row below. */
+/* "How it works" → own full-width top row */
 .footer .hiw-link {
   order: -1;
-  flex-basis: 100%;
+  flex: 0 0 100%;
+  width: 100%;
   text-align: center;
-  margin-bottom: var(--sp-1);
+  margin-bottom: var(--sp-2);
 }
+/* Legal + © → share the bottom row, centered */
+.footer > a[href*="legal"],
+.footer > span { order: 0; }
 
 /* ============================================================
    TABLET (≥720px)
@@ -240,7 +237,8 @@ a:hover { text-decoration: underline; }
   .footer { flex-wrap: nowrap; gap: var(--sp-4); }
   .footer .hiw-link {
     order: 0;
-    flex-basis: auto;
+    flex: 0 0 auto;
+    width: auto;
     margin-bottom: 0;
   }
 
