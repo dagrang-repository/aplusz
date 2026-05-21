@@ -59,21 +59,20 @@ html[dir="rtl"] .ac-opt { flex-direction: row-reverse; }
   line-height: 1.5;
 }
 
-/* live-monitored rows: pronounced accent + tag */
-.ac-opt.live .ac-name { color: var(--accent, #f5b942); font-weight: 600; }
+/* live-monitored rows: readable light-accent + tag */
+.ac-opt.live .ac-name { color: #ffffff; font-weight: 600; }
+.ac-opt.live .ac-code { color: #7fd1ff; }
 .ac-opt .ac-live {
   display: inline-block;
   margin-left: 8px;
-  padding: 1px 7px;
-  font-size: .64rem;
+  padding: 1px 8px;
+  font-size: .62rem;
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: #0b1220;
-  background: var(--accent, #f5b942);
+  color: #06283d;                /* dark text */
+  background: #bfe6ff;           /* light blue pill */
   border-radius: 999px;
   vertical-align: middle;
 }
-.ac-opt.live .ac-code { color: var(--accent, #f5b942); }
-/* subtle divider feel: non-live rows slightly muted */
 .ac-opt:not(.live) .ac-name { color: var(--text, #e8eef7); }
