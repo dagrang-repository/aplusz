@@ -71,6 +71,21 @@ async function readToken(env, token) {
   return p; // { e, t, x }
 }
 
+/* ---------- admin session cookie validation ---------- */
+async function validAdminCookie(env, req) {
+  const cookie = req.headers.get('cookie') || '';
+  const m = cookie.match(/(?:^|;\s*)az_admin=([^;]+)/);
+  if (!m) return false;
+  const tok = m[1];
+  if (tok.indexOf('.') === -1) return false;
+  const [body, sig] = tok.split('.');
+  const expect = b64url(await hmac(env.SIGNING_SECRET, 'admin.' + body));
+  if (!timingSafe(sig, expect)) return false;
+  let p; try { p = JSON.parse(fromB64url(body)); } catch { return false; }
+  if (!p.x || p.x < Math.floor(Date.now() / 1000)) return false;
+  return true;
+}
+
 /* ---------- Stripe REST (no SDK; fetch + form encoding) ---------- */
 async function stripe(env, path, method = 'GET', form = null) {
   const opt = {
@@ -274,10 +289,70 @@ export default {
         return json({ received: true }, 200, origin);
       }
 
+      /* ---- admin pause page (one-tap, password-protected) ---- */
+      if (url.pathname === '/admin' && req.method === 'GET') {
+        return new Response(adminPage(), {
+          status: 200,
+          headers: { 'content-type': 'text/html; charset=utf-8' }
+        });
+      }
+
+      /* ---- admin session: password → 90-day signed cookie ---- */
+      if (url.pathname === '/admin/session' && req.method === 'POST') {
+        const { pass } = await req.json();
+        if (pass !== env.ADMIN_PASS) return json({ error: 'forbidden' }, 403, origin);
+        const exp = Math.floor(Date.now() / 1000) + 90 * 86400;
+        const body = b64urlStr(JSON.stringify({ a: 1, x: exp }));
+        const sig = b64url(await hmac(env.SIGNING_SECRET, 'admin.' + body));
+        const tok = body + '.' + sig;
+        return new Response(JSON.stringify({ ok: true }), {
+          status: 200,
+          headers: {
+            'content-type': 'application/json',
+            ...cors(origin),
+            'set-cookie': 'az_admin=' + tok + '; Path=/; Max-Age=' + (90 * 86400) +
+              '; HttpOnly; Secure; SameSite=Strict'
+          }
+        });
+      }
+
+      /* ---- admin logout: clear cookie ---- */
+      if (url.pathname === '/admin/logout' && req.method === 'POST') {
+        return new Response(JSON.stringify({ ok: true }), {
+          status: 200,
+          headers: {
+            'content-type': 'application/json',
+            ...cors(origin),
+            'set-cookie': 'az_admin=; Path=/; Max-Age=0; HttpOnly; Secure; SameSite=Strict'
+          }
+        });
+      }
+
+      /* ---- admin live status (drives the page state) ---- */
+      if (url.pathname === '/admin/status' && req.method === 'POST') {
+        const reqBody = await req.json().catch(() => ({}));
+        const ok = (reqBody.pass && reqBody.pass === env.ADMIN_PASS)
+          || await validAdminCookie(env, req);
+        if (!ok) return json({ error: 'forbidden' }, 403, origin);
+        const manual = (await env.AZKV.get('pause:manual')) === '1';
+        const cents = parseInt((await env.AZKV.get('rev:' + year())) || '0', 10);
+        const auto = cents >= CAP_CENTS;
+        return json({
+          paused: manual || auto,
+          manual, auto,
+          revenue: (cents / 100),
+          cap: (CAP_CENTS / 100),
+          year: year()
+        }, 200, origin);
+      }
+
       /* ---- manual pause / resume (owner only) ---- */
       if (url.pathname === '/admin/pause' && req.method === 'POST') {
-        const { pass, action } = await req.json();
-        if (pass !== env.ADMIN_PASS) return json({ error: 'forbidden' }, 403, origin);
+        const reqBody = await req.json().catch(() => ({}));
+        const ok = (reqBody.pass && reqBody.pass === env.ADMIN_PASS)
+          || await validAdminCookie(env, req);
+        if (!ok) return json({ error: 'forbidden' }, 403, origin);
+        const action = reqBody.action;
         if (action === 'on') { await env.AZKV.put('pause:manual', '1'); await pauseAllSubs(env, 'manual'); }
         else { await env.AZKV.delete('pause:manual'); }
         return json({ paused: action === 'on' }, 200, origin);
@@ -297,4 +372,158 @@ async function verifyStripeSig(env, payload, header) {
   const expectBuf = await hmac(env.STRIPE_WEBHOOK_SECRET, parts.t + '.' + payload);
   const expect = [...new Uint8Array(expectBuf)].map(b => b.toString(16).padStart(2, '0')).join('');
   return timingSafe(parts.v1, expect);
+}
+
+/* ============================================================
+   ADMIN PAUSE PAGE  (GET /admin)
+   One-tap pause/resume. Password-gated client-side; every action
+   re-verifies ADMIN_PASS server-side at /admin/status & /admin/pause.
+   Self-contained HTML (no external assets). Posh minimalist.
+   ============================================================ */
+function adminPage() {
+  return `<!doctype html><html lang="en"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>A+Z · Control</title>
+<style>
+:root{--bg:#0b1020;--card:#121a30;--ink:#eef2ff;--mut:#8a97b8;--line:#23304f;
+--gold:#f5b942;--green:#34d399;--red:#fb7185;--blue:#60a5fa}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:radial-gradient(1200px 600px at 70% -10%,#16203c 0,var(--bg) 60%);
+color:var(--ink);font-family:ui-sans-serif,-apple-system,Segoe UI,Roboto,sans-serif;
+min-height:100vh;display:grid;place-items:center;padding:24px;letter-spacing:.2px}
+.wrap{width:100%;max-width:420px}
+.brand{text-align:center;margin-bottom:22px}
+.brand b{font-size:1.5rem;font-weight:800}.brand b span{color:var(--gold)}
+.brand p{color:var(--mut);font-size:.82rem;margin-top:4px}
+.card{background:linear-gradient(180deg,var(--card),#0f1730);border:1px solid var(--line);
+border-radius:20px;padding:26px;box-shadow:0 30px 60px -30px #000}
+label{display:block;font-size:.75rem;color:var(--mut);margin:0 0 7px 2px;text-transform:uppercase;letter-spacing:1.5px}
+input{width:100%;background:#0a1124;border:1px solid var(--line);color:var(--ink);
+padding:14px 16px;border-radius:12px;font-size:1rem;outline:none}
+input:focus{border-color:var(--blue)}
+.btn{width:100%;border:0;border-radius:12px;padding:15px;font-size:1rem;font-weight:700;
+cursor:pointer;margin-top:14px;transition:.15s transform,.15s opacity}
+.btn:active{transform:scale(.985)}
+.btn-go{background:var(--blue);color:#06122b}
+.btn-pause{background:var(--red);color:#2a0712}
+.btn-resume{background:var(--green);color:#04221a}
+.hide{display:none}
+.state{display:flex;align-items:center;gap:12px;padding:16px;border-radius:14px;
+border:1px solid var(--line);background:#0a1124;margin-bottom:6px}
+.dot{width:12px;height:12px;border-radius:50%;flex:0 0 auto;box-shadow:0 0 14px}
+.dot.live{background:var(--green);box-shadow:0 0 14px var(--green)}
+.dot.paused{background:var(--red);box-shadow:0 0 14px var(--red)}
+.state .lbl{font-weight:700}.state .sub{color:var(--mut);font-size:.8rem;margin-top:2px}
+.meter{margin:16px 2px 4px}
+.meter .row{display:flex;justify-content:space-between;font-size:.82rem;color:var(--mut);margin-bottom:6px}
+.bar{height:9px;border-radius:99px;background:#0a1124;border:1px solid var(--line);overflow:hidden}
+.bar i{display:block;height:100%;background:linear-gradient(90deg,var(--gold),var(--red));width:0}
+.msg{text-align:center;font-size:.85rem;margin-top:14px;min-height:18px}
+.msg.err{color:var(--red)}.msg.ok{color:var(--green)}
+.foot{text-align:center;margin-top:20px;font-size:.78rem}
+.foot a{color:var(--blue);text-decoration:none}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid #ffffff55;
+border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px}
+@keyframes s{to{transform:rotate(360deg)}}
+</style></head><body>
+<div class="wrap">
+  <div class="brand"><b>A<span>+</span>Z</b><p>Owner control panel</p></div>
+
+  <!-- LOGIN -->
+  <div class="card" id="login">
+    <label for="pass">Admin password</label>
+    <input id="pass" type="password" autocomplete="current-password" placeholder="••••••••••" />
+    <button class="btn btn-go" id="enter">Unlock panel</button>
+    <div class="msg err" id="loginMsg"></div>
+  </div>
+
+  <!-- PANEL -->
+  <div class="card hide" id="panel">
+    <div class="state">
+      <span class="dot" id="dot"></span>
+      <div><div class="lbl" id="stateLbl">—</div><div class="sub" id="stateSub"></div></div>
+    </div>
+    <div class="meter">
+      <div class="row"><span>Revenue this year</span><span id="revTxt">—</span></div>
+      <div class="bar"><i id="revBar"></i></div>
+    </div>
+    <button class="btn" id="toggle">—</button>
+    <div class="msg" id="panelMsg"></div>
+    <!-- ===== FLOW AI LINK SLOT — tell Claude where/label; replace below ===== -->
+    <!-- <div class="foot"><a href="FLOW_AI_URL">Open Flow AI →</a></div> -->
+    <div class="foot"><a href="#" id="logout">Log out</a></div>
+  </div>
+
+  <div class="foot"><a href="https://aplusz.app">← aplusz.app</a></div>
+</div>
+
+<script>
+const API = location.origin;            // same Worker origin
+let PASS = '', cur = null;
+
+const $ = id => document.getElementById(id);
+async function api(path, body){
+  const r = await fetch(API + path, {method:'POST',headers:{'content-type':'application/json'},
+    credentials:'include',body:JSON.stringify(body||{})});
+  return r.ok ? r.json() : Promise.reject(await r.json().catch(()=>({})));
+}
+function render(s){
+  cur = s;
+  const paused = s.paused;
+  $('dot').className = 'dot ' + (paused ? 'paused' : 'live');
+  $('stateLbl').textContent = paused ? 'PAUSED — free for everyone' : 'LIVE — billing active';
+  $('stateSub').textContent = paused
+    ? (s.auto ? 'Auto-paused: revenue cap reached' : 'Manually paused by you')
+    : 'Subscriptions charging normally';
+  $('revTxt').textContent = '€' + s.revenue.toLocaleString() + ' / €' + s.cap.toLocaleString();
+  $('revBar').style.width = Math.min(100,(s.revenue/s.cap)*100) + '%';
+  const t = $('toggle');
+  if(paused){ t.textContent='Resume — start billing again'; t.className='btn btn-resume'; }
+  else { t.textContent='Pause everything — free for all'; t.className='btn btn-pause'; }
+  t.disabled = paused && s.auto && !s.manual;
+  if(t.disabled){ t.textContent='Auto-paused until 1 January'; t.style.opacity=.6; }
+  else t.style.opacity=1;
+}
+function show(which){ $('login').classList.toggle('hide',which!=='login'); $('panel').classList.toggle('hide',which!=='panel'); }
+async function loadStatus(){
+  // cookie path first (no password)
+  try{ const s = await api('/admin/status',{}); show('panel'); render(s); return true; }
+  catch{ return false; }
+}
+
+// On page load: if a valid 90-day session cookie exists, skip login.
+(async ()=>{ await loadStatus(); })();
+
+$('enter').onclick = async () => {
+  PASS = $('pass').value.trim();
+  if(!PASS){ $('loginMsg').textContent='Enter your password.'; return; }
+  $('enter').innerHTML='<span class="spin"></span>';
+  try{
+    await api('/admin/session',{pass:PASS});   // sets 90-day cookie
+    const s = await api('/admin/status',{pass:PASS});
+    show('panel'); render(s);
+    $('pass').value='';
+  }catch{ $('loginMsg').textContent='Wrong password.'; }
+  $('enter').textContent='Unlock panel';
+};
+$('pass').addEventListener('keydown',e=>{ if(e.key==='Enter') $('enter').click(); });
+
+$('toggle').onclick = async () => {
+  const goPause = !cur.paused;
+  const m = $('panelMsg'); m.className='msg'; m.innerHTML='<span class="spin"></span>';
+  try{
+    await api('/admin/pause',{action: goPause?'on':'off'});
+    m.className='msg ok'; m.textContent = goPause?'Paused. Everyone is free now.':'Resumed. Billing is active.';
+    await loadStatus();
+  }catch{ m.className='msg err'; m.textContent='Action failed. Try again.'; }
+};
+
+$('logout').onclick = async (e) => {
+  e.preventDefault();
+  try{ await api('/admin/logout',{}); }catch{}
+  cur=null; show('login'); $('loginMsg').textContent=''; $('pass').focus();
+};
+</script>
+</body></html>`;
 }

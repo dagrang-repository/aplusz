@@ -1,17 +1,17 @@
-name = "aplusz-api"
+name = "apluszworker"
 main = "index.js"
 compatibility_date = "2025-01-01"
 
 # Custom domain route — map api.aplusz.app to this Worker in the
 # Cloudflare dashboard (Workers & Pages → your Worker → Settings → Domains),
 # or uncomment the route below if aplusz.app is on Cloudflare DNS.
-# route = { pattern = "api.aplusz.app/*", zone_name = "aplusz.app" }
+route = { pattern = "api.aplusz.app/*", zone_name = "aplusz.app" }
 
 # KV namespace — create it once, then paste its id here:
 #   npx wrangler kv namespace create AZKV
 [[kv_namespaces]]
 binding = "AZKV"
-id = "PASTE_KV_NAMESPACE_ID_HERE"
+id = "d5aa91ac64c340848c409e47f3e88b97"
 
 # Non-secret vars
 [vars]
