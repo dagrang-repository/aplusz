@@ -37,3 +37,14 @@ logs/
 *.local
 .tmp/
 .temp/
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+*.key
+*.pem
+.dev.vars
+.dev.vars.*
+!.dev.vars.example
+*.key
+*.pem
+.env
