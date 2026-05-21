@@ -1,25 +1,70 @@
-# Static headers for Cloudflare Pages
+# ============================================================
+# APlusZ — Cloudflare Pages headers
 # File: frontend/_headers
+# Save: D:\Destop\AplusZ\frontend\_headers
+#
+# Caching philosophy (why this layout):
+#   Filenames here are STABLE (data.js stays data.js), so we must NOT
+#   mark code "immutable" — that froze the old data.js for a year.
+#   Instead: code & data revalidate fast (a push shows in minutes),
+#   while truly static art (icons, fonts) keeps the 1-year immutable cache.
+#   Rules are top-to-bottom; later, more-specific rules override earlier.
+# ============================================================
 
+# ---------- security: every response ----------
 /*
   X-Frame-Options: DENY
   X-Content-Type-Options: nosniff
   Referrer-Policy: strict-origin-when-cross-origin
   Permissions-Policy: geolocation=(), microphone=(), camera=()
-  Strict-Transport-Security: max-age=31536000; includeSubDomains
+  Strict-Transport-Security: max-age=31536000; includeSubDomains; preload
 
+# ---------- HTML shells: always revalidate (instant updates) ----------
+/
+  Cache-Control: no-cache
+/index.html
+  Cache-Control: no-cache
+/pricing.html
+  Cache-Control: no-cache
+/legal/*
+  Cache-Control: no-cache
+
+# ---------- service worker: never cache (must self-update) ----------
 /sw.js
   Cache-Control: no-cache
 
+# ---------- web app manifest ----------
 /apz.webmanifest
   Content-Type: application/manifest+json
   Cache-Control: public, max-age=3600
 
+# ---------- JS / CSS (change often): 5-min cache, then revalidate ----------
+#   stale-while-revalidate keeps loads instant: serve cached copy,
+#   refresh it in the background — users still get updates within minutes.
 /assets/*
-  Cache-Control: public, max-age=31536000, immutable
+  Cache-Control: public, max-age=300, stale-while-revalidate=86400
 
+# ---------- translations: change rarely, safe to cache an hour ----------
 /i18n/*
-  Cache-Control: public, max-age=86400
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400
 
+# ---------- flight data: weekly cron, allow fresh within 10 min ----------
 /data/*
-  Cache-Control: public, max-age=3600
+  Cache-Control: public, max-age=600, stale-while-revalidate=3600
+
+# ---------- truly static art: safe to cache 1 year (content stable) ----------
+#   placed AFTER /assets/* so these override the short rule above
+/assets/icons/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/fonts/*
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.woff2
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.png
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.svg
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.jpg
+  Cache-Control: public, max-age=31536000, immutable
+/assets/*.webp
+  Cache-Control: public, max-age=31536000, immutable
