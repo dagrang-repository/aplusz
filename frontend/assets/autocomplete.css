@@ -77,7 +77,10 @@ html[dir="rtl"] .ac-opt { flex-direction: row-reverse; }
 .search-card .field input { background: #ffffff !important; color: #000000 !important; }
 .search-card .field label { color: #475569 !important; }
 .search-card .field input::placeholder { color: #94a3b8 !important; }
+<<<<<<< HEAD
 
 /* row zones: name (left) · Live Price (dead center) · code (right) */
 .ac-mid { flex: 1; text-align: center; }
 .ac-name { flex-shrink: 0; }
+=======
+>>>>>>> 0940c313f53513967d065f62b46d97b60985bf58
