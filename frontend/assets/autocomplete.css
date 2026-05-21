@@ -70,7 +70,7 @@ html[dir="rtl"] .ac-opt { flex-direction: row-reverse; }
   font-weight: 700;
   letter-spacing: .06em;
   text-transform: uppercase;
-  color: #06283d;                /* dark text */
+  color: #ffffff;                /* pure white text */
   background: #bfe6ff;           /* light blue pill */
   border-radius: 999px;
   vertical-align: middle;
