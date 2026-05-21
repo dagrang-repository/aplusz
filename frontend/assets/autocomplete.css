@@ -60,7 +60,7 @@ html[dir="rtl"] .ac-opt { flex-direction: row-reverse; }
 }
 
 /* live-monitored rows: readable light-accent + tag */
-.ac-opt.live .ac-name { color: #ffffff; font-weight: 600; }
+.ac-opt.live .ac-name { color: var(--text, #e8eef7); font-weight: 600; }
 .ac-opt.live .ac-code { color: #7fd1ff; }
 .ac-opt .ac-live {
   display: inline-block;
