@@ -59,11 +59,19 @@
   line-height: 1.5;
 }
 
-/* ---------- FOOTER ----------
-   Layout (.footer / .footer-sep) is owned by app.css. Keep ONLY link
-   colors here so plans.css never overrides app.css footer positioning. */
+/* ---------- FOOTER ---------- */
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: var(--sp-12);
+  padding: var(--sp-8) var(--sp-4) var(--sp-12);
+  color: var(--text-dim);
+  font-size: var(--fs-sm);
+}
 .footer a { color: var(--text-muted); text-decoration: none; transition: color var(--dur-base); }
 .footer a:hover { color: var(--accent); }
+.footer-sep { width: 1px; height: 16px; background: var(--border); }
 
 /* ---------- DESKTOP: 3 columns side by side ---------- */
 @media (min-width: 720px) {
@@ -72,4 +80,5 @@
     gap: var(--sp-8);
     align-items: start;
   }
+  .footer { gap: var(--sp-16); }
 }
