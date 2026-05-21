@@ -41,7 +41,8 @@
       if (!matches.length) { close(); return; }
       box.innerHTML = matches.map(function (m, i) {
         return '<div class="ac-opt' + (m.live ? ' live' : '') + (i === active ? ' on' : '') + '" data-i="' + i + '">' +
-          '<span class="ac-name">' + m.label + (m.live ? ' ' + liveTag() : '') + '</span>' +
+          '<span class="ac-name">' + m.label + '</span>' +
+          '<span class="ac-mid">' + (m.live ? liveTag() : '') + '</span>' +
           '<span class="ac-code">' + m.code + '</span></div>';
       }).join('');
       box.querySelectorAll('.ac-opt').forEach(function (el) {

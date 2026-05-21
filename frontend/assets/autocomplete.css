@@ -59,30 +59,25 @@ html[dir="rtl"] .ac-opt { flex-direction: row-reverse; }
   line-height: 1.5;
 }
 
-<<<<<<< HEAD
 /* live-monitored rows: no background — color signals only */
 .ac-opt .ac-name { color: #000000; }            /* city name always black */
 .ac-opt.live .ac-code { color: #2563eb; }       /* live: clear dark blue code */
 .ac-opt:not(.live) .ac-code { color: #000000; } /* non-live: black code */
-=======
-/* live-monitored rows: readable light-accent + tag */
-.ac-opt.live .ac-name { color: var(--text, #e8eef7); font-weight: 600; }
-.ac-opt.live .ac-code { color: #7fd1ff; }
->>>>>>> 444a8c3edd27c57ce90dab081a3c5bd7e4839fec
 .ac-opt .ac-live {
   display: inline-block;
-  margin-left: 8px;
   font-size: .68rem;
   font-weight: 700;
-<<<<<<< HEAD
   letter-spacing: .03em;
   color: #22c55e;                                /* green "Live Price", no background */
-=======
-  letter-spacing: .06em;
-  text-transform: uppercase;
-  color: #ffffff;                /* pure white text */
-  background: #bfe6ff;           /* light blue pill */
-  border-radius: 999px;
->>>>>>> 444a8c3edd27c57ce90dab081a3c5bd7e4839fec
   vertical-align: middle;
 }
+
+/* ---- input fields: white, black text, no themed box background ---- */
+.search-card .field { background: #ffffff !important; }
+.search-card .field input { background: #ffffff !important; color: #000000 !important; }
+.search-card .field label { color: #475569 !important; }
+.search-card .field input::placeholder { color: #94a3b8 !important; }
+
+/* row zones: name (left) · Live Price (dead center) · code (right) */
+.ac-mid { flex: 1; text-align: center; }
+.ac-name { flex-shrink: 0; }
