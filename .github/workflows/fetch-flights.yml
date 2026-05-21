@@ -1,13 +1,14 @@
-name: Weekly Flight Data Refresh
+name: Daily Flight Data Refresh
 
 on:
   schedule:
-    # Every Sunday at 03:00 UTC
-    - cron: '0 3 * * 0'
-  workflow_dispatch:  # Manual trigger button in GitHub Actions tab
+    # Every day at 03:00 UTC (low-traffic window)
+    - cron: '0 3 * * *'
+  workflow_dispatch:  # Manual "Run workflow" button in the Actions tab
 
 permissions:
   contents: write
+  issues: write        # allows the failure-alert step to open an issue
 
 jobs:
   fetch:
@@ -22,12 +23,27 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+      # No npm install: fetch-flights.js uses only Node built-ins
+      # (https, fs, path). There is no package.json — nothing to install.
 
       - name: Run flight data fetcher
         run: node scripts/fetch-flights.js
         env:
           TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
           TRAVELPAYOUTS_MARKER: ${{ secrets.TRAVELPAYOUTS_MARKER }}
+
+      - name: Validate output
+        run: |
+          if [ ! -f frontend/data/index.json ]; then
+            echo "::error::index.json missing — fetch produced no manifest"
+            exit 1
+          fi
+          ORIGINS=$(node -e "console.log((require('./frontend/data/index.json').origins||[]).length)")
+          echo "Origins with data: $ORIGINS"
+          if [ "$ORIGINS" -lt 1 ]; then
+            echo "::error::manifest has zero origins — refusing to commit empty data"
+            exit 1
+          fi
 
       - name: Commit & push updated data
         run: |
@@ -37,6 +53,17 @@ jobs:
           if git diff --staged --quiet; then
             echo "No changes to commit"
           else
-            git commit -m "🤖 Weekly data refresh — $(date -u +%Y-%m-%d)"
+            git commit -m "Daily data refresh — $(date -u +%Y-%m-%d)"
             git push
           fi
+
+      - name: Alert on failure
+        if: failure()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          gh issue create \
+            --title "Daily flight data fetch failed — $(date -u +%Y-%m-%d)" \
+            --body "The daily refresh failed or produced no data. Log: https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --label "automated" \
+            || echo "Could not open issue (permissions)"
