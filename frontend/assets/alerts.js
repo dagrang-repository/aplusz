@@ -136,7 +136,7 @@
     var item = {
       o: d.origin, d: d.destination,
       price: d.priceFormatted || d.price || '',
-      book: (function () {
+      book: d.book || (function () {
         try { return bookLink(d.origin, d.destination, d.bestDeparture); } catch (e) { return ''; }
       })(),
       dep: d.bestDeparture || '',

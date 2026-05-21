@@ -90,6 +90,7 @@
     d.priceFormatted = window.APlusZ.detect.formatPrice(d.priceBase, d.currency);
     var daysOut = daysFromNow(d.bestDeparture);
     var aff = affiliates(d);
+    var primaryBook = d.book || aff.kiwi;   // real marker link from data; fallback only
 
     box.innerHTML = [
       '<article class="result-card">',
@@ -119,7 +120,7 @@
       '    ' + confidenceBadge(d.confidence),
       '  </div>',
 
-      '  <a class="cta-book" href="' + aff.kiwi + '" target="_blank" rel="noopener nofollow">',
+      '  <a class="cta-book" href="' + primaryBook + '" target="_blank" rel="noopener nofollow">',
       '    ' + t('result.cta_book'),
       '  </a>',
 

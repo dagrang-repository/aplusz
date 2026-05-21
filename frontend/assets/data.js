@@ -1,105 +1,80 @@
 /* ============================================================
-   APlusZ — Data Layer (Step 14)
+   APlusZ — Data Layer (global, chunked, no live calls)
    File: frontend/assets/data.js
    Save: D:\Destop\AplusZ\frontend\assets\data.js
 
-   Reads the static JSON committed weekly by GitHub Actions.
-   Shows ONLY real fetched fares. A route with no data returns null
-   so the UI shows an honest empty-state (no fabricated prices).
-   A demo generator exists only for local dev behind
-   window.APlusZ.config.allowDemo === true (never set in production).
+   Reads per-origin chunks committed weekly by GitHub Actions:
+     /data/<ORIGIN>.json   (+ /data/index.json manifest)
+   Resolves typed cities -> IATA city codes via APlusZ.cities.
+   Shows ONLY real fetched fares; a miss returns null -> honest
+   empty-state. No fabricated prices (demo behind dev flag only).
    ============================================================ */
 
 (function () {
   'use strict';
 
-  var DATA_URL = '/data/routes.json';
-  var cache = null;
-  var loading = null;
+  var chunkCache = {};   // origin -> routes map (or null)
+  var manifest = null;
 
-  /* ---------- Load (cached, single fetch) ---------- */
-  function load() {
-    if (cache) return Promise.resolve(cache);
-    if (loading) return loading;
-    loading = fetch(DATA_URL, { cache: 'default' })
-      .then(function (r) {
-        if (!r.ok) throw new Error('not found');
-        return r.json();
-      })
-      .then(function (j) { cache = j; return j; })
-      .catch(function () { cache = null; return null; });
-    return loading;
+  function resolve(s) {
+    return (window.APlusZ.cities && window.APlusZ.cities.resolve)
+      ? window.APlusZ.cities.resolve(s)
+      : String(s || '').trim().toUpperCase().slice(0, 3);
   }
 
-  /* ---------- IATA normalization (very light) ---------- */
-  function normalize(s) {
-    return String(s || '').trim().toUpperCase().slice(0, 3);
+  function loadManifest() {
+    if (manifest) return Promise.resolve(manifest);
+    return fetch('/data/index.json', { cache: 'default' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (j) { manifest = j || { origins: [] }; return manifest; })
+      .catch(function () { manifest = { origins: [] }; return manifest; });
   }
 
-  /* ---------- Lookup by O/D pair ---------- */
-  function lookup(origin, dest) {
-    var o = normalize(origin);
-    var d = normalize(dest);
-    return load().then(function (j) {
-      if (!j || !j.routes) return null;
-      var key = o + '-' + d;
-      return j.routes[key] || null;
-    });
+  function loadChunk(origin) {
+    if (origin in chunkCache) return Promise.resolve(chunkCache[origin]);
+    return fetch('/data/' + origin + '.json', { cache: 'default' })
+      .then(function (r) { if (!r.ok) throw new Error('no chunk'); return r.json(); })
+      .then(function (j) { chunkCache[origin] = (j && j.routes) || null; return chunkCache[origin]; })
+      .catch(function () { chunkCache[origin] = null; return null; });
   }
 
-  /* ---------- Demo fallback (used until real data exists) ---------- */
-  function demo(origin, dest) {
+  /* demo kept ONLY for local dev: window.APlusZ.config.allowDemo === true */
+  function demo(o, d) {
     var today = new Date();
-    var dep = new Date(today.getTime() + 75 * 86400000);
-    var book = new Date(today.getTime() + 14 * 86400000);
-    var iso = function (d) { return d.toISOString().split('T')[0]; };
-    // Pseudo-random but stable per route
-    var seed = (origin + dest).split('').reduce(function (a, c) { return a + c.charCodeAt(0); }, 0);
-    var price = 180 + (seed % 700);
+    var iso = function (t) { return t.toISOString().split('T')[0]; };
+    var seed = (o + d).split('').reduce(function (a, c) { return a + c.charCodeAt(0); }, 0);
     return {
-      origin: normalize(origin),
-      destination: normalize(dest),
-      bestDeparture: iso(dep),
-      bestBooking: iso(book),
-      priceBase: price,
-      currency: window.APlusZ.detect.currency,
-      confidence: 'medium',
-      isDemo: true
+      origin: o, destination: d,
+      bestDeparture: iso(new Date(today.getTime() + 75 * 86400000)),
+      bestBooking: iso(new Date(today.getTime() + 14 * 86400000)),
+      priceBase: 180 + (seed % 700), currency: 'EUR',
+      confidence: 'medium', isDemo: true
     };
   }
 
-  /* ---------- Public API ---------- */
-  /* TRUE TO THE PROMISE: only real, fetched fares are shown.
-     If a route isn't in routes.json, return null → the UI shows the
-     "no data for this route yet" empty-state. The demo generator is
-     kept ONLY for local testing, behind an explicit opt-in flag:
-       window.APlusZ.config.allowDemo = true   (never set in production) */
   function search(origin, dest) {
     if (!origin || !dest) return Promise.resolve(null);
-    return lookup(origin, dest).then(function (row) {
-      if (row) return row;
+    var o = resolve(origin), d = resolve(dest);
+    if (!o || !d || o === d) return Promise.resolve(null);
+    return loadChunk(o).then(function (routes) {
+      if (routes && routes[d]) return routes[d];
       var devDemo = window.APlusZ.config && window.APlusZ.config.allowDemo === true;
-      return devDemo ? demo(origin, dest) : null;
+      return devDemo ? demo(o, d) : null;   // honest empty-state in production
     });
   }
 
   function metadata() {
-    return load().then(function (j) {
-      if (!j) return { available: false };
+    return loadManifest().then(function (m) {
       return {
-        available: true,
-        version: j.version,
-        generated: j.generated,
-        count: j.count
+        available: !!(m && m.origins && m.origins.length),
+        generated: m && m.generated,
+        origins: m && m.origin_count,
+        routes: m && m.total_routes
       };
     });
   }
 
   window.APlusZ = window.APlusZ || {};
-  window.APlusZ.data = {
-    search: search,
-    metadata: metadata,
-    normalize: normalize
-  };
+  window.APlusZ.data = { search: search, metadata: metadata, resolve: resolve };
 
 })();
