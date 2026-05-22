@@ -1,5 +1,5 @@
 /* ============================================================
-   AplusZ — Profile UI: Streak / Referrals / Tier / Adoption Bar
+   AplusZ — Profile UI: Plan status / Karma / Referral / Alerts / Streak
    File: frontend/assets/profile.js
    Save: D:\Destop\AplusZ\frontend\assets\profile.js
    ============================================================ */
@@ -9,12 +9,21 @@
 
   var REVENUE_CAP_EUR = 62000;
 
-  /* Tier reward labels (shown as "next unlock") */
-  var TIER_REWARD = {
-    Silver:  'More saved routes + weekly trends',
-    Gold:    'Free Pro for 1 month',
-    Diamond: 'Lifetime Pro+'
-  };
+  /* ---- plan copy (Bronze = free, Pro, Pro+) ---- */
+  var PLANS = [
+    { id: 'free',    name: 'Bronze', tag: 'Free',
+      feats: 'Unlimited searches \u00b7 exact best date + price \u00b7 1 saved route \u00b7 works offline' },
+    { id: 'pro',     name: 'Pro', tag: '',
+      feats: 'Everything in Bronze \u00b7 3 alerts/day \u00b7 2 custom route sets \u00b7 priority data refresh' },
+    { id: 'proplus', name: 'Pro+', tag: '',
+      feats: 'Everything in Pro \u00b7 5 alerts/day or custom \u00b7 unlimited route sets \u00b7 early access' }
+  ];
+
+  function currentPlan() {
+    var p = 'free';
+    try { if (window.APlusZ.billing && window.APlusZ.billing.tier) p = window.APlusZ.billing.tier(); } catch (e) {}
+    return p;
+  }
 
   function loadCap() {
     return fetch('data/cap.json', { cache: 'default' })
@@ -22,56 +31,47 @@
       .catch(function () { return null; });
   }
 
-  function buildProfileHTML() {
-    var ref = window.APlusZ.referral;
-    var streak = ref ? ref.getStreak() : 0;
-    var bounty = ref ? ref.getBounty() : 0;
-    var tier   = ref ? ref.getTier() : { name: 'Bronze', icon: '🥉' };
-    var next   = ref ? ref.getNextTier() : null;
-    var url    = ref ? ref.getRefUrl() : '';
-
-    var nextLine = '';
-    if (next) {
-      var remaining = next.min - bounty;
-      nextLine =
-        '<div class="tier-next">' +
-        '  <div class="tier-next-label">' + remaining + ' more referral' + (remaining === 1 ? '' : 's') +
-             ' to ' + next.icon + ' ' + next.name + '</div>' +
-        '  <div class="tier-next-reward">Unlocks: ' + (TIER_REWARD[next.name] || '') + '</div>' +
+  function planCardsHTML() {
+    var cur = currentPlan();
+    return PLANS.map(function (pl) {
+      var active = (pl.id === cur);
+      return '' +
+        '<div class="plan-card' + (active ? ' active' : '') + '">' +
+          '<div class="plan-card-top">' +
+            '<span class="plan-card-name">' + pl.name +
+              (pl.tag ? ' <span class="plan-card-tag">' + pl.tag + '</span>' : '') + '</span>' +
+            (active ? '<span class="plan-card-badge">Your plan</span>' : '') +
+          '</div>' +
+          '<div class="plan-card-feats">' + pl.feats + '</div>' +
         '</div>';
-    } else {
-      nextLine = '<div class="tier-next"><div class="tier-next-label">💎 Diamond — top tier reached</div>' +
-                 '<div class="tier-next-reward">Lifetime Pro+ unlocked</div></div>';
-    }
+    }).join('');
+  }
+
+  function buildProfileHTML() {
+    var ref    = window.APlusZ.referral;
+    var streak = ref ? ref.getStreak() : 0;
+    var karma  = ref ? ref.getBounty() : 0;
+    var url    = ref ? ref.getRefUrl() : '';
 
     return [
       '<div class="profile-drawer" id="profile-drawer">',
       '  <div class="pd-header">',
       '    <div class="pd-title">Your Profile</div>',
-      '    <button class="pd-close" id="pd-close" aria-label="Close">×</button>',
+      '    <button class="pd-close" id="pd-close" aria-label="Close">\u00d7</button>',
       '  </div>',
 
-      '  <div class="pd-stats">',
-      '    <div class="stat" title="Open or share AplusZ daily to keep your streak alive.">',
-      '      <div class="stat-icon">🔥</div>',
-      '      <div class="stat-value">' + streak + '</div>',
-      '      <div class="stat-label">Day streak</div>',
+      '  <div class="pd-plans">' + planCardsHTML() + '</div>',
+
+      '  <div class="pd-karma">',
+      '    <div class="pd-karma-top">',
+      '      <span class="pd-karma-label">Karma points</span>',
+      '      <span class="pd-karma-value">' + karma + '</span>',
       '    </div>',
-      '    <div class="stat" title="People who installed AplusZ from your share link.">',
-      '      <div class="stat-icon">🎯</div>',
-      '      <div class="stat-value">' + bounty + '</div>',
-      '      <div class="stat-label">Referrals</div>',
-      '    </div>',
-      '    <div class="stat" title="Your status. Refer friends to climb: Bronze to Silver to Gold to Diamond.">',
-      '      <div class="stat-icon">' + tier.icon + '</div>',
-      '      <div class="stat-value stat-tier">' + tier.name + '</div>',
-      '      <div class="stat-label">Tier</div>',
-      '    </div>',
+      '    <div class="pd-karma-msg">The more you share AplusZ, the faster the whole site — including Pro and Pro+ — becomes free for everyone.</div>',
+      '    <div class="pd-bar-label"><span>Progress to free-for-all</span><span id="adopt-pct">0%</span></div>',
+      '    <div class="adopt-bar" id="adopt-bar"><div class="adopt-fill" id="adopt-fill" style="width:0%"><div class="adopt-shimmer"></div></div></div>',
+      '    <div class="pd-karma-reward">When this hits 100%, every paid plan becomes free for everyone until January 1. So share more!</div>',
       '  </div>',
-
-      nextLine,
-
-      '  <div id="pd-alerts-anchor"></div>',
 
       '  <div class="pd-section">',
       '    <div class="pd-label">Your referral link</div>',
@@ -79,28 +79,21 @@
       '      <input class="ref-link-input" id="ref-link-input" value="' + url + '" readonly>',
       '      <button class="ref-link-copy" id="ref-link-copy">Copy</button>',
       '    </div>',
-      '    <button class="primary-btn pd-share" id="pd-share">↗ Share AplusZ</button>',
+      '    <button class="pd-share-btn" id="pd-share">\u2197 Share AplusZ</button>',
       '  </div>',
 
       '  <div class="pd-section">',
-      '    <div class="pd-label">Progress to free-for-all 🏆</div>',
-      '    <div class="adopt-bar" id="adopt-bar">',
-      '      <div class="adopt-fill" id="adopt-fill" style="width:0%">',
-      '        <div class="adopt-shimmer"></div>',
-      '      </div>',
-      '      <div class="adopt-pct" id="adopt-pct">0%</div>',
-      '    </div>',
-      '    <div class="adopt-help">When this hits 100%, every paid plan becomes free until January 1 of next year. So share more!</div>',
+      '    <div class="pd-label">Price alerts</div>',
+      '    <div class="pd-alerts-intro">Get notified when your route hits an all-time low.</div>',
+      '    <div id="pd-alerts-anchor"></div>',
       '  </div>',
 
-      '  <div class="pd-section">',
-      '    <div class="pd-label">Streak milestones</div>',
-      '    <div class="milestones">',
-      '      <div class="milestone ' + (streak >= 7  ? 'unlocked' : '') + '"><span>D7</span><small>+1 route</small></div>',
-      '      <div class="milestone ' + (streak >= 14 ? 'unlocked' : '') + '"><span>D14</span><small>+1 route set</small></div>',
-      '      <div class="milestone ' + (streak >= 30 ? 'unlocked' : '') + '"><span>D30</span><small>Lifetime Pro+</small></div>',
-      '    </div>',
+      '  <div class="pd-streak">',
+      '    <span class="pd-streak-icon">\uD83D\uDD25</span>',
+      '    <span class="pd-streak-value">' + streak + '</span>',
+      '    <span class="pd-streak-label">Day streak — open or share AplusZ daily to keep it alive.</span>',
       '  </div>',
+
       '</div>',
       '<div class="profile-overlay" id="profile-overlay"></div>'
     ].join('');
@@ -122,12 +115,9 @@
 
     document.getElementById('ref-link-copy').addEventListener('click', function () {
       var input = document.getElementById('ref-link-input');
-      input.select();
-      input.setSelectionRange(0, 99999);
-      try {
-        navigator.clipboard.writeText(input.value);
-        window.APlusZ.referral.showToast('Link copied');
-      } catch (e) { document.execCommand('copy'); }
+      input.select(); input.setSelectionRange(0, 99999);
+      try { navigator.clipboard.writeText(input.value); window.APlusZ.referral.showToast('Link copied'); }
+      catch (e) { document.execCommand('copy'); }
     });
 
     document.getElementById('pd-share').addEventListener('click', function () {
@@ -157,6 +147,12 @@
       if (o && o.parentNode) o.parentNode.removeChild(o);
     }, 300);
   }
+
+  /* live-refresh the active plan card if tier changes while open */
+  document.addEventListener('aplusz:tier', function () {
+    var box = document.querySelector('.pd-plans');
+    if (box) box.innerHTML = planCardsHTML();
+  });
 
   window.APlusZ = window.APlusZ || {};
   window.APlusZ.profile = { open: open, close: close };

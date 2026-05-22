@@ -118,15 +118,21 @@ async function tierForEmail(env, email) {
   return best;
 }
 
-/* ---------- Resend email ---------- */
+/* ---------- MailerSend email (RESEND_KEY holds the mlsn. token) ---------- */
 async function sendMail(env, to, subject, html) {
-  return fetch('https://api.resend.com/emails', {
+  return fetch('https://api.mailersend.com/v1/email', {
     method: 'POST',
     headers: {
       authorization: 'Bearer ' + env.RESEND_KEY,
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      'x-requested-with': 'XMLHttpRequest'
     },
-    body: JSON.stringify({ from: 'AplusZ <automail@aplusz.app>', to, subject, html })
+    body: JSON.stringify({
+      from: { email: 'automail@aplusz.app', name: 'AplusZ' },
+      to: [{ email: to }],
+      subject,
+      html
+    })
   });
 }
 async function emailMagicLink(env, email, tier) {
