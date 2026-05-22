@@ -56,7 +56,11 @@
     var cards = document.querySelectorAll('.pd-plans .plan-card.upgradable');
     cards.forEach(function (c) {
       var id = c.getAttribute('data-buy');
-      var go = function () { if (window.APlusZ && APlusZ.billing) APlusZ.billing.buy(id); };
+      var go = function () {
+        if (!(window.APlusZ && APlusZ.billing)) return;
+        close();                       // close drawer first so the billing modal isn't stacked behind it
+        setTimeout(function () { APlusZ.billing.buy(id); }, 60);
+      };
       c.addEventListener('click', go);
       c.addEventListener('keydown', function (e) {
         if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
