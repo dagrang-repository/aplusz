@@ -37,6 +37,7 @@
     'alerts.tier_free': 'Free',
     'alerts.tier_pro': 'Pro',
     'alerts.tier_proplus': 'Pro+',
+    'alerts.upgrade_btn': 'Upgrade',
     'alerts.book': 'Book it now',
     'alerts.rescan': 'Rescan latest price',
     'alerts.mail_subject': '✈️ Price watch: {route}',
@@ -131,7 +132,9 @@
     el.className = 'azb-limit';
     el.innerHTML =
       '<span class="azb-limit-msg">' + msg + '</span>' +
-      '<button class="azb-limit-up" type="button">' + t('billing.free_upgrade') + '</button>' +
+      '<button class="azb-limit-up" type="button">' +
+        (function(){ var u=t('billing.free_upgrade'); return (u==='billing.free_upgrade')?t('alerts.upgrade_btn'):u; })() +
+      '</button>' +
       '<button class="azb-limit-x" type="button" aria-label="close">\u00d7</button>';
     document.body.appendChild(el);
     requestAnimationFrame(function () { el.classList.add('show'); });
@@ -240,8 +243,10 @@
     var tr = tier();
     var icon = TIER_ICON[tr] || TIER_ICON.free;
     var name = tierLabel(tr);
+    // Pro+ crown glows (icon only); other tiers plain
+    var iconHTML = (tr === 'proplus') ? '<span class="az-crown">' + icon + '</span>' : icon;
     // HARD RULE: icon + name always together, never one alone
-    b.innerHTML = '<span class="tb-ic">' + icon + '</span><span class="tb-nm">' + name + '</span>';
+    b.innerHTML = '<span class="tb-ic">' + iconHTML + '</span><span class="tb-nm">' + name + '</span>';
     b.setAttribute('aria-label', name);
     b.title = name;
   }
@@ -266,7 +271,13 @@
     bindBadge(b);
     updateBadge();
   }
-  document.addEventListener('aplusz:tier', function () { updateBadge(); refresh(); });
+  // reset the remove/swap counter whenever the tier changes (new plan period
+  // grants its full quota again; prevents stale lifetime carry-over on
+  // upgrade, downgrade, churn, or re-subscribe).
+  document.addEventListener('aplusz:tier', function () {
+    try { localStorage.removeItem(LS_REMOVES); } catch (e) {}
+    updateBadge(); refresh();
+  });
 
   /* called by profile.js after the drawer is built */
   function mount() {

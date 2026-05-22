@@ -7,8 +7,9 @@
      /data/<ORIGIN>.json   (+ /data/index.json manifest)
    Resolves typed cities -> IATA city codes via APlusZ.cities.
 
-   EVERY resolvable pair is monitored + bookable (affiliate, marker
-   531148). Cached fare shown when present; otherwise the card invites
+   EVERY resolvable pair is monitored + bookable via Travelpayouts
+   tracked deep links (profile 730427 / program 531148). Cached fare
+   shown when present; otherwise the card invites
    "Check the live price" and still opens a real affiliate search.
    ============================================================ */
 (function () {
@@ -39,11 +40,20 @@
       .catch(function () { chunkCache[origin] = null; return null; });
   }
 
-  var MARKER = '531148';
+  // Travelpayouts tracked deep-link (verified format from TP dashboard):
+  //   marker = profile ID, trs = program/project ID, p = Aviasales program, u = encoded search URL
+  var TP_MARKER = '730427';   // profile ID
+  var TP_TRS    = '531148';   // program/project ID
+  var TP_P      = '4114';     // Aviasales program code
+  var TP_CAMP   = '100';
   function ddmm(iso) { return (iso && iso.length >= 10) ? iso.slice(8, 10) + iso.slice(5, 7) : ''; }
   function bookLink(o, d, dep) {
     if (!dep) dep = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10); // ~30d out
-    return 'https://www.aviasales.com/search/' + o + ddmm(dep) + d + '1?marker=' + MARKER;
+    var search = 'https://www.aviasales.com/search/' + o + ddmm(dep) + d + '1';
+    return 'https://tp.media/r?marker=' + TP_MARKER +
+           '&trs=' + TP_TRS + '&p=' + TP_P +
+           '&u=' + encodeURIComponent(search) +
+           '&campaign_id=' + TP_CAMP;
   }
 
   function search(origin, dest) {

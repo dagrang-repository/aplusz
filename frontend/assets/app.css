@@ -425,26 +425,20 @@ a:hover { text-decoration: underline; }
 .azb-limit-x:hover { color: var(--text); }
 
 /* ============================================================
-   TIER BADGE — status icon left of theme toggle; tap = open menu
-   🆓 Free · ⭐ Pro · 👑 Pro+
+   PRO+ CROWN GLOW — slow golden breathe on the 👑 icon only.
+   Wrap any 👑 in <span class="az-crown">👑</span>; only the crown
+   glows, never surrounding text. Honors reduced-motion.
    ============================================================ */
-.tier-badge {
-  /* HARD RULE: icon + name shown together as one pill */
-  width: auto;
-  gap: 4px;
-  padding: 0 var(--sp-2);
-  border: 1px solid var(--border);
-  border-radius: var(--r-pill);
-  font-size: var(--fs-sm);
-  font-weight: 700;
+.az-crown {
+  display: inline-block;
   line-height: 1;
-  white-space: nowrap;
+  animation: az-crown-glow 3s ease-in-out infinite;
+  will-change: filter;
 }
-.tier-badge .tb-ic { font-size: 16px; line-height: 1; }
-.tier-badge .tb-nm { font-size: var(--fs-sm); }
-.tier-badge:hover { transform: scale(1.06); border-color: var(--accent); }
-html[data-tier="pro"] .tier-badge,
-html[data-tier="proplus"] .tier-badge {
-  color: var(--accent);
-  border-color: var(--accent);
+@keyframes az-crown-glow {
+  0%, 100% { filter: drop-shadow(0 0 1px rgba(250, 204, 21, 0.45)); }
+  50%      { filter: drop-shadow(0 0 7px rgba(250, 204, 21, 0.95)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .az-crown { animation: none; filter: drop-shadow(0 0 3px rgba(250, 204, 21, 0.6)); }
 }

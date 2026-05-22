@@ -14,7 +14,7 @@
       feats: 'Unlimited searches \u00b7 exact best date + price \u00b7 1 saved route \u00b7 unlimited reminders \u00b7 works offline' },
     { id: 'pro',     name: '\u2B50 Pro', tag: '',
       feats: 'Everything in Free \u00b7 up to 3 saved routes \u00b7 swap routes (3 changes) \u00b7 unlimited reminders' },
-    { id: 'proplus', name: '\uD83D\uDC51 Pro+', tag: '',
+    { id: 'proplus', name: '<span class="az-crown">\uD83D\uDC51</span> Pro+', tag: '',
       feats: 'Everything in Pro \u00b7 unlimited saved routes \u00b7 unlimited swaps + removes \u00b7 unlimited reminders' }
   ];
 
@@ -30,20 +30,38 @@
       .catch(function () { return null; });
   }
 
+  var RANK = { free: 0, pro: 1, proplus: 2 };
   function planCardsHTML() {
     var cur = currentPlan();
+    var curRank = RANK[cur] || 0;
     return PLANS.map(function (pl) {
       var active = (pl.id === cur);
+      // upgrade target = any tier ABOVE current (Free is never a target)
+      var upgradable = (RANK[pl.id] > curRank);
+      var attrs = 'class="plan-card' + (active ? ' active' : '') + (upgradable ? ' upgradable' : '') + '"';
+      if (upgradable) {
+        attrs += ' role="button" tabindex="0" data-buy="' + pl.id + '"';
+      }
       return '' +
-        '<div class="plan-card' + (active ? ' active' : '') + '">' +
+        '<div ' + attrs + '>' +
           '<div class="plan-card-top">' +
-            '<span class="plan-card-name">' + pl.name +
-              (pl.tag ? ' <span class="plan-card-tag">' + pl.tag + '</span>' : '') + '</span>' +
+            '<span class="plan-card-name">' + pl.name + '</span>' +
             (active ? '<span class="plan-card-badge">Your plan</span>' : '') +
           '</div>' +
           '<div class="plan-card-feats">' + pl.feats + '</div>' +
         '</div>';
     }).join('');
+  }
+  function wirePlanCards() {
+    var cards = document.querySelectorAll('.pd-plans .plan-card.upgradable');
+    cards.forEach(function (c) {
+      var id = c.getAttribute('data-buy');
+      var go = function () { if (window.APlusZ && APlusZ.billing) APlusZ.billing.buy(id); };
+      c.addEventListener('click', go);
+      c.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
+      });
+    });
   }
 
   function buildProfileHTML() {
@@ -125,6 +143,8 @@
 
     if (window.APlusZ.alerts && window.APlusZ.alerts.mount) window.APlusZ.alerts.mount();
 
+    wirePlanCards();
+
     loadCap().then(function (cap) {
       var fill = document.getElementById('adopt-fill');
       var pctEl = document.getElementById('adopt-pct');
@@ -149,7 +169,7 @@
 
   document.addEventListener('aplusz:tier', function () {
     var box = document.querySelector('.pd-plans');
-    if (box) box.innerHTML = planCardsHTML();
+    if (box) { box.innerHTML = planCardsHTML(); wirePlanCards(); }
   });
 
   window.APlusZ = window.APlusZ || {};

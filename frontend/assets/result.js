@@ -7,6 +7,17 @@
 (function () {
   'use strict';
 
+  // Travelpayouts tracked deep-link (mirrors data.js). Used only as a safety
+  // fallback so the primary CTA is NEVER a bare/placeholder partner link.
+  function ddmm(iso) { return (iso && iso.length >= 10) ? iso.slice(8, 10) + iso.slice(5, 7) : ''; }
+  function tpBook(o, d, dep) {
+    if (!o || !d) return '#';
+    if (!dep) dep = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10);
+    var search = 'https://www.aviasales.com/search/' + o + ddmm(dep) + d + '1';
+    return 'https://tp.media/r?marker=730427&trs=531148&p=4114&u=' +
+           encodeURIComponent(search) + '&campaign_id=100';
+  }
+
   function formatDate(iso) {
     try {
       var d = new Date(iso);
@@ -103,6 +114,7 @@
     var hotelDest = encodeURIComponent(d.destination);
     var c = (window.APlusZ.config && window.APlusZ.config.affiliates) || {};
     var hotel = 'https://www.booking.com/searchresults.html?ss=' + hotelDest + '&aid=' + (c.booking || 'placeholder');
+    var primaryBook = d.book || tpBook(d.origin, d.destination, d.bestDeparture);   // never undefined; always tracked
 
     box.innerHTML = [
       '<article class="result-card">',
@@ -119,7 +131,7 @@
       '    </div>',
       '  </div>',
 
-      '  <a class="cta-book" href="' + d.book + '" target="_blank" rel="noopener nofollow">',
+      '  <a class="cta-book" href="' + primaryBook + '" target="_blank" rel="noopener nofollow">',
       '    ' + t('result.cta_book'),
       '  </a>',
 
@@ -159,7 +171,7 @@
     d.priceFormatted = window.APlusZ.detect.formatPrice(d.priceBase, d.currency);
     var daysOut = daysFromNow(d.bestDeparture);
     var aff = affiliates(d);
-    var primaryBook = d.book || aff.kiwi;   // real marker link from data; fallback only
+    var primaryBook = d.book || tpBook(d.origin, d.destination, d.bestDeparture);   // tracked link; fallback also tracked, never bare
 
     box.innerHTML = [
       '<article class="result-card">',

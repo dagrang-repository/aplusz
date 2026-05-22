@@ -95,7 +95,7 @@
 <section class="plans-strip">
   <div class="plans-grid">
 
-    <div class="plan-col">
+    <div class="plan-col" data-plan="free">
       <div class="plan-head" data-i18n="plans.free_head">🆓 Free forever</div>
       <ul class="plan-feats">
         <li data-i18n="plans.f_unlimited">Unlimited route searches</li>
@@ -107,8 +107,8 @@
       </ul>
     </div>
 
-    <div class="plan-col">
-      <a class="plan-head plan-head-link" href="pricing.html#pro" onclick="if(window.APlusZ&&APlusZ.billing){event.preventDefault();APlusZ.billing.buy('pro')}"><span data-i18n="plans.pro_head">⭐ Pro</span> →</a>
+    <div class="plan-col" data-plan="pro">
+      <div class="plan-head"><span data-i18n="plans.pro_head">⭐ Pro</span></div>
       <ul class="plan-feats">
         <li data-i18n="plans.p_everything_free">Everything in Free</li>
         <li data-i18n="plans.p_routes3">Up to 3 saved routes</li>
@@ -117,8 +117,8 @@
       </ul>
     </div>
 
-    <div class="plan-col">
-      <a class="plan-head plan-head-link" href="pricing.html#proplus" onclick="if(window.APlusZ&&APlusZ.billing){event.preventDefault();APlusZ.billing.buy('proplus')}"><span data-i18n="plans.proplus_head">👑 Pro+</span> →</a>
+    <div class="plan-col" data-plan="proplus">
+      <div class="plan-head"><span class="az-crown">👑</span> <span data-i18n="plans.proplus_head">Pro+</span></div>
       <ul class="plan-feats">
         <li data-i18n="plans.pp_everything_pro">Everything in Pro</li>
         <li data-i18n="plans.pp_routes_unlim">Unlimited saved routes</li>
@@ -149,6 +149,41 @@
 <script src="assets/install.js"></script>
 <script src="assets/howitworks.js"></script>
 <script src="assets/app.js"></script>
+
+
+<script>
+/* Plans-strip: whole-block upgrade clicks, tier-aware.
+   Free col never clickable. Only tiers ABOVE current become clickable. */
+(function () {
+  var RANK = { free: 0, pro: 1, proplus: 2 };
+  function tier() {
+    try { return (window.APlusZ && APlusZ.billing && APlusZ.billing.tier) ? APlusZ.billing.tier() : 'free'; }
+    catch (e) { return 'free'; }
+  }
+  function paint() {
+    var cur = RANK[tier()] || 0;
+    document.querySelectorAll('.plans-strip .plan-col').forEach(function (col) {
+      var id = col.getAttribute('data-plan');
+      var up = (RANK[id] > cur);          // above current = clickable upgrade
+      col.classList.toggle('upgradable', up);
+      if (up) { col.setAttribute('role', 'button'); col.setAttribute('tabindex', '0'); }
+      else { col.removeAttribute('role'); col.removeAttribute('tabindex'); }
+    });
+  }
+  function go(col) {
+    var id = col.getAttribute('data-plan');
+    if (col.classList.contains('upgradable') && window.APlusZ && APlusZ.billing) APlusZ.billing.buy(id);
+  }
+  document.querySelectorAll('.plans-strip .plan-col').forEach(function (col) {
+    col.addEventListener('click', function () { go(col); });
+    col.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(col); }
+    });
+  });
+  document.addEventListener('aplusz:tier', paint);
+  paint();
+})();
+</script>
 
 </body>
 </html>

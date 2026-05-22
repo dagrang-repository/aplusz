@@ -24,7 +24,12 @@ const path = require('path');
 const https = require('https');
 
 const TOKEN  = process.env.TRAVELPAYOUTS_TOKEN  || '';
-const MARKER = process.env.TRAVELPAYOUTS_MARKER || '531148';
+const MARKER = process.env.TRAVELPAYOUTS_MARKER || '531148';   // program/project ID (kept for manifest stamping)
+// Travelpayouts tracked deep-link parts (verified from TP dashboard)
+const TP_MARKER = '730427';   // profile ID
+const TP_TRS    = MARKER;     // program/project ID (531148)
+const TP_P      = '4114';     // Aviasales program code
+const TP_CAMP   = '100';
 const CURRENCY = 'eur';
 const LIMIT = 1000;          // API hard max per request
 
@@ -63,7 +68,11 @@ function fetchJson(url) {
 
 function ddmm(iso) { return (iso && iso.length >= 10) ? iso.slice(8, 10) + iso.slice(5, 7) : ''; }
 function bookLink(o, d, dep) {
-  return 'https://www.aviasales.com/search/' + o + ddmm(dep) + d + '1?marker=' + MARKER;
+  var search = 'https://www.aviasales.com/search/' + o + ddmm(dep) + d + '1';
+  return 'https://tp.media/r?marker=' + TP_MARKER +
+         '&trs=' + TP_TRS + '&p=' + TP_P +
+         '&u=' + encodeURIComponent(search) +
+         '&campaign_id=' + TP_CAMP;
 }
 
 /* load each route's ALL-TIME LOW (and the date it was set) for one origin.
@@ -114,7 +123,8 @@ async function fetchOrigin(origin) {
     const newPrice = Math.round(r.value);
 
     const prior = lows[d] || null;         // { low, lowDate } or null
-    const priorLow = prior ? prior.low : null;
+    // guard against missing/zero/negative stored lows (bad data) — reseed instead of dividing
+    const priorLow = (prior && typeof prior.low === 'number' && prior.low > 0) ? prior.low : null;
 
     let dropAbs = 0, dropPct = 0;
     let low, lowDate;
