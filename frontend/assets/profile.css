@@ -1,27 +1,21 @@
 /* ============================================================
-   APlusZ — Profile Drawer Styles (Plan / Karma / Referral / Alerts / Streak)
+   APlusZ — Profile Drawer (centered "B" layout, compact)
    File: frontend/assets/profile.css
    Save: D:\Destop\AplusZ\frontend\assets\profile.css
    ============================================================ */
 
 .profile-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.4);
-  backdrop-filter: blur(4px);
-  -webkit-backdrop-filter: blur(4px);
-  opacity: 0;
-  z-index: var(--z-modal);
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+  opacity: 0; z-index: var(--z-modal);
   transition: opacity var(--dur-base) var(--ease-ios);
 }
 .profile-overlay.show { opacity: 1; }
 
 .profile-drawer {
-  position: fixed;
-  top: 0; right: 0;
-  height: 100dvh;
-  width: 100%;
-  max-width: 440px;
+  position: fixed; top: 0; right: 0;
+  height: 100dvh; width: 100%; max-width: 440px;
   background: var(--bg);
   border-left: 1px solid var(--border);
   box-shadow: var(--shadow-lg);
@@ -29,18 +23,15 @@
   transform: translateX(100%);
   transition: transform var(--dur-slow) var(--ease-spring);
   overflow-y: auto;
-  display: flex;
-  flex-direction: column;
+  display: flex; flex-direction: column;
 }
 .profile-drawer.show { transform: translateX(0); }
 
+/* ---- header (centered title, × pinned right, slightly bigger) ---- */
 .pd-header {
-  position: sticky;
-  top: 0;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: var(--sp-4) var(--sp-6);
+  position: sticky; top: 0;
+  display: flex; align-items: center; justify-content: center;
+  padding: var(--sp-3) var(--sp-6);
   background: var(--bg-glass);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
@@ -49,28 +40,28 @@
 }
 .pd-title { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em; }
 .pd-close {
-  width: 36px; height: 36px;
+  position: absolute; right: var(--sp-5); top: 50%; transform: translateY(-50%);
+  width: 40px; height: 40px;
   border-radius: var(--r-pill);
   display: grid; place-items: center;
-  font-size: 1.5rem;
+  font-size: 1.8rem; line-height: 1;
   color: var(--text-muted);
-  transition: background var(--dur-base) var(--ease-spring);
+  transition: background var(--dur-base) var(--ease-spring), color var(--dur-base);
 }
 .pd-close:hover { background: var(--bg-elevated); color: var(--text); }
 
-/* ---------- PLAN CARDS (Bronze / Pro / Pro+) ---------- */
+/* ---- plan cards (centered, minimal margin) ---- */
 .pd-plans {
-  display: flex;
-  flex-direction: column;
-  gap: var(--sp-2);
-  padding: var(--sp-6) var(--sp-6) var(--sp-4);
+  display: flex; flex-direction: column; gap: var(--sp-1);
+  padding: var(--sp-3) var(--sp-5) var(--sp-2);
 }
 .plan-card {
   background: var(--surface);
   border: 1px solid var(--border);
-  border-radius: var(--r-lg);
-  padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--r-md);
+  padding: var(--sp-2) var(--sp-3);
   opacity: 0.6;
+  text-align: center;
   transition: opacity var(--dur-base), border-color var(--dur-base);
 }
 .plan-card.active {
@@ -78,194 +69,111 @@
   border: 2px solid var(--accent);
   background: linear-gradient(135deg, rgba(250,204,21,0.06), transparent);
 }
-.plan-card-top {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 4px;
-  gap: var(--sp-2);
-}
-.plan-card-name { font-size: var(--fs-lg); font-weight: 800; letter-spacing: -0.01em; }
+.plan-card-top { margin-bottom: 2px; }
+.plan-card-name { font-size: var(--fs-base); font-weight: 800; letter-spacing: -0.01em; }
 .plan-card-tag {
-  font-size: var(--fs-xs);
-  font-weight: 600;
-  color: var(--text-dim);
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
+  font-size: var(--fs-xs); font-weight: 600; color: var(--text-dim);
+  text-transform: uppercase; letter-spacing: 0.06em;
 }
 .plan-card-badge {
-  font-size: var(--fs-xs);
-  font-weight: 700;
-  color: var(--bg);
-  background: var(--accent);
-  padding: 3px 10px;
-  border-radius: var(--r-pill);
-  flex-shrink: 0;
+  font-size: var(--fs-xs); font-weight: 700; color: var(--bg);
+  background: var(--accent); padding: 2px 9px; border-radius: var(--r-pill);
+  margin-left: var(--sp-2);
 }
-.plan-card-feats {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: 1.5;
-}
+.plan-card-feats { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.4; }
 
-/* ---------- KARMA ---------- */
-.pd-karma { padding: 0 var(--sp-6) var(--sp-5); }
-.pd-karma-top {
-  display: flex;
-  align-items: baseline;
-  justify-content: space-between;
-  margin-bottom: var(--sp-2);
-}
-.pd-karma-label {
-  font-size: var(--fs-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  font-weight: 700;
-}
-.pd-karma-value {
-  font-size: var(--fs-2xl);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  color: var(--accent);
-}
-.pd-karma-msg,
-.pd-karma-reward {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: 1.5;
-}
-.pd-karma-msg { margin-bottom: var(--sp-4); }
-.pd-bar-label {
-  display: flex;
-  justify-content: space-between;
-  font-size: var(--fs-xs);
-  color: var(--text-dim);
-  font-weight: 600;
-  margin-bottom: var(--sp-2);
-}
-.pd-karma-reward { margin-top: var(--sp-3); text-align: center; }
-
-/* ---------- SECTIONS ---------- */
-.pd-section { padding: 0 var(--sp-6) var(--sp-6); }
+/* ---- sections (centered) ---- */
+.pd-section { padding: var(--sp-2) var(--sp-5) var(--sp-3); text-align: center; }
 .pd-label {
-  font-size: var(--fs-xs);
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--text-dim);
-  font-weight: 700;
-  margin-bottom: var(--sp-3);
+  font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-dim); font-weight: 700; margin-bottom: var(--sp-2);
 }
-.pd-alerts-intro {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: 1.5;
-  margin-bottom: var(--sp-3);
-}
+.pd-alerts-intro { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.45; }
 
-/* ---------- REFERRAL (flat buttons, no blue) ---------- */
-.ref-link-row { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-3); }
-.ref-link-input {
-  flex: 1;
+/* ---- karma block (bar → reward → share → karma) ---- */
+.pd-karma { padding: 0 var(--sp-5) var(--sp-4); text-align: center; }
+
+.adopt-bar {
+  position: relative;
+  height: 38px;
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--r-md);
-  padding: var(--sp-3) var(--sp-4);
+  overflow: hidden;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.12);
+  margin-bottom: var(--sp-3);
+}
+.adopt-fill {
+  position: absolute; inset: 0 auto 0 0; width: 0%;
+  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 50%, var(--accent) 100%);
+  background-size: 200% 100%;
+  transition: width 1.5s var(--ease-spring);
+  animation: adopt-gradient 4s linear infinite;
+}
+@keyframes adopt-gradient { 0%{background-position:0% 0%} 100%{background-position:200% 0%} }
+.adopt-shimmer {
+  position: absolute; top: 0; bottom: 0; left: -40%; width: 30%;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
+  animation: adopt-shimmer 2.4s ease-in-out infinite;
+}
+@keyframes adopt-shimmer { 0%{left:-40%} 100%{left:110%} }
+.adopt-bar-text {
+  position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 0 var(--sp-4);
+  font-size: var(--fs-sm); font-weight: 700;
   color: var(--text);
-  font-family: var(--font-mono);
-  font-size: var(--fs-sm);
-  outline: none;
-  min-width: 0;
+  mix-blend-mode: difference;
+  pointer-events: none;
+}
+
+.pd-karma-reward { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.45; margin-bottom: var(--sp-4); }
+
+.pd-karma-top {
+  display: flex; align-items: baseline; justify-content: center; gap: var(--sp-2);
+  margin-top: var(--sp-4); margin-bottom: var(--sp-2);
+}
+.pd-karma-label {
+  font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em;
+  color: var(--text-dim); font-weight: 700;
+}
+.pd-karma-value { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em; color: var(--accent); }
+.pd-karma-msg { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.45; }
+
+/* ---- referral (flat buttons, no blue) ---- */
+.ref-link-row { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-2); }
+.ref-link-input {
+  flex: 1; min-width: 0;
+  background: var(--surface); border: 1px solid var(--border);
+  border-radius: var(--r-md); padding: var(--sp-2) var(--sp-3);
+  color: var(--text); font-family: var(--font-mono); font-size: var(--fs-sm);
+  outline: none; text-align: center;
 }
 .ref-link-input:focus { border-color: var(--accent); }
 .ref-link-copy {
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-  padding: 0 var(--sp-5);
-  border-radius: var(--r-md);
-  font-weight: 700;
-  font-size: var(--fs-sm);
-  flex-shrink: 0;
-  transition: background var(--dur-base), border-color var(--dur-base);
+  background: transparent; color: var(--text);
+  border: 1px solid var(--border); padding: 0 var(--sp-5);
+  border-radius: var(--r-md); font-weight: 700; font-size: var(--fs-sm);
+  flex-shrink: 0; transition: background var(--dur-base), border-color var(--dur-base);
 }
 .ref-link-copy:hover { background: var(--bg-elevated); border-color: var(--accent); }
 .pd-share-btn {
-  width: 100%;
-  background: transparent;
-  color: var(--text);
-  border: 1px solid var(--border);
-  border-radius: var(--r-md);
-  padding: var(--sp-3);
-  font-weight: 700;
-  font-size: var(--fs-base);
+  width: 100%; background: transparent; color: var(--text);
+  border: 1px solid var(--border); border-radius: var(--r-md);
+  padding: var(--sp-3); font-weight: 700; font-size: var(--fs-base);
   transition: background var(--dur-base), border-color var(--dur-base);
 }
 .pd-share-btn:hover { background: var(--bg-elevated); border-color: var(--accent); }
 
-/* ---------- ADOPTION BAR ---------- */
-.adopt-bar {
-  position: relative;
-  height: 14px;
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--r-pill);
-  overflow: hidden;
-  box-shadow: inset 0 1px 2px rgba(0,0,0,0.15);
-}
-.adopt-fill {
-  position: absolute;
-  inset: 0 auto 0 0;
-  width: 0%;
-  background: linear-gradient(90deg, var(--accent) 0%, var(--accent-hover) 50%, var(--accent) 100%);
-  background-size: 200% 100%;
-  border-radius: var(--r-pill);
-  transition: width 1.5s var(--ease-spring);
-  overflow: hidden;
-  animation: adopt-gradient 4s linear infinite;
-}
-@keyframes adopt-gradient {
-  0%   { background-position: 0% 0%; }
-  100% { background-position: 200% 0%; }
-}
-.adopt-shimmer {
-  position: absolute;
-  top: 0; bottom: 0;
-  left: -40%;
-  width: 30%;
-  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.35) 50%, transparent 100%);
-  animation: adopt-shimmer 2.4s ease-in-out infinite;
-}
-@keyframes adopt-shimmer {
-  0%   { left: -40%; }
-  100% { left: 110%; }
-}
-
-/* ---------- DAY STREAK (bottom) ---------- */
+/* ---- day streak (centered, bottom) ---- */
 .pd-streak {
-  display: flex;
-  align-items: center;
+  display: flex; align-items: center; justify-content: center;
   gap: var(--sp-2);
-  padding: var(--sp-4) var(--sp-6) var(--sp-8);
+  padding: var(--sp-3) var(--sp-5) var(--sp-6);
   border-top: 1px solid var(--border);
   margin-top: auto;
+  text-align: center;
 }
-.pd-streak-icon { font-size: 1.3rem; flex-shrink: 0; }
-.pd-streak-value {
-  font-size: var(--fs-xl);
-  font-weight: 800;
-  color: var(--accent);
-  flex-shrink: 0;
-}
-.pd-streak-label {
-  font-size: var(--fs-sm);
-  color: var(--text-muted);
-  line-height: 1.4;
-}
-
-/* ============================================================
-   DESKTOP / WIDE — drawer stays a right panel; ensure no overflow
-   ============================================================ */
-@media (min-width: 720px) {
-  .plan-card-feats, .pd-karma-msg, .pd-karma-reward, .pd-alerts-intro { font-size: var(--fs-sm); }
-}
+.pd-streak-icon { font-size: 1.2rem; flex-shrink: 0; }
+.pd-streak-value { font-size: var(--fs-lg); font-weight: 800; color: var(--accent); flex-shrink: 0; }
+.pd-streak-label { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.35; }
