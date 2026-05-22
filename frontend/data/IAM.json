@@ -1,0 +1,1 @@
+{"origin":"IAM","generated":"2026-05-22T10:20:07.309Z","count":1,"routes":{"ALG":{"origin":"IAM","destination":"ALG","bestDeparture":"2026-06-12","bestBooking":"2026-05-22","priceBase":37,"currency":"EUR","airline":"","confidence":"high","book":"https://www.aviasales.com/search/IAM1206ALG1?marker=531148","updated":"2026-05-22T10:20:07.309Z"}}}

@@ -1,0 +1,1 @@
+{"origin":"ETL","generated":"2026-05-22T10:19:52.987Z","count":1,"routes":{"DHG":{"origin":"ETL","destination":"DHG","bestDeparture":"2026-07-24","bestBooking":"2026-05-22","priceBase":104,"currency":"EUR","airline":"","confidence":"high","book":"https://www.aviasales.com/search/ETL2407DHG1?marker=531148","updated":"2026-05-22T10:19:52.987Z"}}}
