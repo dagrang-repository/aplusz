@@ -8,6 +8,15 @@
    v2/prices/latest (limit=1000, one-way, cheapest per destination).
    We keep the cheapest fare per destination and write one chunk
    per origin:  frontend/data/<ORIGIN>.json  + index.json (manifest)
+
+   PRICE-DROP (Step 19B): a "drop" means a NEW ALL-TIME LOW for that route,
+   not merely cheaper than yesterday. Each origin file persists per route:
+     low      = lowest fare ever recorded
+     lowDate  = date that all-time low was set
+   Each run: if newPrice < stored low -> real drop (dropAbs/dropPct vs old
+   low), then low updates. If newPrice >= low -> no drop (dropPct 0), low
+   unchanged. First sighting seeds low=newPrice, dropPct 0. Self-seeding,
+   no extra infra, no cron change.
    ============================================================ */
 
 const fs = require('fs');
@@ -57,6 +66,26 @@ function bookLink(o, d, dep) {
   return 'https://www.aviasales.com/search/' + o + ddmm(dep) + d + '1?marker=' + MARKER;
 }
 
+/* load each route's ALL-TIME LOW (and the date it was set) for one origin.
+   Reads whichever fields the previous file has: prefer stored `low`, else
+   fall back to last priceBase so older files migrate cleanly. */
+function loadLows(origin) {
+  try {
+    const j = JSON.parse(fs.readFileSync(path.join(outDir, origin + '.json'), 'utf8'));
+    const m = {};
+    if (j && j.routes) {
+      for (const d in j.routes) {
+        const p = j.routes[d];
+        if (!p) continue;
+        const low = (typeof p.low === 'number') ? p.low
+                  : (typeof p.priceBase === 'number') ? p.priceBase : null;
+        if (low !== null) m[d] = { low: low, lowDate: p.lowDate || (p.updated || '').slice(0,10) };
+      }
+    }
+    return m;
+  } catch (e) { return {}; }
+}
+
 /* v2/prices/latest: cheapest cached fares from one origin to ALL destinations.
    Returns { success, data:[ {origin,destination,value,depart_date,gate,...} ] } */
 async function fetchOrigin(origin) {
@@ -72,6 +101,8 @@ async function fetchOrigin(origin) {
   const res = await fetchJson(url);
   if (!res || !res.success || !Array.isArray(res.data)) return null;
 
+  const lows = loadLows(origin);   // all-time low per destination (persisted)
+  const today = new Date().toISOString().slice(0, 10);
   const routes = {};
   let n = 0;
   for (const r of res.data) {
@@ -80,12 +111,36 @@ async function fetchOrigin(origin) {
     // keep cheapest per destination
     if (routes[d] && routes[d].priceBase <= Math.round(r.value)) continue;
     const dep = (r.depart_date || '').slice(0, 10);
+    const newPrice = Math.round(r.value);
+
+    const prior = lows[d] || null;         // { low, lowDate } or null
+    const priorLow = prior ? prior.low : null;
+
+    let dropAbs = 0, dropPct = 0;
+    let low, lowDate;
+    if (priorLow === null) {
+      // first ever sighting: seed the all-time low, no drop
+      low = newPrice; lowDate = today;
+    } else if (newPrice < priorLow) {
+      // NEW ALL-TIME LOW -> real drop, measured against the old record
+      dropAbs = priorLow - newPrice;
+      dropPct = Math.round((dropAbs / priorLow) * 100);
+      low = newPrice; lowDate = today;
+    } else {
+      // not a record: keep the historic low, no drop
+      low = priorLow; lowDate = prior.lowDate || '';
+    }
+
     routes[d] = {
       origin: origin,
       destination: d,
       bestDeparture: dep,
-      bestBooking: new Date().toISOString().slice(0, 10),
-      priceBase: Math.round(r.value),
+      bestBooking: today,
+      priceBase: newPrice,
+      low: low,             // all-time lowest ever recorded
+      lowDate: lowDate,     // date that low was set
+      dropAbs: dropAbs,     // >0 only when this run set a NEW low
+      dropPct: dropPct,     // >0 only when this run set a NEW low
       currency: 'EUR',
       airline: r.airline || '',
       confidence: 'high',
@@ -104,6 +159,7 @@ async function main() {
   const ORIGINS = loadOrigins();
   const manifest = [];
   let totalRoutes = 0, okOrigins = 0, failOrigins = 0;
+  let allDrops = [];   // 19B: collect every route that dropped
 
   for (const origin of ORIGINS) {
     try {
@@ -113,6 +169,15 @@ async function main() {
         manifest.push(origin);
         totalRoutes += chunk.count;
         okOrigins++;
+        for (const d in chunk.routes) {
+          const r = chunk.routes[d];
+          if (r.dropPct > 0) allDrops.push({
+            origin: r.origin, destination: r.destination,
+            priceBase: r.priceBase, low: r.low, lowDate: r.lowDate,
+            dropAbs: r.dropAbs, dropPct: r.dropPct,
+            currency: r.currency, bestDeparture: r.bestDeparture, book: r.book
+          });
+        }
       } else { failOrigins++; }
     } catch (e) {
       console.error('Failed ' + origin + ':', e.message);
@@ -120,6 +185,15 @@ async function main() {
     }
     await new Promise(r => setTimeout(r, 200)); // polite rate limit
   }
+
+  // 19B: biggest price drops across all origins (top 100)
+  allDrops.sort(function (a, b) { return (b.dropPct - a.dropPct) || (b.dropAbs - a.dropAbs); });
+  fs.writeFileSync(path.join(outDir, 'drops.json'), JSON.stringify({
+    generated: new Date().toISOString(),
+    marker: MARKER,
+    count: Math.min(allDrops.length, 100),
+    drops: allDrops.slice(0, 100)
+  }));
 
   fs.writeFileSync(path.join(outDir, 'index.json'), JSON.stringify({
     generated: new Date().toISOString(),
@@ -139,7 +213,7 @@ async function main() {
     marker: MARKER ? 'set' : 'missing'
   }, null, 2));
 
-  console.log('Done. ' + okOrigins + ' origins ok, ' + failOrigins + ' empty, ' + totalRoutes + ' routes.');
+  console.log('Done. ' + okOrigins + ' origins ok, ' + failOrigins + ' empty, ' + totalRoutes + ' routes, ' + allDrops.length + ' drops.');
 }
 
 main().catch((e) => { console.error(e); process.exit(1); });
