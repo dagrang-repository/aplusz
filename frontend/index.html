@@ -44,6 +44,7 @@
     <span class="brand-name"><span class="bn-az">A</span><span class="bn-plus">plus</span><span class="bn-az">Z</span></span>
   </div>
   <nav class="topnav">
+    <button class="icon-btn tier-badge" id="tier-badge" type="button" aria-label="Free">🆓</button>
     <button class="icon-btn" id="theme-toggle" aria-label="Theme">☀</button>
     <button class="icon-btn" id="lang-btn" aria-label="Language">🌐</button>
     <button class="icon-btn" id="menu-btn" aria-label="Profile">☰</button>
@@ -95,34 +96,34 @@
   <div class="plans-grid">
 
     <div class="plan-col">
-      <div class="plan-head" data-i18n="plans.free_head">Free forever</div>
+      <div class="plan-head" data-i18n="plans.free_head">🆓 Free forever</div>
       <ul class="plan-feats">
         <li data-i18n="plans.f_unlimited">Unlimited route searches</li>
         <li data-i18n="plans.f_exact">Exact best date + price</li>
         <li data-i18n="plans.f_saved1">1 saved route</li>
-        <li data-i18n="plans.f_alert1">1 alert per week</li>
+        <li data-i18n="plans.f_reminders">Unlimited reminders on it</li>
         <li data-i18n="plans.f_calendar">Calendar export</li>
         <li data-i18n="plans.f_offline">Works offline</li>
       </ul>
     </div>
 
     <div class="plan-col">
-      <a class="plan-head plan-head-link" href="pricing.html#pro" onclick="if(window.APlusZ&&APlusZ.billing){event.preventDefault();APlusZ.billing.buy('pro')}"><span data-i18n="plans.pro_head">Pro</span> →</a>
+      <a class="plan-head plan-head-link" href="pricing.html#pro" onclick="if(window.APlusZ&&APlusZ.billing){event.preventDefault();APlusZ.billing.buy('pro')}"><span data-i18n="plans.pro_head">⭐ Pro</span> →</a>
       <ul class="plan-feats">
         <li data-i18n="plans.p_everything_free">Everything in Free</li>
-        <li data-i18n="plans.p_alerts3">3 alerts per day</li>
-        <li data-i18n="plans.p_routes2">2 custom route sets</li>
-        <li data-i18n="plans.p_priority">Priority data refresh</li>
+        <li data-i18n="plans.p_routes3">Up to 3 saved routes</li>
+        <li data-i18n="plans.p_swaps3">Swap routes (3 changes)</li>
+        <li data-i18n="plans.p_reminders">Unlimited reminders</li>
       </ul>
     </div>
 
     <div class="plan-col">
-      <a class="plan-head plan-head-link" href="pricing.html#proplus" onclick="if(window.APlusZ&&APlusZ.billing){event.preventDefault();APlusZ.billing.buy('proplus')}"><span data-i18n="plans.proplus_head">Pro+</span> →</a>
+      <a class="plan-head plan-head-link" href="pricing.html#proplus" onclick="if(window.APlusZ&&APlusZ.billing){event.preventDefault();APlusZ.billing.buy('proplus')}"><span data-i18n="plans.proplus_head">👑 Pro+</span> →</a>
       <ul class="plan-feats">
         <li data-i18n="plans.pp_everything_pro">Everything in Pro</li>
-        <li data-i18n="plans.pp_alerts5">5 alerts/day or custom frequency</li>
-        <li data-i18n="plans.pp_routes_unlim">Unlimited route sets</li>
-        <li data-i18n="plans.pp_early">Early access to new features</li>
+        <li data-i18n="plans.pp_routes_unlim">Unlimited saved routes</li>
+        <li data-i18n="plans.pp_swaps_unlim">Unlimited swaps + removes</li>
+        <li data-i18n="plans.pp_reminders">Unlimited reminders</li>
       </ul>
     </div>
 

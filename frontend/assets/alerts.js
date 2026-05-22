@@ -4,9 +4,13 @@
    Save: D:\Destop\AplusZ\frontend\assets\alerts.js
 
    Self-reminders sent via the user's OWN mail app (mailto:).
-   No server, no Resend, no cost. Limits enforced locally:
-     Free 1/week · Pro 3/day · Pro+ unlimited (optional self-cap)
-     Cap-on (€62k) → unlimited for everyone.
+   No server, no Resend, no cost. REMINDERS ARE UNLIMITED (all tiers).
+   The ONLY gate is how many saved routes you may keep + how many
+   removes/swaps you may do:
+     Free  : 1 route, 0 removes  (remove/swap -> upgrade banner)
+     Pro   : 3 routes, 3 removes (4th remove -> upgrade banner)
+     Pro+  : unlimited routes + unlimited removes.
+     Cap-on (€62k) -> everyone gets Pro+ behaviour.
    Email body carries an affiliate "Book it now" link + a "Rescan" link.
    ============================================================ */
 
@@ -17,11 +21,8 @@
   var APP_URL = (APZ.config && APZ.config.appUrl) || 'https://aplusz.app';
 
   var LS_LIST = 'aplusz-alerts';     // [{o,d,price,book,dep,savedAt}]
-  var LS_LOG = 'aplusz-alert-log';   // [timestamps]
-  var LS_CAP = 'aplusz-alert-cap';   // Pro+ self-set per-day cap ('' = unlimited)
+  var LS_REMOVES = 'aplusz-removes'; // count of removes/swaps used (gate)
   var LS_EMAIL = 'aplusz-email';     // set by billing.js at paid signup
-
-  var DAY = 86400000, WEEK = 7 * DAY;
 
   /* ---------- i18n with English fallback ---------- */
   var EN = {
@@ -30,9 +31,12 @@
     'alerts.empty': 'No alerts yet. Tap "Remind me" on a result to add one.',
     'alerts.resend': 'Re-send',
     'alerts.remove': 'Remove',
-    'alerts.limit': 'Reminder limit reached for your plan — upgrade for more.',
     'alerts.sent': 'Reminder ready in your mail app.',
-    'alerts.cap_label': 'Max reminders per day (blank = unlimited)',
+    'alerts.limit_free': 'Free keeps 1 saved route, locked. Upgrade to Pro to swap routes (3 changes) or Pro+ for unlimited.',
+    'alerts.limit_pro': 'Pro allows 3 route changes — you have used them all. Upgrade to Pro+ for unlimited routes and swaps.',
+    'alerts.tier_free': 'Free',
+    'alerts.tier_pro': 'Pro',
+    'alerts.tier_proplus': 'Pro+',
     'alerts.book': 'Book it now',
     'alerts.rescan': 'Rescan latest price',
     'alerts.mail_subject': '✈️ Price watch: {route}',
@@ -52,39 +56,37 @@
   function set(key, val) { try { localStorage.setItem(key, JSON.stringify(val)); } catch (e) {} }
   function rawGet(key) { try { return localStorage.getItem(key) || ''; } catch (e) { return ''; } }
 
-  /* ---------- tier + limits ---------- */
+  /* ---------- tier + ROUTE/REMOVE gate ---------- */
   function tier() {
     return (APZ.billing && APZ.billing.tier) ? APZ.billing.tier() : 'free';
   }
   function capOn() {
     return !!(APZ.billing && APZ.billing.isCapOn && APZ.billing.isCapOn());
   }
-  /* returns { unlimited, max, win } */
-  function limit() {
-    if (capOn()) return { unlimited: true };
+  /* how many saved routes this tier may keep */
+  function routeCap() {
+    if (capOn()) return Infinity;
     var tr = tier();
-    if (tr === 'proplus') {
-      var c = parseInt(rawGet(LS_CAP), 10);
-      return (c > 0) ? { unlimited: false, max: c, win: DAY } : { unlimited: true };
-    }
-    if (tr === 'pro') return { unlimited: false, max: 3, win: DAY };
-    return { unlimited: false, max: 1, win: WEEK }; // free
+    if (tr === 'proplus') return Infinity;
+    if (tr === 'pro') return 3;
+    return 1; // free
   }
-  function usedWithin(win) {
-    var now = Date.now();
-    return get(LS_LOG, []).filter(function (ts) { return now - ts < win; }).length;
+  /* how many removes/swaps this tier is allowed in total */
+  function removeCap() {
+    if (capOn()) return Infinity;
+    var tr = tier();
+    if (tr === 'proplus') return Infinity;
+    if (tr === 'pro') return 3;
+    return 0; // free: route is locked
   }
-  function canSend() {
-    var l = limit();
-    if (l.unlimited) return true;
-    return usedWithin(l.win) < l.max;
+  function removesUsed() { var n = parseInt(rawGet(LS_REMOVES), 10); return isNaN(n) ? 0 : n; }
+  function canRemove() { return removesUsed() < removeCap(); }
+  function recordRemove() {
+    if (removeCap() === Infinity) return;
+    set(LS_REMOVES, removesUsed() + 1);
   }
-  function record() {
-    var now = Date.now();
-    var log = get(LS_LOG, []).filter(function (ts) { return now - ts < WEEK; });
-    log.push(now);
-    set(LS_LOG, log);
-  }
+  /* reminders are ALWAYS allowed now */
+  function canSend() { return true; }
 
   /* ---------- affiliate "Book" link (mirrors result.js) ---------- */
   function bookLink(o, d, dep) {
@@ -122,16 +124,19 @@
 
   function limitBanner() {
     var old = document.querySelector('.azb-limit'); if (old) old.remove();
+    var tr = tier();
+    var msg = (tr === 'pro') ? t('alerts.limit_pro') : t('alerts.limit_free');
+    var nextTier = (tr === 'pro') ? 'proplus' : 'pro';
     var el = document.createElement('div');
     el.className = 'azb-limit';
     el.innerHTML =
-      '<span class="azb-limit-msg">' + t('alerts.limit') + '</span>' +
+      '<span class="azb-limit-msg">' + msg + '</span>' +
       '<button class="azb-limit-up" type="button">' + t('billing.free_upgrade') + '</button>' +
       '<button class="azb-limit-x" type="button" aria-label="close">\u00d7</button>';
     document.body.appendChild(el);
     requestAnimationFrame(function () { el.classList.add('show'); });
     el.querySelector('.azb-limit-up').onclick = function () {
-      if (window.APlusZ && APlusZ.billing) APlusZ.billing.buy('pro');
+      if (window.APlusZ && APlusZ.billing) APlusZ.billing.buy(nextTier);
       el.remove();
     };
     el.querySelector('.azb-limit-x').onclick = function () { el.remove(); };
@@ -159,14 +164,15 @@
       dep: d.bestDeparture || '',
       savedAt: Date.now()
     };
-    // save/dedupe into the list (max 12)
+    // save/dedupe, then trim to this tier's route cap
+    var cap = routeCap();
     var list = get(LS_LIST, []).filter(function (r) { return (r.o + r.d) !== (item.o + item.d); });
     list.unshift(item);
-    set(LS_LIST, list.slice(0, 12));
+    if (cap !== Infinity) list = list.slice(0, cap);
+    set(LS_LIST, list);
 
-    if (!canSend()) { limitBanner(); refresh(); return; }
+    // reminders are unlimited on any kept route
     openMail(item);
-    record();
     toast(t('alerts.sent'));
     refresh();
   }
@@ -174,16 +180,18 @@
   function resend(i) {
     var list = get(LS_LIST, []);
     if (!list[i]) return;
-    if (!canSend()) { limitBanner(); return; }
     openMail(list[i]);
-    record();
     toast(t('alerts.sent'));
   }
   function remove(i) {
     var list = get(LS_LIST, []);
+    if (!list[i]) return;
+    if (!canRemove()) { limitBanner(); return; }
     list.splice(i, 1);
     set(LS_LIST, list);
+    recordRemove();
     refresh();
+    updateBadge();
   }
 
   /* ---------- "My alerts" section inside the profile drawer ---------- */
@@ -201,20 +209,9 @@
         }).join('')
       : '<div class="al-empty">' + t('alerts.empty') + '</div>';
 
-    var capField = '';
-    if (tier() === 'proplus' && !capOn()) {
-      capField =
-        '<div class="al-cap">' +
-        '<label class="al-cap-label">' + t('alerts.cap_label') + '</label>' +
-        '<input class="al-cap-input" id="al-cap-input" type="number" min="1" inputmode="numeric" value="' +
-        rawGet(LS_CAP) + '">' +
-        '</div>';
-    }
-
     return '<div class="pd-section" id="pd-alerts">' +
       '<div class="pd-label">\uD83D\uDD14 ' + t('alerts.title') + '</div>' +
       '<div class="al-list">' + rows + '</div>' +
-      capField +
       '</div>';
   }
 
@@ -227,13 +224,41 @@
     root.querySelectorAll('.al-remove').forEach(function (b) {
       b.addEventListener('click', function () { remove(+b.dataset.i); });
     });
-    var cap = document.getElementById('al-cap-input');
-    if (cap) cap.addEventListener('change', function () {
-      var v = parseInt(cap.value, 10);
-      if (v > 0) { try { localStorage.setItem(LS_CAP, String(v)); } catch (e) {} }
-      else { try { localStorage.removeItem(LS_CAP); } catch (e) {} }
-    });
   }
+
+
+  /* ---------- TIER BADGE (left of theme toggle, opens the menu) ---------- */
+  var TIER_ICON = { free: '\uD83C\uDD93', pro: '\u2B50', proplus: '\uD83D\uDC51' }; // 🆓 ⭐ 👑
+  function tierLabel(tr) {
+    if (tr === 'proplus') return t('alerts.tier_proplus');
+    if (tr === 'pro') return t('alerts.tier_pro');
+    return t('alerts.tier_free');
+  }
+  function updateBadge() {
+    var b = document.getElementById('tier-badge');
+    if (!b) return;
+    var tr = tier();
+    b.textContent = TIER_ICON[tr] || TIER_ICON.free;
+    b.setAttribute('aria-label', tierLabel(tr));
+    b.title = tierLabel(tr);
+  }
+  function ensureBadge() {
+    if (document.getElementById('tier-badge')) { updateBadge(); return; }
+    var nav = document.querySelector('.topnav');
+    var theme = document.getElementById('theme-toggle');
+    if (!nav || !theme) return;
+    var b = document.createElement('button');
+    b.className = 'icon-btn tier-badge';
+    b.id = 'tier-badge';
+    b.type = 'button';
+    nav.insertBefore(b, theme);          // sits to the LEFT of the theme icon
+    b.onclick = function () {
+      var m = document.getElementById('menu-btn');
+      if (m) m.click();
+    };
+    updateBadge();
+  }
+  document.addEventListener('aplusz:tier', function () { updateBadge(); refresh(); });
 
   /* called by profile.js after the drawer is built */
   function mount() {
@@ -249,6 +274,10 @@
     wire();
   }
 
-  APZ.alerts = { remind: remind, resend: resend, remove: remove, mount: mount, canSend: canSend, tier: tier };
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', ensureBadge);
+  } else { ensureBadge(); }
+
+  APZ.alerts = { remind: remind, resend: resend, remove: remove, mount: mount, tier: tier, updateBadge: updateBadge };
 
 })();

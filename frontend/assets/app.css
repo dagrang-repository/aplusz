@@ -423,3 +423,15 @@ a:hover { text-decoration: underline; }
   padding: 0 2px;
 }
 .azb-limit-x:hover { color: var(--text); }
+
+/* ============================================================
+   TIER BADGE — status icon left of theme toggle; tap = open menu
+   🆓 Free · ⭐ Pro · 👑 Pro+
+   ============================================================ */
+.tier-badge {
+  font-size: 18px;          /* glyph a touch smaller than the 24px nav icons */
+  line-height: 1;
+}
+.tier-badge:hover { transform: scale(1.12); }
+html[data-tier="pro"] .tier-badge,
+html[data-tier="proplus"] .tier-badge { color: var(--accent); }
