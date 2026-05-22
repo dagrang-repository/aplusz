@@ -10,12 +10,12 @@
   var REVENUE_CAP_EUR = 62000;
 
   var PLANS = [
-    { id: 'free',    name: 'Bronze', tag: 'Free',
-      feats: 'Unlimited searches \u00b7 exact best date + price \u00b7 1 saved route \u00b7 works offline' },
-    { id: 'pro',     name: 'Pro', tag: '',
-      feats: 'Everything in Bronze \u00b7 3 alerts/day \u00b7 2 custom route sets \u00b7 priority data refresh' },
-    { id: 'proplus', name: 'Pro+', tag: '',
-      feats: 'Everything in Pro \u00b7 5 alerts/day or custom \u00b7 unlimited route sets \u00b7 early access' }
+    { id: 'free',    name: '\uD83C\uDD93 Free', tag: '',
+      feats: 'Unlimited searches \u00b7 exact best date + price \u00b7 1 saved route \u00b7 unlimited reminders \u00b7 works offline' },
+    { id: 'pro',     name: '\u2B50 Pro', tag: '',
+      feats: 'Everything in Free \u00b7 up to 3 saved routes \u00b7 swap routes (3 changes) \u00b7 unlimited reminders' },
+    { id: 'proplus', name: '\uD83D\uDC51 Pro+', tag: '',
+      feats: 'Everything in Pro \u00b7 unlimited saved routes \u00b7 unlimited swaps + removes \u00b7 unlimited reminders' }
   ];
 
   function currentPlan() {
@@ -62,8 +62,8 @@
       '  <div class="pd-plans">' + planCardsHTML() + '</div>',
 
       '  <div class="pd-section">',
-      '    <div class="pd-label">Price alerts</div>',
-      '    <div class="pd-alerts-intro">Get notified when your route hits an all-time low.</div>',
+      '    <div class="pd-label">Saved routes</div>',
+      '    <div class="pd-alerts-intro">Save a route, then re-send a reminder to your own mail anytime.</div>',
       '    <div id="pd-alerts-anchor"></div>',
       '  </div>',
 

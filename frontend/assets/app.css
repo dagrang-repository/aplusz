@@ -429,9 +429,22 @@ a:hover { text-decoration: underline; }
    🆓 Free · ⭐ Pro · 👑 Pro+
    ============================================================ */
 .tier-badge {
-  font-size: 18px;          /* glyph a touch smaller than the 24px nav icons */
+  /* HARD RULE: icon + name shown together as one pill */
+  width: auto;
+  gap: 4px;
+  padding: 0 var(--sp-2);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  font-size: var(--fs-sm);
+  font-weight: 700;
   line-height: 1;
+  white-space: nowrap;
 }
-.tier-badge:hover { transform: scale(1.12); }
+.tier-badge .tb-ic { font-size: 16px; line-height: 1; }
+.tier-badge .tb-nm { font-size: var(--fs-sm); }
+.tier-badge:hover { transform: scale(1.06); border-color: var(--accent); }
 html[data-tier="pro"] .tier-badge,
-html[data-tier="proplus"] .tier-badge { color: var(--accent); }
+html[data-tier="proplus"] .tier-badge {
+  color: var(--accent);
+  border-color: var(--accent);
+}

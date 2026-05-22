@@ -238,12 +238,23 @@
     var b = document.getElementById('tier-badge');
     if (!b) return;
     var tr = tier();
-    b.textContent = TIER_ICON[tr] || TIER_ICON.free;
-    b.setAttribute('aria-label', tierLabel(tr));
-    b.title = tierLabel(tr);
+    var icon = TIER_ICON[tr] || TIER_ICON.free;
+    var name = tierLabel(tr);
+    // HARD RULE: icon + name always together, never one alone
+    b.innerHTML = '<span class="tb-ic">' + icon + '</span><span class="tb-nm">' + name + '</span>';
+    b.setAttribute('aria-label', name);
+    b.title = name;
+  }
+  function bindBadge(b) {
+    b.onclick = function () {
+      var m = document.getElementById('menu-btn');
+      if (m) m.click();
+      else if (window.APlusZ && APlusZ.profile && APlusZ.profile.open) APlusZ.profile.open();
+    };
   }
   function ensureBadge() {
-    if (document.getElementById('tier-badge')) { updateBadge(); return; }
+    var existing = document.getElementById('tier-badge');
+    if (existing) { bindBadge(existing); updateBadge(); return; }   // static markup: bind + update
     var nav = document.querySelector('.topnav');
     var theme = document.getElementById('theme-toggle');
     if (!nav || !theme) return;
@@ -252,10 +263,7 @@
     b.id = 'tier-badge';
     b.type = 'button';
     nav.insertBefore(b, theme);          // sits to the LEFT of the theme icon
-    b.onclick = function () {
-      var m = document.getElementById('menu-btn');
-      if (m) m.click();
-    };
+    bindBadge(b);
     updateBadge();
   }
   document.addEventListener('aplusz:tier', function () { updateBadge(); refresh(); });
