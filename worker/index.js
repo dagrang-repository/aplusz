@@ -71,6 +71,28 @@ async function readToken(env, token) {
   return p; // { e, t, x }
 }
 
+
+/* ---------- GIFT comp-access: signed token + KV single-use/single-device ----------
+   A gift = a normal proplus access token with a custom expiry, gated by:
+     KV  gift:<code> -> { used, deviceId, exp, days }
+   No secret on the public site; generation is ADMIN_PASS-gated. */
+async function makeGiftToken(env, exp) {
+  // mirrors makeToken shape {e,t,x} so /validate + billing.js treat it identically
+  const payload = { e: 'gift', t: 'proplus', x: exp, g: 1 };
+  const body = b64urlStr(JSON.stringify(payload));
+  const sig = b64url(await hmac(env.SIGNING_SECRET, body));
+  return body + '.' + sig;
+}
+function randCode() {
+  return (crypto.randomUUID && crypto.randomUUID()) ||
+    ([1e7]+-1e3+-4e3).replace(/[018]/g, c =>
+      (c ^ crypto.getRandomValues(new Uint8Array(1))[0] & 15 >> c / 4).toString(16));
+}
+function randDevice() {
+  const a = crypto.getRandomValues(new Uint8Array(16));
+  return Array.from(a).map(x => x.toString(16).padStart(2, '0')).join('');
+}
+
 /* ---------- admin session cookie validation ---------- */
 async function validAdminCookie(env, req) {
   const cookie = req.headers.get('cookie') || '';
@@ -352,6 +374,59 @@ export default {
         }, 200, origin);
       }
 
+      /* ---- GIFT: generate a comp-access code (ADMIN_PASS gated) ---- */
+      if (url.pathname === '/admin/gift' && req.method === 'POST') {
+        const reqBody = await req.json().catch(() => ({}));
+        const ok = (reqBody.pass && reqBody.pass === env.ADMIN_PASS)
+          || await validAdminCookie(env, req);
+        if (!ok) return json({ error: 'forbidden' }, 403, origin);
+        let days = parseInt(reqBody.days, 10);
+        if (!days || days < 1) days = 180;          // default ~6 months
+        if (days > 3650) days = 3650;               // sane ceiling (10y)
+        const code = randCode();
+        await env.AZKV.put('gift:' + code, JSON.stringify({
+          used: 0, deviceId: null, days: days, exp: null,
+          created: Math.floor(Date.now() / 1000)
+        }));
+        const redeemUrl = (env.APP_URL || 'https://aplusz.app') + '/legal/?code=' + code;
+        return json({ ok: true, code: code, days: days, url: redeemUrl }, 200, origin);
+      }
+
+      /* ---- GIFT: redeem a code (PUBLIC, no secret) ---- */
+      if (url.pathname === '/redeem' && req.method === 'POST') {
+        const reqBody = await req.json().catch(() => ({}));
+        const code = ('' + (reqBody.code || '')).trim();
+        const sentDevice = ('' + (reqBody.deviceId || '')).trim();
+        if (!code) return json({ error: 'no_code', valid: false }, 400, origin);
+
+        const raw = await env.AZKV.get('gift:' + code);
+        if (!raw) return json({ error: 'invalid', valid: false }, 200, origin);
+        let g; try { g = JSON.parse(raw); } catch { return json({ error: 'invalid', valid: false }, 200, origin); }
+
+        // already redeemed
+        if (g.used) {
+          // same device that first redeemed -> re-issue a fresh token (re-open allowed)
+          if (sentDevice && g.deviceId && timingSafe(sentDevice, g.deviceId)) {
+            if (g.exp && g.exp > Math.floor(Date.now() / 1000)) {
+              const token = await makeGiftToken(env, g.exp);
+              return json({ valid: true, token, deviceId: g.deviceId, exp: g.exp, tier: 'proplus' }, 200, origin);
+            }
+            return json({ error: 'expired', valid: false }, 200, origin);
+          }
+          // different device -> single-device lock
+          return json({ error: 'used', valid: false }, 200, origin);
+        }
+
+        // first redemption -> bind device, set expiry, mint token
+        const deviceId = randDevice();
+        const exp = Math.floor(Date.now() / 1000) + g.days * 86400;
+        g.used = 1; g.deviceId = deviceId; g.exp = exp;
+        g.redeemed = Math.floor(Date.now() / 1000);
+        await env.AZKV.put('gift:' + code, JSON.stringify(g));
+        const token = await makeGiftToken(env, exp);
+        return json({ valid: true, token, deviceId, exp, tier: 'proplus' }, 200, origin);
+      }
+
       /* ---- manual pause / resume (owner only) ---- */
       if (url.pathname === '/admin/pause' && req.method === 'POST') {
         const reqBody = await req.json().catch(() => ({}));
@@ -432,6 +507,9 @@ border:1px solid var(--line);background:#0a1124;margin-bottom:6px}
 .spin{display:inline-block;width:15px;height:15px;border:2px solid #ffffff55;
 border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical-align:-2px}
 @keyframes s{to{transform:rotate(360deg)}}
+.gift{margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.giftOut input{width:100%;background:#0a1124;border:1px solid var(--line);color:var(--ink);padding:12px;border-radius:10px}
+.giftOut.hide{display:none}
 </style></head><body>
 <div class="wrap">
   <div class="brand"><b>A<span>+</span>Z</b><p>Owner control panel</p></div>
@@ -456,6 +534,19 @@ border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical
     </div>
     <button class="btn" id="toggle">—</button>
     <div class="msg" id="panelMsg"></div>
+
+    <!-- ===== GIFT CODE GENERATOR ===== -->
+    <div class="gift">
+      <label for="giftDays">Gift access · duration (days)</label>
+      <input id="giftDays" type="number" min="1" max="3650" value="180" inputmode="numeric" />
+      <button class="btn btn-go" id="giftGo" style="margin-top:12px">Generate gift code</button>
+      <div class="msg" id="giftMsg"></div>
+      <div id="giftOut" class="giftOut hide">
+        <input id="giftUrl" readonly onclick="this.select()" style="margin-top:14px;font-size:.82rem;text-align:center" />
+        <button class="btn" id="giftCopy" style="margin-top:8px;background:#1f2b4a;color:var(--ink)">Copy link</button>
+        <div class="sub" style="margin-top:8px;text-align:center;color:var(--mut);font-size:.75rem">Send this link to your friend. First device to open it is bound for the full period · single use.</div>
+      </div>
+    </div>
     <!-- ===== FLOW AI LINK SLOT — tell Claude where/label; replace below ===== -->
     <!-- <div class="foot"><a href="FLOW_AI_URL">Open Flow AI →</a></div> -->
     <div class="foot"><a href="#" id="logout">Log out</a></div>
@@ -529,6 +620,24 @@ $('logout').onclick = async (e) => {
   e.preventDefault();
   try{ await api('/admin/logout',{}); }catch{}
   cur=null; show('login'); $('loginMsg').textContent=''; $('pass').focus();
+};
+
+/* ===== GIFT CODE GENERATOR (link only) ===== */
+$('giftGo').onclick = async () => {
+  const days = parseInt($('giftDays').value, 10) || 180;
+  const m = $('giftMsg'); m.className='msg'; m.innerHTML='<span class="spin"></span>';
+  try {
+    const r = await api('/admin/gift', { days: days });
+    m.className='msg ok'; m.textContent = 'Code created · valid ' + r.days + ' days · single device.';
+    $('giftUrl').value = r.url;
+    $('giftOut').classList.remove('hide');
+  } catch { m.className='msg err'; m.textContent='Could not create code. Try again.'; }
+};
+$('giftCopy').onclick = () => {
+  const i = $('giftUrl'); i.select(); i.setSelectionRange(0,99999);
+  try { navigator.clipboard.writeText(i.value); $('giftCopy').textContent='Copied ✓';
+        setTimeout(()=>$('giftCopy').textContent='Copy link',1500); }
+  catch { document.execCommand('copy'); }
 };
 </script>
 </body></html>`;

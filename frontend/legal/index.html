@@ -121,7 +121,7 @@ www.cloudflare.com</p>
 
 <h3>5. Programme de parrainage</h3>
 <ul>
-  <li>Les séquences (streaks), primes et statuts (Bronze, Argent, Or, Diamant) sont non transférables et sans valeur monétaire.</li>
+  <li>Les séquences (streaks), primes et statuts (🆓 Free, ⭐ Pro, 👑 Pro+) sont non transférables et sans valeur monétaire.</li>
   <li>AplusZ se réserve le droit de modifier ou résilier le programme à tout moment.</li>
   <li>La barre de progression collective et le déclenchement final sont à la discrétion de l'éditeur après vérification.</li>
 </ul>
@@ -137,6 +137,64 @@ www.cloudflare.com</p>
 
 <h3>9. Contact</h3>
 <p>Questions : <a href="mailto:dagrang@gmail.com">dagrang@gmail.com</a></p>
+
+<hr>
+
+<!-- ===== AplusZ Codes — gift redemption (no secret; validates via Worker) ===== -->
+<details id="az-codes" style="margin-top:var(--sp-8)">
+  <summary style="cursor:pointer;color:var(--text-dim);font-size:var(--fs-sm);list-style:none">AplusZ Codes</summary>
+  <div style="margin-top:var(--sp-4);max-width:360px">
+    <input id="az-code-input" type="text" autocomplete="off" spellcheck="false"
+      placeholder="Enter your code"
+      style="width:100%;background:var(--surface);border:1px solid var(--border);color:var(--text);padding:12px 14px;border-radius:var(--r-md);font-family:var(--font-mono);font-size:.85rem;outline:none" />
+    <button id="az-code-go" type="button"
+      style="width:100%;margin-top:10px;border:0;border-radius:var(--r-md);padding:13px;font-weight:700;cursor:pointer;background:var(--accent);color:var(--bg)">Unlock</button>
+    <div id="az-code-msg" style="margin-top:10px;font-size:.85rem;text-align:center;color:var(--text-muted);min-height:1.2em"></div>
+  </div>
+</details>
+
+<script>
+(function(){
+  var API='https://api.aplusz.app';
+  var LS_TOKEN='aplusz-token', LS_TIER='aplusz-tier', LS_DEV='aplusz-gift-device';
+  var $=function(id){return document.getElementById(id);};
+  function msg(t,ok){var m=$('az-code-msg');if(!m)return;m.textContent=t;m.style.color=ok?'#34d399':(ok===false?'#fb7185':'var(--text-muted)');}
+  function dev(){try{var d=localStorage.getItem(LS_DEV);return d||'';}catch(e){return '';}}
+  function redeem(code){
+    if(!code){msg('Enter a code.',false);return;}
+    msg('Checking…');
+    fetch(API+'/redeem',{method:'POST',headers:{'content-type':'application/json'},
+      body:JSON.stringify({code:code,deviceId:dev()})})
+      .then(function(r){return r.json();})
+      .then(function(r){
+        if(r&&r.valid&&r.token){
+          try{
+            localStorage.setItem(LS_TOKEN,r.token);
+            localStorage.setItem(LS_TIER,r.tier||'proplus');
+            if(r.deviceId)localStorage.setItem(LS_DEV,r.deviceId);
+          }catch(e){}
+          msg('Unlocked ✓ Enjoy AplusZ.',true);
+          setTimeout(function(){location.href='../index.html';},1200);
+        } else if(r&&r.error==='used'){ msg('This code is already in use on another device.',false); }
+        else if(r&&r.error==='expired'){ msg('This code has expired.',false); }
+        else { msg('Invalid code.',false); }
+      })
+      .catch(function(){ msg('Network error. Try again.',false); });
+  }
+  function init(){
+    var btn=$('az-code-go'),inp=$('az-code-input');
+    if(!btn||!inp)return;
+    btn.addEventListener('click',function(){redeem(inp.value.trim());});
+    inp.addEventListener('keydown',function(e){if(e.key==='Enter')redeem(inp.value.trim());});
+    // auto-fill + auto-open from ?code=
+    try{
+      var q=new URLSearchParams(location.search).get('code');
+      if(q){inp.value=q;var d=$('az-codes');if(d)d.open=true;}
+    }catch(e){}
+  }
+  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
+})();
+</script>
 
 </body>
 </html>
