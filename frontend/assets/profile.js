@@ -1,5 +1,5 @@
 /* ============================================================
-   AplusZ — Profile UI: Plan status / Karma / Referral / Alerts / Streak
+   AplusZ — Profile UI: Plans / Price alerts / Progress / Share / Karma / Streak
    File: frontend/assets/profile.js
    Save: D:\Destop\AplusZ\frontend\assets\profile.js
    ============================================================ */
@@ -9,7 +9,6 @@
 
   var REVENUE_CAP_EUR = 62000;
 
-  /* ---- plan copy (Bronze = free, Pro, Pro+) ---- */
   var PLANS = [
     { id: 'free',    name: 'Bronze', tag: 'Free',
       feats: 'Unlimited searches \u00b7 exact best date + price \u00b7 1 saved route \u00b7 works offline' },
@@ -62,30 +61,30 @@
 
       '  <div class="pd-plans">' + planCardsHTML() + '</div>',
 
-      '  <div class="pd-karma">',
-      '    <div class="pd-karma-top">',
-      '      <span class="pd-karma-label">Karma points</span>',
-      '      <span class="pd-karma-value">' + karma + '</span>',
-      '    </div>',
-      '    <div class="pd-karma-msg">The more you share AplusZ, the faster the whole site — including Pro and Pro+ — becomes free for everyone.</div>',
-      '    <div class="pd-bar-label"><span>Progress to free-for-all</span><span id="adopt-pct">0%</span></div>',
-      '    <div class="adopt-bar" id="adopt-bar"><div class="adopt-fill" id="adopt-fill" style="width:0%"><div class="adopt-shimmer"></div></div></div>',
-      '    <div class="pd-karma-reward">When this hits 100%, every paid plan becomes free for everyone until January 1. So share more!</div>',
+      '  <div class="pd-section">',
+      '    <div class="pd-label">Price alerts</div>',
+      '    <div class="pd-alerts-intro">Get notified when your route hits an all-time low.</div>',
+      '    <div id="pd-alerts-anchor"></div>',
       '  </div>',
 
-      '  <div class="pd-section">',
-      '    <div class="pd-label">Your referral link</div>',
+      '  <div class="pd-karma">',
+      '    <div class="adopt-bar" id="adopt-bar">',
+      '      <div class="adopt-fill" id="adopt-fill" style="width:0%"><div class="adopt-shimmer"></div></div>',
+      '      <div class="adopt-bar-text"><span>Progress to free-for-all</span><span id="adopt-pct">0%</span></div>',
+      '    </div>',
+      '    <div class="pd-karma-reward">When this hits 100%, every paid plan becomes free for everyone until January 1. So share more!</div>',
+
       '    <div class="ref-link-row">',
       '      <input class="ref-link-input" id="ref-link-input" value="' + url + '" readonly>',
       '      <button class="ref-link-copy" id="ref-link-copy">Copy</button>',
       '    </div>',
       '    <button class="pd-share-btn" id="pd-share">\u2197 Share AplusZ</button>',
-      '  </div>',
 
-      '  <div class="pd-section">',
-      '    <div class="pd-label">Price alerts</div>',
-      '    <div class="pd-alerts-intro">Get notified when your route hits an all-time low.</div>',
-      '    <div id="pd-alerts-anchor"></div>',
+      '    <div class="pd-karma-top">',
+      '      <span class="pd-karma-label">Karma points</span>',
+      '      <span class="pd-karma-value">' + karma + '</span>',
+      '    </div>',
+      '    <div class="pd-karma-msg">The more you share AplusZ, the faster the whole site — including Pro and Pro+ — becomes free for everyone.</div>',
       '  </div>',
 
       '  <div class="pd-streak">',
@@ -148,7 +147,6 @@
     }, 300);
   }
 
-  /* live-refresh the active plan card if tier changes while open */
   document.addEventListener('aplusz:tier', function () {
     var box = document.querySelector('.pd-plans');
     if (box) box.innerHTML = planCardsHTML();
