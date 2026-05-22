@@ -56,7 +56,7 @@
       '<div class="profile-drawer" id="profile-drawer">',
       '  <div class="pd-header">',
       '    <div class="pd-title">Your Profile</div>',
-      '    <button class="pd-close" id="pd-close" aria-label="Close">\u00d7</button>',
+      '    <div class="pd-close-wrap"><button class="pd-close" id="pd-close" aria-label="Close">\u00d7</button></div>',
       '  </div>',
 
       '  <div class="pd-plans">' + planCardsHTML() + '</div>',

@@ -1,37 +1,29 @@
 name: Daily Flight Data Refresh
-
 on:
   schedule:
     # Every day at 03:00 UTC (low-traffic window)
     - cron: '0 3 * * *'
   workflow_dispatch:  # Manual "Run workflow" button in the Actions tab
-
 permissions:
   contents: write
   issues: write        # allows the failure-alert step to open an issue
-
 jobs:
   fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
-
+    timeout-minutes: 30
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
-
+        uses: actions/checkout@v5
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v5
         with:
-          node-version: '20'
-      # No npm install: fetch-flights.js uses only Node built-ins
-      # (https, fs, path). There is no package.json — nothing to install.
-
+          node-version: '22'
+      # No npm install: fetch-flights.js uses only Node built-ins.
       - name: Run flight data fetcher
         run: node scripts/fetch-flights.js
         env:
           TRAVELPAYOUTS_TOKEN: ${{ secrets.TRAVELPAYOUTS_TOKEN }}
           TRAVELPAYOUTS_MARKER: ${{ secrets.TRAVELPAYOUTS_MARKER }}
-
       - name: Validate output
         run: |
           if [ ! -f frontend/data/index.json ]; then
@@ -44,7 +36,6 @@ jobs:
             echo "::error::manifest has zero origins — refusing to commit empty data"
             exit 1
           fi
-
       - name: Commit & push updated data
         run: |
           git config user.name "APlusZ Bot"
@@ -56,7 +47,6 @@ jobs:
             git commit -m "Daily data refresh — $(date -u +%Y-%m-%d)"
             git push
           fi
-
       - name: Alert on failure
         if: failure()
         env:

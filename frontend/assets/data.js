@@ -6,10 +6,11 @@
    Reads per-origin chunks committed weekly by GitHub Actions:
      /data/<ORIGIN>.json   (+ /data/index.json manifest)
    Resolves typed cities -> IATA city codes via APlusZ.cities.
-   Shows ONLY real fetched fares; a miss returns null -> honest
-   empty-state. No fabricated prices (demo behind dev flag only).
-   ============================================================ */
 
+   EVERY resolvable pair is monitored + bookable (affiliate, marker
+   531148). Cached fare shown when present; otherwise the card invites
+   "Check the live price" and still opens a real affiliate search.
+   ============================================================ */
 (function () {
   'use strict';
 
@@ -38,24 +39,10 @@
       .catch(function () { chunkCache[origin] = null; return null; });
   }
 
-  /* demo kept ONLY for local dev: window.APlusZ.config.allowDemo === true */
-  function demo(o, d) {
-    var today = new Date();
-    var iso = function (t) { return t.toISOString().split('T')[0]; };
-    var seed = (o + d).split('').reduce(function (a, c) { return a + c.charCodeAt(0); }, 0);
-    return {
-      origin: o, destination: d,
-      bestDeparture: iso(new Date(today.getTime() + 75 * 86400000)),
-      bestBooking: iso(new Date(today.getTime() + 14 * 86400000)),
-      priceBase: 180 + (seed % 700), currency: 'EUR',
-      confidence: 'medium', isDemo: true
-    };
-  }
-
   var MARKER = '531148';
   function ddmm(iso) { return (iso && iso.length >= 10) ? iso.slice(8, 10) + iso.slice(5, 7) : ''; }
   function bookLink(o, d, dep) {
-    if (!dep) dep = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10); // default ~30d out
+    if (!dep) dep = new Date(Date.now() + 30 * 86400000).toISOString().slice(0, 10); // ~30d out
     return 'https://www.aviasales.com/search/' + o + ddmm(dep) + d + '1?marker=' + MARKER;
   }
 
@@ -65,15 +52,21 @@
     if (!o || !d || o === d) return Promise.resolve(null);
     return loadChunk(o).then(function (routes) {
       if (routes && routes[d]) {
+        // cached fare available -> full green card with price
         var row = routes[d];
         row.monitored = true;
+        row.livePrice = false;
         if (!row.book) row.book = bookLink(o, d, row.bestDeparture);
         return row;
       }
-      var devDemo = window.APlusZ.config && window.APlusZ.config.allowDemo === true;
-      if (devDemo) return demo(o, d);
-      // not live-monitored — still fully bookable (affiliate, marker 531148)
-      return { origin: o, destination: d, monitored: false, noData: true, book: bookLink(o, d) };
+      // no cached fare -> still green + bookable; invite live-price check
+      return {
+        origin: o,
+        destination: d,
+        monitored: true,
+        livePrice: true,        // signals result.js to show "Check the live price"
+        book: bookLink(o, d)
+      };
     });
   }
 
@@ -90,5 +83,4 @@
 
   window.APlusZ = window.APlusZ || {};
   window.APlusZ.data = { search: search, metadata: metadata, resolve: resolve };
-
 })();

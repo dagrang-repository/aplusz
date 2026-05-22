@@ -27,21 +27,26 @@
 }
 .profile-drawer.show { transform: translateX(0); }
 
-/* ---- header: 3 zones (spacer | centered title | close X) ---- */
+/* ---- header: title centered; X centered in the right-side gap ---- */
 .pd-header {
-  position: sticky; top: 0;
-  display: flex; align-items: center; justify-content: space-between;
+  display: flex; align-items: center;
   padding: var(--sp-3) var(--sp-4);
   background: var(--bg-glass);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   border-bottom: 1px solid var(--border);
-  z-index: 2;
+  position: sticky; top: 0; z-index: 2;
 }
-.pd-header::before { content: ""; width: 40px; flex-shrink: 0; }
-.pd-title { flex: 1; text-align: center; font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em; }
+.pd-header::before { content: ""; flex: 1; }      /* left half (empty) */
+.pd-title {
+  position: absolute; left: 0; right: 0;
+  text-align: center;
+  font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em;
+  pointer-events: none;
+}
+.pd-close-wrap { flex: 1; display: flex; justify-content: center; }  /* right half, X centered */
 .pd-close {
-  position: static; flex-shrink: 0;
+  position: relative; z-index: 1;
   width: 40px; height: 40px;
   border-radius: var(--r-pill);
   display: grid; place-items: center;
@@ -54,7 +59,7 @@
 /* ---- plan cards (centered, minimal margin) ---- */
 .pd-plans {
   display: flex; flex-direction: column; gap: var(--sp-1);
-  padding: var(--sp-3) var(--sp-5) var(--sp-2);
+  padding: var(--sp-3) var(--sp-6) var(--sp-2);
 }
 .plan-card {
   background: var(--surface);
@@ -84,7 +89,7 @@
 .plan-card-feats { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.4; }
 
 /* ---- sections (centered) ---- */
-.pd-section { padding: var(--sp-2) var(--sp-5) var(--sp-3); text-align: center; }
+.pd-section { padding: var(--sp-2) var(--sp-6) var(--sp-3); text-align: center; }
 .pd-label {
   font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.08em;
   color: var(--text-dim); font-weight: 700; margin-bottom: var(--sp-2);
@@ -92,7 +97,7 @@
 .pd-alerts-intro { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.45; }
 
 /* ---- karma block (bar → reward → share → karma) ---- */
-.pd-karma { padding: 0 var(--sp-5) var(--sp-4); text-align: center; }
+.pd-karma { padding: 0 var(--sp-6) var(--sp-4); text-align: center; }
 
 .adopt-bar {
   position: relative;
@@ -171,7 +176,7 @@
 .pd-streak {
   display: flex; align-items: center; justify-content: center;
   gap: var(--sp-2);
-  padding: var(--sp-3) var(--sp-5) var(--sp-6);
+  padding: var(--sp-3) var(--sp-6) var(--sp-6);
   border-top: 1px solid var(--border);
   margin-top: auto;
   text-align: center;

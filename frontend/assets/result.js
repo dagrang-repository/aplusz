@@ -45,9 +45,9 @@
   function confidenceBadge(level) {
     var t = window.APlusZ.i18n.t;
     var map = {
-      high:   { cls: 'conf-high',   dot: '●●●', label: t('result.confidence_high') },
-      medium: { cls: 'conf-medium', dot: '●●○', label: t('result.confidence_medium') },
-      low:    { cls: 'conf-low',    dot: '●○○', label: t('result.confidence_low') }
+      high:   { cls: 'conf-high',   dot: '\u25CF\u25CF\u25CF', label: t('result.confidence_high') },
+      medium: { cls: 'conf-medium', dot: '\u25CF\u25CF\u25CB', label: t('result.confidence_medium') },
+      low:    { cls: 'conf-low',    dot: '\u25CF\u25CB\u25CB', label: t('result.confidence_low') }
     };
     var c = map[level] || map.medium;
     return '<span class="conf ' + c.cls + '"><span class="conf-dots">' + c.dot + '</span>' + c.label + '</span>';
@@ -56,7 +56,7 @@
   function googleCalUrl(d) {
     var start = d.bestDeparture.replace(/-/g, '');
     return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
-           '&text=' + encodeURIComponent('APlusZ · ' + d.origin + ' → ' + d.destination) +
+           '&text=' + encodeURIComponent('APlusZ \u00B7 ' + d.origin + ' \u2192 ' + d.destination) +
            '&dates=' + start + '/' + start +
            '&details=' + encodeURIComponent('Book by: ' + d.bestBooking + '\nEst: ' + d.priceFormatted + '\nvia APlusZ.app');
   }
@@ -67,8 +67,8 @@
       'BEGIN:VCALENDAR','VERSION:2.0','PRODID:-//APlusZ//EN',
       'BEGIN:VEVENT','UID:' + Date.now() + '@aplusz.app',
       'DTSTAMP:' + stamp,'DTSTART;VALUE=DATE:' + dt,'DTEND;VALUE=DATE:' + dt,
-      'SUMMARY:APlusZ · ' + d.origin + ' → ' + d.destination,
-      'DESCRIPTION:Book by ' + d.bestBooking + ' · Est. ' + d.priceFormatted,
+      'SUMMARY:APlusZ \u00B7 ' + d.origin + ' \u2192 ' + d.destination,
+      'DESCRIPTION:Book by ' + d.bestBooking + ' \u00B7 Est. ' + d.priceFormatted,
       'END:VEVENT','END:VCALENDAR'
     ].join('\r\n');
     return new Blob([ics], { type: 'text/calendar' });
@@ -95,28 +95,66 @@
     };
   }
 
+  /* green, monitored, but no cached fare yet -> invite live-price check */
+  function renderLivePrice(d) {
+    var t = window.APlusZ.i18n.t;
+    var box = document.getElementById('result');
+    if (!box) return;
+    var hotelDest = encodeURIComponent(d.destination);
+    var c = (window.APlusZ.config && window.APlusZ.config.affiliates) || {};
+    var hotel = 'https://www.booking.com/searchresults.html?ss=' + hotelDest + '&aid=' + (c.booking || 'placeholder');
+
+    box.innerHTML = [
+      '<article class="result-card">',
+      '  <div class="route-line">',
+      '    <span class="city">' + cityLabel(d.origin) + '</span>',
+      '    <span class="arrow">\u2192</span>',
+      '    <span class="city">' + cityLabel(d.destination) + '</span>',
+      '  </div>',
+
+      '  <div class="price-row">',
+      '    <div>',
+      '      <div class="price-label">' + t('result.price_label') + '</div>',
+      '      <div class="price-value price-live">' + t('result.check_live') + '</div>',
+      '    </div>',
+      '  </div>',
+
+      '  <a class="cta-book" href="' + d.book + '" target="_blank" rel="noopener nofollow">',
+      '    ' + t('result.cta_book'),
+      '  </a>',
+
+      '  <div class="also-check">',
+      '    <span class="also-label">' + t('result.also_check') + '</span>',
+      '    <a href="' + hotel + '" target="_blank" rel="noopener nofollow">' + t('result.hotel_near').replace('{city}', d.destination) + '</a>',
+      '  </div>',
+
+      '  <div class="share-row">',
+      '    <div class="share-info">',
+      '      <div class="share-title">' + t('result.share_title') + '</div>',
+      '      <div class="share-sub">' + t('result.share_sub') + '</div>',
+      '    </div>',
+      '    <button class="share-btn" id="share-btn">\u2197 ' + t('result.share_btn') + '</button>',
+      '  </div>',
+
+      '  <div class="plan-hint">' + planHint(t) + '</div>',
+      '</article>'
+    ].join('');
+
+    box.classList.remove('hidden');
+    var shareBtn = document.getElementById('share-btn');
+    if (shareBtn) shareBtn.addEventListener('click', function () {
+      if (window.APlusZ.referral) window.APlusZ.referral.share();
+    });
+    saveRoute(d);
+  }
+
   function render(d) {
     var t = window.APlusZ.i18n.t;
     var box = document.getElementById('result');
     if (!box) return;
 
-    // ---- not live-monitored: still fully bookable (affiliate) ----
-    if (d.noData) {
-      box.innerHTML = [
-        '<article class="result-card result-nolive">',
-        '  <div class="route-line">',
-        '    <span class="city">' + cityLabel(d.origin) + '</span>',
-        '    <span class="arrow">→</span>',
-        '    <span class="city">' + cityLabel(d.destination) + '</span>',
-        '  </div>',
-        '  <div class="nolive-msg">' + t('result.no_live') + '</div>',
-        '  <a class="cta-book" href="' + d.book + '" target="_blank" rel="noopener nofollow">' + t('result.check_live') + '</a>',
-        '</article>'
-      ].join('');
-      box.classList.remove('hidden');
-      saveRoute(d);
-      return;
-    }
+    // ---- monitored but no cached fare: green, "Check the live price" ----
+    if (d.livePrice) { renderLivePrice(d); return; }
 
     d.priceFormatted = window.APlusZ.detect.formatPrice(d.priceBase, d.currency);
     var daysOut = daysFromNow(d.bestDeparture);
@@ -127,7 +165,7 @@
       '<article class="result-card">',
       '  <div class="route-line">',
       '    <span class="city">' + cityLabel(d.origin) + '</span>',
-      '    <span class="arrow">→</span>',
+      '    <span class="arrow">\u2192</span>',
       '    <span class="city">' + cityLabel(d.destination) + '</span>',
       '  </div>',
 
@@ -163,9 +201,9 @@
       '  </div>',
 
       '  <div class="cal-row">',
-      '    <a class="cal-btn" href="' + googleCalUrl(d) + '" target="_blank" rel="noopener">📅 ' + t('result.add_google') + '</a>',
-      '    <button class="cal-btn" id="ics-dl">⬇ ' + t('result.download_ics') + '</button>',
-      '    <button class="remind-btn" id="remind-btn">🔔 ' + t('alerts.remind') + '</button>',
+      '    <a class="cal-btn" href="' + googleCalUrl(d) + '" target="_blank" rel="noopener">\uD83D\uDCC5 ' + t('result.add_google') + '</a>',
+      '    <button class="cal-btn" id="ics-dl">\u2B07 ' + t('result.download_ics') + '</button>',
+      '    <button class="remind-btn" id="remind-btn">\uD83D\uDD14 ' + t('alerts.remind') + '</button>',
       '  </div>',
 
       '  <div class="share-row">',
@@ -173,7 +211,7 @@
       '      <div class="share-title">' + t('result.share_title') + '</div>',
       '      <div class="share-sub">' + t('result.share_sub') + '</div>',
       '    </div>',
-      '    <button class="share-btn" id="share-btn">↗ ' + t('result.share_btn') + '</button>',
+      '    <button class="share-btn" id="share-btn">\u2197 ' + t('result.share_btn') + '</button>',
       '  </div>',
 
       '  <div class="plan-hint">' + planHint(t) + '</div>',
@@ -196,7 +234,6 @@
       if (window.APlusZ.referral) window.APlusZ.referral.share();
     });
 
-    // Save route locally
     saveRoute(d);
   }
 
