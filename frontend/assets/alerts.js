@@ -120,6 +120,23 @@
     window.location.href = href;
   }
 
+  function limitBanner() {
+    var old = document.querySelector('.azb-limit'); if (old) old.remove();
+    var el = document.createElement('div');
+    el.className = 'azb-limit';
+    el.innerHTML =
+      '<span class="azb-limit-msg">' + t('alerts.limit') + '</span>' +
+      '<button class="azb-limit-up" type="button">' + t('billing.free_upgrade') + '</button>' +
+      '<button class="azb-limit-x" type="button" aria-label="close">\u00d7</button>';
+    document.body.appendChild(el);
+    requestAnimationFrame(function () { el.classList.add('show'); });
+    el.querySelector('.azb-limit-up').onclick = function () {
+      if (window.APlusZ && APlusZ.billing) APlusZ.billing.buy('pro');
+      el.remove();
+    };
+    el.querySelector('.azb-limit-x').onclick = function () { el.remove(); };
+  }
+
   function toast(msg) {
     if (APZ.referral && APZ.referral.showToast) { APZ.referral.showToast(msg); return; }
     var el = document.createElement('div');
@@ -147,7 +164,7 @@
     list.unshift(item);
     set(LS_LIST, list.slice(0, 12));
 
-    if (!canSend()) { toast(t('alerts.limit')); refresh(); return; }
+    if (!canSend()) { limitBanner(); refresh(); return; }
     openMail(item);
     record();
     toast(t('alerts.sent'));
@@ -157,7 +174,7 @@
   function resend(i) {
     var list = get(LS_LIST, []);
     if (!list[i]) return;
-    if (!canSend()) { toast(t('alerts.limit')); return; }
+    if (!canSend()) { limitBanner(); return; }
     openMail(list[i]);
     record();
     toast(t('alerts.sent'));
