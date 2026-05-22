@@ -27,20 +27,21 @@
 }
 .profile-drawer.show { transform: translateX(0); }
 
-/* ---- header (centered title, × pinned right, slightly bigger) ---- */
+/* ---- header: 3 zones (spacer | centered title | close X) ---- */
 .pd-header {
   position: sticky; top: 0;
-  display: flex; align-items: center; justify-content: center;
-  padding: var(--sp-3) var(--sp-6);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: var(--sp-3) var(--sp-4);
   background: var(--bg-glass);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
   border-bottom: 1px solid var(--border);
   z-index: 2;
 }
-.pd-title { font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em; }
+.pd-header::before { content: ""; width: 40px; flex-shrink: 0; }
+.pd-title { flex: 1; text-align: center; font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em; }
 .pd-close {
-  position: absolute; right: var(--sp-5); top: 50%; transform: translateY(-50%);
+  position: static; flex-shrink: 0;
   width: 40px; height: 40px;
   border-radius: var(--r-pill);
   display: grid; place-items: center;
@@ -141,20 +142,21 @@
 .pd-karma-msg { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.45; }
 
 /* ---- referral (flat buttons, no blue) ---- */
-.ref-link-row { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-2); }
+.ref-link-row { display: flex; gap: var(--sp-2); margin-bottom: var(--sp-2); width: 100%; }
 .ref-link-input {
-  flex: 1; min-width: 0;
+  flex: 1 1 auto; min-width: 0;
   background: var(--surface); border: 1px solid var(--border);
-  border-radius: var(--r-md); padding: var(--sp-2) var(--sp-3);
-  color: var(--text); font-family: var(--font-mono); font-size: var(--fs-sm);
+  border-radius: var(--r-md); padding: var(--sp-2) var(--sp-2);
+  color: var(--text); font-family: var(--font-mono); font-size: var(--fs-xs);
   outline: none; text-align: center;
 }
 .ref-link-input:focus { border-color: var(--accent); }
 .ref-link-copy {
   background: transparent; color: var(--text);
-  border: 1px solid var(--border); padding: 0 var(--sp-5);
+  border: 1px solid var(--border); padding: 0 var(--sp-4);
   border-radius: var(--r-md); font-weight: 700; font-size: var(--fs-sm);
-  flex-shrink: 0; transition: background var(--dur-base), border-color var(--dur-base);
+  flex: 0 0 auto; white-space: nowrap;
+  transition: background var(--dur-base), border-color var(--dur-base);
 }
 .ref-link-copy:hover { background: var(--bg-elevated); border-color: var(--accent); }
 .pd-share-btn {
