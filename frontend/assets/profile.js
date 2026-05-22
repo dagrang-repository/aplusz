@@ -1,5 +1,5 @@
 /* ============================================================
-   AplusZ — Profile UI: Streak / Referrals / Tier / Adoption Bar
+   AplusZ — Profile UI: Streak / Referrals / Tier / Plan / Adoption Bar
    File: frontend/assets/profile.js
    Save: D:\Destop\AplusZ\frontend\assets\profile.js
    ============================================================ */
@@ -16,6 +16,15 @@
     Diamond: 'Lifetime Pro+'
   };
 
+  /* Paid plan (from billing.js) → label + icon. Separate from referral tier. */
+  function planInfo() {
+    var p = 'free';
+    try { if (window.APlusZ.billing && window.APlusZ.billing.tier) p = window.APlusZ.billing.tier(); } catch (e) {}
+    if (p === 'proplus') return { label: 'Pro+', icon: '\uD83D\uDC8E' };   /* 💎 */
+    if (p === 'pro')     return { label: 'Pro',  icon: '\u2B50' };          /* ⭐ */
+    return { label: 'Free', icon: '\u2708\uFE0F' };                         /* ✈️ */
+  }
+
   function loadCap() {
     return fetch('data/cap.json', { cache: 'default' })
       .then(function (r) { return r.ok ? r.json() : null; })
@@ -26,9 +35,10 @@
     var ref = window.APlusZ.referral;
     var streak = ref ? ref.getStreak() : 0;
     var bounty = ref ? ref.getBounty() : 0;
-    var tier   = ref ? ref.getTier() : { name: 'Bronze', icon: '🥉' };
+    var tier   = ref ? ref.getTier() : { name: 'Bronze', icon: '\uD83E\uDD49' };
     var next   = ref ? ref.getNextTier() : null;
     var url    = ref ? ref.getRefUrl() : '';
+    var plan   = planInfo();
 
     var nextLine = '';
     if (next) {
@@ -40,7 +50,7 @@
         '  <div class="tier-next-reward">Unlocks: ' + (TIER_REWARD[next.name] || '') + '</div>' +
         '</div>';
     } else {
-      nextLine = '<div class="tier-next"><div class="tier-next-label">💎 Diamond — top tier reached</div>' +
+      nextLine = '<div class="tier-next"><div class="tier-next-label">\uD83D\uDC8E Diamond — top tier reached</div>' +
                  '<div class="tier-next-reward">Lifetime Pro+ unlocked</div></div>';
     }
 
@@ -48,17 +58,17 @@
       '<div class="profile-drawer" id="profile-drawer">',
       '  <div class="pd-header">',
       '    <div class="pd-title">Your Profile</div>',
-      '    <button class="pd-close" id="pd-close" aria-label="Close">×</button>',
+      '    <button class="pd-close" id="pd-close" aria-label="Close">\u00d7</button>',
       '  </div>',
 
       '  <div class="pd-stats">',
       '    <div class="stat" title="Open or share AplusZ daily to keep your streak alive.">',
-      '      <div class="stat-icon">🔥</div>',
+      '      <div class="stat-icon">\uD83D\uDD25</div>',
       '      <div class="stat-value">' + streak + '</div>',
       '      <div class="stat-label">Day streak</div>',
       '    </div>',
       '    <div class="stat" title="People who installed AplusZ from your share link.">',
-      '      <div class="stat-icon">🎯</div>',
+      '      <div class="stat-icon">\uD83C\uDFAF</div>',
       '      <div class="stat-value">' + bounty + '</div>',
       '      <div class="stat-label">Referrals</div>',
       '    </div>',
@@ -66,6 +76,11 @@
       '      <div class="stat-icon">' + tier.icon + '</div>',
       '      <div class="stat-value stat-tier">' + tier.name + '</div>',
       '      <div class="stat-label">Tier</div>',
+      '    </div>',
+      '    <div class="stat" title="Your paid plan. Pro and Pro+ unlock more alerts and route sets.">',
+      '      <div class="stat-icon">' + plan.icon + '</div>',
+      '      <div class="stat-value stat-plan">' + plan.label + '</div>',
+      '      <div class="stat-label">Plan</div>',
       '    </div>',
       '  </div>',
 
@@ -79,11 +94,11 @@
       '      <input class="ref-link-input" id="ref-link-input" value="' + url + '" readonly>',
       '      <button class="ref-link-copy" id="ref-link-copy">Copy</button>',
       '    </div>',
-      '    <button class="primary-btn pd-share" id="pd-share">↗ Share AplusZ</button>',
+      '    <button class="primary-btn pd-share" id="pd-share">\u2197 Share AplusZ</button>',
       '  </div>',
 
       '  <div class="pd-section">',
-      '    <div class="pd-label">Progress to free-for-all 🏆</div>',
+      '    <div class="pd-label">Progress to free-for-all \uD83C\uDFC6</div>',
       '    <div class="adopt-bar" id="adopt-bar">',
       '      <div class="adopt-fill" id="adopt-fill" style="width:0%">',
       '        <div class="adopt-shimmer"></div>',
@@ -157,6 +172,16 @@
       if (o && o.parentNode) o.parentNode.removeChild(o);
     }, 300);
   }
+
+  /* live-update the Plan badge if tier changes while drawer is open */
+  document.addEventListener('aplusz:tier', function () {
+    var el = document.querySelector('.stat-plan');
+    if (!el) return;
+    var p = planInfo();
+    el.textContent = p.label;
+    var icon = el.parentNode.querySelector('.stat-icon');
+    if (icon) icon.textContent = p.icon;
+  });
 
   window.APlusZ = window.APlusZ || {};
   window.APlusZ.profile = { open: open, close: close };
