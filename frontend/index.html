@@ -23,18 +23,9 @@
 <link rel="stylesheet" href="assets/autocomplete.css">
 <link rel="stylesheet" href="assets/alerts.css">
 
-<script src="assets/detect.js"></script>
-<script src="assets/config.js"></script>
+<script defer src="assets/detect.js"></script>
+<script defer src="assets/config.js"></script>
 
-<!-- Travelpayouts Drive -->
-<script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
-  (function () {
-      var script = document.createElement("script");
-      script.async = 1;
-      script.src = 'https://tp-em.com/NTMxMTQ4.js?t=531148';
-      document.head.appendChild(script);
-  })();
-</script>
 </head>
 <body>
 
@@ -136,19 +127,19 @@
   <span>© <span id="year"></span> <span class="bn-az">A</span><span class="bn-plus">plus</span><span class="bn-az">Z</span> <span class="footer-mark">(A+Z).app</span></span>
 </footer>
 
-<script src="assets/i18n.js"></script>
-<script src="assets/referral.js"></script>
-<script src="assets/cities.js"></script>
-<script src="assets/data.js"></script>
-<script src="assets/autocomplete.js"></script>
-<script src="assets/result.js"></script>
-<script src="assets/billing.js"></script>
-<script src="assets/alerts.js"></script>
-<script src="assets/profile.js"></script>
-<script src="assets/sw-register.js"></script>
-<script src="assets/install.js"></script>
-<script src="assets/howitworks.js"></script>
-<script src="assets/app.js"></script>
+<script defer src="assets/i18n.js"></script>
+<script defer src="assets/referral.js"></script>
+<script defer src="assets/cities.js"></script>
+<script defer src="assets/data.js"></script>
+<script defer src="assets/autocomplete.js"></script>
+<script defer src="assets/result.js"></script>
+<script defer src="assets/billing.js"></script>
+<script defer src="assets/alerts.js"></script>
+<script defer src="assets/profile.js"></script>
+<script defer src="assets/sw-register.js"></script>
+<script defer src="assets/install.js"></script>
+<script defer src="assets/howitworks.js"></script>
+<script defer src="assets/app.js"></script>
 
 
 <script>
@@ -174,15 +165,29 @@
     var id = col.getAttribute('data-plan');
     if (col.classList.contains('upgradable') && window.APlusZ && APlusZ.billing) APlusZ.billing.buy(id);
   }
-  document.querySelectorAll('.plans-strip .plan-col').forEach(function (col) {
-    col.addEventListener('click', function () { go(col); });
-    col.addEventListener('keydown', function (e) {
-      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(col); }
+  function init() {
+    document.querySelectorAll('.plans-strip .plan-col').forEach(function (col) {
+      col.addEventListener('click', function () { go(col); });
+      col.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(col); }
+      });
     });
-  });
-  document.addEventListener('aplusz:tier', paint);
-  paint();
+    document.addEventListener('aplusz:tier', paint);
+    paint();
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
+  else init();
 })();
+</script>
+
+<!-- Travelpayouts Drive -->
+<script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
+  (function () {
+      var script = document.createElement("script");
+      script.async = 1;
+      script.src = 'https://tp-em.com/NTMxMTQ4.js?t=531148';
+      document.head.appendChild(script);
+  })();
 </script>
 
 </body>

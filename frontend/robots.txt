@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# Sitemap: https://aplusz.app/sitemap.xml   (enable at Step 23 once sitemap.xml is generated)
