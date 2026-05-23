@@ -4,7 +4,7 @@
    Save: D:\Destop\AplusZ\frontend\sw.js
    ============================================================ */
 
-const CACHE_VERSION = 'aplusz-v1';
+const CACHE_VERSION = 'aplusz-v2';
 const STATIC_CACHE = CACHE_VERSION + '-static';
 const DATA_CACHE = CACHE_VERSION + '-data';
 const OFFLINE_URL = '/offline.html';
@@ -17,11 +17,25 @@ const STATIC_ASSETS = [
   '/assets/tokens.css',
   '/assets/detect.js',
   '/assets/i18n.js',
-  '/i18n/en.json',
-  '/i18n/fr.json',
-  '/i18n/es.json',
+  '/i18n/ar.json',
+  '/i18n/bn.json',
   '/i18n/de.json',
+  '/i18n/en.json',
+  '/i18n/es.json',
+  '/i18n/fa.json',
+  '/i18n/fr.json',
+  '/i18n/hi.json',
+  '/i18n/id.json',
+  '/i18n/it.json',
   '/i18n/ja.json',
+  '/i18n/ko.json',
+  '/i18n/nl.json',
+  '/i18n/pl.json',
+  '/i18n/pt.json',
+  '/i18n/ru.json',
+  '/i18n/th.json',
+  '/i18n/tr.json',
+  '/i18n/vi.json',
   '/i18n/zh.json'
 ];
 

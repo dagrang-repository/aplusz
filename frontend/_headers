@@ -24,8 +24,6 @@
   Cache-Control: no-cache
 /index.html
   Cache-Control: no-cache
-/pricing.html
-  Cache-Control: no-cache
 /legal/*
   Cache-Control: no-cache
 
