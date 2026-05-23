@@ -25,7 +25,7 @@ let DATA_CACHE   = CACHE_PREFIX + '-data-'   + FALLBACK_VERSION;
 
 const STATIC_ASSETS = [
   '/', '/index.html', '/offline.html', '/apz.webmanifest',
-  '/assets/tokens.css', '/assets/detect.js', '/assets/i18n.js',
+  '/assets/bundle.css', '/assets/tokens.css', '/assets/detect.js', '/assets/i18n.js',
   '/i18n/ar.json','/i18n/bn.json','/i18n/de.json','/i18n/en.json',
   '/i18n/es.json','/i18n/fa.json','/i18n/fr.json','/i18n/hi.json',
   '/i18n/id.json','/i18n/it.json','/i18n/ja.json','/i18n/ko.json',
