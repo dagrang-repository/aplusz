@@ -1,4 +1,4 @@
-/* APlusZ — bundle.css (tokens app result affiliates install referral profile plans howitworks langpicker autocomplete alerts) */
+/* APlusZ — bundle.css */
 
 /* ==================== tokens.css ==================== */
 /* ============================================================
@@ -1366,7 +1366,7 @@ a:hover { text-decoration: underline; }
   position: relative;
   max-width: 820px;
   margin: var(--sp-12) auto 0;
-  padding: var(--sp-10) var(--sp-4) 0;
+  padding: var(--sp-10) var(--sp-5) 0;
 }
 .plans-strip::before {
   content: "";
@@ -1406,12 +1406,14 @@ a:hover { text-decoration: underline; }
 
 .plan-feats {
   list-style: none;
-  padding: 0;
+  padding: 0 var(--sp-2);
   margin: 0;
   font-size: var(--fs-sm);
   color: var(--text-muted);
   line-height: 1.6;
   text-align: left;
+  overflow-wrap: break-word;
+  word-break: break-word;
 }
 .plan-feats span {
   /* features flow as one comma-separated paragraph under the title */
