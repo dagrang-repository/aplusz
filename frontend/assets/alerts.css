@@ -85,3 +85,35 @@
   outline: none;
 }
 .al-cap-input:focus { border-color: var(--accent); }
+
+/* ===== Save / Remind split bar (replaces single .remind-btn) ===== */
+.sr-bar {
+  display: flex;
+  gap: var(--sp-2);
+  margin-top: var(--sp-3);
+}
+.sr-half {
+  flex: 1 1 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 10px 12px;
+  border-radius: var(--r-pill);
+  font-weight: 600;
+  font-size: .9rem;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  transition: background .15s ease, border-color .15s ease, color .15s ease;
+}
+.sr-save { border-color: rgba(34,197,94,.4); color: #22c55e; background: rgba(34,197,94,.10); }
+.sr-save:hover { background: rgba(34,197,94,.18); }
+.sr-save.is-saved { background: rgba(34,197,94,.22); border-color: rgba(34,197,94,.6); cursor: default; }
+.sr-remind { border-color: rgba(245,185,66,.4); color: #f5b942; background: rgba(245,185,66,.10); }
+.sr-remind:hover { background: rgba(245,185,66,.18); }
+
+/* tappable "Saved to your Profile" toast */
+.azb-toast.azb-tap { cursor: pointer; text-decoration: none; }
+.azb-toast.azb-tap:hover { filter: brightness(1.08); }

@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Price watch: {route}",
     "mail_intro": "Your A+Z.app price watch:",
     "mail_price": "Lowest seen",
-    "mail_outro": "— A+Z.app · fly for LESS"
+    "mail_outro": "— A+Z.app · fly for LESS",
+    "save": "Save this route",
+    "saved": "Saved",
+    "saved_profile": "Saved to your Profile"
   }
 }

@@ -36,14 +36,21 @@
     return (window.APlusZ.cities && window.APlusZ.cities.label)
       ? window.APlusZ.cities.label(code) : code;
   }
-  function saveRoute(d) {
+  /* Save-button label: "✓ Saved" if this route is already in the saved
+     list, else "Save this route". Uses alerts' i18n keys (all 20 langs). */
+  function savedWord() {
+    var t = window.APlusZ.i18n.t;
+    return '\u2713 ' + t('alerts.saved');
+  }
+  function isSaved(d) {
     try {
-      var saved = JSON.parse(localStorage.getItem('aplusz-saved-routes') || '[]');
-      var key = d.origin + '-' + d.destination;
-      saved = saved.filter(function (r) { return (r.origin + '-' + r.destination) !== key; });
-      saved.unshift({ origin: d.origin, destination: d.destination, lastPrice: d.priceFormatted || '', savedAt: Date.now() });
-      localStorage.setItem('aplusz-saved-routes', JSON.stringify(saved.slice(0, 5)));
-    } catch (e) {}
+      var list = JSON.parse(localStorage.getItem('aplusz-alerts') || '[]');
+      return list.some(function (r) { return (r.o + r.d) === (d.origin + d.destination); });
+    } catch (e) { return false; }
+  }
+  function saveLabel(d) {
+    var t = window.APlusZ.i18n.t;
+    return isSaved(d) ? savedWord() : t('alerts.save');
   }
 
   function planHint(t) {
@@ -179,7 +186,6 @@
     if (shareBtn) shareBtn.addEventListener('click', function () {
       if (window.APlusZ.referral) window.APlusZ.referral.share();
     });
-    saveRoute(d);
   }
 
   function render(d) {
@@ -239,7 +245,11 @@
       '  <div class="cal-row">',
       '    <a class="cal-btn" href="' + googleCalUrl(d) + '" target="_blank" rel="noopener">\uD83D\uDCC5 ' + t('result.add_google') + '</a>',
       '    <button class="cal-btn" id="ics-dl">\u2B07 ' + t('result.download_ics') + '</button>',
-      '    <button class="remind-btn" id="remind-btn">\uD83D\uDD14 ' + t('alerts.remind') + '</button>',
+      '  </div>',
+
+      '  <div class="sr-bar">',
+      '    <button class="sr-half sr-save" id="save-btn">\uD83D\uDCBE <span class="sr-lbl">' + saveLabel(d) + '</span></button>',
+      '    <button class="sr-half sr-remind" id="remind-btn">\uD83D\uDD14 ' + t('alerts.remind') + '</button>',
       '  </div>',
 
       '  <div class="share-row">',
@@ -260,6 +270,18 @@
     var icsBtn = document.getElementById('ics-dl');
     if (icsBtn) icsBtn.addEventListener('click', function () { downloadIcs(d); });
 
+    var saveBtn = document.getElementById('save-btn');
+    if (saveBtn) saveBtn.addEventListener('click', function () {
+      if (window.APlusZ.alerts && window.APlusZ.alerts.save) {
+        var ok = window.APlusZ.alerts.save(d);
+        if (ok) {
+          saveBtn.classList.add('is-saved');
+          var lbl = saveBtn.querySelector('.sr-lbl');
+          if (lbl) lbl.textContent = savedWord();
+        }
+      }
+    });
+
     var remindBtn = document.getElementById('remind-btn');
     if (remindBtn) remindBtn.addEventListener('click', function () {
       if (window.APlusZ.alerts) window.APlusZ.alerts.remind(d);
@@ -269,8 +291,6 @@
     if (shareBtn) shareBtn.addEventListener('click', function () {
       if (window.APlusZ.referral) window.APlusZ.referral.share();
     });
-
-    saveRoute(d);
   }
 
   function renderEmpty(msg) {

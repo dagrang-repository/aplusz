@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Veille de prix : {route}",
     "mail_intro": "Votre veille de prix A+Z.app :",
     "mail_price": "Plus bas vu",
-    "mail_outro": "— A+Z.app · volez pour MOINS"
+    "mail_outro": "— A+Z.app · volez pour MOINS",
+    "save": "Enregistrer ce trajet",
+    "saved": "Enregistré",
+    "saved_profile": "Enregistré dans votre profil"
   }
 }

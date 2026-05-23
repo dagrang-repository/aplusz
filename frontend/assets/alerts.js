@@ -27,6 +27,9 @@
   /* ---------- i18n with English fallback ---------- */
   var EN = {
     'alerts.remind': 'Remind me',
+    'alerts.save': 'Save this route',
+    'alerts.saved': 'Saved',
+    'alerts.saved_profile': 'Saved to your Profile',
     'alerts.title': 'My alerts',
     'alerts.empty': 'No alerts yet. Tap "Remind me" on a result to add one.',
     'alerts.resend': 'Re-send',
@@ -155,10 +158,9 @@
     setTimeout(function () { el.classList.remove('show'); setTimeout(function () { el.remove(); }, 400); }, 3000);
   }
 
-  /* ---------- public: add reminder from a result card ---------- */
-  function remind(d) {
-    if (!d || !d.origin) return;
-    var item = {
+  /* ---------- build a saveable/remindable item from a result card ---------- */
+  function mkItem(d) {
+    return {
       o: d.origin, d: d.destination,
       price: d.priceFormatted || d.price || '',
       book: d.book || (function () {
@@ -167,17 +169,50 @@
       dep: d.bestDeparture || '',
       savedAt: Date.now()
     };
-    // save/dedupe, then trim to this tier's route cap
-    var cap = routeCap();
-    var list = get(LS_LIST, []).filter(function (r) { return (r.o + r.d) !== (item.o + item.d); });
-    list.unshift(item);
-    if (cap !== Infinity) list = list.slice(0, cap);
-    set(LS_LIST, list);
+  }
 
-    // reminders are unlimited on any kept route
-    openMail(item);
-    toast(t('alerts.sent'));
+  /* ---------- public: SAVE this route (independent of reminding) ----------
+     Adds to the saved list shown in the Profile drawer. Cap-gated:
+     Free 1, Pro 3, Pro+ ∞. Returns true if saved, false if blocked.
+     On success, fires a toast that POINTS TO the Profile (tap to open). */
+  function save(d) {
+    if (!d || !d.origin) return false;
+    var item = mkItem(d);
+    var list = get(LS_LIST, []);
+    var already = list.some(function (r) { return (r.o + r.d) === (item.o + item.d); });
+    if (already) { toastProfile(); return true; } // already saved -> still confirm + point
+    var cap = routeCap();
+    if (cap !== Infinity && list.length >= cap) { limitBanner(); return false; } // at cap -> upsell, don't silently drop
+    list.unshift(item);
+    set(LS_LIST, list);
+    toastProfile();
     refresh();
+    return true;
+  }
+
+  /* tappable toast: "✓ Saved to your Profile" -> opens the profile drawer */
+  function toastProfile() {
+    var old = document.querySelector('.azb-toast.azb-tap'); if (old) old.remove();
+    var el = document.createElement('div');
+    el.className = 'azb-toast azb-tap';
+    el.innerHTML = '\u2713 ' + t('alerts.saved_profile') + ' \u2192';
+    el.setAttribute('role', 'button');
+    document.body.appendChild(el);
+    requestAnimationFrame(function () { el.classList.add('show'); });
+    el.onclick = function () {
+      var m = document.getElementById('menu-btn');
+      if (m) m.click();
+      else if (window.APlusZ.profile && APlusZ.profile.open) APlusZ.profile.open();
+      el.classList.remove('show'); setTimeout(function () { el.remove(); }, 400);
+    };
+    setTimeout(function () { el.classList.remove('show'); setTimeout(function () { el.remove(); }, 400); }, 5000);
+  }
+
+  /* ---------- public: REMIND me (mail only; does NOT save) ---------- */
+  function remind(d) {
+    if (!d || !d.origin) return;
+    openMail(mkItem(d));
+    toast(t('alerts.sent'));
   }
 
   function resend(i) {
@@ -297,6 +332,6 @@
     document.addEventListener('DOMContentLoaded', ensureBadge);
   } else { ensureBadge(); }
 
-  APZ.alerts = { remind: remind, resend: resend, remove: remove, mount: mount, tier: tier, updateBadge: updateBadge };
+  APZ.alerts = { save: save, remind: remind, resend: resend, remove: remove, mount: mount, tier: tier, updateBadge: updateBadge };
 
 })();
