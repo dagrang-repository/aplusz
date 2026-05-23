@@ -271,6 +271,8 @@ a:hover { text-decoration: underline; }
 .brand-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .icon-btn {
   width: 32px; height: 32px;
+  -webkit-tap-highlight-color: transparent;
+  outline: none;
   display: flex; align-items: center; justify-content: center;
   font-size: 24px; line-height: 1;
   color: var(--text-muted);
@@ -279,12 +281,11 @@ a:hover { text-decoration: underline; }
 }
 .icon-btn:hover { background: none; color: var(--text); transform: scale(1.08); }
 
-/* Tier badge = icon + name PAIR (never a 32px single-glyph button).
-   Overrides .icon-btn fixed width so it sizes to its content.
-   No background/border — reads as a plain label beside the other nav
-   icons (a boxed pill looked like a duplicate button on mobile). */
+/* Tier badge = icon + name PAIR. Fully self-contained so it never
+   inherits .icon-btn's 24px font (huge text) or hover circle. */
 .tier-badge {
-  width: auto;
+  width: auto !important;
+  height: auto;
   min-width: 0;
   gap: 5px;
   padding: 0 4px;
@@ -292,10 +293,13 @@ a:hover { text-decoration: underline; }
   font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
+  background: none !important;
+  border: none !important;
+  border-radius: 0 !important;
 }
-.tier-badge:hover { transform: none; color: var(--text); }
-.tier-badge .tb-ic { font-size: 0.95rem; line-height: 1; }
-.tier-badge .tb-nm { line-height: 1; letter-spacing: -0.01em; }
+.tier-badge:hover { transform: none !important; background: none !important; color: var(--text); }
+.tier-badge .tb-ic { font-size: 1rem !important; line-height: 1; }
+.tier-badge .tb-nm { font-size: var(--fs-xs) !important; line-height: 1; letter-spacing: -0.01em; }
 
 /* ---------- HERO (mobile default) ---------- */
 .hero {
