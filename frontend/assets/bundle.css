@@ -1,10 +1,4 @@
-/* ============================================================
-   APlusZ — bundle.css (12 stylesheets concatenated in link order)
-   File: frontend/assets/bundle.css
-   Save: D:\Destop\AplusZrontendssetsundle.css
-   Order: tokens app result affiliates install referral profile plans howitworks langpicker autocomplete alerts
-   Generated for Step 21 performance (1 request vs 12).
-   ============================================================ */
+/* APlusZ — bundle.css (12 stylesheets, link order: tokens app result affiliates install referral profile plans howitworks langpicker autocomplete alerts) */
 
 /* ==================== tokens.css ==================== */
 /* ============================================================
@@ -268,7 +262,13 @@ a:hover { text-decoration: underline; }
   font-weight: 800; font-size: 0.75rem; letter-spacing: -0.02em;
 }
 .brand-name { font-weight: 700; font-size: var(--fs-lg); letter-spacing: -0.01em; }
-.topnav { display: flex; align-items: center; gap: var(--sp-3); }
+.topnav { display: flex; align-items: center; gap: var(--sp-3); flex-shrink: 0; }
+
+/* Topbar must never let its two halves collide. The brand (left) may
+   shrink/ellipsize; the nav (right) keeps its size. Guarantees spacing
+   between the badge and the icons at EVERY width, not just ≤360px. */
+.brand { min-width: 0; flex-shrink: 1; overflow: hidden; }
+.brand-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .icon-btn {
   width: 32px; height: 32px;
   display: flex; align-items: center; justify-content: center;
@@ -280,22 +280,20 @@ a:hover { text-decoration: underline; }
 .icon-btn:hover { background: none; color: var(--text); transform: scale(1.08); }
 
 /* Tier badge = icon + name PAIR (never a 32px single-glyph button).
-   Overrides .icon-btn fixed width so it sizes to its content as a pill,
-   preventing overlap with the theme icon beside it. */
+   Overrides .icon-btn fixed width so it sizes to its content.
+   No background/border — reads as a plain label beside the other nav
+   icons (a boxed pill looked like a duplicate button on mobile). */
 .tier-badge {
   width: auto;
   min-width: 0;
   gap: 5px;
-  padding: 4px 10px;
-  border-radius: var(--r-pill);
-  background: var(--surface);
-  border: 1px solid var(--border);
+  padding: 0 4px;
   font-size: var(--fs-xs);
   font-weight: 700;
   white-space: nowrap;
   flex-shrink: 0;
 }
-.tier-badge:hover { transform: none; background: var(--bg-elevated); color: var(--text); }
+.tier-badge:hover { transform: none; color: var(--text); }
 .tier-badge .tb-ic { font-size: 0.95rem; line-height: 1; }
 .tier-badge .tb-nm { line-height: 1; letter-spacing: -0.01em; }
 
@@ -621,16 +619,22 @@ a:hover { text-decoration: underline; }
 }
 
 /* Keep footer on one line on very narrow phones */
-@media (max-width: 360px) {
-  .footer { font-size: var(--fs-xs); gap: var(--sp-2); }
-
-  /* Topnav holds 4 items (badge + 3 icons) — tighten so they never
-     overflow or overlap on the narrowest phones; let brand name shrink. */
+@media (max-width: 480px) {
+  /* Topnav holds 4 items (badge + 3 icons). Tighten + guarantee spacing so
+     they never overflow or overlap on phones (most are 390–430px wide). */
   .topnav { gap: var(--sp-2); }
   .tier-badge { padding: 3px 8px; gap: 4px; }
   .tier-badge .tb-ic { font-size: 0.85rem; }
-  .icon-btn { width: 30px; font-size: 22px; }
-  .brand-name { font-size: var(--fs-base); min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+  .tier-badge .tb-nm { font-size: var(--fs-xs); }
+  .icon-btn { width: 30px; font-size: 22px; flex-shrink: 0; }
+  .brand-mark { flex-shrink: 0; }
+}
+
+@media (max-width: 360px) {
+  .footer { font-size: var(--fs-xs); gap: var(--sp-2); }
+  /* Narrowest phones: hide the brand word-mark entirely (keep the A+Z tile)
+     so the nav always has room — zero chance of collision. */
+  .brand-name { display: none; }
 }
 
 /* ============================================================
