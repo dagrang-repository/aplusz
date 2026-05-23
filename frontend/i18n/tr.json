@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Sonsuza dek ücretsiz",
     "f_unlimited": "Sınırsız rota araması",
-    "f_exact": "Tam en iyi tarih + fiyat",
+    "f_exact": "tam en iyi tarih + fiyat",
     "f_saved1": "1 kayıtlı rota",
-    "f_reminders": "Onda sınırsız hatırlatma",
-    "f_calendar": "Takvim dışa aktarma",
-    "f_offline": "Çevrimdışı çalışır",
+    "f_reminders": "sınırsız hatırlatma",
+    "f_calendar": "takvim dışa aktarma",
+    "f_offline": "çevrimdışı çalışır",
     "pro_head": "Pro",
     "p_everything_free": "Ücretsizdeki her şey",
-    "p_routes3": "En fazla 3 kayıtlı rota",
-    "p_swaps3": "Rota değiştir (3 değişiklik)",
-    "p_reminders": "Sınırsız hatırlatma",
+    "p_routes3": "en fazla 3 kayıtlı rota",
+    "p_swaps3": "rota değiştir (3 değişiklik)",
+    "p_reminders": "sınırsız hatırlatma",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Pro'daki her şey",
-    "pp_routes_unlim": "Sınırsız rota seti",
-    "pp_swaps_unlim": "Sınırsız değişiklik + kaldırma",
-    "pp_reminders": "Sınırsız hatırlatma"
+    "pp_routes_unlim": "sınırsız rota seti",
+    "pp_swaps_unlim": "sınırsız değişiklik + kaldırma",
+    "pp_reminders": "sınırsız hatırlatma"
   },
   "hiw": {
     "link": "Nasıl çalışır",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Fiyat takibi: {route}",
     "mail_intro": "A+Z.app fiyat takibin:",
     "mail_price": "Görülen en düşük",
-    "mail_outro": "— A+Z.app · daha ucuza uç"
+    "mail_outro": "— A+Z.app · daha ucuza uç",
+    "save": "Bu rotayı kaydet",
+    "saved": "Kaydedildi",
+    "saved_profile": "Profilinize kaydedildi"
   }
 }

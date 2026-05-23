@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Grátis para sempre",
     "f_unlimited": "Buscas de rotas ilimitadas",
-    "f_exact": "Data e preço ideais exatos",
+    "f_exact": "data e preço ideais exatos",
     "f_saved1": "1 rota salva",
-    "f_reminders": "Lembretes ilimitados nela",
-    "f_calendar": "Exportar para calendário",
-    "f_offline": "Funciona offline",
+    "f_reminders": "lembretes ilimitados",
+    "f_calendar": "exportar para calendário",
+    "f_offline": "funciona offline",
     "pro_head": "Pro",
     "p_everything_free": "Tudo do Grátis",
-    "p_routes3": "Até 3 rotas salvas",
-    "p_swaps3": "Trocar rotas (3 alterações)",
-    "p_reminders": "Lembretes ilimitados",
+    "p_routes3": "até 3 rotas salvas",
+    "p_swaps3": "trocar rotas (3 alterações)",
+    "p_reminders": "lembretes ilimitados",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Tudo do Pro",
-    "pp_routes_unlim": "Conjuntos de rotas ilimitados",
-    "pp_swaps_unlim": "Trocas e remoções ilimitadas",
-    "pp_reminders": "Lembretes ilimitados"
+    "pp_routes_unlim": "conjuntos de rotas ilimitados",
+    "pp_swaps_unlim": "trocas e remoções ilimitadas",
+    "pp_reminders": "lembretes ilimitados"
   },
   "hiw": {
     "link": "Como funciona",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Monitor de preço: {route}",
     "mail_intro": "Seu monitor de preço A+Z.app:",
     "mail_price": "Mais baixo visto",
-    "mail_outro": "— A+Z.app · voe por MENOS"
+    "mail_outro": "— A+Z.app · voe por MENOS",
+    "save": "Salvar esta rota",
+    "saved": "Salva",
+    "saved_profile": "Salva no seu perfil"
   }
 }

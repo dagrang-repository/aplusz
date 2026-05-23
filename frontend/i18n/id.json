@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Gratis selamanya",
     "f_unlimited": "Pencarian rute tak terbatas",
-    "f_exact": "Tanggal & harga terbaik yang tepat",
+    "f_exact": "tanggal & harga terbaik yang tepat",
     "f_saved1": "1 rute tersimpan",
-    "f_reminders": "Pengingat tak terbatas untuknya",
-    "f_calendar": "Ekspor kalender",
-    "f_offline": "Berfungsi offline",
+    "f_reminders": "pengingat tak terbatas",
+    "f_calendar": "ekspor kalender",
+    "f_offline": "berfungsi offline",
     "pro_head": "Pro",
     "p_everything_free": "Semua di Gratis",
-    "p_routes3": "Hingga 3 rute tersimpan",
-    "p_swaps3": "Tukar rute (3 perubahan)",
-    "p_reminders": "Pengingat tak terbatas",
+    "p_routes3": "hingga 3 rute tersimpan",
+    "p_swaps3": "tukar rute (3 perubahan)",
+    "p_reminders": "pengingat tak terbatas",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Semua di Pro",
-    "pp_routes_unlim": "Set rute tak terbatas",
-    "pp_swaps_unlim": "Tukar & hapus tak terbatas",
-    "pp_reminders": "Pengingat tak terbatas"
+    "pp_routes_unlim": "set rute tak terbatas",
+    "pp_swaps_unlim": "tukar & hapus tak terbatas",
+    "pp_reminders": "pengingat tak terbatas"
   },
   "hiw": {
     "link": "Cara kerja",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Pantau harga: {route}",
     "mail_intro": "Pantauan harga A+Z.app Anda:",
     "mail_price": "Terendah terlihat",
-    "mail_outro": "— A+Z.app · terbang lebih murah"
+    "mail_outro": "— A+Z.app · terbang lebih murah",
+    "save": "Simpan rute ini",
+    "saved": "Tersimpan",
+    "saved_profile": "Tersimpan di profil Anda"
   }
 }

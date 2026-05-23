@@ -1,4 +1,4 @@
-/* APlusZ — bundle.css (12 stylesheets, link order: tokens app result affiliates install referral profile plans howitworks langpicker autocomplete alerts) */
+/* APlusZ — bundle.css (tokens app result affiliates install referral profile plans howitworks langpicker autocomplete alerts) */
 
 /* ==================== tokens.css ==================== */
 /* ============================================================
@@ -1396,6 +1396,7 @@ a:hover { text-decoration: underline; }
   font-weight: 700;
   letter-spacing: -0.01em;
   color: var(--text-muted);
+  text-align: center;
 }
 .plan-head-link {
   text-decoration: none;
@@ -1410,6 +1411,7 @@ a:hover { text-decoration: underline; }
   font-size: var(--fs-sm);
   color: var(--text-muted);
   line-height: 1.6;
+  text-align: left;
 }
 .plan-feats span {
   /* features flow as one comma-separated paragraph under the title */

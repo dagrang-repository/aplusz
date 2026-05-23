@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Für immer kostenlos",
     "f_unlimited": "Unbegrenzte Routensuchen",
-    "f_exact": "Genaues bestes Datum + Preis",
+    "f_exact": "genaues bestes Datum + Preis",
     "f_saved1": "1 gespeicherte Route",
-    "f_reminders": "Unbegrenzte Erinnerungen dafür",
+    "f_reminders": "unbegrenzte Erinnerungen",
     "f_calendar": "Kalenderexport",
-    "f_offline": "Funktioniert offline",
+    "f_offline": "funktioniert offline",
     "pro_head": "Pro",
     "p_everything_free": "Alles aus Kostenlos",
-    "p_routes3": "Bis zu 3 gespeicherte Routen",
+    "p_routes3": "bis zu 3 gespeicherte Routen",
     "p_swaps3": "Routen wechseln (3 Änderungen)",
-    "p_reminders": "Unbegrenzte Erinnerungen",
+    "p_reminders": "unbegrenzte Erinnerungen",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Alles aus Pro",
-    "pp_routes_unlim": "Unbegrenzte Routensätze",
-    "pp_swaps_unlim": "Unbegrenzte Wechsel + Löschungen",
-    "pp_reminders": "Unbegrenzte Erinnerungen"
+    "pp_routes_unlim": "unbegrenzte Routensätze",
+    "pp_swaps_unlim": "unbegrenzte Wechsel + Löschungen",
+    "pp_reminders": "unbegrenzte Erinnerungen"
   },
   "hiw": {
     "link": "So funktioniert's",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Preis-Watch: {route}",
     "mail_intro": "Dein A+Z.app Preis-Watch:",
     "mail_price": "Niedrigster Preis",
-    "mail_outro": "— A+Z.app · flieg für WENIGER"
+    "mail_outro": "— A+Z.app · flieg für WENIGER",
+    "save": "Route speichern",
+    "saved": "Gespeichert",
+    "saved_profile": "In deinem Profil gespeichert"
   }
 }

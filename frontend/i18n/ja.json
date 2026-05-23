@@ -69,7 +69,7 @@
     "f_unlimited": "ルート検索無制限",
     "f_exact": "正確な最適日と価格",
     "f_saved1": "保存ルート1件",
-    "f_reminders": "そのルートで通知無制限",
+    "f_reminders": "通知無制限",
     "f_calendar": "カレンダー書き出し",
     "f_offline": "オフライン対応",
     "pro_head": "Pro",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ 価格ウォッチ：{route}",
     "mail_intro": "A+Z.app の価格ウォッチ：",
     "mail_price": "最安値",
-    "mail_outro": "— A+Z.app · もっと安く飛ぶ"
+    "mail_outro": "— A+Z.app · もっと安く飛ぶ",
+    "save": "このルートを保存",
+    "saved": "保存しました",
+    "saved_profile": "プロフィールに保存しました"
   }
 }

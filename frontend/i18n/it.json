@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Gratis per sempre",
     "f_unlimited": "Ricerche di percorsi illimitate",
-    "f_exact": "Data e prezzo migliori esatti",
+    "f_exact": "data e prezzo migliori esatti",
     "f_saved1": "1 percorso salvato",
-    "f_reminders": "Promemoria illimitati su quello",
-    "f_calendar": "Esportazione calendario",
-    "f_offline": "Funziona offline",
+    "f_reminders": "promemoria illimitati",
+    "f_calendar": "esportazione calendario",
+    "f_offline": "funziona offline",
     "pro_head": "Pro",
     "p_everything_free": "Tutto di Gratis",
-    "p_routes3": "Fino a 3 percorsi salvati",
-    "p_swaps3": "Cambia percorso (3 modifiche)",
-    "p_reminders": "Promemoria illimitati",
+    "p_routes3": "fino a 3 percorsi salvati",
+    "p_swaps3": "cambia percorso (3 modifiche)",
+    "p_reminders": "promemoria illimitati",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Tutto di Pro",
-    "pp_routes_unlim": "Set di percorsi illimitati",
-    "pp_swaps_unlim": "Cambi ed eliminazioni illimitati",
-    "pp_reminders": "Promemoria illimitati"
+    "pp_routes_unlim": "set di percorsi illimitati",
+    "pp_swaps_unlim": "cambi ed eliminazioni illimitati",
+    "pp_reminders": "promemoria illimitati"
   },
   "hiw": {
     "link": "Come funziona",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Monitoraggio prezzo: {route}",
     "mail_intro": "Il tuo monitoraggio prezzo A+Z.app:",
     "mail_price": "Più basso visto",
-    "mail_outro": "— A+Z.app · vola con MENO"
+    "mail_outro": "— A+Z.app · vola con MENO",
+    "save": "Salva questo percorso",
+    "saved": "Salvato",
+    "saved_profile": "Salvato nel tuo profilo"
   }
 }

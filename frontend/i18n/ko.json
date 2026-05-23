@@ -69,7 +69,7 @@
     "f_unlimited": "무제한 경로 검색",
     "f_exact": "정확한 최적 날짜 + 가격",
     "f_saved1": "저장 경로 1개",
-    "f_reminders": "해당 경로 알림 무제한",
+    "f_reminders": "알림 무제한",
     "f_calendar": "캘린더 내보내기",
     "f_offline": "오프라인 작동",
     "pro_head": "Pro",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ 가격 알림: {route}",
     "mail_intro": "A+Z.app 가격 알림:",
     "mail_price": "최저가",
-    "mail_outro": "— A+Z.app · 더 저렴하게"
+    "mail_outro": "— A+Z.app · 더 저렴하게",
+    "save": "이 경로 저장",
+    "saved": "저장됨",
+    "saved_profile": "프로필에 저장되었습니다"
   }
 }

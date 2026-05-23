@@ -69,7 +69,7 @@
     "f_unlimited": "无限次路线搜索",
     "f_exact": "精确的最佳日期和价格",
     "f_saved1": "1 条保存路线",
-    "f_reminders": "该路线无限提醒",
+    "f_reminders": "无限提醒",
     "f_calendar": "日历导出",
     "f_offline": "离线可用",
     "pro_head": "Pro",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ 价格监控：{route}",
     "mail_intro": "你的 A+Z.app 价格监控：",
     "mail_price": "最低价",
-    "mail_outro": "— A+Z.app · 花更少就能飞"
+    "mail_outro": "— A+Z.app · 花更少就能飞",
+    "save": "保存此路线",
+    "saved": "已保存",
+    "saved_profile": "已保存到你的个人资料"
   }
 }

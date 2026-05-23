@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Gratis para siempre",
     "f_unlimited": "Búsquedas de rutas ilimitadas",
-    "f_exact": "Fecha y precio óptimos exactos",
+    "f_exact": "fecha y precio óptimos exactos",
     "f_saved1": "1 ruta guardada",
-    "f_reminders": "Recordatorios ilimitados en ella",
-    "f_calendar": "Exportar a calendario",
-    "f_offline": "Funciona sin conexión",
+    "f_reminders": "recordatorios ilimitados",
+    "f_calendar": "exportar a calendario",
+    "f_offline": "funciona sin conexión",
     "pro_head": "Pro",
     "p_everything_free": "Todo lo de Gratis",
-    "p_routes3": "Hasta 3 rutas guardadas",
-    "p_swaps3": "Cambiar de ruta (3 cambios)",
-    "p_reminders": "Recordatorios ilimitados",
+    "p_routes3": "hasta 3 rutas guardadas",
+    "p_swaps3": "cambiar de ruta (3 cambios)",
+    "p_reminders": "recordatorios ilimitados",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Todo lo de Pro",
-    "pp_routes_unlim": "Conjuntos de rutas ilimitados",
-    "pp_swaps_unlim": "Cambios y eliminaciones ilimitados",
-    "pp_reminders": "Recordatorios ilimitados"
+    "pp_routes_unlim": "conjuntos de rutas ilimitados",
+    "pp_swaps_unlim": "cambios y eliminaciones ilimitados",
+    "pp_reminders": "recordatorios ilimitados"
   },
   "hiw": {
     "link": "Cómo funciona",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Vigilancia de precio: {route}",
     "mail_intro": "Tu vigilancia de precio de A+Z.app:",
     "mail_price": "Más bajo visto",
-    "mail_outro": "— A+Z.app · vuela por MENOS"
+    "mail_outro": "— A+Z.app · vuela por MENOS",
+    "save": "Guardar esta ruta",
+    "saved": "Guardada",
+    "saved_profile": "Guardada en tu perfil"
   }
 }

@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Voor altijd gratis",
     "f_unlimited": "Onbeperkt routes zoeken",
-    "f_exact": "Exacte beste datum + prijs",
+    "f_exact": "exacte beste datum + prijs",
     "f_saved1": "1 opgeslagen route",
-    "f_reminders": "Onbeperkte herinneringen erop",
-    "f_calendar": "Agenda-export",
-    "f_offline": "Werkt offline",
+    "f_reminders": "onbeperkte herinneringen",
+    "f_calendar": "agenda-export",
+    "f_offline": "werkt offline",
     "pro_head": "Pro",
     "p_everything_free": "Alles uit Gratis",
-    "p_routes3": "Tot 3 opgeslagen routes",
-    "p_swaps3": "Routes wisselen (3 wijzigingen)",
-    "p_reminders": "Onbeperkte herinneringen",
+    "p_routes3": "tot 3 opgeslagen routes",
+    "p_swaps3": "routes wisselen (3 wijzigingen)",
+    "p_reminders": "onbeperkte herinneringen",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Alles uit Pro",
-    "pp_routes_unlim": "Onbeperkte routesets",
-    "pp_swaps_unlim": "Onbeperkt wisselen + verwijderen",
-    "pp_reminders": "Onbeperkte herinneringen"
+    "pp_routes_unlim": "onbeperkte routesets",
+    "pp_swaps_unlim": "onbeperkt wisselen + verwijderen",
+    "pp_reminders": "onbeperkte herinneringen"
   },
   "hiw": {
     "link": "Hoe het werkt",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Prijswacht: {route}",
     "mail_intro": "Jouw A+Z.app prijswacht:",
     "mail_price": "Laagste gezien",
-    "mail_outro": "— A+Z.app · vlieg voor MINDER"
+    "mail_outro": "— A+Z.app · vlieg voor MINDER",
+    "save": "Route opslaan",
+    "saved": "Opgeslagen",
+    "saved_profile": "Opgeslagen in je profiel"
   }
 }

@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Za darmo na zawsze",
     "f_unlimited": "Nieograniczone wyszukiwanie tras",
-    "f_exact": "Dokładna najlepsza data i cena",
+    "f_exact": "dokładna najlepsza data i cena",
     "f_saved1": "1 zapisana trasa",
-    "f_reminders": "Nielimitowane przypomnienia",
-    "f_calendar": "Eksport do kalendarza",
-    "f_offline": "Działa offline",
+    "f_reminders": "nielimitowane przypomnienia",
+    "f_calendar": "eksport do kalendarza",
+    "f_offline": "działa offline",
     "pro_head": "Pro",
     "p_everything_free": "Wszystko z wersji darmowej",
-    "p_routes3": "Do 3 zapisanych tras",
-    "p_swaps3": "Zmiana tras (3 zmiany)",
-    "p_reminders": "Nielimitowane przypomnienia",
+    "p_routes3": "do 3 zapisanych tras",
+    "p_swaps3": "zmiana tras (3 zmiany)",
+    "p_reminders": "nielimitowane przypomnienia",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Wszystko z Pro",
-    "pp_routes_unlim": "Nieograniczone zestawy tras",
-    "pp_swaps_unlim": "Nielimitowane zmiany i usunięcia",
-    "pp_reminders": "Nielimitowane przypomnienia"
+    "pp_routes_unlim": "nieograniczone zestawy tras",
+    "pp_swaps_unlim": "nielimitowane zmiany i usunięcia",
+    "pp_reminders": "nielimitowane przypomnienia"
   },
   "hiw": {
     "link": "Jak to działa",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Monitor ceny: {route}",
     "mail_intro": "Twój monitor ceny A+Z.app:",
     "mail_price": "Najniższa widziana",
-    "mail_outro": "— A+Z.app · lataj taniej"
+    "mail_outro": "— A+Z.app · lataj taniej",
+    "save": "Zapisz tę trasę",
+    "saved": "Zapisano",
+    "saved_profile": "Zapisano w Twoim profilu"
   }
 }

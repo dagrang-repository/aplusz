@@ -67,21 +67,21 @@
   "plans": {
     "free_head": "Miễn phí mãi mãi",
     "f_unlimited": "Tìm tuyến không giới hạn",
-    "f_exact": "Ngày và giá tốt nhất chính xác",
+    "f_exact": "ngày và giá tốt nhất chính xác",
     "f_saved1": "1 tuyến đã lưu",
-    "f_reminders": "Nhắc nhở không giới hạn",
-    "f_calendar": "Xuất ra lịch",
-    "f_offline": "Hoạt động ngoại tuyến",
+    "f_reminders": "nhắc nhở không giới hạn",
+    "f_calendar": "xuất ra lịch",
+    "f_offline": "hoạt động ngoại tuyến",
     "pro_head": "Pro",
     "p_everything_free": "Mọi thứ của bản Miễn phí",
-    "p_routes3": "Tối đa 3 tuyến đã lưu",
-    "p_swaps3": "Đổi tuyến (3 lần thay đổi)",
-    "p_reminders": "Nhắc nhở không giới hạn",
+    "p_routes3": "tối đa 3 tuyến đã lưu",
+    "p_swaps3": "đổi tuyến (3 lần thay đổi)",
+    "p_reminders": "nhắc nhở không giới hạn",
     "proplus_head": "Pro+",
     "pp_everything_pro": "Mọi thứ của Pro",
-    "pp_routes_unlim": "Bộ tuyến không giới hạn",
-    "pp_swaps_unlim": "Đổi và xóa không giới hạn",
-    "pp_reminders": "Nhắc nhở không giới hạn"
+    "pp_routes_unlim": "bộ tuyến không giới hạn",
+    "pp_swaps_unlim": "đổi và xóa không giới hạn",
+    "pp_reminders": "nhắc nhở không giới hạn"
   },
   "hiw": {
     "link": "Cách hoạt động",
@@ -161,6 +161,9 @@
     "mail_subject": "✈️ Theo dõi giá: {route}",
     "mail_intro": "Theo dõi giá A+Z.app của bạn:",
     "mail_price": "Thấp nhất đã thấy",
-    "mail_outro": "— A+Z.app · bay rẻ hơn"
+    "mail_outro": "— A+Z.app · bay rẻ hơn",
+    "save": "Lưu tuyến này",
+    "saved": "Đã lưu",
+    "saved_profile": "Đã lưu vào hồ sơ của bạn"
   }
 }
