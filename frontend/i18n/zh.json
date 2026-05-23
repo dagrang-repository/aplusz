@@ -165,5 +165,19 @@
     "save": "保存此路线",
     "saved": "已保存",
     "saved_profile": "已保存到你的个人资料"
+  },
+  "profile": {
+    "title": "你的个人资料",
+    "your_plan": "你的套餐",
+    "saved_routes": "已保存路线",
+    "saved_intro": "保存一条路线，然后随时把提醒重新发送到你自己的邮箱。",
+    "progress": "迈向全员免费的进度",
+    "reward": "达到100%时，所有付费套餐在1月1日前对所有人免费。多多分享！",
+    "copy": "复制",
+    "share": "分享 AplusZ",
+    "karma_points": "积分",
+    "karma_msg": "你分享 AplusZ 越多，整个网站——包括 Pro 和 Pro+——就越快对所有人免费。",
+    "streak": "连续天数——每天打开或分享 AplusZ 以保持。",
+    "link_copied": "链接已复制"
   }
 }

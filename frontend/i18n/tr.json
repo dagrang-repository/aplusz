@@ -165,5 +165,19 @@
     "save": "Bu rotayı kaydet",
     "saved": "Kaydedildi",
     "saved_profile": "Profilinize kaydedildi"
+  },
+  "profile": {
+    "title": "Profiliniz",
+    "your_plan": "Planınız",
+    "saved_routes": "Kayıtlı rotalar",
+    "saved_intro": "Bir rota kaydedin, ardından istediğiniz zaman kendinize e-postayla hatırlatma gönderin.",
+    "progress": "Herkese ücretsiz hedefine ilerleme",
+    "reward": "%100'e ulaşınca her ücretli plan 1 Ocak'a kadar herkese ücretsiz olur. Daha çok paylaşın!",
+    "copy": "Kopyala",
+    "share": "AplusZ'yi paylaş",
+    "karma_points": "Karma puanı",
+    "karma_msg": "AplusZ'yi ne kadar paylaşırsanız, tüm site — Pro ve Pro+ dahil — herkes için o kadar hızlı ücretsiz olur.",
+    "streak": "Gün serisi — sürdürmek için AplusZ'yi her gün açın veya paylaşın.",
+    "link_copied": "Bağlantı kopyalandı"
   }
 }

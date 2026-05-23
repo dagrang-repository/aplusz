@@ -9,14 +9,28 @@
 
   var REVENUE_CAP_EUR = 62000;
 
-  var PLANS = [
-    { id: 'free',    name: '\uD83C\uDD93 Free', tag: '',
-      feats: 'Unlimited searches \u00b7 exact best date + price \u00b7 1 saved route \u00b7 unlimited reminders \u00b7 works offline' },
-    { id: 'pro',     name: '\u2B50 Pro', tag: '',
-      feats: 'Everything in Free \u00b7 up to 3 saved routes \u00b7 swap routes (3 changes) \u00b7 unlimited reminders' },
-    { id: 'proplus', name: '<span class="az-crown">\uD83D\uDC51</span> Pro+', tag: '',
-      feats: 'Everything in Pro \u00b7 unlimited saved routes \u00b7 unlimited swaps + removes \u00b7 unlimited reminders' }
-  ];
+  // Plans built from i18n at render time (names use the icon+key pair rule;
+  // feats reuse the existing plans.* keys joined with " · ").
+  function tt(k) {
+    try { return (window.APlusZ.i18n && window.APlusZ.i18n.t) ? window.APlusZ.i18n.t(k) : k; }
+    catch (e) { return k; }
+  }
+  function plansData() {
+    return [
+      { id: 'free',
+        name: '\uD83C\uDD93 ' + tt('plans.free_head'),
+        feats: [tt('plans.f_unlimited'), tt('plans.f_exact'), tt('plans.f_saved1'),
+                tt('plans.f_reminders'), tt('plans.f_offline')].join(' \u00b7 ') },
+      { id: 'pro',
+        name: '\u2B50 ' + tt('plans.pro_head'),
+        feats: [tt('plans.p_everything_free'), tt('plans.p_routes3'),
+                tt('plans.p_swaps3'), tt('plans.p_reminders')].join(' \u00b7 ') },
+      { id: 'proplus',
+        name: '<span class="az-crown">\uD83D\uDC51</span> ' + tt('plans.proplus_head'),
+        feats: [tt('plans.pp_everything_pro'), tt('plans.pp_routes_unlim'),
+                tt('plans.pp_swaps_unlim'), tt('plans.pp_reminders')].join(' \u00b7 ') }
+    ];
+  }
 
   function currentPlan() {
     var p = 'free';
@@ -34,9 +48,8 @@
   function planCardsHTML() {
     var cur = currentPlan();
     var curRank = RANK[cur] || 0;
-    return PLANS.map(function (pl) {
+    return plansData().map(function (pl) {
       var active = (pl.id === cur);
-      // upgrade target = any tier ABOVE current (Free is never a target)
       var upgradable = (RANK[pl.id] > curRank);
       var attrs = 'class="plan-card' + (active ? ' active' : '') + (upgradable ? ' upgradable' : '') + '"';
       if (upgradable) {
@@ -46,7 +59,7 @@
         '<div ' + attrs + '>' +
           '<div class="plan-card-top">' +
             '<span class="plan-card-name">' + pl.name + '</span>' +
-            (active ? '<span class="plan-card-badge">Your plan</span>' : '') +
+            (active ? '<span class="plan-card-badge">' + tt('profile.your_plan') + '</span>' : '') +
           '</div>' +
           '<div class="plan-card-feats">' + pl.feats + '</div>' +
         '</div>';
@@ -77,42 +90,42 @@
     return [
       '<div class="profile-drawer" id="profile-drawer">',
       '  <div class="pd-header">',
-      '    <div class="pd-title">Your Profile</div>',
-      '    <div class="pd-close-wrap"><button class="pd-close" id="pd-close" aria-label="Close">\u00d7</button></div>',
+      '    <div class="pd-title">' + tt('profile.title') + '</div>',
+      '    <div class="pd-close-wrap"><button class="pd-close" id="pd-close" aria-label="' + tt('alerts.close') + '">\u00d7</button></div>',
       '  </div>',
 
       '  <div class="pd-plans">' + planCardsHTML() + '</div>',
 
       '  <div class="pd-section">',
-      '    <div class="pd-label">Saved routes</div>',
-      '    <div class="pd-alerts-intro">Save a route, then re-send a reminder to your own mail anytime.</div>',
+      '    <div class="pd-label">' + tt('profile.saved_routes') + '</div>',
+      '    <div class="pd-alerts-intro">' + tt('profile.saved_intro') + '</div>',
       '    <div id="pd-alerts-anchor"></div>',
       '  </div>',
 
       '  <div class="pd-karma">',
       '    <div class="adopt-bar" id="adopt-bar">',
       '      <div class="adopt-fill" id="adopt-fill" style="width:0%"><div class="adopt-shimmer"></div></div>',
-      '      <div class="adopt-bar-text"><span>Progress to free-for-all</span><span id="adopt-pct">0%</span></div>',
+      '      <div class="adopt-bar-text"><span>' + tt('profile.progress') + '</span><span id="adopt-pct">0%</span></div>',
       '    </div>',
-      '    <div class="pd-karma-reward">When this hits 100%, every paid plan becomes free for everyone until January 1. So share more!</div>',
+      '    <div class="pd-karma-reward">' + tt('profile.reward') + '</div>',
 
       '    <div class="ref-link-row">',
       '      <input class="ref-link-input" id="ref-link-input" value="' + url + '" readonly>',
-      '      <button class="ref-link-copy" id="ref-link-copy">Copy</button>',
+      '      <button class="ref-link-copy" id="ref-link-copy">' + tt('profile.copy') + '</button>',
       '    </div>',
-      '    <button class="pd-share-btn" id="pd-share">\u2197 Share AplusZ</button>',
+      '    <button class="pd-share-btn" id="pd-share">\u2197 ' + tt('profile.share') + '</button>',
 
       '    <div class="pd-karma-top">',
-      '      <span class="pd-karma-label">Karma points</span>',
+      '      <span class="pd-karma-label">' + tt('profile.karma_points') + '</span>',
       '      <span class="pd-karma-value">' + karma + '</span>',
       '    </div>',
-      '    <div class="pd-karma-msg">The more you share AplusZ, the faster the whole site — including Pro and Pro+ — becomes free for everyone.</div>',
+      '    <div class="pd-karma-msg">' + tt('profile.karma_msg') + '</div>',
       '  </div>',
 
       '  <div class="pd-streak">',
       '    <span class="pd-streak-icon">\uD83D\uDD25</span>',
       '    <span class="pd-streak-value">' + streak + '</span>',
-      '    <span class="pd-streak-label">Day streak — open or share AplusZ daily to keep it alive.</span>',
+      '    <span class="pd-streak-label">' + tt('profile.streak') + '</span>',
       '  </div>',
 
       '</div>',
@@ -137,7 +150,7 @@
     document.getElementById('ref-link-copy').addEventListener('click', function () {
       var input = document.getElementById('ref-link-input');
       input.select(); input.setSelectionRange(0, 99999);
-      try { navigator.clipboard.writeText(input.value); window.APlusZ.referral.showToast('Link copied'); }
+      try { navigator.clipboard.writeText(input.value); window.APlusZ.referral.showToast(tt('profile.link_copied')); }
       catch (e) { document.execCommand('copy'); }
     });
 
@@ -174,6 +187,18 @@
   document.addEventListener('aplusz:tier', function () {
     var box = document.querySelector('.pd-plans');
     if (box) { box.innerHTML = planCardsHTML(); wirePlanCards(); }
+  });
+
+  // Language switched: if the drawer is open, rebuild it in the new language.
+  document.addEventListener('aplusz:lang', function () {
+    var existing = document.getElementById('profile-drawer');
+    if (!existing) return;                 // not open -> nothing to do
+    var wrap = existing.parentNode;
+    var overlay = document.getElementById('profile-overlay');
+    if (wrap && wrap.parentNode) wrap.parentNode.removeChild(wrap);
+    else { if (existing.parentNode) existing.parentNode.removeChild(existing);
+           if (overlay && overlay.parentNode) overlay.parentNode.removeChild(overlay); }
+    open();                                // rebuild fresh with current language
   });
 
   window.APlusZ = window.APlusZ || {};

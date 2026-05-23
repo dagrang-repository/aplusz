@@ -165,5 +165,19 @@
     "save": "Zapisz tę trasę",
     "saved": "Zapisano",
     "saved_profile": "Zapisano w Twoim profilu"
+  },
+  "profile": {
+    "title": "Twój profil",
+    "your_plan": "Twój plan",
+    "saved_routes": "Zapisane trasy",
+    "saved_intro": "Zapisz trasę, a potem wyślij sobie przypomnienie na własną pocztę w dowolnej chwili.",
+    "progress": "Postęp do darmowego dla wszystkich",
+    "reward": "Po osiągnięciu 100% każdy płatny plan staje się darmowy dla wszystkich do 1 stycznia. Udostępniaj więcej!",
+    "copy": "Kopiuj",
+    "share": "Udostępnij AplusZ",
+    "karma_points": "Punkty karmy",
+    "karma_msg": "Im więcej udostępniasz AplusZ, tym szybciej cała strona — w tym Pro i Pro+ — staje się darmowa dla wszystkich.",
+    "streak": "Seria dni — otwieraj lub udostępniaj AplusZ codziennie, by ją utrzymać.",
+    "link_copied": "Skopiowano link"
   }
 }

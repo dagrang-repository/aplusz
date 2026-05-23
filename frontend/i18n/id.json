@@ -165,5 +165,19 @@
     "save": "Simpan rute ini",
     "saved": "Tersimpan",
     "saved_profile": "Tersimpan di profil Anda"
+  },
+  "profile": {
+    "title": "Profil Anda",
+    "your_plan": "Paket Anda",
+    "saved_routes": "Rute tersimpan",
+    "saved_intro": "Simpan rute, lalu kirim ulang pengingat ke email Anda kapan saja.",
+    "progress": "Kemajuan menuju gratis untuk semua",
+    "reward": "Saat mencapai 100%, setiap paket berbayar menjadi gratis untuk semua hingga 1 Januari. Bagikan lebih banyak!",
+    "copy": "Salin",
+    "share": "Bagikan AplusZ",
+    "karma_points": "Poin karma",
+    "karma_msg": "Semakin banyak Anda membagikan AplusZ, semakin cepat seluruh situs — termasuk Pro dan Pro+ — gratis untuk semua.",
+    "streak": "Rentetan hari — buka atau bagikan AplusZ setiap hari untuk mempertahankannya.",
+    "link_copied": "Tautan disalin"
   }
 }

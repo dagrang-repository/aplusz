@@ -165,5 +165,19 @@
     "save": "Lưu tuyến này",
     "saved": "Đã lưu",
     "saved_profile": "Đã lưu vào hồ sơ của bạn"
+  },
+  "profile": {
+    "title": "Hồ sơ của bạn",
+    "your_plan": "Gói của bạn",
+    "saved_routes": "Tuyến đã lưu",
+    "saved_intro": "Lưu một tuyến, rồi gửi lại nhắc nhở vào email của bạn bất cứ lúc nào.",
+    "progress": "Tiến độ đến miễn phí cho mọi người",
+    "reward": "Khi đạt 100%, mọi gói trả phí sẽ miễn phí cho tất cả đến ngày 1 tháng 1. Hãy chia sẻ thêm!",
+    "copy": "Sao chép",
+    "share": "Chia sẻ AplusZ",
+    "karma_points": "Điểm karma",
+    "karma_msg": "Bạn càng chia sẻ AplusZ, cả trang — gồm Pro và Pro+ — càng nhanh miễn phí cho mọi người.",
+    "streak": "Chuỗi ngày — mở hoặc chia sẻ AplusZ mỗi ngày để duy trì.",
+    "link_copied": "Đã sao chép liên kết"
   }
 }

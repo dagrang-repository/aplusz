@@ -165,5 +165,19 @@
     "save": "Enregistrer ce trajet",
     "saved": "Enregistré",
     "saved_profile": "Enregistré dans votre profil"
+  },
+  "profile": {
+    "title": "Votre profil",
+    "your_plan": "Votre offre",
+    "saved_routes": "Trajets enregistrés",
+    "saved_intro": "Enregistrez un trajet, puis renvoyez-vous un rappel par e-mail à tout moment.",
+    "progress": "Progression vers le gratuit pour tous",
+    "reward": "À 100 %, toutes les offres payantes deviennent gratuites pour tous jusqu'au 1er janvier. Partagez plus !",
+    "copy": "Copier",
+    "share": "Partager AplusZ",
+    "karma_points": "Points de karma",
+    "karma_msg": "Plus vous partagez AplusZ, plus vite tout le site — y compris Pro et Pro+ — devient gratuit pour tous.",
+    "streak": "Série de jours — ouvrez ou partagez AplusZ chaque jour pour la maintenir.",
+    "link_copied": "Lien copié"
   }
 }

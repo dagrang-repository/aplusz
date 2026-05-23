@@ -165,5 +165,19 @@
     "save": "Save this route",
     "saved": "Saved",
     "saved_profile": "Saved to your Profile"
+  },
+  "profile": {
+    "title": "Your Profile",
+    "your_plan": "Your plan",
+    "saved_routes": "Saved routes",
+    "saved_intro": "Save a route, then re-send a reminder to your own mail anytime.",
+    "progress": "Progress to free-for-all",
+    "reward": "When this hits 100%, every paid plan becomes free for everyone until January 1. So share more!",
+    "copy": "Copy",
+    "share": "Share AplusZ",
+    "karma_points": "Karma points",
+    "karma_msg": "The more you share AplusZ, the faster the whole site — including Pro and Pro+ — becomes free for everyone.",
+    "streak": "Day streak — open or share AplusZ daily to keep it alive.",
+    "link_copied": "Link copied"
   }
 }

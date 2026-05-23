@@ -1,4 +1,4 @@
-/* APlusZ — bundle.css */
+/* APlusZ bundle.css */
 
 /* ==================== tokens.css ==================== */
 /* ============================================================
@@ -1366,17 +1366,11 @@ a:hover { text-decoration: underline; }
   position: relative;
   max-width: 820px;
   margin: var(--sp-12) auto 0;
-  padding: var(--sp-10) var(--sp-5) 0;
+  padding: var(--sp-12) var(--sp-6) 0;
+  box-sizing: border-box;
 }
-.plans-strip::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: var(--sp-4);
-  right: var(--sp-4);
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border) 30%, var(--border) 70%, transparent);
-}
+/* divider line hidden per request; empty space kept via padding-top above */
+.plans-strip::before { display: none; }
 
 .plans-grid {
   display: grid;
@@ -1389,6 +1383,8 @@ a:hover { text-decoration: underline; }
   flex-direction: column;
   gap: var(--sp-3);
   text-align: center;
+  min-width: 0;
+  box-sizing: border-box;
 }
 
 .plan-head {

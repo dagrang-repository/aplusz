@@ -165,5 +165,19 @@
     "save": "Guardar esta ruta",
     "saved": "Guardada",
     "saved_profile": "Guardada en tu perfil"
+  },
+  "profile": {
+    "title": "Tu perfil",
+    "your_plan": "Tu plan",
+    "saved_routes": "Rutas guardadas",
+    "saved_intro": "Guarda una ruta y reenvíate un recordatorio a tu correo cuando quieras.",
+    "progress": "Progreso hacia gratis para todos",
+    "reward": "Cuando llegue al 100 %, cada plan de pago será gratis para todos hasta el 1 de enero. ¡Comparte más!",
+    "copy": "Copiar",
+    "share": "Compartir AplusZ",
+    "karma_points": "Puntos de karma",
+    "karma_msg": "Cuanto más compartas AplusZ, más rápido todo el sitio — incluidos Pro y Pro+ — será gratis para todos.",
+    "streak": "Racha de días — abre o comparte AplusZ a diario para mantenerla.",
+    "link_copied": "Enlace copiado"
   }
 }

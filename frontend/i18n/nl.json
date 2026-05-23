@@ -165,5 +165,19 @@
     "save": "Route opslaan",
     "saved": "Opgeslagen",
     "saved_profile": "Opgeslagen in je profiel"
+  },
+  "profile": {
+    "title": "Je profiel",
+    "your_plan": "Je abonnement",
+    "saved_routes": "Opgeslagen routes",
+    "saved_intro": "Sla een route op en stuur jezelf later een herinnering per mail.",
+    "progress": "Voortgang naar gratis voor iedereen",
+    "reward": "Bij 100% wordt elk betaald abonnement gratis voor iedereen tot 1 januari. Deel meer!",
+    "copy": "Kopiëren",
+    "share": "AplusZ delen",
+    "karma_points": "Karmapunten",
+    "karma_msg": "Hoe meer je AplusZ deelt, hoe sneller de hele site — inclusief Pro en Pro+ — gratis wordt voor iedereen.",
+    "streak": "Dagenreeks — open of deel AplusZ dagelijks om deze te behouden.",
+    "link_copied": "Link gekopieerd"
   }
 }

@@ -165,5 +165,19 @@
     "save": "Route speichern",
     "saved": "Gespeichert",
     "saved_profile": "In deinem Profil gespeichert"
+  },
+  "profile": {
+    "title": "Dein Profil",
+    "your_plan": "Dein Plan",
+    "saved_routes": "Gespeicherte Routen",
+    "saved_intro": "Speichere eine Route und sende dir jederzeit eine Erinnerung an deine eigene Mail.",
+    "progress": "Fortschritt zu kostenlos für alle",
+    "reward": "Bei 100 % wird jeder kostenpflichtige Plan bis zum 1. Januar für alle kostenlos. Teile mehr!",
+    "copy": "Kopieren",
+    "share": "AplusZ teilen",
+    "karma_points": "Karma-Punkte",
+    "karma_msg": "Je mehr du AplusZ teilst, desto schneller wird die ganze Seite — auch Pro und Pro+ — für alle kostenlos.",
+    "streak": "Tagesserie — öffne oder teile AplusZ täglich, um sie zu erhalten.",
+    "link_copied": "Link kopiert"
   }
 }

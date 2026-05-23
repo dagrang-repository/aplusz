@@ -165,5 +165,19 @@
     "save": "Salvar esta rota",
     "saved": "Salva",
     "saved_profile": "Salva no seu perfil"
+  },
+  "profile": {
+    "title": "Seu perfil",
+    "your_plan": "Seu plano",
+    "saved_routes": "Rotas salvas",
+    "saved_intro": "Salve uma rota e reenvie um lembrete para o seu e-mail quando quiser.",
+    "progress": "Progresso para grátis para todos",
+    "reward": "Ao atingir 100%, todo plano pago fica grátis para todos até 1º de janeiro. Compartilhe mais!",
+    "copy": "Copiar",
+    "share": "Compartilhar AplusZ",
+    "karma_points": "Pontos de karma",
+    "karma_msg": "Quanto mais você compartilha o AplusZ, mais rápido todo o site — incluindo Pro e Pro+ — fica grátis para todos.",
+    "streak": "Sequência de dias — abra ou compartilhe o AplusZ diariamente para mantê-la.",
+    "link_copied": "Link copiado"
   }
 }

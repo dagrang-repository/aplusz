@@ -101,6 +101,7 @@
 
     if (cache[code]) {
       applyTranslations(cache[code]);
+      notifyLang(code);
       return Promise.resolve(cache[code]);
     }
 
@@ -112,11 +113,17 @@
       .then(function (dict) {
         cache[code] = dict;
         applyTranslations(dict);
+        notifyLang(code);
         return dict;
       })
       .catch(function () {
         if (code !== FALLBACK) return load(FALLBACK);
       });
+  }
+
+  /* tell JS-built UI (profile drawer, alerts) to re-render in the new language */
+  function notifyLang(code) {
+    try { document.dispatchEvent(new CustomEvent('aplusz:lang', { detail: { lang: code } })); } catch (e) {}
   }
 
   /* manual switch — persists and overrides device language */
