@@ -113,8 +113,19 @@
 <footer class="footer">
   <a href="legal/index.html" data-i18n="nav.legal">Legal</a>
   <span class="footer-sep"></span>
+  <a href="disclosure/index.html" id="footer-disclosure">Disclosure</a>
+  <span class="footer-sep"></span>
   <span>© <span id="year"></span> <span class="bn-az">A</span><span class="bn-plus">plus</span><span class="bn-az">Z</span> <span class="footer-mark">(A+Z).app</span></span>
 </footer>
+<script>
+  // Disclosure link label: French → "Divulgation", all else → "Disclosure"
+  (function(){
+    try{
+      var l=(localStorage.getItem('aplusz-lang')||navigator.language||'en').toLowerCase();
+      if(l.indexOf('fr')===0){var a=document.getElementById('footer-disclosure');if(a)a.textContent='Divulgation';}
+    }catch(e){}
+  })();
+</script>
 
 <script defer src="assets/i18n.js"></script>
 <script defer src="assets/referral.js"></script>
