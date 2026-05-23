@@ -64,6 +64,28 @@
     return '<span class="conf ' + c.cls + '"><span class="conf-dots">' + c.dot + '</span>' + c.label + '</span>';
   }
 
+  /* All-time-low banner. Shows ONLY when this fetch set a NEW record
+     (d.dropPct > 0). Near-symbolic + inline FR/EN label (French for French
+     users, English for everyone else) — no i18n JSON keys needed. */
+  function isFrench() {
+    try {
+      var l = (localStorage.getItem('aplusz-lang') ||
+               (window.APlusZ.i18n && window.APlusZ.i18n.locale && window.APlusZ.i18n.locale()) ||
+               navigator.language || 'en').toLowerCase();
+      return l.indexOf('fr') === 0;
+    } catch (e) { return false; }
+  }
+  function lowBanner(d) {
+    var pct = (typeof d.dropPct === 'number') ? d.dropPct : 0;
+    if (pct <= 0) return '';                 // only on a fresh all-time low
+    var abs = (typeof d.dropAbs === 'number' && d.dropAbs > 0)
+      ? window.APlusZ.detect.formatPrice(d.dropAbs, d.currency || 'EUR') : '';
+    var label = isFrench()
+      ? ('Plus bas jamais vu' + (abs ? ' \u2014 ' + abs + ' de moins' : '') + ' (\u2212' + pct + '\u202F%)')
+      : ('All-time low' + (abs ? ' \u2014 ' + abs + ' cheaper' : '') + ' (\u2212' + pct + '%)');
+    return '  <div class="alltime-low">\u2B07\uFE0F ' + label + '</div>';
+  }
+
   function googleCalUrl(d) {
     var start = d.bestDeparture.replace(/-/g, '');
     return 'https://calendar.google.com/calendar/render?action=TEMPLATE' +
@@ -192,6 +214,8 @@
       '      <div class="date-value">' + formatDate(d.bestBooking) + '</div>',
       '    </div>',
       '  </div>',
+
+      lowBanner(d),
 
       '  <div class="price-row">',
       '    <div>',
