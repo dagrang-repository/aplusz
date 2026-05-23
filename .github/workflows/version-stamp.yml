@@ -1,0 +1,35 @@
+name: Stamp version.json
+on:
+  push:
+    branches: [ main ]
+permissions:
+  contents: write
+# Prevent overlapping runs racing on the same commit
+concurrency:
+  group: version-stamp
+  cancel-in-progress: false
+jobs:
+  stamp:
+    runs-on: ubuntu-latest
+    # Skip when the push was the bot's own version/data commit (avoids loops)
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+      - name: Write version.json
+        run: |
+          SHA=$(git rev-parse --short HEAD)
+          DATE=$(date -u +%Y%m%d-%H%M)
+          echo "{\"v\":\"${DATE}-${SHA}\"}" > frontend/version.json
+          echo "Stamped: ${DATE}-${SHA}"
+      - name: Commit & push
+        run: |
+          git config user.name "APlusZ Bot"
+          git config user.email "bot@aplusz.app"
+          git add frontend/version.json
+          if git diff --staged --quiet; then
+            echo "No version change"
+          else
+            git commit -m "version stamp [skip ci]"
+            git push
+          fi
