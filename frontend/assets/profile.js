@@ -17,90 +17,13 @@
   }
   function plansData() {
     return [
-      { id: 'free',
-        name: '\uD83C\uDD93 ' + tt('plans.free_head'),
-        feats: [tt('plans.f_unlimited'), tt('plans.f_exact'), tt('plans.f_saved1'),
-                tt('plans.f_reminders'), tt('plans.f_offline')].join(' \u00b7 ') },
-      { id: 'pro',
-        name: '\u2B50 ' + tt('plans.pro_head'),
-        feats: [tt('plans.p_everything_free'), tt('plans.p_routes3'),
-                tt('plans.p_swaps3'), tt('plans.p_reminders')].join(' \u00b7 ') },
-      { id: 'proplus',
-        name: '<span class="az-crown">\uD83D\uDC51</span> ' + tt('plans.proplus_head'),
-        feats: [tt('plans.pp_everything_pro'), tt('plans.pp_routes_unlim'),
-                tt('plans.pp_swaps_unlim'), tt('plans.pp_reminders')].join(' \u00b7 ') }
-    ];
-  }
-
-  function currentPlan() {
-    var p = 'free';
-    try { if (window.APlusZ.billing && window.APlusZ.billing.tier) p = window.APlusZ.billing.tier(); } catch (e) {}
-    return p;
-  }
-
-  function loadCap() {
-    return fetch('data/cap.json', { cache: 'default' })
-      .then(function (r) { return r.ok ? r.json() : null; })
-      .catch(function () { return null; });
-  }
-
-  var RANK = { free: 0, pro: 1, proplus: 2 };
-  function planCardsHTML() {
-    var cur = currentPlan();
-    var curRank = RANK[cur] || 0;
-    return plansData().map(function (pl) {
-      var active = (pl.id === cur);
-      var upgradable = (RANK[pl.id] > curRank);
-      var attrs = 'class="plan-card' + (active ? ' active' : '') + (upgradable ? ' upgradable' : '') + '"';
-      if (upgradable) {
-        attrs += ' role="button" tabindex="0" data-buy="' + pl.id + '"';
-      }
-      return '' +
-        '<div ' + attrs + '>' +
-          '<div class="plan-card-top">' +
-            '<span class="plan-card-name">' + pl.name + '</span>' +
-            (active ? '<span class="plan-card-badge">' + tt('profile.your_plan') + '</span>' : '') +
-          '</div>' +
-          '<div class="plan-card-feats">' + pl.feats + '</div>' +
-        '</div>';
-    }).join('');
-  }
-  function wirePlanCards() {
-    var cards = document.querySelectorAll('.pd-plans .plan-card.upgradable');
-    cards.forEach(function (c) {
-      var id = c.getAttribute('data-buy');
-      var go = function () {
-        if (!(window.APlusZ && APlusZ.billing)) return;
-        close();                       // close drawer first so the billing modal isn't stacked behind it
-        setTimeout(function () { APlusZ.billing.buy(id); }, 60);
-      };
-      c.addEventListener('click', go);
-      c.addEventListener('keydown', function (e) {
-        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); go(); }
-      });
-    });
-  }
-
-  function buildProfileHTML() {
-    var ref    = window.APlusZ.referral;
-    var streak = ref ? ref.getStreak() : 0;
-    var karma  = ref ? ref.getBounty() : 0;
-    var url    = ref ? ref.getRefUrl() : '';
-
-    return [
       '<div class="profile-drawer" id="profile-drawer">',
       '  <div class="pd-header">',
       '    <div class="pd-title">' + tt('profile.title') + '</div>',
       '    <div class="pd-close-wrap"><button class="pd-close" id="pd-close" aria-label="' + tt('alerts.close') + '">\u00d7</button></div>',
       '  </div>',
 
-      '  <div class="pd-plans">' + planCardsHTML() + '</div>',
-
-      '  <div class="pd-section">',
-      '    <div class="pd-label">' + tt('profile.saved_routes') + '</div>',
-      '    <div class="pd-alerts-intro">' + tt('profile.saved_intro') + '</div>',
-      '    <div id="pd-alerts-anchor"></div>',
-      '  </div>',
+      '  <div class="pd-plans pd-plans-current">' + currentPlanHTML() + '</div>',
 
       '  <div class="pd-karma">',
       '    <div class="adopt-bar" id="adopt-bar">',
@@ -108,13 +31,17 @@
       '      <div class="adopt-bar-text"><span>' + tt('profile.progress') + '</span><span id="adopt-pct">0%</span></div>',
       '    </div>',
       '    <div class="pd-karma-reward">' + tt('profile.reward') + '</div>',
+      '  </div>',
 
+      '  <div class="pd-karma">',
       '    <div class="ref-link-row">',
       '      <input class="ref-link-input" id="ref-link-input" value="' + url + '" readonly>',
       '      <button class="ref-link-copy" id="ref-link-copy">' + tt('profile.copy') + '</button>',
       '    </div>',
       '    <button class="pd-share-btn" id="pd-share">\u2197 ' + tt('profile.share') + '</button>',
+      '  </div>',
 
+      '  <div class="pd-karma">',
       '    <div class="pd-karma-top">',
       '      <span class="pd-karma-label">' + tt('profile.karma_points') + '</span>',
       '      <span class="pd-karma-value">' + karma + '</span>',
@@ -127,6 +54,14 @@
       '    <span class="pd-streak-value">' + streak + '</span>',
       '    <span class="pd-streak-label">' + tt('profile.streak') + '</span>',
       '  </div>',
+
+      '  <div class="pd-section">',
+      '    <div class="pd-label">' + tt('profile.saved_routes') + '</div>',
+      '    <div class="pd-alerts-intro">' + tt('profile.saved_intro') + '</div>',
+      '    <div id="pd-alerts-anchor"></div>',
+      '  </div>',
+
+      '  <div class="pd-plans pd-plans-others">' + otherPlansHTML() + '</div>',
 
       '</div>',
       '<div class="profile-overlay" id="profile-overlay"></div>'
@@ -185,8 +120,11 @@
   }
 
   document.addEventListener('aplusz:tier', function () {
-    var box = document.querySelector('.pd-plans');
-    if (box) { box.innerHTML = planCardsHTML(); wirePlanCards(); }
+    var curBox = document.querySelector('.pd-plans-current');
+    if (curBox) curBox.innerHTML = currentPlanHTML();
+    var upBox = document.querySelector('.pd-plans-others');
+    if (upBox) upBox.innerHTML = otherPlansHTML();
+    if (curBox || upBox) wirePlanCards();
   });
 
   // Language switched: if the drawer is open, rebuild it in the new language.

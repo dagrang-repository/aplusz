@@ -1802,3 +1802,7 @@ a.bb-link:hover{opacity:.75;text-decoration:underline}
 .plans-strip{margin-top:0;padding-top:var(--sp-4)}  /* snug below billboard, above Free */
 .plans-grid{gap:var(--sp-4)}                         /* tighter between Free/Pro/Pro+ */
 @media (min-width:720px){.hero{padding-bottom:var(--sp-8)}.billboard{margin-top:var(--sp-6)}.plans-strip{padding-top:var(--sp-6)}.plans-grid{gap:var(--sp-6)}}
+
+/* upgrade plans moved to bottom of profile; hide when none */
+.pd-plans-others:empty{display:none}
+.pd-plans-others{margin-top:var(--sp-4)}
