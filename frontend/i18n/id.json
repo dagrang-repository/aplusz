@@ -86,7 +86,7 @@
   "hiw": {
     "link": "Cara kerja",
     "title": "Cara kerja",
-    "concept": "A+Z.app memenuhi semua kebutuhan terbang Anda. Tetapkan dua kota — kami temukan harga terendah dan tanggal terbaik untuk memesan. Kami yang bekerja keras, agar Anda terbang lebih {hl}murah{/hl}.",
+    "concept": "A+Z.app dirancang dengan cermat agar kamu terbang dengan biaya {hl}LEBIH MURAH{/hl}. Intinya bersifat amal: semakin banyak orang mendapat manfaat, semakin baik — begitu biaya pemeliharaan dasar tertutup, aplikasi ini menjadi gratis untuk semua. Berbagi semaksimal mungkin dengan teman membuat «gratis untuk semua» terwujud lebih cepat.",
     "foot": "Kedua kota Anda disimpan otomatis — sampai Anda mengubahnya.",
     "nav": {
       "back": "Kembali",
@@ -164,7 +164,11 @@
     "mail_outro": "— A+Z.app · terbang lebih murah",
     "save": "Simpan rute ini",
     "saved": "Tersimpan",
-    "saved_profile": "Tersimpan di profil Anda"
+    "saved_profile": "Rute disimpan",
+    "saved_where": "Ada di Profilmu, di bagian Rute tersimpan.",
+    "view_saved": "Lihat rute tersimpan",
+    "got_it": "Mengerti",
+    "close": "Tutup"
   },
   "profile": {
     "title": "Profil Anda",
@@ -172,12 +176,18 @@
     "saved_routes": "Rute tersimpan",
     "saved_intro": "Simpan rute, lalu kirim ulang pengingat ke email Anda kapan saja.",
     "progress": "Kemajuan menuju gratis untuk semua",
-    "reward": "Saat mencapai 100%, setiap paket berbayar menjadi gratis untuk semua hingga 1 Januari. Bagikan lebih banyak!",
+    "reward": "Saat mencapai 100%, setiap paket berbayar menjadi gratis untuk semua hingga 1 Januari tahun depan.",
     "copy": "Salin",
-    "share": "Bagikan AplusZ",
-    "karma_points": "Poin karma",
+    "share": "Bagikan AplusZ ke teman",
+    "karma_points": "Poin karma berbagi",
     "karma_msg": "Semakin banyak Anda membagikan AplusZ, semakin cepat seluruh situs — termasuk Pro dan Pro+ — gratis untuk semua.",
     "streak": "Rentetan hari — buka atau bagikan AplusZ setiap hari untuk mempertahankannya.",
     "link_copied": "Tautan disalin"
+  },
+  "billboard": {
+    "stat": "Aplikasi ini memindai hingga 50.000 kemungkinan harga terendah di antara 2.000 bandara dan menemukan tarif termurah pada tanggal pemesanan terbaik dalam 6 bulan ke depan.",
+    "insurance": "Mencari asuransi perjalanan tepercaya? Kami punya tautan bagus untuk itu.",
+    "hosting": "Layanan hosting web mitra, jika kamu tertarik.",
+    "webdesign": "Butuh situs web yang andal →"
   }
 }

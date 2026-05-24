@@ -80,6 +80,22 @@
   /* ---------- public tier getter ---------- */
   function tier() { return effectiveTier(); }
 
+  /* decode a stored token's payload {e,t,x} locally (no secret needed — this is
+     for instant UI only; the server re-verifies the HMAC on any real action).
+     Lets us show the correct tier immediately on boot, independent of network
+     or Stripe/KV propagation timing. */
+  function decodeToken(tok) {
+    try {
+      var body = ('' + tok).split('.')[0];
+      var b = body.replace(/-/g, '+').replace(/_/g, '/');
+      while (b.length % 4) b += '=';            // worker strips '=' padding; atob needs it
+      var p = JSON.parse(atob(b));
+      if (!p || (p.t !== 'pro' && p.t !== 'proplus')) return null;
+      if (p.x && p.x < Math.floor(Date.now() / 1000)) return null; // expired
+      return p;
+    } catch (e) { return null; }
+  }
+
   /* ============================================================
      Modal (hardcoded colors — consistent with the How-it-works modal)
      ============================================================ */
@@ -216,12 +232,18 @@
     var saved = '';
     try { saved = localStorage.getItem(LS_TOKEN) || ''; } catch (e) {}
     if (saved) {
+      /* Show the correct tier INSTANTLY from the signed token (survives reloads,
+         offline, and Stripe/KV propagation lag — the cause of the old ~10-min
+         "stuck on Free" delay). The server still re-verifies on any real action. */
+      var local = decodeToken(saved);
+      if (local) setTier(local.t, null, local.e);
+
       post('/validate', { token: saved }).then(function (r) {
         if (r.valid) setTier(r.tier, null, r.email);
-        else setTier('free');
+        else if (!local) setTier('free');   // only downgrade if the token is genuinely bad/expired
       }).catch(function () {
-        // offline: trust last known tier from storage
-        try { state.tier = localStorage.getItem(LS_TIER) || 'free'; } catch (e) {}
+        // offline / server hiccup: keep last known tier, never downgrade
+        if (!local) { try { state.tier = localStorage.getItem(LS_TIER) || 'free'; } catch (e) {} }
         applyTier();
       });
     }

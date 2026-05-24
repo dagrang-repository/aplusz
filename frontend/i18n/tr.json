@@ -86,7 +86,7 @@
   "hiw": {
     "link": "Nasıl çalışır",
     "title": "Nasıl çalışır",
-    "concept": "A+Z.app tüm uçuş ihtiyaçlarınızı karşılar. İki şehir girin — en düşük fiyatı ve rezervasyon için en iyi tarihi buluruz. Zor işi biz yaparız, siz {hl}daha ucuza{/hl} uçun.",
+    "concept": "A+Z.app, daha {hl}UCUZA{/hl} uçmanız için özenle tasarlandı. Özünde hayır amacı taşır: ne kadar çok kişi faydalanırsa o kadar iyi — temel bakım masrafları karşılandığında herkes için ücretsiz hâle gelir. Arkadaşlarla en üst düzeyde paylaşmak «herkese ücretsiz» hedefini daha çabuk getirir.",
     "foot": "İki şehriniz otomatik olarak kaydedilir — siz değiştirene kadar.",
     "nav": {
       "back": "Geri",
@@ -164,7 +164,11 @@
     "mail_outro": "— A+Z.app · daha ucuza uç",
     "save": "Bu rotayı kaydet",
     "saved": "Kaydedildi",
-    "saved_profile": "Profilinize kaydedildi"
+    "saved_profile": "Rota kaydedildi",
+    "saved_where": "Profilinde, Kayıtlı rotalar altında.",
+    "view_saved": "Kayıtlı rotaları gör",
+    "got_it": "Anladım",
+    "close": "Kapat"
   },
   "profile": {
     "title": "Profiliniz",
@@ -172,12 +176,18 @@
     "saved_routes": "Kayıtlı rotalar",
     "saved_intro": "Bir rota kaydedin, ardından istediğiniz zaman kendinize e-postayla hatırlatma gönderin.",
     "progress": "Herkese ücretsiz hedefine ilerleme",
-    "reward": "%100'e ulaşınca her ücretli plan 1 Ocak'a kadar herkese ücretsiz olur. Daha çok paylaşın!",
+    "reward": "%100’e ulaştığında, her ücretli plan gelecek yılın 1 Ocak’ına kadar herkes için ücretsiz olur.",
     "copy": "Kopyala",
-    "share": "AplusZ'yi paylaş",
-    "karma_points": "Karma puanı",
+    "share": "AplusZ’yi arkadaşlarınla paylaş",
+    "karma_points": "Karma paylaşım puanı",
     "karma_msg": "AplusZ'yi ne kadar paylaşırsanız, tüm site — Pro ve Pro+ dahil — herkes için o kadar hızlı ücretsiz olur.",
     "streak": "Gün serisi — sürdürmek için AplusZ'yi her gün açın veya paylaşın.",
     "link_copied": "Bağlantı kopyalandı"
+  },
+  "billboard": {
+    "stat": "Bu uygulama 2.000 havalimanı arasında 50.000’e kadar olası en düşük fiyatı tarar ve önümüzdeki 6 ay içinde rezervasyon için en iyi tarihteki en düşük ücreti bulur.",
+    "insurance": "Güvenilir bir seyahat sigortası mı arıyorsun? Bunun için iyi bir bağlantımız var.",
+    "hosting": "İlgileniyorsan, partner bir web barındırma hizmeti.",
+    "webdesign": "Güçlü bir web sitesine mi ihtiyacın var →"
   }
 }

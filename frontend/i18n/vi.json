@@ -86,7 +86,7 @@
   "hiw": {
     "link": "Cách hoạt động",
     "title": "Cách hoạt động",
-    "concept": "A+Z.app đáp ứng mọi nhu cầu bay của bạn. Chọn hai thành phố — chúng tôi tìm mức giá thấp nhất và ngày đặt vé tốt nhất. Chúng tôi lo phần khó, để bạn bay với chi phí {hl}thấp hơn{/hl}.",
+    "concept": "A+Z.app được thiết kế tỉ mỉ để bạn bay với giá {hl}RẺ HƠN{/hl}. Cốt lõi của nó mang tính thiện nguyện: càng nhiều người hưởng lợi càng tốt — khi chi phí bảo trì cơ bản được trang trải, nó sẽ miễn phí cho tất cả mọi người. Chia sẻ tối đa với bạn bè giúp “miễn phí cho mọi người” đến nhanh hơn.",
     "foot": "Hai thành phố của bạn được lưu tự động — cho đến khi bạn thay đổi.",
     "nav": {
       "back": "Quay lại",
@@ -164,7 +164,11 @@
     "mail_outro": "— A+Z.app · bay rẻ hơn",
     "save": "Lưu tuyến này",
     "saved": "Đã lưu",
-    "saved_profile": "Đã lưu vào hồ sơ của bạn"
+    "saved_profile": "Đã lưu tuyến đường",
+    "saved_where": "Nó nằm trong Hồ sơ của bạn, ở mục Tuyến đã lưu.",
+    "view_saved": "Xem tuyến đã lưu",
+    "got_it": "Đã hiểu",
+    "close": "Đóng"
   },
   "profile": {
     "title": "Hồ sơ của bạn",
@@ -172,12 +176,18 @@
     "saved_routes": "Tuyến đã lưu",
     "saved_intro": "Lưu một tuyến, rồi gửi lại nhắc nhở vào email của bạn bất cứ lúc nào.",
     "progress": "Tiến độ đến miễn phí cho mọi người",
-    "reward": "Khi đạt 100%, mọi gói trả phí sẽ miễn phí cho tất cả đến ngày 1 tháng 1. Hãy chia sẻ thêm!",
+    "reward": "Khi đạt 100%, mọi gói trả phí sẽ miễn phí cho tất cả đến ngày 1 tháng 1 năm sau.",
     "copy": "Sao chép",
-    "share": "Chia sẻ AplusZ",
-    "karma_points": "Điểm karma",
+    "share": "Chia sẻ AplusZ với bạn bè",
+    "karma_points": "Điểm karma chia sẻ",
     "karma_msg": "Bạn càng chia sẻ AplusZ, cả trang — gồm Pro và Pro+ — càng nhanh miễn phí cho mọi người.",
     "streak": "Chuỗi ngày — mở hoặc chia sẻ AplusZ mỗi ngày để duy trì.",
     "link_copied": "Đã sao chép liên kết"
+  },
+  "billboard": {
+    "stat": "Ứng dụng này quét tới 50.000 mức giá thấp nhất có thể giữa 2.000 sân bay và tìm ra mức giá thấp nhất vào ngày đặt vé tốt nhất trong 6 tháng tới.",
+    "insurance": "Đang tìm bảo hiểm du lịch đáng tin cậy? Chúng tôi có một liên kết tốt cho việc đó.",
+    "hosting": "Một dịch vụ lưu trữ web đối tác, nếu bạn quan tâm.",
+    "webdesign": "Bạn cần một trang web mạnh mẽ →"
   }
 }

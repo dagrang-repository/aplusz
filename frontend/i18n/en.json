@@ -86,7 +86,7 @@
   "hiw": {
     "link": "How it works",
     "title": "How it works",
-    "concept": "A+Z.app fulfils your flying needs. Set two cities — we find the lowest possible price and the best date to book. We do the heavy lifting so you fly {i}for{/i} {hl}LESS{/hl}.",
+    "concept": "A+Z.app is carefully designed to let you fly for {hl}LESS{/hl}. It has a charitable character at its core: the more people benefit from it, the better — once basic maintenance fees are covered, it becomes free for everyone. A maximum share with friends makes the \"free for all\" happen quicker.",
     "foot": "Your two cities are saved automatically — until you change them.",
     "nav": {
       "back": "Back",
@@ -164,7 +164,11 @@
     "mail_outro": "— A+Z.app · fly for LESS",
     "save": "Save this route",
     "saved": "Saved",
-    "saved_profile": "Saved to your Profile"
+    "saved_profile": "Route saved",
+    "saved_where": "It’s in your Profile, under Saved routes.",
+    "view_saved": "View saved routes",
+    "got_it": "Got it",
+    "close": "Close"
   },
   "profile": {
     "title": "Your Profile",
@@ -172,12 +176,18 @@
     "saved_routes": "Saved routes",
     "saved_intro": "Save a route, then re-send a reminder to your own mail anytime.",
     "progress": "Progress to free-for-all",
-    "reward": "When this hits 100%, every paid plan becomes free for everyone until January 1. So share more!",
+    "reward": "When this hits 100%, every paid plan becomes free for everyone until January 1 of next year.",
     "copy": "Copy",
-    "share": "Share AplusZ",
-    "karma_points": "Karma points",
+    "share": "Share AplusZ with friends",
+    "karma_points": "Karma share points",
     "karma_msg": "The more you share AplusZ, the faster the whole site — including Pro and Pro+ — becomes free for everyone.",
     "streak": "Day streak — open or share AplusZ daily to keep it alive.",
     "link_copied": "Link copied"
+  },
+  "billboard": {
+    "stat": "This app scans up to 50,000 possible lowest prices across 2,000 airports and finds the lowest possible fare on the best date to book within the next 6 months.",
+    "insurance": "Looking for trusted travel assurance, we have a good link for that.",
+    "hosting": "A partner web hosting service, if you are interested.",
+    "webdesign": "Do you need a powerful website →"
   }
 }

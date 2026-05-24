@@ -29,7 +29,11 @@
     'alerts.remind': 'Remind me',
     'alerts.save': 'Save this route',
     'alerts.saved': 'Saved',
-    'alerts.saved_profile': 'Saved to your Profile',
+    'alerts.saved_profile': 'Route saved',
+    'alerts.saved_where': "It's in your Profile, under Saved routes.",
+    'alerts.view_saved': 'View saved routes',
+    'alerts.got_it': 'Got it',
+    'alerts.close': 'Close',
     'alerts.title': 'My alerts',
     'alerts.empty': 'No alerts yet. Tap "Remind me" on a result to add one.',
     'alerts.resend': 'Re-send',
@@ -127,25 +131,29 @@
   }
 
   function limitBanner() {
-    var old = document.querySelector('.azb-limit'); if (old) old.remove();
+    var old = document.querySelector('.azb-modal'); if (old) old.remove();
     var tr = tier();
     var msg = (tr === 'pro') ? t('alerts.limit_pro') : t('alerts.limit_free');
     var nextTier = (tr === 'pro') ? 'proplus' : 'pro';
-    var el = document.createElement('div');
-    el.className = 'azb-limit';
-    el.innerHTML =
-      '<span class="azb-limit-msg">' + msg + '</span>' +
-      '<button class="azb-limit-up" type="button">' +
-        (function(){ var u=t('billing.free_upgrade'); return (u==='billing.free_upgrade')?t('alerts.upgrade_btn'):u; })() +
-      '</button>' +
-      '<button class="azb-limit-x" type="button" aria-label="close">\u00d7</button>';
-    document.body.appendChild(el);
-    requestAnimationFrame(function () { el.classList.add('show'); });
-    el.querySelector('.azb-limit-up').onclick = function () {
+    var up = (function(){ var u=t('billing.free_upgrade'); return (u==='billing.free_upgrade')?t('alerts.upgrade_btn'):u; })();
+    var wrap = document.createElement('div');
+    wrap.className = 'azb-modal';
+    wrap.innerHTML =
+      '<div class="azb-modal-backdrop"></div>' +
+      '<div class="azb-modal-card" role="dialog" aria-modal="true">' +
+        '<button class="azb-modal-x" type="button" aria-label="' + t('alerts.close') + '">\u00d7</button>' +
+        '<div class="azb-modal-msg">' + msg + '</div>' +
+        '<button class="azb-modal-up" type="button">' + up + '</button>' +
+      '</div>';
+    document.body.appendChild(wrap);
+    requestAnimationFrame(function () { wrap.classList.add('show'); });
+    function dismiss() { wrap.classList.remove('show'); setTimeout(function () { if (wrap.parentNode) wrap.remove(); }, 250); }
+    wrap.querySelector('.azb-modal-up').onclick = function () {
       if (window.APlusZ && APlusZ.billing) APlusZ.billing.buy(nextTier);
-      el.remove();
+      dismiss();
     };
-    el.querySelector('.azb-limit-x').onclick = function () { el.remove(); };
+    wrap.querySelector('.azb-modal-x').onclick = dismiss;
+    wrap.querySelector('.azb-modal-backdrop').onclick = dismiss;
   }
 
   function toast(msg) {
@@ -190,22 +198,34 @@
     return true;
   }
 
-  /* tappable toast: "✓ Saved to your Profile" -> opens the profile drawer */
+  /* persistent confirmation the user must acknowledge: tells them the route is
+     saved, WHERE it lives, and offers a one-tap path to it. No auto-dismiss. */
   function toastProfile() {
-    var old = document.querySelector('.azb-toast.azb-tap'); if (old) old.remove();
-    var el = document.createElement('div');
-    el.className = 'azb-toast azb-tap';
-    el.innerHTML = '\u2713 ' + t('alerts.saved_profile') + ' \u2192';
-    el.setAttribute('role', 'button');
-    document.body.appendChild(el);
-    requestAnimationFrame(function () { el.classList.add('show'); });
-    el.onclick = function () {
+    var old = document.querySelector('.azb-modal.azb-saved'); if (old) old.remove();
+    var wrap = document.createElement('div');
+    wrap.className = 'azb-modal azb-saved';
+    wrap.innerHTML =
+      '<div class="azb-modal-backdrop"></div>' +
+      '<div class="azb-modal-card" role="dialog" aria-modal="true">' +
+        '<button class="azb-modal-x" type="button" aria-label="' + t('alerts.close') + '">\u00d7</button>' +
+        '<div class="azb-saved-check">\u2713</div>' +
+        '<div class="azb-modal-title">' + t('alerts.saved_profile') + '</div>' +
+        '<div class="azb-modal-msg">' + t('alerts.saved_where') + '</div>' +
+        '<button class="azb-modal-up" type="button">' + t('alerts.view_saved') + ' \u2192</button>' +
+        '<button class="azb-modal-ok" type="button">' + t('alerts.got_it') + '</button>' +
+      '</div>';
+    document.body.appendChild(wrap);
+    requestAnimationFrame(function () { wrap.classList.add('show'); });
+    function dismiss() { wrap.classList.remove('show'); setTimeout(function () { if (wrap.parentNode) wrap.remove(); }, 250); }
+    wrap.querySelector('.azb-modal-up').onclick = function () {
+      dismiss();
       var m = document.getElementById('menu-btn');
       if (m) m.click();
       else if (window.APlusZ.profile && APlusZ.profile.open) APlusZ.profile.open();
-      el.classList.remove('show'); setTimeout(function () { el.remove(); }, 400);
     };
-    setTimeout(function () { el.classList.remove('show'); setTimeout(function () { el.remove(); }, 400); }, 5000);
+    wrap.querySelector('.azb-modal-ok').onclick = dismiss;
+    wrap.querySelector('.azb-modal-x').onclick = dismiss;
+    wrap.querySelector('.azb-modal-backdrop').onclick = dismiss;
   }
 
   /* ---------- public: REMIND me (mail only; does NOT save) ---------- */

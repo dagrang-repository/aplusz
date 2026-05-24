@@ -289,7 +289,14 @@ export default {
         if (!timingSafe(sig, expect)) return json({ error: 'bad' }, 400, origin);
         let p; try { p = JSON.parse(fromB64url(body)); } catch { return json({ error: 'bad' }, 400, origin); }
         if (!p.x || p.x < Math.floor(Date.now() / 1000)) return json({ error: 'expired' }, 400, origin);
-        const tier = await tierForEmail(env, p.e);   // re-check live (true to usage)
+        /* Trust the tier baked into the signed link. The link is HMAC-signed and
+           only ever emailed after the plan was confirmed (checkout/restore), and
+           it expires in 30 min — so re-reading live Stripe here is unnecessary and
+           was the cause of the ~10-min activation delay (Stripe sub not yet
+           'active' right after payment -> tier read as free -> no token issued).
+           Fall back to a live read only if the link somehow carries no tier. */
+        const signedTier = (p.t === 'pro' || p.t === 'proplus') ? p.t : null;
+        const tier = signedTier || await tierForEmail(env, p.e);
         if (tier === 'free') return json({ tier: 'free' }, 200, origin);
         const token = await makeToken(env, p.e, tier);
         return json({ tier, token, email: p.e }, 200, origin);

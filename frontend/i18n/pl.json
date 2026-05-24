@@ -86,7 +86,7 @@
   "hiw": {
     "link": "Jak to działa",
     "title": "Jak to działa",
-    "concept": "A+Z.app spełnia wszystkie Twoje potrzeby lotnicze. Podaj dwa miasta — znajdziemy najniższą cenę i najlepszą datę rezerwacji. Bierzemy na siebie ciężką pracę, abyś latał {hl}taniej{/hl}.",
+    "concept": "A+Z.app jest starannie zaprojektowany, abyś latał {hl}TANIEJ{/hl}. W swej istocie ma charakter charytatywny: im więcej osób korzysta, tym lepiej — gdy podstawowe koszty utrzymania zostaną pokryte, staje się darmowy dla wszystkich. Maksymalne dzielenie się ze znajomymi sprawia, że „za darmo dla wszystkich” nadchodzi szybciej.",
     "foot": "Twoje dwa miasta są zapisywane automatycznie — dopóki ich nie zmienisz.",
     "nav": {
       "back": "Wstecz",
@@ -164,7 +164,11 @@
     "mail_outro": "— A+Z.app · lataj taniej",
     "save": "Zapisz tę trasę",
     "saved": "Zapisano",
-    "saved_profile": "Zapisano w Twoim profilu"
+    "saved_profile": "Trasa zapisana",
+    "saved_where": "Jest w Twoim Profilu, w sekcji Zapisane trasy.",
+    "view_saved": "Zobacz zapisane trasy",
+    "got_it": "Rozumiem",
+    "close": "Zamknij"
   },
   "profile": {
     "title": "Twój profil",
@@ -172,12 +176,18 @@
     "saved_routes": "Zapisane trasy",
     "saved_intro": "Zapisz trasę, a potem wyślij sobie przypomnienie na własną pocztę w dowolnej chwili.",
     "progress": "Postęp do darmowego dla wszystkich",
-    "reward": "Po osiągnięciu 100% każdy płatny plan staje się darmowy dla wszystkich do 1 stycznia. Udostępniaj więcej!",
+    "reward": "Po osiągnięciu 100% każdy płatny plan staje się bezpłatny dla wszystkich do 1 stycznia przyszłego roku.",
     "copy": "Kopiuj",
-    "share": "Udostępnij AplusZ",
-    "karma_points": "Punkty karmy",
+    "share": "Udostępnij AplusZ znajomym",
+    "karma_points": "Punkty karmy za udostępnianie",
     "karma_msg": "Im więcej udostępniasz AplusZ, tym szybciej cała strona — w tym Pro i Pro+ — staje się darmowa dla wszystkich.",
     "streak": "Seria dni — otwieraj lub udostępniaj AplusZ codziennie, by ją utrzymać.",
     "link_copied": "Skopiowano link"
+  },
+  "billboard": {
+    "stat": "Ta aplikacja skanuje do 50 000 możliwych najniższych cen między 2000 lotnisk i znajduje najtańszą taryfę w najlepszym dniu rezerwacji w ciągu najbliższych 6 miesięcy.",
+    "insurance": "Szukasz zaufanego ubezpieczenia podróżnego? Mamy do tego dobry link.",
+    "hosting": "Partnerska usługa hostingu, jeśli jesteś zainteresowany.",
+    "webdesign": "Potrzebujesz mocnej strony internetowej →"
   }
 }

@@ -19,10 +19,10 @@
 <body>
 
 <header class="topbar">
-  <div class="brand">
+  <a class="brand" id="brand-home" href="/" aria-label="AplusZ home">
     <span class="brand-mark">A+Z</span>
     <span class="brand-name"><span class="bn-az">A</span><span class="bn-plus">plus</span><span class="bn-az">Z</span></span>
-  </div>
+  </a>
   <nav class="topnav">
     <button class="icon-btn tier-badge" id="tier-badge" type="button" aria-label="Free"><span class="tb-ic">🆓</span><span class="tb-nm">Free</span></button>
     <button class="icon-btn" id="theme-toggle" aria-label="Theme">☀</button>
@@ -72,6 +72,8 @@
   </div>
 </main>
 
+<section class="billboard" id="billboard" aria-live="polite"></section>
+
 <section class="plans-strip">
   <div class="plans-grid">
 
@@ -98,7 +100,7 @@
   <span class="footer-sep"></span>
   <a href="disclosure/index.html" id="footer-disclosure">Disclosure</a>
   <span class="footer-sep"></span>
-  <span>© <span id="year"></span> <span class="bn-az">A</span><span class="bn-plus">plus</span><span class="bn-az">Z</span> <span class="footer-mark">(A+Z).app</span></span>
+  <span>© <span id="year"></span> <a class="footer-brand" id="footer-home" href="/" aria-label="AplusZ home"><span class="bn-az">A</span><span class="bn-plus">plus</span><span class="bn-az">Z</span> <span class="footer-mark">(A+Z).app</span></a></span>
 </footer>
 <script>
   // Disclosure link label: French → "Divulgation", all else → "Disclosure"
@@ -107,6 +109,24 @@
       var l=(localStorage.getItem('aplusz-lang')||navigator.language||'en').toLowerCase();
       if(l.indexOf('fr')===0){var a=document.getElementById('footer-disclosure');if(a)a.textContent='Divulgation';}
     }catch(e){}
+  })();
+</script>
+
+<script>
+  // Brand (top-left) + footer brand → Home: reload if already on home, else go to index.
+  (function(){
+    function isHome(){
+      var p = location.pathname.replace(/\/+$/, '');
+      return p === '' || p === '/index.html' || p === '/index';
+    }
+    function goHome(e){
+      if (isHome()) { if(e) e.preventDefault(); location.reload(); }
+      // else: let the href="/" navigate normally
+    }
+    ['brand-home','footer-home'].forEach(function(id){
+      var el = document.getElementById(id);
+      if (el) el.addEventListener('click', goHome);
+    });
   })();
 </script>
 
@@ -122,6 +142,7 @@
 <script defer src="assets/sw-register.js"></script>
 <script defer src="assets/install.js"></script>
 <script defer src="assets/howitworks.js"></script>
+<script defer src="assets/billboard.js"></script>
 <script defer src="assets/app.js"></script>
 
 

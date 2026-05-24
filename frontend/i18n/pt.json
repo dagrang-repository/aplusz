@@ -86,7 +86,7 @@
   "hiw": {
     "link": "Como funciona",
     "title": "Como funciona",
-    "concept": "O A+Z.app trata de todas as suas necessidades de voo. Indique duas cidades — encontramos o preço mais baixo e a melhor data para reservar. Fazemos o trabalho pesado para que voe por {hl}MENOS{/hl}.",
+    "concept": "O A+Z.app é cuidadosamente concebido para você voar por {hl}MENOS{/hl}. Tem um caráter beneficente no seu cerne: quanto mais pessoas se beneficiarem, melhor — uma vez cobertos os custos básicos de manutenção, torna-se gratuito para todos. Partilhar ao máximo com amigos faz o «gratuito para todos» chegar mais depressa.",
     "foot": "As suas duas cidades são guardadas automaticamente — até as alterar.",
     "nav": {
       "back": "Voltar",
@@ -164,7 +164,11 @@
     "mail_outro": "— A+Z.app · voe por MENOS",
     "save": "Salvar esta rota",
     "saved": "Salva",
-    "saved_profile": "Salva no seu perfil"
+    "saved_profile": "Rota guardada",
+    "saved_where": "Está no seu Perfil, em Rotas guardadas.",
+    "view_saved": "Ver rotas guardadas",
+    "got_it": "Entendi",
+    "close": "Fechar"
   },
   "profile": {
     "title": "Seu perfil",
@@ -172,12 +176,18 @@
     "saved_routes": "Rotas salvas",
     "saved_intro": "Salve uma rota e reenvie um lembrete para o seu e-mail quando quiser.",
     "progress": "Progresso para grátis para todos",
-    "reward": "Ao atingir 100%, todo plano pago fica grátis para todos até 1º de janeiro. Compartilhe mais!",
+    "reward": "Aos 100 %, cada plano pago torna-se gratuito para todos até 1 de janeiro do próximo ano.",
     "copy": "Copiar",
-    "share": "Compartilhar AplusZ",
-    "karma_points": "Pontos de karma",
+    "share": "Partilhar o AplusZ com amigos",
+    "karma_points": "Pontos de karma por partilha",
     "karma_msg": "Quanto mais você compartilha o AplusZ, mais rápido todo o site — incluindo Pro e Pro+ — fica grátis para todos.",
     "streak": "Sequência de dias — abra ou compartilhe o AplusZ diariamente para mantê-la.",
     "link_copied": "Link copiado"
+  },
+  "billboard": {
+    "stat": "Esta app verifica até 50 000 dos preços mais baixos possíveis entre 2000 aeroportos e encontra a tarifa mais baixa na melhor data de reserva nos próximos 6 meses.",
+    "insurance": "Procura um seguro de viagem de confiança? Temos um bom link para isso.",
+    "hosting": "Um serviço de alojamento web parceiro, se tiver interesse.",
+    "webdesign": "Precisa de um site poderoso →"
   }
 }

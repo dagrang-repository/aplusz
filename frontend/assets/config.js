@@ -23,6 +23,14 @@
       proplus: 'placeholder'      // €9.99/mo
     },
 
+    // Front-index billboard affiliate slides. Each slide stays HIDDEN until its
+    // placeholder is replaced with a real link (no bare links are ever shown).
+    billboard: {
+      insurance: 'https://safetywing.com/?referenceID=YOUR_ID',          // SafetyWing (or World Nomads)
+      hosting:   'https://www.hostinger.com/ref/YOUR_USERNAME',          // Hostinger
+      webdesign: ''                                                      // own aplusz.app web-design subdomain (set when live)
+    },
+
     // Customer Portal URL (Stripe Dashboard → Settings → Customer Portal → Activate → copy link)
     customerPortal: 'placeholder' // e.g. 'https://billing.stripe.com/p/login/xxxx'
 

@@ -15,7 +15,7 @@
   /* English fallback — modal works even before JSON blocks are merged */
   var EN = {
     'hiw.link':'How it works','hiw.title':'How it works',
-    'hiw.concept':'A+Z.app fulfils your flying needs. Set two cities — we find the lowest possible price and the best date to book. We do the heavy lifting so you fly {i}for{/i} {hl}LESS{/hl}.',
+    'hiw.concept':'A+Z.app is carefully designed to let you fly for {hl}LESS{/hl}. It has a charitable character at its core: the more people benefit from it, the better — once basic maintenance fees are covered, it becomes free for everyone. A maximum share with friends makes the "free for all" happen quicker.',
     'hiw.foot':'Your two cities are saved automatically — until you change them.',
     'hiw.nav.back':'Back','hiw.nav.next':'Next','hiw.nav.done':'Got it',
     'hiw.s1.step':'A → Z','hiw.s1.body':'Pick your two cities.',

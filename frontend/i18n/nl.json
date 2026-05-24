@@ -86,7 +86,7 @@
   "hiw": {
     "link": "Hoe het werkt",
     "title": "Hoe het werkt",
-    "concept": "A+Z.app vervult al je vliegbehoeften. Stel twee steden in — wij vinden de laagste prijs en de beste datum om te boeken. Wij doen het zware werk, zodat jij voor {hl}MINDER{/hl} vliegt.",
+    "concept": "A+Z.app is zorgvuldig ontworpen om je voor {hl}MINDER{/hl} te laten vliegen. De kern is liefdadig: hoe meer mensen ervan profiteren, hoe beter — zodra de basisonderhoudskosten gedekt zijn, wordt het gratis voor iedereen. Maximaal delen met vrienden laat het «gratis voor iedereen» sneller komen.",
     "foot": "Je twee steden worden automatisch opgeslagen — totdat je ze wijzigt.",
     "nav": {
       "back": "Terug",
@@ -164,7 +164,11 @@
     "mail_outro": "— A+Z.app · vlieg voor MINDER",
     "save": "Route opslaan",
     "saved": "Opgeslagen",
-    "saved_profile": "Opgeslagen in je profiel"
+    "saved_profile": "Route opgeslagen",
+    "saved_where": "Hij staat in je Profiel, onder Opgeslagen routes.",
+    "view_saved": "Opgeslagen routes bekijken",
+    "got_it": "Begrepen",
+    "close": "Sluiten"
   },
   "profile": {
     "title": "Je profiel",
@@ -172,12 +176,18 @@
     "saved_routes": "Opgeslagen routes",
     "saved_intro": "Sla een route op en stuur jezelf later een herinnering per mail.",
     "progress": "Voortgang naar gratis voor iedereen",
-    "reward": "Bij 100% wordt elk betaald abonnement gratis voor iedereen tot 1 januari. Deel meer!",
+    "reward": "Bij 100 % wordt elk betaald abonnement gratis voor iedereen tot 1 januari volgend jaar.",
     "copy": "Kopiëren",
-    "share": "AplusZ delen",
-    "karma_points": "Karmapunten",
+    "share": "AplusZ delen met vrienden",
+    "karma_points": "Karma-deelpunten",
     "karma_msg": "Hoe meer je AplusZ deelt, hoe sneller de hele site — inclusief Pro en Pro+ — gratis wordt voor iedereen.",
     "streak": "Dagenreeks — open of deel AplusZ dagelijks om deze te behouden.",
     "link_copied": "Link gekopieerd"
+  },
+  "billboard": {
+    "stat": "Deze app scant tot wel 50.000 mogelijke laagste prijzen tussen 2.000 luchthavens en vindt het laagste tarief op de beste boekingsdatum binnen de komende 6 maanden.",
+    "insurance": "Op zoek naar een betrouwbare reisverzekering? Daar hebben we een goede link voor.",
+    "hosting": "Een partner-webhostingdienst, als je interesse hebt.",
+    "webdesign": "Heb je een krachtige website nodig →"
   }
 }
