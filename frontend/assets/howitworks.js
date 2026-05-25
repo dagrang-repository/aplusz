@@ -212,17 +212,12 @@
 
   /* re-apply whenever the site changes language */
   function hookLanguage() {
-    if (APZ.i18n && typeof APZ.i18n.load === 'function') {
-      var orig = APZ.i18n.load;
-      APZ.i18n.load = function (lang) {
-        return Promise.resolve(orig.call(APZ.i18n, lang)).then(function (d) {
-          apply(); return d;
-        });
-      };
-      APZ.i18n.load();          /* initial apply (now wrapped) */
-    } else {
-      apply();                  /* i18n absent → English */
-    }
+    /* Listen to the broadcast event, NOT a wrap of APZ.i18n.load:
+       setLang() (the manual toggle) calls the internal load() closure,
+       which bypasses any wrapper on the public APZ.i18n.load. The
+       'aplusz:lang' event fires on every change, manual toggle included. */
+    document.addEventListener('aplusz:lang', apply);
+    apply();   /* initial render (EN fallback until the dict loads) */
   }
 
   function init() { build(); injectLink(); hookLanguage(); }
