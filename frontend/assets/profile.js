@@ -20,7 +20,7 @@
       { id: 'free',
         name: '\uD83C\uDD93 ' + tt('plans.free_head'),
         feats: [tt('plans.f_unlimited'), tt('plans.f_exact'), tt('plans.f_saved1'),
-                tt('plans.f_reminders'), tt('plans.f_offline')].join(' \u00b7 ') },
+                tt('plans.f_reminders'), tt('plans.f_calendar'), tt('plans.f_offline')].join(' \u00b7 ') },
       { id: 'pro',
         name: '\u2B50 ' + tt('plans.pro_head'),
         feats: [tt('plans.p_everything_free'), tt('plans.p_routes3'),
