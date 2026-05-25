@@ -1,0 +1,5 @@
+{
+  "version": 1,
+  "include": ["/*/flights/*"],
+  "exclude": ["/assets/*", "/data/*", "/i18n/*", "/api/*"]
+}
