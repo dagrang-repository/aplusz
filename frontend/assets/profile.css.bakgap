@@ -178,7 +178,7 @@
   gap: var(--sp-2);
   padding: var(--sp-3) var(--sp-6) var(--sp-6);
   border-top: 1px solid var(--border);
-  margin-top: var(--sp-6);
+  margin-top: auto;
   text-align: center;
 }
 .pd-streak-icon { font-size: 1.2rem; flex-shrink: 0; }

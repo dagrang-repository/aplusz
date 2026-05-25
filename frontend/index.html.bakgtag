@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -15,7 +15,7 @@
 <script defer src="assets/detect.js"></script>
 <script defer src="assets/config.js"></script>
 
-<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-995108846></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');</script></head>
+</head>
 <body>
 
 <header class="topbar">
@@ -190,99 +190,5 @@
 })();
 </script>
 
-<script>document.addEventListener('aplusz:tier',function(){var tr=(window.APlusZ&&APlusZ.billing&&APlusZ.billing.tier)?APlusZ.billing.tier():'free';document.querySelectorAll('.plans-strip .plan-col[data-plan]').forEach(function(c){var p=c.getAttribute('data-plan');var u=(tr==='free'&&(p==='pro'||p==='proplus'))||(tr==='pro'&&p==='proplus');if(!u)return;c.classList.add('upgradable');c.style.cursor='pointer';c.setAttribute('tabindex','0');c.setAttribute('role','button');c.addEventListener('click',function(){if(window.APlusZ&&APlusZ.billing)APlusZ.billing.buy(p);});c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();if(window.APlusZ&&APlusZ.billing)APlusZ.billing.buy(p);}});});});/* plans-strip-buy */</script><link rel="stylesheet" href="assets/reveal.css">
-<div class="reveal-wrap" id="reveal-wrap" aria-hidden="true">
-  <div class="reveal-card" role="dialog" aria-label="About AplusZ">
-    <button class="reveal-close" id="reveal-close" aria-label="Close">&times;</button>
-    <div class="reveal-mission">
-      <div class="reveal-motto">AplusZ.app &mdash; the search is free as air, so you fly for less.</div>
-      <div class="reveal-statement">Some things should be like air &mdash; genuinely useful, and free to everyone. A handful of large companies sit between you and the sky, and most people have no real choice but to accept whatever they&rsquo;re shown. AplusZ.app gives that sight back, for free. No signup, no markup. It even works without an internet connection &mdash; once <strong>AplusZ.app</strong> is loaded, you can find the best fares offline, anywhere. When running costs are covered, <strong>AplusZ.app</strong> stays free for everyone, for good.</div>
-    </div>
-    <div class="reveal-stats">
-      <div class="reveal-stat"><strong>50,000+</strong>prices scanned</div>
-      <div class="reveal-stat"><strong>2,000</strong>airports</div>
-      <div class="reveal-stat"><strong>3,514</strong>cities</div>
-      <div class="reveal-stat"><strong>20</strong>languages</div>
-    </div>
-    <div class="reveal-free">Free forever &middot; No signup &middot; Price never marked up &middot; Works offline</div>
-    <div class="reveal-founder">&ldquo;I always wanted to build something useful and free &mdash; like air. This is it.&rdquo;</div>
-    <div class="reveal-share">
-      <button class="reveal-share-btn" id="reveal-share-btn">Share AplusZ.app</button>
-    </div>
-    <hr class="reveal-divider">
-    <div class="reveal-press">
-      <div class="reveal-section-title">From the Press?</div>
-      <p>Covering travel, tech, or consumer tools? We&rsquo;d love to hear from you. Get in touch directly &mdash; journalists who visit us get <strong>6 months fully unlocked</strong>, on us.</p>
-      <a class="reveal-press-link" href="mailto:dagrang@gmail.com">dagrang@gmail.com &rarr;</a>
-      <div class="reveal-press-gift">&#127381; In-person visit = 6-month Pro+ gift, no strings.</div>
-    </div>
-    <hr class="reveal-divider">
-    <div class="reveal-comments">
-      <div class="reveal-section-title">What people say</div>
-      <div class="reveal-comment-gift">&#127381; Share your experience &mdash; if we feature your comment, you get free Pro or Pro+ access as a thank-you.</div>
-      <div class="reveal-comment-form" id="reveal-comment-form">
-        <input type="text" id="rc-name" placeholder="Your name" maxlength="60">
-        <textarea id="rc-text" placeholder="Your experience with AplusZ.app..." maxlength="400"></textarea>
-        <button class="reveal-comment-submit" id="rc-submit">Share your experience &rarr;</button>
-      </div>
-      <div id="rc-msg" class="reveal-msg"></div>
-      <div id="rc-approved"></div>
-    </div>
-  </div>
-</div>
-<script>
-(function(){
-  var wrap=document.getElementById('reveal-wrap');
-  var footer=document.querySelector('.footer');
-  var closed=false;
-  function checkScroll(){
-    if(closed)return;
-    if(!footer)return;
-    var r=footer.getBoundingClientRect();
-    if(r.bottom<=window.innerHeight+40){
-      wrap.classList.add('show');
-      wrap.setAttribute('aria-hidden','false');
-      loadComments();
-    }
-  }
-  window.addEventListener('scroll',checkScroll,{passive:true});
-  document.getElementById('reveal-close').onclick=function(){
-    wrap.classList.remove('show');
-    wrap.setAttribute('aria-hidden','true');
-    closed=true;
-  };
-  // Share
-  document.getElementById('reveal-share-btn').onclick=function(){
-    var u='https://aplusz.app/';
-    if(navigator.share){navigator.share({title:'AplusZ.app',text:'Find the cheapest flight free as air',url:u});}
-    else{navigator.clipboard&&navigator.clipboard.writeText(u);document.getElementById('rc-msg').textContent='Link copied!';}
-  };
-  // Submit comment
-  document.getElementById('rc-submit').onclick=function(){
-    var name=document.getElementById('rc-name').value.trim();
-    var text=document.getElementById('rc-text').value.trim();
-    var msg=document.getElementById('rc-msg');
-    if(!name||!text){msg.textContent='Please fill in both fields.';return;}
-    msg.textContent='Sending...';
-    fetch('https://api.aplusz.app/comment',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,comment:text})})
-    .then(function(r){return r.json();})
-    .then(function(){msg.textContent='Thank you! We will review your comment shortly.';document.getElementById('reveal-comment-form').style.display='none';})
-    .catch(function(){msg.textContent='Could not send. Please try again.';});
-  };
-  // Load approved comments
-  function loadComments(){
-    fetch('https://api.aplusz.app/comments')
-    .then(function(r){return r.json();})
-    .then(function(data){
-      var box=document.getElementById('rc-approved');
-      if(!data||!data.comments||!data.comments.length)return;
-      box.innerHTML=data.comments.map(function(c){
-        return '<div class="reveal-approved-comment"><div class="rc-name">'+esc(c.name)+'</div><div class="rc-text">'+esc(c.comment)+'</div></div>';
-      }).join('');
-    }).catch(function(){});
-  }
-  function esc(s){var d=document.createElement('div');d.textContent=s;return d.innerHTML;}
-})();
-</script>
-</body>
+<script>document.addEventListener('aplusz:tier',function(){var tr=(window.APlusZ&&APlusZ.billing&&APlusZ.billing.tier)?APlusZ.billing.tier():'free';document.querySelectorAll('.plans-strip .plan-col[data-plan]').forEach(function(c){var p=c.getAttribute('data-plan');var u=(tr==='free'&&(p==='pro'||p==='proplus'))||(tr==='pro'&&p==='proplus');if(!u)return;c.classList.add('upgradable');c.style.cursor='pointer';c.setAttribute('tabindex','0');c.setAttribute('role','button');c.addEventListener('click',function(){if(window.APlusZ&&APlusZ.billing)APlusZ.billing.buy(p);});c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();if(window.APlusZ&&APlusZ.billing)APlusZ.billing.buy(p);}});});});/* plans-strip-buy */</script></body>
 </html>

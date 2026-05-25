@@ -124,15 +124,6 @@
   }
 
   function affiliates(d) {
-    var tp = 'https://tp.media/r?marker=730427&trs=531148';
-    d._affil = {
-      gettransfer: tp + '&p=4439&u=' + encodeURIComponent('https://gettransfer.com') + '&campaign_id=147',
-      airalo:      tp + '&p=8310&u=' + encodeURIComponent('https://airalo.com')      + '&campaign_id=541',
-      drimsim:     tp + '&p=2762&u=' + encodeURIComponent('https://w1.drimsim.com')  + '&campaign_id=102',
-      airhelp:     tp + '&p=9139&u=' + encodeURIComponent('https://airhelp.com')     + '&campaign_id=120',
-      tiqets:      tp + '&p=2074&u=' + encodeURIComponent('https://tiqets.com')      + '&campaign_id=89',
-      klook:       tp + '&p=4110&u=' + encodeURIComponent('https://klook.com')       + '&campaign_id=137'
-    };
     var c = (window.APlusZ.config && window.APlusZ.config.affiliates) || {};
     var o = encodeURIComponent(d.origin);
     var dest = encodeURIComponent(d.destination);

@@ -1,10 +1,10 @@
-<!DOCTYPE html>
+ï»¿<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>Disclosure · AplusZ</title>
+<title>Disclosure Â· AplusZ</title>
 <link rel="manifest" href="../apz.webmanifest">
 <link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/detect.js"></script>
@@ -36,10 +36,10 @@
   .updated { font-size: var(--fs-xs); color: var(--text-dim); margin-top: var(--sp-8); }
   [hidden] { display: none !important; }
 </style>
-<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-995108846></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');</script></head>
+</head>
 <body>
 
-<a class="back" href="../index.html">? AplusZ</a>
+<a class="back" href="../index.html">â† AplusZ</a>
 
 <!-- ENGLISH (default, all languages except French) -->
 <div id="disc-en">
@@ -60,7 +60,7 @@
   <p>AplusZ does not run third-party analytics or advertising trackers. We do not build a profile of you across the web.</p>
 
   <h2>Your control</h2>
-  <p>You can clear AplusZ's stored data at any time by clearing your browser's site data. The app keeps working — it simply forgets your saved cities and preferences.</p>
+  <p>You can clear AplusZ's stored data at any time by clearing your browser's site data. The app keeps working â€” it simply forgets your saved cities and preferences.</p>
 
   <h2>Contact</h2>
   <p>Questions about this disclosure? Email <a href="mailto:dagrang@gmail.com">dagrang@gmail.com</a>. For full legal terms and the GDPR privacy policy, see the <a href="../legal/index.html">Legal</a> page.</p>
@@ -68,31 +68,31 @@
   <p class="updated">Last updated: May 2026</p>
 </div>
 
-<!-- FRANÇAIS (langue française uniquement) -->
+<!-- FRANÃ‡AIS (langue franÃ§aise uniquement) -->
 <div id="disc-fr" hidden>
   <h1>Divulgation</h1>
-  <p>Cette page explique comment fonctionne AplusZ, comment le service reste gratuit et comment vos données sont traitées. Nous restons clairs et honnêtes.</p>
+  <p>Cette page explique comment fonctionne AplusZ, comment le service reste gratuit et comment vos donnÃ©es sont traitÃ©es. Nous restons clairs et honnÃªtes.</p>
 
   <h2>Liens d'affiliation et partenaires</h2>
-  <p>AplusZ peut renvoyer vers nos autres projets et vers des services partenaires ; certains liens sont affiliés et peuvent nous rapporter une commission, sans coût supplémentaire pour vous.</p>
-  <p>Lorsque vous appuyez sur un bouton « Réserver », nous vous dirigeons vers un partenaire de voyage (par exemple, la recherche de vols via nos partenaires). Si vous réservez chez eux, nous pouvons percevoir une petite commission. Le prix que vous payez est le même, que vous passiez ou non par notre lien.</p>
+  <p>AplusZ peut renvoyer vers nos autres projets et vers des services partenaires ; certains liens sont affiliÃ©s et peuvent nous rapporter une commission, sans coÃ»t supplÃ©mentaire pour vous.</p>
+  <p>Lorsque vous appuyez sur un bouton Â« RÃ©server Â», nous vous dirigeons vers un partenaire de voyage (par exemple, la recherche de vols via nos partenaires). Si vous rÃ©servez chez eux, nous pouvons percevoir une petite commission. Le prix que vous payez est le mÃªme, que vous passiez ou non par notre lien.</p>
 
   <h2>Comment AplusZ reste gratuit</h2>
-  <p>AplusZ est gratuit, avec des recherches illimitées et sans inscription. L'application est financée par les commissions d'affiliation et par des offres payantes facultatives (Pro et Pro+). Cela permet de garder le service principal gratuit pour tous.</p>
+  <p>AplusZ est gratuit, avec des recherches illimitÃ©es et sans inscription. L'application est financÃ©e par les commissions d'affiliation et par des offres payantes facultatives (Pro et Pro+). Cela permet de garder le service principal gratuit pour tous.</p>
 
   <h2>Ce que nous stockons sur votre appareil</h2>
-  <p>AplusZ enregistre quelques éléments dans le stockage local de votre navigateur pour que l'application fonctionne : vos deux villes choisies, vos trajets enregistrés et rappels, votre langue et votre thème, et (si vous passez à une offre supérieure) le statut de votre abonnement. Ces données restent sur votre appareil. Nous ne les vendons pas et nous n'utilisons aucun cookie publicitaire ou de suivi tiers.</p>
+  <p>AplusZ enregistre quelques Ã©lÃ©ments dans le stockage local de votre navigateur pour que l'application fonctionne : vos deux villes choisies, vos trajets enregistrÃ©s et rappels, votre langue et votre thÃ¨me, et (si vous passez Ã  une offre supÃ©rieure) le statut de votre abonnement. Ces donnÃ©es restent sur votre appareil. Nous ne les vendons pas et nous n'utilisons aucun cookie publicitaire ou de suivi tiers.</p>
 
   <h2>Aucun suivi</h2>
-  <p>AplusZ n'utilise aucun outil d'analyse ou de publicité tiers. Nous ne créons pas de profil vous concernant à travers le web.</p>
+  <p>AplusZ n'utilise aucun outil d'analyse ou de publicitÃ© tiers. Nous ne crÃ©ons pas de profil vous concernant Ã  travers le web.</p>
 
-  <h2>Votre contrôle</h2>
-  <p>Vous pouvez effacer les données stockées par AplusZ à tout moment en effaçant les données du site dans votre navigateur. L'application continue de fonctionner — elle oublie simplement vos villes enregistrées et vos préférences.</p>
+  <h2>Votre contrÃ´le</h2>
+  <p>Vous pouvez effacer les donnÃ©es stockÃ©es par AplusZ Ã  tout moment en effaÃ§ant les donnÃ©es du site dans votre navigateur. L'application continue de fonctionner â€” elle oublie simplement vos villes enregistrÃ©es et vos prÃ©fÃ©rences.</p>
 
   <h2>Contact</h2>
-  <p>Des questions sur cette divulgation ? Écrivez à <a href="mailto:dagrang@gmail.com">dagrang@gmail.com</a>. Pour les conditions légales complètes et la politique de confidentialité (RGPD), consultez la page <a href="../legal/index.html">Mentions légales</a>.</p>
+  <p>Des questions sur cette divulgation ? Ã‰crivez Ã  <a href="mailto:dagrang@gmail.com">dagrang@gmail.com</a>. Pour les conditions lÃ©gales complÃ¨tes et la politique de confidentialitÃ© (RGPD), consultez la page <a href="../legal/index.html">Mentions lÃ©gales</a>.</p>
 
-  <p class="updated">Dernière mise à jour : mai 2026</p>
+  <p class="updated">DerniÃ¨re mise Ã  jour : mai 2026</p>
 </div>
 
 <script>
@@ -105,7 +105,7 @@
     var isFR = pickLang().indexOf('fr') === 0;
     var en = document.getElementById('disc-en');
     var fr = document.getElementById('disc-fr');
-    if (isFR) { en.hidden = true; fr.hidden = false; document.documentElement.lang = 'fr'; document.title = 'Divulgation · AplusZ'; }
+    if (isFR) { en.hidden = true; fr.hidden = false; document.documentElement.lang = 'fr'; document.title = 'Divulgation Â· AplusZ'; }
     else { en.hidden = false; fr.hidden = true; document.documentElement.lang = 'en'; }
   })();
 </script>

@@ -38,11 +38,11 @@ a:hover { text-decoration: underline; }
 .brand { display: flex; align-items: center; gap: var(--sp-2); text-decoration: none; color: inherit; cursor: pointer; }
 .brand-mark {
   display: inline-grid; place-items: center;
-  width: 36px; height: 36px;
+  width: 32px; height: 32px;
   background: var(--accent);
   color: var(--bg);
   border-radius: var(--r-sm);
-  font-weight: 800; font-size: 0.8rem; letter-spacing: -0.02em;
+  font-weight: 800; font-size: 0.75rem; letter-spacing: -0.02em;
 }
 .brand-name { font-weight: 700; font-size: var(--fs-lg); letter-spacing: -0.01em; }
 .topnav { display: flex; align-items: center; gap: var(--sp-3); flex-shrink: 0; }
@@ -53,7 +53,7 @@ a:hover { text-decoration: underline; }
 .brand { min-width: 0; flex-shrink: 1; overflow: hidden; }
 .brand-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .icon-btn {
-  width: 36px; height: 36px;
+  width: 32px; height: 32px;
   -webkit-tap-highlight-color: transparent;
   outline: none;
   display: flex; align-items: center; justify-content: center;
