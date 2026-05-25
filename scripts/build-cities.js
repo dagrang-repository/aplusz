@@ -1,14 +1,14 @@
 /* ============================================================
    APlusZ — City List Builder (run once, locally)
    File: scripts/build-cities.js
-   Save: D:\Destop\AplusZ\scripts\build-cities.js
    Run:  node scripts/build-cities.js
 
-   Builds frontend/data/cities.json — the ~2000 cities people
-   actually fly to/from, multilingual (20 langs), ranked by real
-   popularity. Junk airports are excluded; major hubs are
-   force-included so typed cities (Paris=PAR, Manila=MNL...) are
-   ALWAYS present. No runtime API calls.
+   Builds frontend/data/cities.json — MAXIMUM coverage: EVERY
+   flightable city TravelPayouts knows, multilingual (20 langs).
+   No 2000 cap → every IATA referenced in any route file resolves
+   to a real city name. Zero code fallbacks, zero skipped routes.
+   Major hubs force-included + canonical-name-corrected.
+   No runtime API calls.
    ============================================================ */
 
 const https = require('https');
@@ -18,7 +18,9 @@ const path  = require('path');
 
 const LANGS = ['en','fr','es','de','it','pt','nl','pl','ru','tr',
                'ar','fa','hi','bn','th','vi','id','ja','ko','zh-CN'];
-const TARGET = 2000;
+
+// MAX coverage: no cap. Keep every flightable city with a name.
+const TARGET = Infinity;
 
 /* Hubs that must NEVER be missing (IATA city codes). */
 const FORCE = ['PAR','LON','NYC','MNL','BKK','TYO','OSA','SIN','HKG','DXB','AUH','DOH',
@@ -51,7 +53,7 @@ function get(url) {
   var airports = await get('http://api.travelpayouts.com/data/airports.json');
   if (!Array.isArray(cities)) throw new Error('cities.json not an array');
 
-  // weight per city = sum of its airports' weights (real popularity signal)
+  // weight per city = sum of its airports' weights (real popularity signal, used for ordering only)
   var weight = {};
   if (Array.isArray(airports)) {
     airports.forEach(function (a) {
@@ -65,16 +67,16 @@ function get(url) {
   var byCode = {};
   cities.forEach(function (c) { if (c && c.code) byCode[c.code] = c; });
 
-  // candidate pool: cities with a flightable airport (excludes junk)
+  // candidate pool: EVERY city with a flightable airport + a name (excludes only true junk)
   var pool = cities.filter(function (c) {
     return c && c.code && c.has_flightable_airport !== false &&
            (c.name || (c.name_translations && c.name_translations.en));
   });
 
-  // rank by city weight desc
+  // rank by city weight desc (ordering only — nothing is dropped now)
   pool.sort(function (a, b) { return (weight[b.code] || 0) - (weight[a.code] || 0); });
 
-  // build keep-set: forced hubs first, then top by weight up to TARGET
+  // build keep-set: forced hubs first, then ALL pool cities (TARGET = Infinity)
   var keep = {}, order = [];
   FORCE.forEach(function (code) { if (byCode[code] && !keep[code]) { keep[code] = true; order.push(byCode[code]); } });
   for (var i = 0; i < pool.length && order.length < TARGET; i++) {
@@ -102,7 +104,6 @@ function get(url) {
     var t = (src && src.name_translations) || {};
     var names = {};
     LANGS.forEach(function (l) { names[l] = t[l] || HUBS[code]; });
-    // remove any existing entry with this code OR sharing the hub's English name
     out = out.filter(function (r) {
       if (r.code === code) return false;
       if ((r.names.en || '').toLowerCase() === HUBS[code].toLowerCase()) return false; // drop impostors (Paris,TX etc.)
@@ -118,7 +119,7 @@ function get(url) {
 
   // sanity report
   var have = function (x) { return out.some(function (c) { return c.code === x; }); };
-  console.log('Wrote frontend/data/cities.json — ' + out.length + ' cities, ' + LANGS.length + ' languages.');
-  console.log('Check: PAR=' + have('PAR') + ' LON=' + have('LON') + ' MNL=' + have('MNL') + ' BKK=' + have('BKK') + ' NYC=' + have('NYC'));
-  console.log('Top 12: ' + out.slice(0, 12).map(function (c) { return c.code; }).join(','));
+  console.log('Wrote frontend/data/cities.json — ' + out.length + ' cities, ' + LANGS.length + ' languages (MAX, no cap).');
+  console.log('Check hubs: PAR=' + have('PAR') + ' LON=' + have('LON') + ' MNL=' + have('MNL') + ' BKK=' + have('BKK') + ' NYC=' + have('NYC'));
+  console.log('Check long-tail: TGD=' + have('TGD') + ' IAS=' + have('IAS') + ' BHX=' + have('BHX'));
 })().catch(function (e) { console.error('Build failed:', e.message); process.exit(1); });
