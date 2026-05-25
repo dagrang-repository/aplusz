@@ -105,7 +105,7 @@
       return Promise.resolve(cache[code]);
     }
 
-    return fetch('i18n/' + code + '.json', { cache: 'force-cache' })
+    return fetch('i18n/' + code + '.json', { cache: 'no-cache' })
       .then(function (r) {
         if (!r.ok) throw new Error('lang load failed');
         return r.json();
