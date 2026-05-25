@@ -77,6 +77,15 @@ for (const origin of origins) {
   }
 }
 
+// ── Static multilingual pages (FAQ / About / Feedback) — high-value, append ──
+const STATIC_PAGES = ['faq', 'about', 'feedback'];
+const staticUrls = [];
+for (const lang of CONFIG.LANGS)
+  for (const p of STATIC_PAGES)
+    staticUrls.push(`${CONFIG.SITE}/${lang}/${p}`);
+// prepend so they sit at the top of the first shard
+urls.unshift(...staticUrls);
+
 await mkdir(path.join(OUT, 'sitemaps'), { recursive: true });
 
 const existingIndex = path.join(OUT, 'sitemap.xml');

@@ -310,21 +310,6 @@ export default {
         return json({ tier: p.t, valid: true, email: p.e }, 200, origin);
       }
 
-      /* ---- public feedback: bug report / feature idea (no auth, text only) ---- */
-      if (url.pathname === '/feedback' && req.method === 'POST') {
-        const b = await req.json().catch(() => ({}));
-        const type = (b.type === 'idea') ? 'idea' : 'bug';
-        const message = ('' + (b.message || '')).trim().slice(0, 4000);
-        if (!message) return json({ error: 'empty' }, 400, origin);
-        const email = normEmail(b.email).slice(0, 200);
-        const lang = ('' + (b.lang || '')).slice(0, 8);
-        const page = ('' + (b.page || '')).slice(0, 300);
-        const id = Date.now() + '-' + Math.random().toString(36).slice(2, 8);
-        const rec = { id, type, message, email, lang, page, ts: new Date().toISOString() };
-        await env.AZKV.put('feedback:' + id, JSON.stringify(rec));
-        return json({ ok: true }, 200, origin);
-      }
-
       /* ---- Stripe webhook → revenue tally + cap ---- */
       if (url.pathname === '/webhook' && req.method === 'POST') {
         const raw = await req.text();
@@ -394,32 +379,6 @@ export default {
           cap: (CAP_CENTS / 100),
           year: year()
         }, 200, origin);
-      }
-
-      /* ---- admin: list feedback (newest first) ---- */
-      if (url.pathname === '/admin/feedback' && req.method === 'POST') {
-        const reqBody = await req.json().catch(() => ({}));
-        const ok = (reqBody.pass && reqBody.pass === env.ADMIN_PASS)
-          || await validAdminCookie(env, req);
-        if (!ok) return json({ error: 'forbidden' }, 403, origin);
-        const list = await env.AZKV.list({ prefix: 'feedback:' });
-        const items = [];
-        for (const k of list.keys) {
-          const v = await env.AZKV.get(k.name);
-          if (v) { try { items.push(JSON.parse(v)); } catch {} }
-        }
-        items.sort((a, b) => (a.ts < b.ts ? 1 : -1));
-        return json({ items }, 200, origin);
-      }
-
-      /* ---- admin: delete one feedback item ---- */
-      if (url.pathname === '/admin/feedback/delete' && req.method === 'POST') {
-        const reqBody = await req.json().catch(() => ({}));
-        const ok = (reqBody.pass && reqBody.pass === env.ADMIN_PASS)
-          || await validAdminCookie(env, req);
-        if (!ok) return json({ error: 'forbidden' }, 403, origin);
-        if (reqBody.id) await env.AZKV.delete('feedback:' + reqBody.id);
-        return json({ ok: true }, 200, origin);
       }
 
       /* ---- GIFT: generate a comp-access code (ADMIN_PASS gated) ---- */
@@ -597,12 +556,6 @@ border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical
     </div>
     <!-- ===== FLOW AI LINK SLOT — tell Claude where/label; replace below ===== -->
     <!-- <div class="foot"><a href="FLOW_AI_URL">Open Flow AI →</a></div> -->
-    <div class="gift">
-      <label>User feedback - bugs and ideas</label>
-      <button class="btn btn-go" id="fbLoad" style="margin-top:8px">Load feedback</button>
-      <div class="msg" id="fbAdminMsg"></div>
-      <div id="fbList" style="margin-top:10px;display:flex;flex-direction:column;gap:8px"></div>
-    </div>
     <div class="foot"><a href="#" id="logout">Log out</a></div>
   </div>
 
@@ -692,32 +645,6 @@ $('giftCopy').onclick = () => {
   try { navigator.clipboard.writeText(i.value); $('giftCopy').textContent='Copied ✓';
         setTimeout(()=>$('giftCopy').textContent='Copy link',1500); }
   catch { document.execCommand('copy'); }
-};
-
-/* ===== FEEDBACK INBOX ===== */
-\fbLoad.onclick = async () => {
-  const m = \fbAdminMsg; m.className='msg'; m.innerHTML='<span class="spin"></span>';
-  try {
-    const r = await api('/admin/feedback', {});
-    const list = \fbList; list.innerHTML='';
-    if (!r.items || !r.items.length) { m.className='msg'; m.textContent='No feedback yet.'; return; }
-    m.textContent='';
-    r.items.forEach(it => {
-      const d = document.createElement('div');
-      d.style.cssText='border:1px solid var(--line);border-radius:10px;padding:10px;background:#0a1124;font-size:.82rem';
-      const tag = it.type==='idea' ? 'Idea' : 'Bug';
-      const when = (it.ts||'').replace('T',' ').slice(0,16);
-      d.innerHTML = '<div style="display:flex;justify-content:space-between;color:var(--mut)">'
-        + '<b style="color:var(--ink)">'+tag+'</b><span>'+when+'</span></div>'
-        + '<div style="margin:6px 0;color:var(--ink);white-space:pre-wrap">'+ (it.message||'').replace(/[<>&]/g,c=>({'<':'&lt;','>':'&gt;','&':'&amp;'}[c])) +'</div>'
-        + '<div style="color:var(--mut);font-size:.75rem">'+ (it.email||'no email') +' - '+ (it.lang||'') +' - '+ (it.page||'') +'</div>'
-        + '<button class="btn" data-id="'+it.id+'" style="margin-top:8px;background:#1f2b4a;color:var(--ink);padding:8px">Delete</button>';
-      d.querySelector('button').onclick = async (e) => {
-        try { await api('/admin/feedback/delete', { id: e.target.getAttribute('data-id') }); d.remove(); } catch {}
-      };
-      list.appendChild(d);
-    });
-  } catch { m.className='msg err'; m.textContent='Could not load feedback.'; }
 };
 </script>
 </body></html>`;

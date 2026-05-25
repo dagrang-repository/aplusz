@@ -3,6 +3,7 @@
 // data shapes; this is the only place to touch.
 export const CONFIG = {
   SITE: 'https://aplusz.app',
+  API: 'https://api.aplusz.app',        // Worker base (feedback POST, etc.)
   BRAND: 'AplusZ',
   // Data path relative to site root. Pages serves /frontend, so /data resolves
   // to frontend/data. Loader probes the list in order; a wrong guess self-heals.

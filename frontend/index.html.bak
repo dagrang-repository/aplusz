@@ -96,12 +96,6 @@
 </section>
 
 <footer class="footer">
-  <a href="en/faq" data-i18n="nav.faq">FAQ</a>
-  <span class="footer-sep"></span>
-  <a href="en/about" data-i18n="nav.about">About</a>
-  <span class="footer-sep"></span>
-  <a href="en/feedback" data-i18n="nav.feedback">Feedback</a>
-  <span class="footer-sep"></span>
   <a href="legal/index.html" data-i18n="nav.legal">Legal</a>
   <span class="footer-sep"></span>
   <a href="disclosure/index.html" id="footer-disclosure">Disclosure</a>
