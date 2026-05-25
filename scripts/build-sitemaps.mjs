@@ -1,35 +1,55 @@
 // node scripts/build-sitemaps.mjs   (run from repo root)
-// Reads frontend/data/*.json, writes frontend/sitemap.xml (index) +
-// frontend/sitemaps/sitemap-N.xml. Preserves any existing sitemap.xml as
-// sitemap-core.xml. Optional IndexNow ping for instant Bing/Yandex indexing.
+// Self-contained: no imports from functions/ (avoids ESM/CJS clashes on older
+// local node). Reads frontend/data/*.json, writes frontend/sitemap.xml (index)
+// + frontend/sitemaps/sitemap-N.xml. Preserves any existing <urlset> sitemap.xml
+// as sitemap-core.xml. Optional IndexNow ping.
 import { readFile, readdir, writeFile, mkdir, rename } from 'node:fs/promises';
 import { existsSync } from 'node:fs';
 import path from 'node:path';
-import { CONFIG } from '../frontend/functions/_lib/config.js';
-import { slug } from '../frontend/functions/_lib/data.js';
+
+// ── Mirror of functions/_lib/config.js — PHASE-1 levers. Keep in sync. ──
+const CONFIG = {
+  SITE: 'https://aplusz.app',
+  CITIES_FILE: 'cities.json',
+  LANGS: ['ar','bn','de','en','es','fa','fr','hi','id','it',
+          'ja','ko','nl','pl','pt','ru','th','tr','vi','zh'],
+  MAX_DESTS_PER_ORIGIN: 40,
+  ORIGIN_ALLOWLIST: [
+    'PAR','LON','NYC','BKK','TYO','SIN','HKG','DXB','IST','MAD',
+    'BCN','ROM','AMS','FRA','LIS','DUB','LAX','SFO','MIA','CHI',
+    'MEX','GRU','DEL','BOM','KUL','CGK','ICN','SYD','MEL','JNB'
+  ],
+  INDEXNOW_KEY: '',
+};
+
+// ── slug() — identical to functions/_lib/data.js ──
+const norm = s => ('' + (s ?? '')).trim();
+const slug = s => norm(s).normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+  .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
 
 const ROOT = process.cwd();
 const PER_FILE = 45000;
 const TODAY = new Date().toISOString().slice(0, 10);
 
-// Locate the data dir (auto-detect) and treat its parent as the deploy root.
 const dataDir = ['frontend/data', 'data', 'assets/data', 'public/data', '.']
   .map(d => path.join(ROOT, d)).find(d => existsSync(path.join(d, CONFIG.CITIES_FILE)));
 if (!dataDir) { console.error('cities.json not found'); process.exit(1); }
-const OUT = path.dirname(dataDir);                 // e.g. .../frontend
+const OUT = path.dirname(dataDir);
 const readJson = async f => JSON.parse(await readFile(path.join(dataDir, f), 'utf8'));
 
-// IATA → slug, from cities.json
+// IATA → slug, from cities.json (handles {cities:[...]} envelope + names.en)
 const citiesRaw = await readJson(CONFIG.CITIES_FILE);
 const rows = Array.isArray(citiesRaw) ? citiesRaw
-  : Object.entries(citiesRaw).map(([k, v]) => (v && typeof v === 'object') ? { iata: v.iata || k, ...v } : { iata: k, name: v });
+  : (citiesRaw.cities && Array.isArray(citiesRaw.cities) ? citiesRaw.cities
+  : Object.entries(citiesRaw).map(([k, v]) => (v && typeof v === 'object') ? { iata: v.iata || k, ...v } : { iata: k, name: v }));
 const name = new Map();
 for (const r of rows) {
   const iata = String(r.iata || r.code || r.id || '').toUpperCase();
-  if (iata) name.set(iata, slug(r.name || r.city || iata) || slug(iata));
+  const nm = r.name || (r.names && (r.names.en || Object.values(r.names)[0])) || r.city || iata;
+  if (iata) name.set(iata, slug(nm) || slug(iata));
 }
 
-// Origins = 3-letter IATA files that are known cities (skips index/meta/drops/etc.)
+// Origins = 3-letter IATA data files that are known cities
 let origins = (await readdir(dataDir))
   .filter(f => f.endsWith('.json'))
   .map(f => f.replace(/\.json$/i, '').toUpperCase())
@@ -42,10 +62,12 @@ for (const origin of origins) {
   const fromSlug = name.get(origin);
   let raw; try { raw = await readJson(`${origin}.json`); } catch { continue; }
   const recs = Array.isArray(raw) ? raw
-    : Object.entries(raw).map(([k, v]) => (v && typeof v === 'object') ? { to: v.to || k, ...v } : { to: k, price: v });
+    : (raw.routes && typeof raw.routes === 'object'
+        ? Object.entries(raw.routes).map(([k, v]) => (v && typeof v === 'object') ? { to: v.to || v.destination || k, ...v } : { to: k, price: v })
+        : Object.entries(raw).map(([k, v]) => (v && typeof v === 'object') ? { to: v.to || k, ...v } : { to: k, price: v }));
   const priced = recs.map(r => ({
     to: String(pick(r, ['to', 'dest', 'destination', 'iata', 'code']) || '').toUpperCase(),
-    price: Number(pick(r, ['price', 'value', 'lowest', 'min', 'amount', 'fare'])),
+    price: Number(pick(r, ['price', 'priceBase', 'value', 'lowest', 'min', 'amount', 'fare'])),
   })).filter(r => r.to && r.to !== origin && name.has(r.to) && Number.isFinite(r.price) && r.price > 0)
     .sort((a, b) => a.price - b.price).slice(0, CONFIG.MAX_DESTS_PER_ORIGIN);
 
@@ -57,7 +79,6 @@ for (const origin of origins) {
 
 await mkdir(path.join(OUT, 'sitemaps'), { recursive: true });
 
-// Preserve an existing static sitemap.xml (a <urlset>) as sitemap-core.xml
 const existingIndex = path.join(OUT, 'sitemap.xml');
 let coreEntry = '';
 if (existsSync(existingIndex)) {
@@ -84,7 +105,6 @@ await writeFile(existingIndex,
 
 console.log(`Wrote ${urls.length} URLs across ${n} route sitemap(s) for ${origins.length} origins.${coreEntry ? ' Existing sitemap preserved as sitemap-core.xml.' : ''}`);
 
-// ── IndexNow (optional) ──────────────────────────────────────────────
 if (CONFIG.INDEXNOW_KEY) {
   await writeFile(path.join(OUT, `${CONFIG.INDEXNOW_KEY}.txt`), CONFIG.INDEXNOW_KEY);
   const host = new URL(CONFIG.SITE).host;
