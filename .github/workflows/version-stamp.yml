@@ -11,8 +11,9 @@ concurrency:
 jobs:
   stamp:
     runs-on: ubuntu-latest
-    # Skip when the push was the bot's own version/data commit (avoids loops)
-    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    # Skip when the push was the bot's own stamp commit (avoids loops).
+    # Uses [bot-stamp] — NOT [skip ci] — so Cloudflare Pages still deploys.
+    if: ${{ !contains(github.event.head_commit.message, '[bot-stamp]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -30,6 +31,6 @@ jobs:
           if git diff --staged --quiet; then
             echo "No version change"
           else
-            git commit -m "version stamp [skip ci]"
+            git commit -m "version stamp [bot-stamp]"
             git push
           fi
