@@ -191,7 +191,6 @@
 </script>
 
 <script>document.addEventListener('aplusz:tier',function(){var tr=(window.APlusZ&&APlusZ.billing&&APlusZ.billing.tier)?APlusZ.billing.tier():'free';document.querySelectorAll('.plans-strip .plan-col[data-plan]').forEach(function(c){var p=c.getAttribute('data-plan');var u=(tr==='free'&&(p==='pro'||p==='proplus'))||(tr==='pro'&&p==='proplus');if(!u)return;c.classList.add('upgradable');c.style.cursor='pointer';c.setAttribute('tabindex','0');c.setAttribute('role','button');c.addEventListener('click',function(){if(window.APlusZ&&APlusZ.billing)APlusZ.billing.buy(p);});c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();if(window.APlusZ&&APlusZ.billing)APlusZ.billing.buy(p);}});});});/* plans-strip-buy */</script><link rel="stylesheet" href="assets/reveal.css">
-<button class="reveal-hint" id="reveal-hint" type="button" aria-label="More about AplusZ"><span class="reveal-hint-chev">&#8593;</span> More about AplusZ.app</button>
 <div class="reveal-wrap" id="reveal-wrap" aria-hidden="true">
   <div class="reveal-card" role="dialog" aria-label="About AplusZ">
     <button class="reveal-close" id="reveal-close" aria-label="Close">&times;</button>
@@ -234,33 +233,24 @@
 <script>
 (function(){
   var wrap=document.getElementById('reveal-wrap');
-  var hint=document.getElementById('reveal-hint');
   var footer=document.querySelector('.footer');
-  var loaded=false;
-  function openCard(){
-    wrap.classList.add('show');
-    wrap.setAttribute('aria-hidden','false');
-    if(hint)hint.classList.remove('show');
-    if(!loaded){loadComments();loaded=true;}
+  var closed=false;
+  function checkScroll(){
+    if(closed)return;
+    if(!footer)return;
+    var r=footer.getBoundingClientRect();
+    if(r.bottom<=window.innerHeight+40){
+      wrap.classList.add('show');
+      wrap.setAttribute('aria-hidden','false');
+      loadComments();
+    }
   }
-  function closeCard(){
+  window.addEventListener('scroll',checkScroll,{passive:true});
+  document.getElementById('reveal-close').onclick=function(){
     wrap.classList.remove('show');
     wrap.setAttribute('aria-hidden','true');
-  }
-  // Show the hint tab when the footer scrolls into view (reliable on PC + mobile)
-  if(footer && 'IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){ if(hint)hint.classList.add('show'); }
-        else { if(hint)hint.classList.remove('show'); }
-      });
-    },{root:null,threshold:0.1});
-    io.observe(footer);
-  } else if(hint){
-    hint.classList.add('show'); // fallback: always available
-  }
-  if(hint)hint.addEventListener('click',openCard);
-  document.getElementById('reveal-close').onclick=closeCard;
+    closed=true;
+  };
   // Share
   document.getElementById('reveal-share-btn').onclick=function(){
     var u='https://aplusz.app/';

@@ -121,10 +121,3 @@
   font-size: 0.87rem; color: #94a3b8; line-height: 1.5;
 }
 .reveal-msg { font-size: 0.82rem; color: #64748b; text-align: center; margin: 6px 0; }
-
-/* reveal hint tab */
-.reveal-hint{position:fixed;left:50%;bottom:0;transform:translate(-50%,120%);z-index:79;background:rgba(245,185,66,.95);color:#0f172a;border:none;border-radius:14px 14px 0 0;padding:9px 20px;font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 -4px 20px rgba(0,0,0,.3);transition:transform .35s cubic-bezier(.34,1.4,.64,1);white-space:nowrap;}
-.reveal-hint.show{transform:translate(-50%,0);}
-.reveal-hint:hover{background:#f5b942;}
-.reveal-hint-chev{display:inline-block;animation:revealBounce 1.4s ease-in-out infinite;}
-@keyframes revealBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}
