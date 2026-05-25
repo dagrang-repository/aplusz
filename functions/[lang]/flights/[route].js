@@ -1,7 +1,7 @@
 // Route page:  /<lang>/flights/<from>-to-<to>     e.g. /fr/flights/paris-to-bangkok
-import { CONFIG } from '../../../_lib/config.js';
-import { loadCities, loadRoutes } from '../../../_lib/data.js';
-import { buildRoutePage } from '../../../_lib/page.js';
+import { CONFIG } from '../../_lib/config.js';
+import { loadCities, loadRoutes } from '../../_lib/data.js';
+import { buildRoutePage } from '../../_lib/page.js';
 
 const notFound = () => new Response('Not found', { status: 404 });
 
@@ -19,7 +19,7 @@ export async function onRequestGet(context) {
 
   const routes = await loadRoutes(fetch, fromIata);
   const r = routes.find(x => x.to === toIata);
-  if (!r) return notFound();                       // no data → never index a blank
+  if (!r) return notFound();
 
   const from = byIata.get(fromIata) || { iata: fromIata, name: fromIata };
   const to = byIata.get(toIata) || { iata: toIata, name: toIata };
