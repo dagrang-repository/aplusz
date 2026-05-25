@@ -1,4 +1,4 @@
-﻿// ── Page builder · pure, testable, no I/O ────────────────────────────
+// ── Page builder · pure, testable, no I/O ────────────────────────────
 import { CONFIG } from './config.js';
 import { slug } from './data.js';
 
@@ -85,7 +85,7 @@ export function buildRoutePage({ lang, from, to, route, related = [] }) {
 <link rel="stylesheet" href="/assets/bundle.css">
 <script type="application/ld+json">${JSON.stringify(ld)}</script>
 <style>.rg{max-width:760px;margin:0 auto;padding:28px 18px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.5}.rg h1{font-size:1.7rem;margin:.2em 0}.rg .rg-price{font-size:2.2rem;font-weight:700;margin:.1em 0}.rg-sub{color:#555;margin:.2em 0}.rg-cta{display:inline-block;margin:18px 0;padding:14px 22px;background:#1558d6;color:#fff;border-radius:10px;text-decoration:none;font-weight:600}.rg-cta.sec{background:#eef2fb;color:#1558d6}.rg-faq h3{margin:1.1em 0 .2em;font-size:1.05rem}.rg-rel ul{columns:2;list-style:none;padding:0}.rg-rel a{color:#1558d6;text-decoration:none}.rg-note{color:#777;font-size:.85rem;margin-top:24px}.rg-foot{margin:36px 0 8px;padding-top:18px;border-top:1px solid #e5e7eb;font-size:.85rem;color:#555;text-align:center}.rg-foot a{color:#1558d6;text-decoration:none}.rg-foot .c{margin-top:8px;color:#777}</style>
-<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-995108846"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');</script></head><body><main class="rg">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-995108846></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');</script></head><body><main class="rg">
 <h1>${esc(t(lang, 'h1', v))}</h1>
 <p class="rg-price">${money(route.price, route.currency)}</p>
 ${lowLine}

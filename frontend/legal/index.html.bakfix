@@ -1,10 +1,10 @@
-ï»¿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#0f172a">
-<title>Mentions Lï¿½gales ï¿½ AplusZ</title>
+<title>Mentions Légales · AplusZ</title>
 <link rel="manifest" href="../apz.webmanifest">
 <link rel="stylesheet" href="../assets/tokens.css">
 <script src="../assets/detect.js"></script>
@@ -40,16 +40,16 @@
   strong { color: var(--text); }
   code { font-family: var(--font-mono); font-size: 0.9em; background: var(--surface); padding: 2px 6px; border-radius: var(--r-xs); }
 </style>
-<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-995108846"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');</script></head>
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-995108846></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');</script></head>
 <body>
 
 <a class="back" href="../index.html">? AplusZ</a>
 <a class="back" href="../disclosure/index.html" style="margin-left:var(--sp-4);">Divulgation ?</a>
 
-<h1>Mentions Lï¿½gales &amp; Politique de Confidentialitï¿½</h1>
+<h1>Mentions Légales &amp; Politique de Confidentialité</h1>
 
-<h2>Mentions Lï¿½gales</h2>
-<p><strong>ï¿½diteur du site</strong><br>
+<h2>Mentions Légales</h2>
+<p><strong>Éditeur du site</strong><br>
 AplusZ (nom commercial)<br>
 Sang DAGRANG, Entrepreneur Individuel<br>
 SIRET : 92792462100018<br>
@@ -57,91 +57,91 @@ Email : <a href="mailto:dagrang@gmail.com">dagrang@gmail.com</a><br>
 WhatsApp : +63 956 622 5915<br>
 Directeur de la publication : Sang DAGRANG</p>
 
-<p><strong>Hï¿½bergeur</strong><br>
+<p><strong>Hébergeur</strong><br>
 Cloudflare, Inc.<br>
 101 Townsend St, San Francisco, CA 94107, USA<br>
 www.cloudflare.com</p>
 
 <hr>
 
-<h2>Politique de Confidentialitï¿½ (RGPD)</h2>
+<h2>Politique de Confidentialité (RGPD)</h2>
 
 <p><strong>Responsable du traitement :</strong> dagrang@gmail.com, France.</p>
 
-<h3>Donnï¿½es collectï¿½es</h3>
+<h3>Données collectées</h3>
 <ul>
   <li>Adresse e-mail (uniquement si vous vous inscrivez aux alertes)</li>
-  <li>Identifiant d'appareil (suivi du parrainage, aucune donnï¿½e personnelle)</li>
-  <li>Requï¿½tes de recherche (origine/destination, anonymisï¿½es)</li>
+  <li>Identifiant d'appareil (suivi du parrainage, aucune donnée personnelle)</li>
+  <li>Requêtes de recherche (origine/destination, anonymisées)</li>
   <li>Statistiques d'utilisation basiques (pages vues, clics)</li>
 </ul>
 
-<h3>Finalitï¿½s</h3>
-<p>Fournir les donnï¿½es de vols, gï¿½rer le systï¿½me de parrainage, envoyer les alertes.</p>
+<h3>Finalités</h3>
+<p>Fournir les données de vols, gérer le système de parrainage, envoyer les alertes.</p>
 
 <h3>Base juridique</h3>
-<p>Consentement (alertes) + intï¿½rï¿½t lï¿½gitime (parrainage, analytics). Retrait du consentement possible ï¿½ tout moment par e-mail.</p>
+<p>Consentement (alertes) + intérêt légitime (parrainage, analytics). Retrait du consentement possible à tout moment par e-mail.</p>
 
 <h3>Conservation</h3>
 <ul>
-  <li>E-mail : jusqu'ï¿½ suppression du compte</li>
-  <li>Identifiant d'appareil &amp; analytics : 12 mois puis anonymisï¿½s</li>
-  <li>Requï¿½tes de recherche : 30 jours</li>
+  <li>E-mail : jusqu'à suppression du compte</li>
+  <li>Identifiant d'appareil &amp; analytics : 12 mois puis anonymisés</li>
+  <li>Requêtes de recherche : 30 jours</li>
 </ul>
 
 <h3>Vos droits</h3>
-<p>Accï¿½s, rectification, effacement, portabilitï¿½, limitation, opposition. Contact : dagrang@gmail.com. Rï¿½ponse sous 30 jours.</p>
+<p>Accès, rectification, effacement, portabilité, limitation, opposition. Contact : dagrang@gmail.com. Réponse sous 30 jours.</p>
 
 <h3>Sous-traitants</h3>
-<p>Stripe (paiements), Travelpayouts &amp; CJ Affiliate (liens partenaires), Cloudflare (hï¿½bergement). Chacun dispose de sa propre politique de confidentialitï¿½.</p>
+<p>Stripe (paiements), Travelpayouts &amp; CJ Affiliate (liens partenaires), Cloudflare (hébergement). Chacun dispose de sa propre politique de confidentialité.</p>
 
 <h3>Cookies</h3>
-<p>Aucun cookie requis. Le suivi de parrainage utilise le localStorage, pas de cookies. Pas de traï¿½age intersite.</p>
+<p>Aucun cookie requis. Le suivi de parrainage utilise le localStorage, pas de cookies. Pas de traçage intersite.</p>
 
 <h3>Transferts internationaux</h3>
-<p>Donnï¿½es hï¿½bergï¿½es dans l'UE. Sous-traitants aux ï¿½tats-Unis couverts par les clauses contractuelles types (SCC).</p>
+<p>Données hébergées dans l'UE. Sous-traitants aux États-Unis couverts par les clauses contractuelles types (SCC).</p>
 
 <h3>Notification de violation</h3>
-<p>Si des donnï¿½es personnelles sont affectï¿½es, notification ï¿½ la CNIL dans les 72 heures.</p>
+<p>Si des données personnelles sont affectées, notification à la CNIL dans les 72 heures.</p>
 
 <hr>
 
 <h2>Conditions d'Utilisation</h2>
 
 <h3>1. Description du service</h3>
-<p>AplusZ est une PWA gratuite qui affiche des donnï¿½es historiques de prix de vols afin de suggï¿½rer les dates optimales de rï¿½servation et de dï¿½part. Recommandations basï¿½es sur une analyse historique ï¿½ aucune garantie sur les prix futurs.</p>
+<p>AplusZ est une PWA gratuite qui affiche des données historiques de prix de vols afin de suggérer les dates optimales de réservation et de départ. Recommandations basées sur une analyse historique — aucune garantie sur les prix futurs.</p>
 
-<h3>2. Absence de responsabilitï¿½</h3>
-<p>AplusZ fournit des informations ï¿½ en l'ï¿½tat ï¿½. L'ï¿½diteur n'est pas responsable des pertes, retards ou dï¿½penses engagï¿½s sur la base des donnï¿½es affichï¿½es. Les utilisateurs vï¿½rifient les tarifs directement auprï¿½s des compagnies aï¿½riennes.</p>
+<h3>2. Absence de responsabilité</h3>
+<p>AplusZ fournit des informations « en l'état ». L'éditeur n'est pas responsable des pertes, retards ou dépenses engagés sur la base des données affichées. Les utilisateurs vérifient les tarifs directement auprès des compagnies aériennes.</p>
 
-<h3>3. ï¿½ligibilitï¿½</h3>
+<h3>3. Éligibilité</h3>
 <p>Vous devez avoir au moins 18 ans pour utiliser le service.</p>
 
 <h3>4. Utilisations interdites</h3>
-<p>Interdiction de : scraper ou interroger l'API en masse, revendre commercialement les donnï¿½es, contourner les limites techniques.</p>
+<p>Interdiction de : scraper ou interroger l'API en masse, revendre commercialement les données, contourner les limites techniques.</p>
 
 <h3>5. Programme de parrainage</h3>
 <ul>
-  <li>Les sï¿½quences (streaks), primes et statuts (?? Free, ? Pro, ?? Pro+) sont non transfï¿½rables et sans valeur monï¿½taire.</li>
-  <li>AplusZ se rï¿½serve le droit de modifier ou rï¿½silier le programme ï¿½ tout moment.</li>
-  <li>La barre de progression collective et le dï¿½clenchement final sont ï¿½ la discrï¿½tion de l'ï¿½diteur aprï¿½s vï¿½rification.</li>
+  <li>Les séquences (streaks), primes et statuts (?? Free, ? Pro, ?? Pro+) sont non transférables et sans valeur monétaire.</li>
+  <li>AplusZ se réserve le droit de modifier ou résilier le programme à tout moment.</li>
+  <li>La barre de progression collective et le déclenchement final sont à la discrétion de l'éditeur après vérification.</li>
 </ul>
 
 <h3>6. Facturation des abonnements</h3>
-<p>Facturation gï¿½rï¿½e par Stripe. Renouvellement automatique mensuel jusqu'ï¿½ rï¿½siliation. Lorsque la barre de progression atteint 100 %, tous les abonnements payants deviennent gratuits jusqu'au 1er janvier de l'annï¿½e suivante. Les revenus d'affiliation ne sont pas comptï¿½s dans ce seuil.</p>
+<p>Facturation gérée par Stripe. Renouvellement automatique mensuel jusqu'à résiliation. Lorsque la barre de progression atteint 100 %, tous les abonnements payants deviennent gratuits jusqu'au 1er janvier de l'année suivante. Les revenus d'affiliation ne sont pas comptés dans ce seuil.</p>
 
-<h3>7. Rï¿½siliation</h3>
-<p>Nous pouvons suspendre l'accï¿½s en cas de violation. Les utilisateurs peuvent supprimer leur compte ï¿½ tout moment via dagrang@gmail.com.</p>
+<h3>7. Résiliation</h3>
+<p>Nous pouvons suspendre l'accès en cas de violation. Les utilisateurs peuvent supprimer leur compte à tout moment via dagrang@gmail.com.</p>
 
 <h3>8. Droit applicable</h3>
-<p>Droit franï¿½ais. Tout litige relï¿½ve des tribunaux de Paris, France.</p>
+<p>Droit français. Tout litige relève des tribunaux de Paris, France.</p>
 
 <h3>9. Contact</h3>
 <p>Questions : <a href="mailto:dagrang@gmail.com">dagrang@gmail.com</a></p>
 
 <hr>
 
-<!-- ===== AplusZ Codes ï¿½ gift redemption (no secret; validates via Worker) ===== -->
+<!-- ===== AplusZ Codes — gift redemption (no secret; validates via Worker) ===== -->
 <details id="az-codes" style="margin-top:var(--sp-8)">
   <summary style="cursor:pointer;color:var(--text-dim);font-size:var(--fs-sm);list-style:none">AplusZ Codes</summary>
   <div style="margin-top:var(--sp-4);max-width:360px">
@@ -163,7 +163,7 @@ www.cloudflare.com</p>
   function dev(){try{var d=localStorage.getItem(LS_DEV);return d||'';}catch(e){return '';}}
   function redeem(code){
     if(!code){msg('Enter a code.',false);return;}
-    msg('Checkingï¿½');
+    msg('Checking…');
     fetch(API+'/redeem',{method:'POST',headers:{'content-type':'application/json'},
       body:JSON.stringify({code:code,deviceId:dev()})})
       .then(function(r){return r.json();})
