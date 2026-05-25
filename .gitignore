@@ -48,3 +48,5 @@ logs/
 *.key
 *.pem
 .env
+*.bak 
+*.bak2 
