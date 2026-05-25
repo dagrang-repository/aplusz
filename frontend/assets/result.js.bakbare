@@ -141,7 +141,7 @@
       kiwi: 'https://www.kiwi.com/deep?from=' + o + '&to=' + dest + '&departure=' + date + '&affilid=' + (c.kiwi || 'placeholder'),
       skyscanner: 'https://www.skyscanner.net/transport/flights/' + d.origin.toLowerCase() + '/' + d.destination.toLowerCase() + '/' + date.slice(2,4) + date.slice(5,7) + date.slice(8,10) + '/?associateid=' + (c.skyscanner || 'placeholder'),
       kayak: 'https://www.kayak.com/flights/' + d.origin + '-' + d.destination + '/' + date + '?utm_source=' + (c.kayak || 'aplusz'),
-
+      booking: 'https://www.booking.com/searchresults.html?ss=' + dest + '&checkin=' + date + '&aid=' + (c.booking || 'placeholder')
     };
   }
 
@@ -152,8 +152,7 @@
     if (!box) return;
     var hotelDest = encodeURIComponent(d.destination);
     var c = (window.APlusZ.config && window.APlusZ.config.affiliates) || {};
-    var bookingId = c.booking && c.booking !== 'placeholder' ? c.booking : null;
-    var hotel = bookingId ? 'https://tp.media/r?marker=730427&trs=531148&p=4114&u=' + encodeURIComponent('https://www.booking.com/searchresults.html?ss=' + hotelDest + '&aid=' + bookingId) + '&campaign_id=100' : null;
+    var hotel = 'https://www.booking.com/searchresults.html?ss=' + hotelDest + '&aid=' + (c.booking || 'placeholder');
     var primaryBook = d.book || tpBook(d.origin, d.destination, d.bestDeparture);   // never undefined; always tracked
 
     box.innerHTML = [
@@ -175,7 +174,10 @@
       '    ' + t('result.cta_book'),
       '  </a>',
 
-      hotel ? '  <div class="also-check"><span class="also-label">' + t('result.also_check') + '</span><a href="' + hotel + '" target="_blank" rel="noopener nofollow">' + t('result.hotel_near').replace('{city}', d.destination) + '</a></div>' : '',
+      '  <div class="also-check">',
+      '    <span class="also-label">' + t('result.also_check') + '</span>',
+      '    <a href="' + hotel + '" target="_blank" rel="noopener nofollow">' + t('result.hotel_near').replace('{city}', d.destination) + '</a>',
+      '  </div>',
 
       '  <div class="share-row">',
       '    <div class="share-info">',

@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    APlusZ — Front-index Billboard (rotating slides)
    File: frontend/assets/billboard.js
    Save: D:\Destop\AplusZ\frontend\assets\billboard.js
@@ -18,7 +18,7 @@
     'billboard.stat': 'This app scans up to 50,000 possible lowest prices across 2,000 airports and finds the lowest possible fare on the best date to book within the next 6 months.',
     'billboard.insurance': 'Looking for trusted travel assurance, we have a good link for that.',
     'billboard.hosting': 'A partner web hosting service, if you are interested.',
-    'billboard.webdesign': 'If you need a powerful website, we have the perfect solution for you, at a huge discount at the moment. Follow this link!'
+    'billboard.webdesign': 'Do you need a powerful website →'
   };
   function t(k) {
     var v = (APZ.i18n && APZ.i18n.t) ? APZ.i18n.t(k) : k;

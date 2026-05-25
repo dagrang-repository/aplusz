@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    APlusZ — Mailto Alerts (Step 19) · Pure mailto, zero infra
    File: frontend/assets/alerts.js
    Save: D:\Destop\AplusZ\frontend\assets\alerts.js
@@ -101,7 +101,7 @@
     var c = (APZ.config && APZ.config.affiliates) || {};
     var url = 'https://www.kiwi.com/deep?from=' + encodeURIComponent(o) + '&to=' + encodeURIComponent(d);
     if (dep) url += '&departure=' + dep;
-    // kiwi not available via TP -- link removed
+    url += '&affilid=' + (c.kiwi || 'placeholder');
     return url;
   }
   function rescanLink(o, d) {
