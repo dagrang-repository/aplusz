@@ -28,7 +28,7 @@
     billboard: {
       insurance: 'https://safetywing.com/?referenceID=YOUR_ID',          // SafetyWing (or World Nomads)
       hosting:   'https://www.hostinger.com/ref/YOUR_USERNAME',          // Hostinger
-      webdesign: '/web'                                                      // own aplusz.app web-design subdomain (set when live)
+      webdesign: ''                                                      // own aplusz.app web-design subdomain (set when live)
     },
 
     // Customer Portal URL (Stripe Dashboard → Settings → Customer Portal → Activate → copy link)
