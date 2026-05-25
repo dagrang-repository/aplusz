@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    APlusZ — Auth & Billing Worker (Step 18)
    Deploy: Cloudflare Workers  →  https://api.aplusz.app
    Save:   D:\Destop\AplusZ\worker\index.js
@@ -695,11 +695,11 @@ $('giftCopy').onclick = () => {
 };
 
 /* ===== FEEDBACK INBOX ===== */
-$('fbLoad').onclick = async () => {
-  const m = $('fbAdminMsg'); m.className='msg'; m.innerHTML='<span class="spin"></span>';
+\fbLoad.onclick = async () => {
+  const m = \fbAdminMsg; m.className='msg'; m.innerHTML='<span class="spin"></span>';
   try {
     const r = await api('/admin/feedback', {});
-    const list = $('fbList'); list.innerHTML='';
+    const list = \fbList; list.innerHTML='';
     if (!r.items || !r.items.length) { m.className='msg'; m.textContent='No feedback yet.'; return; }
     m.textContent='';
     r.items.forEach(it => {
