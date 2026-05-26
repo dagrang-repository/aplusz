@@ -53,7 +53,7 @@
     var text = t(s.key);
     if (s.url) {
       var _isInt = s.url.charAt(0) === "/";
-      var _tgt = _isInt ? "" : " target=""_blank"" rel=""noopener nofollow sponsored""";
+      var _tgt = _isInt ? '' : ' target="_blank" rel="noopener nofollow sponsored"';
       host.innerHTML = '<a class="bb-slide bb-link" href="' + s.url + '"' + _tgt + '>' + text + '</a>';
     } else {
       host.innerHTML = '<span class="bb-slide">' + text + '</span>';
