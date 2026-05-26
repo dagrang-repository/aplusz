@@ -234,6 +234,8 @@
 <script>
 (function(){
   var wrap=document.getElementById('reveal-wrap');
+  /* reveal-relang-listener */
+  document.addEventListener('aplusz:lang',function(){try{var i=window.APlusZ&&APlusZ.i18n;if(!i||!i.t)return;var card=document.getElementById('reveal-wrap');if(!card)return;card.querySelectorAll('[data-i18n]').forEach(function(el){var v=i.t(el.getAttribute('data-i18n'));if(v!=null)el.textContent=v;});card.querySelectorAll('[data-i18n-html]').forEach(function(el){var v=i.t(el.getAttribute('data-i18n-html'));if(v!=null)el.innerHTML=v;});}catch(e){}});
   var hint=document.getElementById('reveal-hint');
   var footer=document.querySelector('.footer');
   var loaded=false;
