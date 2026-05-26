@@ -294,6 +294,7 @@
     "roulette_loss": "今回はダメでした — 続けてください。",
     "roulette_maxed": "今日の分を使い切りました。明日また来てください！",
     "copied": "コピーしました！",
-    "btn_float": "ギフト"
+    "btn_float": "ギフト",
+    "spins_left": "本日の残り回数：{n}"
   }
 }

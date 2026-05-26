@@ -294,6 +294,7 @@
     "roulette_loss": "Bu sefer olmadı — devam et.",
     "roulette_maxed": "Bugünkü denemelerini kullandın. Yarın tekrar gel!",
     "copied": "Kopyalandı!",
-    "btn_float": "Hediye"
+    "btn_float": "Hediye",
+    "spins_left": "Bugün kalan hak: {n}"
   }
 }

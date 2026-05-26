@@ -294,6 +294,7 @@
     "roulette_loss": "Pas cette fois — continuez.",
     "roulette_maxed": "Vous avez utilisé vos essais du jour. Revenez demain !",
     "copied": "Copié !",
-    "btn_float": "Cadeau"
+    "btn_float": "Cadeau",
+    "spins_left": "Tours restants aujourd'hui : {n}"
   }
 }

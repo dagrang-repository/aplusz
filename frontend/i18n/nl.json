@@ -294,6 +294,7 @@
     "roulette_loss": "Niet deze keer — ga door.",
     "roulette_maxed": "Je hebt je pogingen van vandaag gebruikt. Kom morgen terug!",
     "copied": "Gekopieerd!",
-    "btn_float": "Cadeau"
+    "btn_float": "Cadeau",
+    "spins_left": "Pogingen over vandaag: {n}"
   }
 }

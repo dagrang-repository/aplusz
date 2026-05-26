@@ -294,6 +294,7 @@
     "roulette_loss": "Bukan kali ini — lanjutkan.",
     "roulette_maxed": "Anda sudah menggunakan semua percobaan hari ini. Kembali besok!",
     "copied": "Disalin!",
-    "btn_float": "Hadiah"
+    "btn_float": "Hadiah",
+    "spins_left": "Sisa putaran hari ini: {n}"
   }
 }

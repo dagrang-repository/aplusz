@@ -294,6 +294,7 @@
     "roulette_loss": "这次没有——继续尝试。",
     "roulette_maxed": "你今天的机会已用完。明天再来！",
     "copied": "已复制！",
-    "btn_float": "礼品"
+    "btn_float": "礼品",
+    "spins_left": "今日剩余次数：{n}"
   }
 }

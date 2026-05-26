@@ -294,6 +294,7 @@
     "roulette_loss": "Lần này chưa được — tiếp tục thôi.",
     "roulette_maxed": "Bạn đã dùng hết lượt hôm nay. Quay lại ngày mai nhé!",
     "copied": "Đã sao chép!",
-    "btn_float": "Quà"
+    "btn_float": "Quà",
+    "spins_left": "Lượt còn lại hôm nay: {n}"
   }
 }

@@ -294,6 +294,7 @@
     "roulette_loss": "Nie tym razem — próbuj dalej.",
     "roulette_maxed": "Wykorzystałeś swoje próby na dziś. Wróć jutro!",
     "copied": "Skopiowano!",
-    "btn_float": "Prezent"
+    "btn_float": "Prezent",
+    "spins_left": "Pozostałe próby dzisiaj: {n}"
   }
 }

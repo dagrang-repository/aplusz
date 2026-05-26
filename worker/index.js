@@ -1,6 +1,6 @@
 ﻿/* ============================================================
-   APlusZ � Auth & Billing Worker (Step 18)
-   Deploy: Cloudflare Workers  ?  https://api.aplusz.app
+   APlusZ — Auth & Billing Worker (Step 18)
+   Deploy: Cloudflare Workers → https://api.aplusz.app
    Save:   D:\Destop\AplusZ\worker\index.js
 
    Responsibilities:
@@ -8,14 +8,14 @@
      2. Un-foolable tier unlock via HMAC-signed token (no honor-flag)
      3. Magic-link retrieval of paid access on any device (Resend)
      4. Live entitlement from Stripe ("true to usage")
-     5. Auto-pause at �62,000 Stripe revenue / year  + manual pause
-        ? when paused, everyone is free until 1 January (auto-reset)
+     5. Auto-pause at €62,000 Stripe revenue / year  + manual pause
+        → when paused, everyone is free until 1 January (auto-reset)
 
    Secrets live ONLY in Cloudflare (wrangler secret / dashboard),
    never in this file or the repo. KV namespace binding: AZKV
    ============================================================ */
 
-const CAP_CENTS = 6200000;          // �62,000
+const CAP_CENTS = 6200000;          // €62,000
 const TOKEN_TTL = 30 * 86400;       // 30 days (seconds)
 const MAGIC_TTL = 30 * 60;          // magic link valid 30 min
 
@@ -169,7 +169,7 @@ async function emailMagicLink(env, email, tier) {
     '<p><a href="' + link + '" style="display:inline-block;background:#2563eb;color:#fff;' +
     'padding:12px 22px;border-radius:10px;text-decoration:none;font-weight:600">Unlock my plan</a></p>' +
     '<p style="color:#64748b;font-size:13px">This link works once and expires in 30 minutes. ' +
-    'Keep this email � it is the only way to restore your paid plan on a new device.</p></div>';
+    'Keep this email — it is the only way to restore your paid plan on a new device.</p></div>';
   return sendMail(env, email, 'Your A+Z.app access link', html);
 }
 
@@ -207,7 +207,7 @@ async function sendCapNotices(env, reason) {
   for (const c of (list.data || [])) {
     if (!c.email) continue;
     await sendMail(env, c.email, 'A+Z.app is free for everyone until January',
-      '<p>Good news � every A+Z.app feature is free for all users until <b>1 January</b>. ' +
+      '<p>Good news — every A+Z.app feature is free for all users until <b>1 January</b>. ' +
       'Your billing is paused; nothing will be charged until then.</p>');
   }
 }
@@ -269,7 +269,6 @@ export default {
         await env.AZKV.put('roulette:spins', String(spinCount));
         const isWin = (spinCount % 1500 === 0);
         if (isWin) {
-          // generate a fresh roulette-win code (separate from daily gift)
           const code = giftRandCode();
           await env.AZKV.put('roulette:wincode:' + spinCount, JSON.stringify({
             code, created: Math.floor(Date.now() / 1000)
@@ -288,7 +287,7 @@ export default {
 
         if (await capOn(env)) return json({ capOn: true }, 200, origin);
 
-        // already paying? ? don't double-charge, email the access link
+        // already paying? → don't double-charge, email the access link
         const existing = await tierForEmail(env, e);
         if (existing !== 'free') {
           await emailMagicLink(env, e, existing);
@@ -332,7 +331,7 @@ export default {
         return json({ found: true, emailed: true }, 200, origin);
       }
 
-      /* ---- magic link ? exchange for a signed token ---- */
+      /* ---- magic link → exchange for a signed token ---- */
       if (url.pathname === '/magic' && req.method === 'POST') {
         const { d } = await req.json();
         if (!d || d.indexOf('.') === -1) return json({ error: 'bad' }, 400, origin);
@@ -343,7 +342,7 @@ export default {
         if (!p.x || p.x < Math.floor(Date.now() / 1000)) return json({ error: 'expired' }, 400, origin);
         /* Trust the tier baked into the signed link. The link is HMAC-signed and
            only ever emailed after the plan was confirmed (checkout/restore), and
-           it expires in 30 min � so re-reading live Stripe here is unnecessary and
+           it expires in 30 min — so re-reading live Stripe here is unnecessary and
            was the cause of the ~10-min activation delay (Stripe sub not yet
            'active' right after payment -> tier read as free -> no token issued).
            Fall back to a live read only if the link somehow carries no tier. */
@@ -483,7 +482,7 @@ export default {
         const ev = JSON.parse(raw);
         if (ev.type === 'checkout.session.completed') { const s = ev.data.object; const wem = ((s.customer_email) || (s.customer_details && s.customer_details.email) || '').toLowerCase().trim(); if (wem) await env.KV.put('paid_web:' + wem, '1', { expirationTtl: 2592000 }); }
         if (ev.type === 'invoice.paid') {
-          const amt = ev.data.object.amount_paid || 0; // cents, net of nothing � gross paid
+          const amt = ev.data.object.amount_paid || 0; // cents, net of nothing — gross paid
           if (amt > 0) await addRevenue(env, amt);
         }
         return json({ received: true }, 200, origin);
@@ -663,7 +662,7 @@ function adminPage() {
   return `<!doctype html><html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<title>A+Z � Control</title>
+<title>A+Z — Control</title>
 <style>
 :root{--bg:#0b1020;--card:#121a30;--ink:#eef2ff;--mut:#8a97b8;--line:#23304f;
 --gold:#f5b942;--green:#34d399;--red:#fb7185;--blue:#60a5fa}
@@ -715,7 +714,7 @@ border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical
   <!-- LOGIN -->
   <div class="card" id="login">
     <label for="pass">Admin password</label>
-    <input id="pass" type="password" autocomplete="current-password" placeholder="����������" />
+    <input id="pass" type="password" autocomplete="current-password" placeholder="••••••••••" />
     <button class="btn btn-go" id="enter">Unlock panel</button>
     <div class="msg err" id="loginMsg"></div>
   </div>
@@ -724,39 +723,46 @@ border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical
   <div class="card hide" id="panel">
     <div class="state">
       <span class="dot" id="dot"></span>
-      <div><div class="lbl" id="stateLbl">�</div><div class="sub" id="stateSub"></div></div>
+      <div><div class="lbl" id="stateLbl">—</div><div class="sub" id="stateSub"></div></div>
     </div>
     <div class="meter">
-      <div class="row"><span>Revenue this year</span><span id="revTxt">�</span></div>
+      <div class="row"><span>Revenue this year</span><span id="revTxt">—</span></div>
       <div class="bar"><i id="revBar"></i></div>
     </div>
-    <button class="btn" id="toggle">�</button>
+    <button class="btn" id="toggle">—</button>
     <div class="msg" id="panelMsg"></div>
 
     <!-- ===== GIFT CODE GENERATOR ===== -->
     <div class="gift">
-      <label for="giftDays">Gift access � duration (days)</label>
+      <label for="giftDays">Gift access · duration (days)</label>
       <input id="giftDays" type="number" min="1" max="3650" value="180" inputmode="numeric" />
       <button class="btn btn-go" id="giftGo" style="margin-top:12px">Generate gift code</button>
       <div class="msg" id="giftMsg"></div>
       <div id="giftOut" class="giftOut hide">
         <input id="giftUrl" readonly onclick="this.select()" style="margin-top:14px;font-size:.82rem;text-align:center" />
         <button class="btn" id="giftCopy" style="margin-top:8px;background:#1f2b4a;color:var(--ink)">Copy link</button>
-        <div class="sub" style="margin-top:8px;text-align:center;color:var(--mut);font-size:.75rem">Send this link to your friend. First device to open it is bound for the full period � single use.</div>
+        <div class="sub" style="margin-top:8px;text-align:center;color:var(--mut);font-size:.75rem">Send this link to your friend. First device to open it is bound for the full period · single use.</div>
       </div>
     </div>
-    <!-- ===== FLOW AI LINK SLOT � tell Claude where/label; replace below ===== -->
+    <!-- ===== FLOW AI LINK SLOT · tell Claude where/label; replace below ===== -->
     <!-- <div class="foot"><a href="FLOW_AI_URL">Open Flow AI ?</a></div> -->
     <div class="gift">
       <label>User feedback - bugs and ideas</label>
-      <button class="btn btn-go" id="fbLoad" style="margin-top:8px">Load feedback' + <div style=\"margin-top:24px\"><h3 style=\"color:#f5b942;margin:0 0 10px;font-size:1rem\">User Comments</h3><button id=\"loadComments\" class=\"btn btn-go\" style=\"margin-bottom:10px\">Load pending comments</button><div id=\"cmtAdminMsg\" class=\"msg\"></div><div id=\"cmtList\" style=\"display:flex;flex-direction:column;gap:8px;margin-top:8px\"></div></div><script>$(\"loadComments\").onclick=async()=>{const m=$(\"cmtAdminMsg\");m.className=\"msg\";m.innerHTML=\"<span class=spin></span>\";try{const r=await api(\"/comments-all\");const list=$(\"cmtList\");list.innerHTML=\"\";if(!r.comments||!r.comments.length){m.textContent=\"No pending.\";return;}m.textContent=\"\";r.comments.filter(c=>c.status===\"pending\").forEach(c=>{const d=document.createElement(\"div\");d.style=\"background:rgba(255,255,255,.04);border-radius:10px;padding:12px 14px\";d.innerHTML=\"<strong style=color:#f5b942>\"+c.name+\"</strong><p style=color:#94a3b8;margin:4px 0 8px;font-size:.87rem>\"+c.comment+\"</p><button onclick=acceptCmt(\\\"\"+c.id+\"\\\") style=margin-right:8px;padding:6px 14px;border:none;border-radius:8px;background:#f5b942;color:#0f172a;font-weight:700;cursor:pointer>Accept</button><button onclick=rejectCmt(\\\"\"+c.id+\"\\\") style=padding:6px 14px;border:none;border-radius:8px;background:rgba(255,255,255,.08);color:#cbd5e1;font-weight:600;cursor:pointer>Reject</button>\";list.appendChild(d);});}catch(e){m.textContent=\"Error.\";}};async function acceptCmt(id){await api(\"/comment/accept\",{id});$(\"loadComments\").click();}async function rejectCmt(id){await api(\"/comment/reject\",{id});$(\"loadComments\").click();}<\/script> + '</button>
+      <button class="btn btn-go" id="fbLoad" style="margin-top:8px">Load feedback</button>
       <div class="msg" id="fbAdminMsg"></div>
       <div id="fbList" style="margin-top:10px;display:flex;flex-direction:column;gap:8px"></div>
     </div>
+
+    <!-- ===== COMMENTS MODERATION ===== -->
+    <div class="gift">
+      <label>User comments — moderation</label>
+      <button class="btn btn-go" id="loadComments" style="margin-top:8px">Load pending comments</button>
+      <div class="msg" id="cmtAdminMsg"></div>
+      <div id="cmtList" style="display:flex;flex-direction:column;gap:8px;margin-top:8px"></div>
     <div class="foot"><a href="#" id="logout">Log out</a></div>
   </div>
 
-  <div class="foot"><a href="https://aplusz.app">? aplusz.app</a></div>
+  <div class="foot"><a href="https://aplusz.app">← aplusz.app</a></div>
 </div>
 
 <script>
@@ -773,15 +779,15 @@ function render(s){
   cur = s;
   const paused = s.paused;
   $('dot').className = 'dot ' + (paused ? 'paused' : 'live');
-  $('stateLbl').textContent = paused ? 'PAUSED � free for everyone' : 'LIVE � billing active';
+  $('stateLbl').textContent = paused ? 'PAUSED — free for everyone' : 'LIVE — billing active';
   $('stateSub').textContent = paused
     ? (s.auto ? 'Auto-paused: revenue cap reached' : 'Manually paused by you')
     : 'Subscriptions charging normally';
-  $('revTxt').textContent = '�' + s.revenue.toLocaleString() + ' / �' + s.cap.toLocaleString();
+  $('revTxt').textContent = '€' + s.revenue.toLocaleString() + ' / €' + s.cap.toLocaleString();
   $('revBar').style.width = Math.min(100,(s.revenue/s.cap)*100) + '%';
   const t = $('toggle');
-  if(paused){ t.textContent='Resume � start billing again'; t.className='btn btn-resume'; }
-  else { t.textContent='Pause everything � free for all'; t.className='btn btn-pause'; }
+  if(paused){ t.textContent='Resume — start billing again'; t.className='btn btn-resume'; }
+  else { t.textContent='Pause everything — free for all'; t.className='btn btn-pause'; }
   t.disabled = paused && s.auto && !s.manual;
   if(t.disabled){ t.textContent='Auto-paused until 1 January'; t.style.opacity=.6; }
   else t.style.opacity=1;
@@ -832,14 +838,14 @@ $('giftGo').onclick = async () => {
   const m = $('giftMsg'); m.className='msg'; m.innerHTML='<span class="spin"></span>';
   try {
     const r = await api('/admin/gift', { days: days });
-    m.className='msg ok'; m.textContent = 'Code created � valid ' + r.days + ' days � single device.';
+    m.className='msg ok'; m.textContent = 'Code created · valid ' + r.days + ' days · single device.';
     $('giftUrl').value = r.url;
     $('giftOut').classList.remove('hide');
   } catch { m.className='msg err'; m.textContent='Could not create code. Try again.'; }
 };
 $('giftCopy').onclick = () => {
   const i = $('giftUrl'); i.select(); i.setSelectionRange(0,99999);
-  try { navigator.clipboard.writeText(i.value); $('giftCopy').textContent='Copied ?';
+  try { navigator.clipboard.writeText(i.value); $('giftCopy').textContent='Copied ✓';
         setTimeout(()=>$('giftCopy').textContent='Copy link',1500); }
   catch { document.execCommand('copy'); }
 };
@@ -868,6 +874,31 @@ $('fbLoad').onclick = async () => {
       list.appendChild(d);
     });
   } catch { m.className='msg err'; m.textContent='Could not load feedback.'; }
+};
+/* ===== COMMENTS MODERATION ===== */
+$('loadComments').onclick = async () => {
+  const m = $('cmtAdminMsg'); m.className='msg'; m.innerHTML='<span class="spin"></span>';
+  try {
+    const r = await api('/comments-all');
+    const list = $('cmtList'); list.innerHTML='';
+    const pending = (r.comments||[]).filter(c=>c.status==='pending');
+    if(!pending.length){ m.textContent='No pending comments.'; return; }
+    m.textContent='';
+    pending.forEach(c=>{
+      const d = document.createElement('div');
+      d.style.cssText='background:rgba(255,255,255,.04);border-radius:10px;padding:12px 14px';
+      d.innerHTML='<strong style="color:#f5b942">'+c.name+'</strong>'
+        +'<p style="color:#94a3b8;margin:4px 0 8px;font-size:.87rem">'+c.comment+'</p>'
+        +'<button data-id="'+c.id+'" data-action="accept" style="margin-right:8px;padding:6px 14px;border:none;border-radius:8px;background:#f5b942;color:#0f172a;font-weight:700;cursor:pointer">Accept</button>'
+        +'<button data-id="'+c.id+'" data-action="reject" style="padding:6px 14px;border:none;border-radius:8px;background:rgba(255,255,255,.08);color:#cbd5e1;font-weight:600;cursor:pointer">Reject</button>';
+      d.querySelectorAll('button').forEach(btn=>btn.onclick=async()=>{
+        const action = btn.getAttribute('data-action');
+        await api('/comment/'+action,{id:btn.getAttribute('data-id')});
+        d.remove();
+      });
+      list.appendChild(d);
+    });
+  } catch(e){ m.className='msg err'; m.textContent='Error loading comments.'; }
 };
 </script>
 </body></html>`;

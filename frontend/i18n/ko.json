@@ -294,6 +294,7 @@
     "roulette_loss": "이번엔 아니에요 — 계속해보세요.",
     "roulette_maxed": "오늘 시도를 모두 사용했습니다. 내일 다시 오세요!",
     "copied": "복사됨!",
-    "btn_float": "선물"
+    "btn_float": "선물",
+    "spins_left": "오늘 남은 횟수: {n}"
   }
 }

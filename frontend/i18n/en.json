@@ -294,6 +294,7 @@
     "roulette_loss": "Not this time — keep going.",
     "roulette_maxed": "You've had your tries for today. Come back tomorrow!",
     "copied": "Copied!",
-    "btn_float": "Gift"
+    "btn_float": "Gift",
+    "spins_left": "Spins left today: {n}"
   }
 }
