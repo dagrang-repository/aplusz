@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    APlusZ — App Logic (Step 8/9/14/16/17 wired)
    File: frontend/assets/app.js
    Save: D:\Destop\AplusZ\frontend\assets\app.js
@@ -9,10 +9,10 @@
 
   var THEME_CYCLE = ['dark-glass', 'light-expressive', 'sepia-reader', 'sepia-night'];
 
-  document.getElementById('year').textContent = new Date().getFullYear();
+  var _y = document.getElementById('year'); if (_y) _y.textContent = new Date().getFullYear();
 
   /* ---------- Theme cycle ---------- */
-  document.getElementById('theme-toggle').addEventListener('click', function () {
+  var _tt = document.getElementById('theme-toggle'); if (_tt) _tt.addEventListener('click', function () {
     var current = window.APlusZ.detect.theme;
     var idx = THEME_CYCLE.indexOf(current);
     var next = THEME_CYCLE[(idx + 1) % THEME_CYCLE.length];
@@ -92,12 +92,12 @@
   })();
 
   /* ---------- Menu = open profile drawer ---------- */
-  document.getElementById('menu-btn').addEventListener('click', function () {
+  var _mb = document.getElementById('menu-btn'); if (_mb) _mb.addEventListener('click', function () {
     if (window.APlusZ.profile) window.APlusZ.profile.open();
   });
 
   /* ---------- Swap (values + bound codes) ---------- */
-  document.getElementById('swap').addEventListener('click', function () {
+  var _sw = document.getElementById('swap'); if (_sw) _sw.addEventListener('click', function () {
     var o = document.getElementById('origin');
     var d = document.getElementById('destination');
     var tv = o.value; o.value = d.value; d.value = tv;
@@ -151,7 +151,7 @@
       });
   }
 
-  document.getElementById('search-btn').addEventListener('click', runSearch);
+  var _sb = document.getElementById('search-btn'); if (_sb) _sb.addEventListener('click', runSearch);
 
   /* Enter searches only once both cities are picked (lets autocomplete bind first) */
   ['origin', 'destination'].forEach(function (id) {
