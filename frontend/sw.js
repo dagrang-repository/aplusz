@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    APlusZ — Service Worker (Step 7 · fast + auto-fresh)
    File: frontend/sw.js
    Save: D:\Destop\AplusZ\frontend\sw.js
@@ -130,6 +130,20 @@ function networkFirstNav(req) {
   });
 }
 
+/* network-first for code (CSS/JS): always fresh; cache only as offline fallback.
+   Prevents a broken/old cached script from persisting after a deploy. */
+function networkFirstCode(req, cacheName) {
+  return fetch(req).then(function (resp) {
+    if (resp && resp.ok && (resp.type === 'basic' || resp.type === 'cors')) {
+      var copy = resp.clone();
+      caches.open(cacheName).then(function (c) { c.put(req, copy); });
+    }
+    return resp;
+  }).catch(function () {
+    return caches.open(cacheName).then(function (c) { return c.match(req); });
+  });
+}
+
 /* ---------- FETCH ---------- */
 self.addEventListener('fetch', function (event) {
   var req = event.request;
@@ -154,7 +168,7 @@ self.addEventListener('fetch', function (event) {
   if (isImmutable(url)) { event.respondWith(cacheFirst(req, STATIC_CACHE)); return; }
 
   // 4. Code (CSS/JS/etc, same-origin) -> stale-while-revalidate
-  event.respondWith(staleWhileRevalidate(req, STATIC_CACHE));
+  event.respondWith(networkFirstCode(req, STATIC_CACHE));
 });
 
 /* ---------- MESSAGE (manual update trigger) ---------- */
