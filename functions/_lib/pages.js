@@ -72,8 +72,8 @@ const CONTENT = {
     fbBug: 'Bug', fbIdea: 'Idea', fbPlaceholder: 'Describe the bug or your idea…',
     fbEmailLabel: 'Your email (optional)', fbEmailPlaceholder: 'you@example.com',
     fbSend: 'Send', fbSending: 'Sending…', fbOk: 'Thank you — your feedback was sent.',
-    fbErr: 'Could not send. Please try again.', fbEmpty: 'Please write a short message first.'
-    webTitle: 'Web Design - AplusZ.app', webDesc: 'Professional website built in 7 days. Custom design, mobile-ready, SEO-optimized, hosting setup. EUR299 one-time.', webH1: 'Web Design',,
+    fbErr: 'Could not send. Please try again.', fbEmpty: 'Please write a short message first.',
+    webTitle: 'Web Design - AplusZ.app', webDesc: 'Professional website built in 7 days. Custom design, mobile-ready, SEO-optimized, hosting setup. EUR299 one-time.', webH1: 'Web Design',
   },
 };
 
