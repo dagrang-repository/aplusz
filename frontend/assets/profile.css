@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    APlusZ — Profile Drawer (centered "B" layout, compact)
    File: frontend/assets/profile.css
    Save: D:\Destop\AplusZ\frontend\assets\profile.css
@@ -29,7 +29,7 @@
 
 /* ---- header: title centered; X centered in the right-side gap ---- */
 .pd-header {
-  display: flex; align-items: center;
+  position: relative; display: flex; align-items: center;
   padding: var(--sp-3) var(--sp-4);
   background: var(--bg-glass);
   backdrop-filter: blur(var(--glass-blur)) saturate(var(--glass-saturate));
@@ -44,7 +44,7 @@
   font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em;
   pointer-events: none;
 }
-.pd-close-wrap { flex: 1; display: flex; justify-content: center; }  /* right half, X centered */
+.pd-close-wrap { flex: 1; display: flex; justify-content: center; padding-right: 20px; }  /* right half, X centered */
 .pd-close {
   position: relative; z-index: 1;
   width: 40px; height: 40px;

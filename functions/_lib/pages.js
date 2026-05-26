@@ -37,7 +37,7 @@ const nav = l => NAV[l] || NAV.en;
 function footer(lang) {
   const L = `/${lang}`; const n = nav(lang);
   return `<footer class="rg-foot">
-<a href="${L}/faq">${esc(n[0])}</a> · <a href="${L}/about">${esc(n[1])}</a> · <a href="${L}/feedback">${esc(n[2])}</a> · <a href="${CONFIG.SITE}/legal/">${esc(n[3])}</a> · <a href="${CONFIG.SITE}/disclosure/">${esc(n[4])}</a> · <a href="${L}/web">${esc(n[5])}</a>
+<a href="${L}/faq">${esc(n[0])}</a> · <a href="${L}/about">${esc(n[1])}</a> · <a href="${L}/feedback">${esc(n[2])}</a> · <a href="${CONFIG.SITE}/legal/">${esc(n[3])}</a> · <a href="${CONFIG.SITE}/disclosure/">${esc(n[4])}</a> · <a href="/web">${esc(n[5])}</a>
 <div class="rg-foot-c">© <span>${new Date().getUTCFullYear()}</span> <a href="${CONFIG.SITE}/">AplusZ (A+Z).app</a></div>
 </footer>`;
 }
