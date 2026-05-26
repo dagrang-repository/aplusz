@@ -231,114 +231,7 @@ export default {
       if (url.pathname === '/checkout' && req.method === 'POST') {
         const { email, tier } = await req.json();
         const e = normEmail(email);
-        if (!validEmail(e)) 
-  /* -- Item C: Comments -- */
-  if (method === 'POST' && path === '/comment') {
-    try {
-      const body = await req.json();
-      const name = (body.name || '').slice(0, 60).trim();
-      const comment = (body.comment || '').slice(0, 400).trim();
-      if (!name || !comment) 
-  /* -- Item B: Web Design landing page -- */
-  if (method === 'POST' && path === '/web-verify') {
-    try {
-      const body = await req.json();
-      const email = (body.email || '').toLowerCase().trim();
-      if (!email) return json({ ok: false, error: 'missing email' });
-      let paid = await env.KV.get('paid_web:' + email);
-      if (!paid && env.STRIPE_WEB_KEY) {
-        try {
-          const sr = await fetch('https://api.stripe.com/v1/checkout/sessions?limit=20', { headers: { 'Authorization': 'Bearer ' + env.STRIPE_WEB_KEY } });
-          const sd = await sr.json();
-          if (sd.data && sd.data.some(function (s) { return s.payment_status === 'paid' && (((s.customer_details && s.customer_details.email) || s.customer_email || '').toLowerCase().trim() === email); })) {
-            paid = '1';
-            await env.KV.put('paid_web:' + email, '1', { expirationTtl: 2592000 });
-          }
-        } catch (e) {}
-      }
-      return json({ ok: !!paid });
-    } catch (e) { return json({ ok: false }); }
-  }
-
-  if (method === 'POST' && path === '/web-brief') {
-    try {
-      const body = await req.json();
-      const email = (body.email || '').toLowerCase().trim();
-      if (!email) return json({ error: 'missing email' }, 400);
-      const paid = await env.KV.get('paid_web:' + email);
-      if (!paid) return json({ error: 'not paid' }, 403);
-      const id = 'WEB-' + Date.now().toString(36).toUpperCase();
-      await env.KV.put('brief:' + email, JSON.stringify({ ...body, id, ts: Date.now() }));
-      return json({ ok: true, id });
-    } catch (e) { return json({ error: 'invalid' }, 400); }
-  }
-
-return json({ error: 'missing fields' }, 400);
-      const id = Date.now() + '-' + Math.random().toString(36).slice(2, 7);
-      await env.KV.put('comment:' + id, JSON.stringify({ id, name, comment, status: 'pending', ts: Date.now() }));
-      return json({ ok: true });
-    } catch (e) { return json({ error: 'invalid' }, 400); }
-  }
-
-  if (method === 'GET' && path === '/comments') {
-    const list = await env.KV.list({ prefix: 'comment:' });
-    const approved = [];
-    for (const k of list.keys) {
-      const v = await env.KV.get(k.name, 'json');
-      if (v && v.status === 'approved') approved.push(v);
-    }
-    approved.sort(function(a, b) { return b.ts - a.ts; });
-    return json({ comments: approved });
-  }
-
-  if (method === 'POST' && path === '/press') {
-    try {
-      const body = await req.json();
-      const name = (body.name || '').slice(0, 80).trim();
-      const email = (body.email || '').slice(0, 120).trim();
-      const message = (body.message || '').slice(0, 600).trim();
-      const id = Date.now() + '-' + Math.random().toString(36).slice(2, 7);
-      await env.KV.put('press:' + id, JSON.stringify({ id, name, email, message, ts: Date.now() }));
-      return json({ ok: true });
-    } catch (e) { return json({ error: 'invalid' }, 400); }
-  }
-
-  if (method === 'POST' && path === '/comment/accept') {
-    if (!validAdminCookie(req, env)) return json({ error: 'unauthorized' }, 401);
-    try {
-      const { id } = await req.json();
-      const key = 'comment:' + id;
-      const v = await env.KV.get(key, 'json');
-      if (!v) return json({ error: 'not found' }, 404);
-      v.status = 'approved';
-      await env.KV.put(key, JSON.stringify(v));
-      return json({ ok: true });
-    } catch (e) { return json({ error: 'invalid' }, 400); }
-  }
-
-  if (method === 'POST' && path === '/comment/reject') {
-    if (!validAdminCookie(req, env)) return json({ error: 'unauthorized' }, 401);
-    try {
-      const { id } = await req.json();
-      await env.KV.delete('comment:' + id);
-      return json({ ok: true });
-    } catch (e) { return json({ error: 'invalid' }, 400); }
-  }
-
-
-  if (method === 'GET' && path === '/comments-all') {
-    if (!validAdminCookie(req, env)) return json({ error: 'unauthorized' }, 401);
-    const list = await env.KV.list({ prefix: 'comment:' });
-    const all = [];
-    for (const k of list.keys) {
-      const v = await env.KV.get(k.name, 'json');
-      if (v) all.push(v);
-    }
-    all.sort(function(a, b) { return b.ts - a.ts; });
-    return json({ comments: all });
-  }
-
-return json({ error: 'invalid_email' }, 400, origin);
+        if (!validEmail(e)) return json({ error: 'invalid_email' }, 400, origin);
         if (tier !== 'pro' && tier !== 'proplus') return json({ error: 'bad_tier' }, 400, origin);
 
         if (await capOn(env)) return json({ capOn: true }, 200, origin);
@@ -415,6 +308,103 @@ return json({ error: 'invalid_email' }, 400, origin);
         const p = await readToken(env, token);
         if (!p) return json({ tier: 'free', valid: false }, 200, origin);
         return json({ tier: p.t, valid: true, email: p.e }, 200, origin);
+      }
+
+      /* ---- Item C: comments (public submit, moderated) ---- */
+      if (url.pathname === '/comment' && req.method === 'POST') {
+        try {
+          const body = await req.json();
+          const name = (body.name || '').slice(0, 60).trim();
+          const comment = (body.comment || '').slice(0, 400).trim();
+          if (!name || !comment) return json({ error: 'missing fields' }, 400, origin);
+          const id = Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+          await env.KV.put('comment:' + id, JSON.stringify({ id, name, comment, status: 'pending', ts: Date.now() }));
+          return json({ ok: true }, 200, origin);
+        } catch (e) { return json({ error: 'invalid' }, 400, origin); }
+      }
+      if (url.pathname === '/comments' && req.method === 'GET') {
+        const list = await env.KV.list({ prefix: 'comment:' });
+        const approved = [];
+        for (const k of list.keys) {
+          const v = await env.KV.get(k.name, 'json');
+          if (v && v.status === 'approved') approved.push(v);
+        }
+        approved.sort(function (a, b) { return b.ts - a.ts; });
+        return json({ comments: approved }, 200, origin);
+      }
+      if (url.pathname === '/press' && req.method === 'POST') {
+        try {
+          const body = await req.json();
+          const name = (body.name || '').slice(0, 80).trim();
+          const email = (body.email || '').slice(0, 120).trim();
+          const message = (body.message || '').slice(0, 600).trim();
+          const id = Date.now() + '-' + Math.random().toString(36).slice(2, 7);
+          await env.KV.put('press:' + id, JSON.stringify({ id, name, email, message, ts: Date.now() }));
+          return json({ ok: true }, 200, origin);
+        } catch (e) { return json({ error: 'invalid' }, 400, origin); }
+      }
+      if (url.pathname === '/comment/accept' && req.method === 'POST') {
+        if (!validAdminCookie(req, env)) return json({ error: 'unauthorized' }, 401, origin);
+        try {
+          const { id } = await req.json();
+          const key = 'comment:' + id;
+          const v = await env.KV.get(key, 'json');
+          if (!v) return json({ error: 'not found' }, 404, origin);
+          v.status = 'approved';
+          await env.KV.put(key, JSON.stringify(v));
+          return json({ ok: true }, 200, origin);
+        } catch (e) { return json({ error: 'invalid' }, 400, origin); }
+      }
+      if (url.pathname === '/comment/reject' && req.method === 'POST') {
+        if (!validAdminCookie(req, env)) return json({ error: 'unauthorized' }, 401, origin);
+        try {
+          const { id } = await req.json();
+          await env.KV.delete('comment:' + id);
+          return json({ ok: true }, 200, origin);
+        } catch (e) { return json({ error: 'invalid' }, 400, origin); }
+      }
+      if (url.pathname === '/comments-all' && req.method === 'GET') {
+        if (!validAdminCookie(req, env)) return json({ error: 'unauthorized' }, 401, origin);
+        const list = await env.KV.list({ prefix: 'comment:' });
+        const all = [];
+        for (const k of list.keys) {
+          const v = await env.KV.get(k.name, 'json');
+          if (v) all.push(v);
+        }
+        all.sort(function (a, b) { return b.ts - a.ts; });
+        return json({ comments: all }, 200, origin);
+      }
+      /* ---- Item B: web-design landing pay-gate ---- */
+      if (url.pathname === '/web-verify' && req.method === 'POST') {
+        try {
+          const body = await req.json();
+          const email = (body.email || '').toLowerCase().trim();
+          if (!email) return json({ ok: false, error: 'missing email' }, 400, origin);
+          let paid = await env.KV.get('paid_web:' + email);
+          if (!paid && env.STRIPE_WEB_KEY) {
+            try {
+              const sr = await fetch('https://api.stripe.com/v1/checkout/sessions?limit=20', { headers: { 'Authorization': 'Bearer ' + env.STRIPE_WEB_KEY } });
+              const sd = await sr.json();
+              if (sd.data && sd.data.some(function (s) { return s.payment_status === 'paid' && (((s.customer_details && s.customer_details.email) || s.customer_email || '').toLowerCase().trim() === email); })) {
+                paid = '1';
+                await env.KV.put('paid_web:' + email, '1', { expirationTtl: 2592000 });
+              }
+            } catch (e) {}
+          }
+          return json({ ok: !!paid }, 200, origin);
+        } catch (e) { return json({ ok: false }, 200, origin); }
+      }
+      if (url.pathname === '/web-brief' && req.method === 'POST') {
+        try {
+          const body = await req.json();
+          const email = (body.email || '').toLowerCase().trim();
+          if (!email) return json({ error: 'missing email' }, 400, origin);
+          const paid = await env.KV.get('paid_web:' + email);
+          if (!paid) return json({ error: 'not paid' }, 403, origin);
+          const id = 'WEB-' + Date.now().toString(36).toUpperCase();
+          await env.KV.put('brief:' + email, JSON.stringify({ ...body, id, ts: Date.now() }));
+          return json({ ok: true, id }, 200, origin);
+        } catch (e) { return json({ error: 'invalid' }, 400, origin); }
       }
 
       /* ---- public feedback: bug report / feature idea (no auth, text only) ---- */
