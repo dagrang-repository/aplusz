@@ -111,6 +111,19 @@
   <span>© <span id="year"></span> <a class="footer-brand" id="footer-home" href="/" aria-label="AplusZ home"><span class="bn-az">A</span><span class="bn-plus">plus</span><span class="bn-az">Z</span> <span class="footer-mark">(A+Z).app</span></a></span>
 </footer>
 <script>
+  // footer-lang-rewrite: point FAQ/About/Feedback to the active language
+  (function(){
+    try{
+      var lang=(localStorage.getItem('aplusz-lang')||navigator.language||'en').slice(0,2).toLowerCase();
+      var ok=['ar','bn','de','en','es','fa','fr','hi','id','it','ja','ko','nl','pl','pt','ru','th','tr','vi','zh'];
+      if(ok.indexOf(lang)<0)lang='en';
+      [['nav.faq','faq'],['nav.about','about'],['nav.feedback','feedback']].forEach(function(p){
+        var a=document.querySelector('.footer a[data-i18n="'+p[0]+'"]');
+        if(a)a.setAttribute('href',lang+'/'+p[1]);
+      });
+    }catch(e){}
+  })();
+
   // Disclosure link label: French → "Divulgation", all else → "Disclosure"
   (function(){
     try{

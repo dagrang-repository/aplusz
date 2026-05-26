@@ -141,5 +141,6 @@
   function goHome(e){var p=location.pathname.replace(/\/+$/,'');if(p===''||p==='/index.html'||p==='/index'){if(e)e.preventDefault();location.reload();}}
   if(bh)bh.addEventListener('click',goHome);if(fh)fh.addEventListener('click',goHome);
 })();
-</script></body>
+</script><script>/* footer-lang-rewrite */(function(){try{var _fl=(localStorage.getItem('aplusz-lang')||navigator.language||'en').slice(0,2).toLowerCase();var _ok=['ar','bn','de','en','es','fa','fr','hi','id','it','ja','ko','nl','pl','pt','ru','th','tr','vi','zh'];if(_ok.indexOf(_fl)<0)_fl='en';[['nav.faq','faq'],['nav.about','about'],['nav.feedback','feedback']].forEach(function(p){var _a=document.querySelector('.footer a[data-i18n="'+p[0]+'"]');if(_a)_a.setAttribute('href','/'+_fl+'/'+p[1]);});}catch(e){}})();</script>
+</body>
 </html>
