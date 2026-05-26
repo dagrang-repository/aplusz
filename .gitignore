@@ -50,3 +50,6 @@ logs/
 .env
 *.bak 
 *.bak2 
+*.bak* 
+functions/[lang]/ 
+if 
