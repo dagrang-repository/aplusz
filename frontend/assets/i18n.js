@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    APlusZ — i18n Loader
    File: frontend/assets/i18n.js
    Save: D:\Destop\AplusZ\frontend\assets\i18n.js
@@ -82,6 +82,11 @@
     nodes.forEach(function (el) {
       var val = getNested(dict, el.getAttribute('data-i18n'));
       if (val != null) el.textContent = val;
+    });
+    var htmlNodes = document.querySelectorAll('[data-i18n-html]');
+    htmlNodes.forEach(function (el) {
+      var val = getNested(dict, el.getAttribute('data-i18n-html'));
+      if (val != null) el.innerHTML = val;
     });
     var attrNodes = document.querySelectorAll('[data-i18n-attr]');
     attrNodes.forEach(function (el) {
