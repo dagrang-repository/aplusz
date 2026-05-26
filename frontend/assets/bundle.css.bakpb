@@ -1,8 +1,8 @@
-/* APlusZ bundle.css */
+ï»¿/* APlusZ bundle.css */
 
 /* ==================== tokens.css ==================== */
 /* ============================================================
-   APlusZ — Design Tokens (Step 4)
+   APlusZ â€” Design Tokens (Step 4)
    File: frontend/assets/tokens.css
    Save: D:\Destop\AplusZ\frontend\assets\tokens.css
    ============================================================ */
@@ -33,7 +33,7 @@
   --sp-12: 3rem;
   --sp-16: 4rem;
 
-  /* Radius (M3 Expressive — varied corners) */
+  /* Radius (M3 Expressive â€” varied corners) */
   --r-xs: 6px;
   --r-sm: 10px;
   --r-md: 16px;
@@ -60,7 +60,7 @@
 }
 
 /* ============================================================
-   ?? THEME 1 — DARK GLASS (iOS Liquid Glass style, default)
+   ðŸŒ‘ THEME 1 â€” DARK GLASS (iOS Liquid Glass style, default)
    ============================================================ */
 :root,
 [data-theme="dark-glass"] {
@@ -90,7 +90,7 @@
 }
 
 /* ============================================================
-   ?? THEME 2 — LIGHT EXPRESSIVE (Android M3 Expressive style)
+   ðŸŒ• THEME 2 â€” LIGHT EXPRESSIVE (Android M3 Expressive style)
    ============================================================ */
 [data-theme="light-expressive"] {
   --bg: #fafafa;
@@ -119,7 +119,7 @@
 }
 
 /* ============================================================
-   ?? THEME 3 — SEPIA READER (eBook warm, daytime)
+   ðŸ“– THEME 3 â€” SEPIA READER (eBook warm, daytime)
    ============================================================ */
 [data-theme="sepia-reader"] {
   --bg: #f4ecd8;
@@ -148,7 +148,7 @@
 }
 
 /* ============================================================
-   ?? THEME 4 — SEPIA NIGHT (warm dark, night reading)
+   ðŸŒ™ THEME 4 â€” SEPIA NIGHT (warm dark, night reading)
    ============================================================ */
 [data-theme="sepia-night"] {
   --bg: #1f1a14;
@@ -216,7 +216,7 @@
 
 /* ==================== app.css ==================== */
 /* ============================================================
-   APlusZ — App Styles (mobile + desktop responsive)
+   APlusZ â€” App Styles (mobile + desktop responsive)
    File: frontend/assets/app.css
    Save: D:\Destop\AplusZ\frontend\assets\app.css
    ============================================================ */
@@ -266,7 +266,7 @@ a:hover { text-decoration: underline; }
 
 /* Topbar must never let its two halves collide. The brand (left) may
    shrink/ellipsize; the nav (right) keeps its size. Guarantees spacing
-   between the badge and the icons at EVERY width, not just =360px. */
+   between the badge and the icons at EVERY width, not just â‰¤360px. */
 .brand { min-width: 0; flex-shrink: 1; overflow: hidden; }
 .brand-name { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; }
 .icon-btn {
@@ -389,7 +389,7 @@ a:hover { text-decoration: underline; }
 .swap-btn {
   /* Mobile: sits in normal flow ON the seam between the two stacked
      fields (negative margins tuck it into the gaps so it floats over
-     the divider, horizontally centered — never covers field text). */
+     the divider, horizontally centered â€” never covers field text). */
   position: static;
   align-self: center;
   margin: calc(-1 * var(--sp-2) - 4px) 0;
@@ -445,7 +445,7 @@ a:hover { text-decoration: underline; }
 /* ---------- FOOTER ---------- */
 /* MOBILE: explicit 2 rows.
    Row 1 = "How it works" (centered, full width).
-   Row 2 = Legal + © (centered, side by side). */
+   Row 2 = Legal + Â© (centered, side by side). */
 .footer {
   text-align: center;
   padding: clamp(var(--sp-6), 6vw, var(--sp-12)) var(--sp-3);
@@ -460,7 +460,7 @@ a:hover { text-decoration: underline; }
 /* the injected separators add nothing in the 2-row layout */
 .footer .footer-sep { display: none; }
 
-/* "How it works" ? own full-width top row */
+/* "How it works" â†’ own full-width top row */
 .footer .hiw-link {
   order: -1;
   flex: 0 0 100%;
@@ -468,12 +468,12 @@ a:hover { text-decoration: underline; }
   text-align: center;
   margin-bottom: var(--sp-2);
 }
-/* Legal + © ? share the bottom row, centered */
+/* Legal + Â© â†’ share the bottom row, centered */
 .footer > a[href*="legal"],
 .footer > span { order: 0; }
 
 /* ============================================================
-   TABLET (=720px)
+   TABLET (â‰¥720px)
    ============================================================ */
 @media (min-width: 720px) {
   .topbar { padding: var(--sp-4) var(--sp-8); }
@@ -550,7 +550,7 @@ a:hover { text-decoration: underline; }
 }
 
 /* ============================================================
-   DESKTOP (=1100px)
+   DESKTOP (â‰¥1100px)
    ============================================================ */
 @media (min-width: 1100px) {
   .hero {
@@ -570,7 +570,7 @@ a:hover { text-decoration: underline; }
 }
 
 /* ============================================================
-   ULTRA-WIDE (=1600px)
+   ULTRA-WIDE (â‰¥1600px)
    ============================================================ */
 @media (min-width: 1600px) {
   .hero { max-width: 1440px; }
@@ -578,7 +578,7 @@ a:hover { text-decoration: underline; }
 }
 
 /* ============================================================
-   TRUST HERO LINE — the precious "Free forever" promise
+   TRUST HERO LINE â€” the precious "Free forever" promise
    ============================================================ */
 .trust-hero {
   display: inline-block;
@@ -596,9 +596,9 @@ a:hover { text-decoration: underline; }
 }
 
 /* ============================================================
-   BRAND NAME — A + plus + Z (theme-aware 2-color spelling)
+   BRAND NAME â€” A + plus + Z (theme-aware 2-color spelling)
    "A" and "Z" share the accent tone
-   "plus" sits in muted tone — quieter middle
+   "plus" sits in muted tone â€” quieter middle
    ============================================================ */
 .bn-az {
   color: var(--accent);
@@ -609,13 +609,13 @@ a:hover { text-decoration: underline; }
   font-weight: 500;
 }
 
-/* Hero sub variant — slightly bolder so brand still reads */
+/* Hero sub variant â€” slightly bolder so brand still reads */
 .hero-sub .bn-az,
 .hero-sub .bn-plus {
   font-weight: 600;
 }
 
-/* Footer mark — subtle */
+/* Footer mark â€” subtle */
 .footer-mark {
   color: var(--text-dim);
   font-size: 0.85em;
@@ -625,7 +625,7 @@ a:hover { text-decoration: underline; }
 /* Keep footer on one line on very narrow phones */
 @media (max-width: 480px) {
   /* Topnav holds 4 items (badge + 3 icons). Tighten + guarantee spacing so
-     they never overflow or overlap on phones (most are 390–430px wide). */
+     they never overflow or overlap on phones (most are 390â€“430px wide). */
   .topnav { gap: var(--sp-2); }
   .tier-badge { padding: 3px 8px; gap: 4px; }
   .tier-badge .tb-ic { font-size: 0.85rem; }
@@ -637,13 +637,13 @@ a:hover { text-decoration: underline; }
 @media (max-width: 360px) {
   .footer { font-size: var(--fs-xs); gap: var(--sp-2); }
   /* Narrowest phones: show the A+Z tile + ".app" only (hide the "AplusZ"
-     letters) so the nav always has room — reads "A+Z.app". */
+     letters) so the nav always has room â€” reads "A+Z.app". */
   .brand-name .bn-az, .brand-name .bn-plus { display: none; }
   .brand { gap: 2px; }
 }
 
 /* ============================================================
-   LIMIT BANNER — persistent "upgrade for more reminders"
+   LIMIT BANNER â€” persistent "upgrade for more reminders"
    Replaces the old auto-dismiss toast. Stays until tapped/closed.
    ============================================================ */
 .azb-limit {
@@ -685,8 +685,8 @@ a:hover { text-decoration: underline; }
 .azb-limit-x:hover { color: var(--text); }
 
 /* ============================================================
-   PRO+ CROWN GLOW — slow golden breathe on the ?? icon only.
-   Wrap any ?? in <span class="az-crown">??</span>; only the crown
+   PRO+ CROWN GLOW â€” slow golden breathe on the ðŸ‘‘ icon only.
+   Wrap any ðŸ‘‘ in <span class="az-crown">ðŸ‘‘</span>; only the crown
    glows, never surrounding text. Honors reduced-motion.
    ============================================================ */
 .az-crown {
@@ -705,7 +705,7 @@ a:hover { text-decoration: underline; }
 
 /* ==================== result.css ==================== */
 /* ============================================================
-   APlusZ — Result Card Styles (Step 9 + desktop adapt)
+   APlusZ â€” Result Card Styles (Step 9 + desktop adapt)
    File: frontend/assets/result.css
    Save: D:\Destop\AplusZ\frontend\assets\result.css
    ============================================================ */
@@ -870,14 +870,14 @@ a:hover { text-decoration: underline; }
   font-size: var(--fs-sm);
 }
 
-/* ---------- MOBILE (=420px) ---------- */
+/* ---------- MOBILE (â‰¤420px) ---------- */
 @media (max-width: 420px) {
   .dates { grid-template-columns: 1fr; }
   .cal-row { grid-template-columns: 1fr; }
   .price-value { font-size: var(--fs-2xl); }
 }
 
-/* ---------- DESKTOP (=720px) ---------- */
+/* ---------- DESKTOP (â‰¥720px) ---------- */
 @media (min-width: 720px) {
   .result-card {
     padding: var(--sp-8);
@@ -889,7 +889,7 @@ a:hover { text-decoration: underline; }
   .cal-row { gap: var(--sp-3); }
 }
 
-/* All-time-low banner (Step 19B) — shows only on a fresh record */
+/* All-time-low banner (Step 19B) â€” shows only on a fresh record */
 .alltime-low {
   display: inline-flex;
   align-items: center;
@@ -908,7 +908,7 @@ a:hover { text-decoration: underline; }
 
 /* ==================== affiliates.css ==================== */
 /* ============================================================
-   APlusZ — Affiliate Fan-out Styles (append to result.css)
+   APlusZ â€” Affiliate Fan-out Styles (append to result.css)
    File: frontend/assets/affiliates.css
    Save: D:\Destop\AplusZ\frontend\assets\affiliates.css
    ============================================================ */
@@ -941,14 +941,14 @@ a:hover { text-decoration: underline; }
   text-decoration: none;
 }
 .also-check a:not(:last-child)::after {
-  content: " ·";
+  content: " Â·";
   color: var(--text-dim);
   margin-left: var(--sp-2);
 }
 
 /* ==================== install.css ==================== */
 /* ============================================================
-   APlusZ — Install Banner Styles
+   APlusZ â€” Install Banner Styles
    File: frontend/assets/install.css
    Save: D:\Destop\AplusZ\frontend\assets\install.css
    ============================================================ */
@@ -1053,7 +1053,7 @@ a:hover { text-decoration: underline; }
 
 /* ==================== referral.css ==================== */
 /* ============================================================
-   APlusZ — Referral / Share Styles
+   APlusZ â€” Referral / Share Styles
    File: frontend/assets/referral.css
    Save: D:\Destop\AplusZ\frontend\assets\referral.css
    ============================================================ */
@@ -1154,7 +1154,7 @@ a:hover { text-decoration: underline; }
 
 /* ==================== profile.css ==================== */
 /* ============================================================
-   APlusZ — Profile Drawer (centered "B" layout, compact)
+   APlusZ â€” Profile Drawer (centered "B" layout, compact)
    File: frontend/assets/profile.css
    Save: D:\Destop\AplusZ\frontend\assets\profile.css
    ============================================================ */
@@ -1251,7 +1251,7 @@ a:hover { text-decoration: underline; }
 }
 .pd-alerts-intro { font-size: var(--fs-sm); color: var(--text-muted); line-height: 1.45; }
 
-/* ---- karma block (bar ? reward ? share ? karma) ---- */
+/* ---- karma block (bar â†’ reward â†’ share â†’ karma) ---- */
 .pd-karma { padding: 0 var(--sp-6) var(--sp-4); text-align: center; }
 
 .adopt-bar {
@@ -1358,7 +1358,7 @@ a:hover { text-decoration: underline; }
 
 /* ==================== plans.css ==================== */
 /* ============================================================
-   AplusZ — Plans (plain text, 3 columns, no boxes) + Footer
+   AplusZ â€” Plans (plain text, 3 columns, no boxes) + Footer
    File: frontend/assets/plans.css
    Save: D:\Destop\AplusZ\frontend\assets\plans.css
    ============================================================ */
@@ -1432,7 +1432,7 @@ a:hover { text-decoration: underline; }
 }
 
 /* ==================== howitworks.css ==================== */
-/* How it works — modal (no page leave). Colors hardcoded to neutral slate
+/* How it works â€” modal (no page leave). Colors hardcoded to neutral slate
    so site --card/--accent (blue) tokens can't override them. */
 
 .hiw-link{
@@ -1508,7 +1508,7 @@ a:hover { text-decoration: underline; }
 
 .hiw-foot{margin-top:18px;padding-top:14px;border-top:1px solid #1f2c41;font-size:.85rem;opacity:.6;line-height:1.45}
 
-/* RTL (Arabic, Persian): mirror text, but keep A?B route order intact */
+/* RTL (Arabic, Persian): mirror text, but keep Aâ†’B route order intact */
 #hiw-modal[dir=rtl]{text-align:right}
 #hiw-modal[dir=rtl] .hiw-route,
 #hiw-modal[dir=rtl] .hiw-demo-route{direction:ltr;justify-content:flex-end}
@@ -1521,7 +1521,7 @@ a:hover { text-decoration: underline; }
 
 /* ==================== langpicker.css ==================== */
 /* ============================================================
-   APlusZ — Language Picker
+   APlusZ â€” Language Picker
    File: frontend/assets/langpicker.css
    Save: D:\Destop\AplusZ\frontend\assets\langpicker.css
    ============================================================ */
@@ -1568,7 +1568,7 @@ html[dir="rtl"] .lang-opt { text-align: right; }
 
 /* ==================== autocomplete.css ==================== */
 /* ============================================================
-   APlusZ — Autocomplete styles
+   APlusZ â€” Autocomplete styles
    File: frontend/assets/autocomplete.css
    Save: D:\Destop\AplusZ\frontend\assets\autocomplete.css
    ============================================================ */
@@ -1628,7 +1628,7 @@ html[dir="rtl"] .ac-opt { flex-direction: row-reverse; }
   line-height: 1.5;
 }
 
-/* live-monitored rows: no background — color signals only */
+/* live-monitored rows: no background â€” color signals only */
 .ac-opt .ac-name { color: #000000; }            /* city name always black */
 .ac-opt.live .ac-code { color: #2563eb; }       /* live: clear dark blue code */
 .ac-opt:not(.live) .ac-code { color: #000000; } /* non-live: black code */
@@ -1647,13 +1647,13 @@ html[dir="rtl"] .ac-opt { flex-direction: row-reverse; }
 .search-card .field label { color: #475569 !important; }
 .search-card .field input::placeholder { color: #94a3b8 !important; }
 
-/* row zones: name (left) · Live Price (dead center) · code (right) */
+/* row zones: name (left) Â· Live Price (dead center) Â· code (right) */
 .ac-mid { flex: 1; text-align: center; }
 .ac-name { flex-shrink: 0; }
 
 /* ==================== alerts.css ==================== */
 /* ============================================================
-   APlusZ — Alerts UI (Step 19)
+   APlusZ â€” Alerts UI (Step 19)
    File: frontend/assets/alerts.css
    Save: D:\Destop\AplusZ\frontend\assets\alerts.css
    ============================================================ */
@@ -1942,4 +1942,4 @@ a.bb-link:hover{opacity:.75;text-decoration:underline}
 .reveal-hint.show{transform:translateY(0);}
 .reveal-hint:hover{background:#f5b942;}
 .reveal-hint-chev{display:inline-block;animation:revealBounce 1.4s ease-in-out infinite;}
-@keyframes revealBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}`nbody{padding-bottom:56px;}
+@keyframes revealBounce{0%,100%{transform:translateY(0);}50%{transform:translateY(-3px);}}

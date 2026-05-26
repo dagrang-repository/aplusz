@@ -191,40 +191,40 @@
 </script>
 
 <script>document.addEventListener('aplusz:tier',function(){var tr=(window.APlusZ&&APlusZ.billing&&APlusZ.billing.tier)?APlusZ.billing.tier():'free';document.querySelectorAll('.plans-strip .plan-col[data-plan]').forEach(function(c){var p=c.getAttribute('data-plan');var u=(tr==='free'&&(p==='pro'||p==='proplus'))||(tr==='pro'&&p==='proplus');if(!u)return;c.classList.add('upgradable');c.style.cursor='pointer';c.setAttribute('tabindex','0');c.setAttribute('role','button');c.addEventListener('click',function(){if(window.APlusZ&&APlusZ.billing)APlusZ.billing.buy(p);});c.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();if(window.APlusZ&&APlusZ.billing)APlusZ.billing.buy(p);}});});});/* plans-strip-buy */</script><link rel="stylesheet" href="assets/reveal.css">
-<button class="reveal-hint" id="reveal-hint" type="button" aria-label="More about AplusZ"><span class="reveal-hint-chev">&#8593;</span> <span data-i18n="reveal.hint">More about AplusZ.app</span></button>
+<button class="reveal-hint" id="reveal-hint" type="button" aria-label="More about AplusZ"><span class="reveal-hint-chev">&#8593;</span> More about AplusZ.app</button>
 <div class="reveal-wrap" id="reveal-wrap" aria-hidden="true">
   <div class="reveal-card" role="dialog" aria-label="About AplusZ">
     <button class="reveal-close" id="reveal-close" aria-label="Close">&times;</button>
     <div class="reveal-mission">
-      <div class="reveal-motto" data-i18n="reveal.motto">AplusZ.app &mdash; the search is free as air, so you fly for less.</div>
-      <div class="reveal-statement" data-i18n="reveal.statement">Some things should be like air &mdash; genuinely useful, and free to everyone.</div>
+      <div class="reveal-motto">AplusZ.app &mdash; the search is free as air, so you fly for less.</div>
+      <div class="reveal-statement">Some things should be like air &mdash; genuinely useful, and free to everyone. A handful of large companies sit between you and the sky, and most people have no real choice but to accept whatever they&rsquo;re shown. AplusZ.app gives that sight back, for free. No signup, no markup. It even works without an internet connection &mdash; once <strong>AplusZ.app</strong> is loaded, you can find the best fares offline, anywhere. When running costs are covered, <strong>AplusZ.app</strong> stays free for everyone, for good.</div>
     </div>
     <div class="reveal-stats">
-      <div class="reveal-stat"><strong>50,000+</strong><span data-i18n="reveal.stat_prices">prices scanned</span></div>
-      <div class="reveal-stat"><strong>2,000</strong><span data-i18n="reveal.stat_airports">airports</span></div>
-      <div class="reveal-stat"><strong>3,514</strong><span data-i18n="reveal.stat_cities">cities</span></div>
-      <div class="reveal-stat"><strong>20</strong><span data-i18n="reveal.stat_languages">languages</span></div>
+      <div class="reveal-stat"><strong>50,000+</strong>prices scanned</div>
+      <div class="reveal-stat"><strong>2,000</strong>airports</div>
+      <div class="reveal-stat"><strong>3,514</strong>cities</div>
+      <div class="reveal-stat"><strong>20</strong>languages</div>
     </div>
-    <div class="reveal-free" data-i18n="reveal.free_line">Free forever &middot; No signup &middot; Price never marked up &middot; Works offline</div>
-    <div class="reveal-founder" data-i18n="reveal.founder">&ldquo;I always wanted to build something useful and free &mdash; like air. This is it.&rdquo;</div>
+    <div class="reveal-free">Free forever &middot; No signup &middot; Price never marked up &middot; Works offline</div>
+    <div class="reveal-founder">&ldquo;I always wanted to build something useful and free &mdash; like air. This is it.&rdquo;</div>
     <div class="reveal-share">
-      <button class="reveal-share-btn" id="reveal-share-btn" data-i18n="reveal.share_btn">Share AplusZ.app</button>
+      <button class="reveal-share-btn" id="reveal-share-btn">Share AplusZ.app</button>
     </div>
     <hr class="reveal-divider">
     <div class="reveal-press">
-      <div class="reveal-section-title" data-i18n="reveal.press_title">From the Press?</div>
-      <p data-i18n="reveal.press_body">Covering travel, tech, or consumer tools? We would love to hear from you.</p>
+      <div class="reveal-section-title">From the Press?</div>
+      <p>Covering travel, tech, or consumer tools? We&rsquo;d love to hear from you. Get in touch directly &mdash; journalists who visit us get <strong>6 months fully unlocked</strong>, on us.</p>
       <a class="reveal-press-link" href="mailto:dagrang@gmail.com">dagrang@gmail.com &rarr;</a>
-      <div class="reveal-press-gift"><span>&#127381;</span> <span data-i18n="reveal.press_gift">In-person visit = 6-month Pro+ gift, no strings.</span></div>
+      <div class="reveal-press-gift">&#127381; In-person visit = 6-month Pro+ gift, no strings.</div>
     </div>
     <hr class="reveal-divider">
     <div class="reveal-comments">
-      <div class="reveal-section-title" data-i18n="reveal.comments_title">What people say</div>
-      <div class="reveal-comment-gift"><span>&#127381;</span> <span data-i18n="reveal.comment_gift">Share your experience.</span></div>
+      <div class="reveal-section-title">What people say</div>
+      <div class="reveal-comment-gift">&#127381; Share your experience &mdash; if we feature your comment, you get free Pro or Pro+ access as a thank-you.</div>
       <div class="reveal-comment-form" id="reveal-comment-form">
-        <input type="text" id="rc-name" placeholder="Your name" maxlength="60" data-i18n-attr="placeholder:reveal.rc_name_ph">
-        <textarea id="rc-text" placeholder="Your experience with AplusZ.app..." maxlength="400" data-i18n-attr="placeholder:reveal.rc_text_ph"></textarea>
-        <button class="reveal-comment-submit" id="rc-submit"><span data-i18n="reveal.rc_submit">Share your experience</span> &rarr;</button>
+        <input type="text" id="rc-name" placeholder="Your name" maxlength="60">
+        <textarea id="rc-text" placeholder="Your experience with AplusZ.app..." maxlength="400"></textarea>
+        <button class="reveal-comment-submit" id="rc-submit">Share your experience &rarr;</button>
       </div>
       <div id="rc-msg" class="reveal-msg"></div>
       <div id="rc-approved"></div>

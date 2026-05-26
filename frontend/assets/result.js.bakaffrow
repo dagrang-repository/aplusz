@@ -19,20 +19,7 @@
   }
 
   function kiwitaxiLink(o){return 'https://tp.media/r?marker=730427&trs=531148&p=647&u='+encodeURIComponent('https://kiwitaxi.com/'+(o?o+'/':''))+'&campaign_id=1';}
-  function affiliateRow(d) {
-    affiliates(d);
-    var a = d._affil || {};
-    var k = kiwitaxiLink(d.origin);
-    return '<div class="kiwitaxi-cta"><a href="' + k + '" target="_blank" rel="noopener nofollow" class="kiwi-transfer-btn">&#128661; Airport transfer -5% &bull; code TPO5</a></div>' +
-      '<div class="affil-row">' +
-      '<a href="' + a.gettransfer + '" target="_blank" rel="noopener nofollow" class="affil-btn">&#128652; GetTransfer</a>' +
-      '<a href="' + a.airalo + '" target="_blank" rel="noopener nofollow" class="affil-btn">&#128241; Airalo eSIM</a>' +
-      '<a href="' + a.drimsim + '" target="_blank" rel="noopener nofollow" class="affil-btn">&#128241; Drimsim</a>' +
-      '<a href="' + a.tiqets + '" target="_blank" rel="noopener nofollow" class="affil-btn">&#127981; Tiqets</a>' +
-      '<a href="' + a.klook + '" target="_blank" rel="noopener nofollow" class="affil-btn">&#127758; Klook</a>' +
-      '<a href="' + a.airhelp + '" target="_blank" rel="noopener nofollow" class="affil-btn airhelp-btn">&#9992; AirHelp</a>' +
-      '</div>';
-  }  function formatDate(iso) {
+  function formatDate(iso) {
     try {
       var d = new Date(iso);
       var loc = (window.APlusZ.i18n && window.APlusZ.i18n.locale)
@@ -189,7 +176,6 @@
       '  </a>',
 
       hotel ? '  <div class="also-check"><span class="also-label">' + t('result.also_check') + '</span><a href="' + hotel + '" target="_blank" rel="noopener nofollow">' + t('result.hotel_near').replace('{city}', d.destination) + '</a></div>' : '',
-      affiliateRow(d),
 
       '  <div class="share-row">',
       '    <div class="share-info">',
@@ -257,7 +243,12 @@
       '    ' + t('result.cta_book'),
       '  </a>',
 
-      affiliateRow(d),
+      '  <div class="also-check">',
+      '    <span class="also-label">' + t('result.also_check') + '</span>',
+      '    <a href="' + aff.skyscanner + '" target="_blank" rel="noopener nofollow">Skyscanner</a>',
+      '    <a href="' + aff.kayak + '" target="_blank" rel="noopener nofollow">Kayak</a>',
+      '    <a href="' + aff.booking + '" target="_blank" rel="noopener nofollow">' + t('result.hotel_near').replace('{city}', d.destination) + '</a>',
+      '  </div>',
 
       '  <div class="cal-row">',
       '    <a class="cal-btn" href="' + googleCalUrl(d) + '" target="_blank" rel="noopener">\uD83D\uDCC5 ' + t('result.add_google') + '</a>',

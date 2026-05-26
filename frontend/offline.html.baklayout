@@ -16,12 +16,6 @@
   }
   body {
     display: flex;
-    flex-direction: column;
-    min-height: 100%;
-  }
-  .offline-main {
-    flex: 1;
-    display: flex;
     align-items: center;
     justify-content: center;
     padding: var(--sp-6);
@@ -97,7 +91,7 @@
   </nav>
 </header>
 
-<div class="offline-main"><div class="wrap">
+<div class="wrap">
   <div class="icon">✈️</div>
   <h1 data-i18n="offline.title">You're offline</h1>
   <p data-i18n="offline.message">Last cached results for your saved routes are below.</p>
@@ -118,7 +112,7 @@
       box.appendChild(el);
     });
   } catch (e) {}
-</script></div>
+</script>
 
 <footer class="footer">
   <a href="/en/faq" data-i18n="nav.faq">FAQ</a>

@@ -6,38 +6,38 @@ import { CONFIG } from './config.js';
 const esc = s => ('' + (s ?? '')).replace(/[&<>"']/g, c =>
   ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
-const PATH = { faq: 'faq', about: 'about', feedback: 'feedback', web: 'web' };
+const PATH = { faq: 'faq', about: 'about', feedback: 'feedback' };
 const url = (lang, page) => `${CONFIG.SITE}/${lang}/${PATH[page]}`;
 
 // Footer link labels per language (FAQ / About / Feedback / Legal / Disclosure)
 const NAV = {
-  en:['FAQ','About','Feedback','Legal','Disclosure','Web design'],
-  fr:['FAQ','À propos','Retour','Mentions légales','Divulgation','Site web'],
-  es:['Preguntas','Acerca de','Comentarios','Aviso legal','Divulgación','Diseño web'],
-  de:['FAQ','Über uns','Feedback','Impressum','Offenlegung','Webdesign'],
-  it:['FAQ','Chi siamo','Feedback','Note legali','Informativa','Web design'],
-  pt:['Perguntas','Sobre','Comentários','Aviso legal','Divulgação','Web design'],
-  nl:['FAQ','Over ons','Feedback','Juridisch','Openbaarmaking','Webdesign'],
-  pl:['FAQ','O nas','Opinie','Informacje prawne','Ujawnienie','Strony www'],
-  ru:['Вопросы','О нас','Отзыв','Правовая информация','Раскрытие','Сайты'],
-  tr:['SSS','Hakkında','Geri bildirim','Yasal','Açıklama','Web tasarım'],
-  ar:['الأسئلة','من نحن','ملاحظات','قانوني','الإفصاح','تصميم ويب'],
-  fa:['سؤالات','درباره','بازخورد','حقوقی','افشا','طراحی وب'],
-  hi:['सामान्य प्रश्न','परिचय','प्रतिक्रिया','कानूनी','प्रकटीकरण','वेब डिज़ाइन'],
-  bn:['প্রশ্নাবলী','সম্পর্কে','মতামত','আইনি','প্রকাশ','ওয়েব ডিজাইন'],
-  th:['คำถาม','เกี่ยวกับ','ความคิดเห็น','กฎหมาย','การเปิดเผย','ออกแบบเว็บ'],
-  vi:['Hỏi đáp','Giới thiệu','Phản hồi','Pháp lý','Tiết lộ','Thiết kế web'],
-  id:['FAQ','Tentang','Masukan','Hukum','Pengungkapan','Desain web'],
-  ja:['よくある質問','概要','フィードバック','法的事項','開示','ウェブデザイン'],
-  ko:['자주 묻는 질문','소개','피드백','법적 고지','공개','웹 디자인'],
-  zh:['常见问题','关于','反馈','法律','披露','网页设计'],
+  en:['FAQ','About','Feedback','Legal','Disclosure'],
+  fr:['FAQ','À propos','Retour','Mentions légales','Divulgation'],
+  es:['Preguntas','Acerca de','Comentarios','Aviso legal','Divulgación'],
+  de:['FAQ','Über uns','Feedback','Impressum','Offenlegung'],
+  it:['FAQ','Chi siamo','Feedback','Note legali','Informativa'],
+  pt:['Perguntas','Sobre','Comentários','Aviso legal','Divulgação'],
+  nl:['FAQ','Over ons','Feedback','Juridisch','Openbaarmaking'],
+  pl:['FAQ','O nas','Opinie','Informacje prawne','Ujawnienie'],
+  ru:['Вопросы','О нас','Отзыв','Правовая информация','Раскрытие'],
+  tr:['SSS','Hakkında','Geri bildirim','Yasal','Açıklama'],
+  ar:['الأسئلة','من نحن','ملاحظات','قانوني','الإفصاح'],
+  fa:['سؤالات','درباره','بازخورد','حقوقی','افشا'],
+  hi:['सामान्य प्रश्न','परिचय','प्रतिक्रिया','कानूनी','प्रकटीकरण'],
+  bn:['প্রশ্নাবলী','সম্পর্কে','মতামত','আইনি','প্রকাশ'],
+  th:['คำถาม','เกี่ยวกับ','ความคิดเห็น','กฎหมาย','การเปิดเผย'],
+  vi:['Hỏi đáp','Giới thiệu','Phản hồi','Pháp lý','Tiết lộ'],
+  id:['FAQ','Tentang','Masukan','Hukum','Pengungkapan'],
+  ja:['よくある質問','概要','フィードバック','法的事項','開示'],
+  ko:['자주 묻는 질문','소개','피드백','법적 고지','공개'],
+  zh:['常见问题','关于','反馈','法律','披露'],
 };
 const nav = l => NAV[l] || NAV.en;
 
 function footer(lang) {
   const L = `/${lang}`; const n = nav(lang);
   return `<footer class="rg-foot">
-<a href="${L}/faq">${esc(n[0])}</a> · <a href="${L}/about">${esc(n[1])}</a> · <a href="${L}/feedback">${esc(n[2])}</a> · <a href="${CONFIG.SITE}/legal/">${esc(n[3])}</a> · <a href="${CONFIG.SITE}/disclosure/">${esc(n[4])}</a> · <a href="${L}/web">${esc(n[5])}</a>
+<a href="${L}/faq">${esc(n[0])}</a> · <a href="${L}/about">${esc(n[1])}</a> · <a href="${L}/feedback">${esc(n[2])}</a> · <a href="${CONFIG.SITE}/legal/">${esc(n[3])}</a> · <a href="${CONFIG.SITE}/disclosure/">${esc(n[4])}</a>
 <div class="rg-foot-c">© <span>${new Date().getUTCFullYear()}</span> <a href="${CONFIG.SITE}/">AplusZ (A+Z).app</a></div>
 </footer>`;
 }
@@ -45,7 +45,6 @@ function footer(lang) {
 // ── Localized content. en authoritative; every language fully filled. ──
 const CONTENT = {
   en: {
-    webIntro: 'A professional, custom-designed website built and delivered in 7 days. Mobile-ready, SEO-optimized, with hosting setup included. From €699, now €299 — one-time payment, no subscription.', webInclTitle: 'What is included', webInclBody: 'Custom design tailored to your brand and audience. Mobile-first, fully responsive. SEO foundation. Contact form. Hosting setup and domain connection. 1 month support. Full handover.', webHowTitle: 'How it works', webHowBody: 'Pay once on Stripe, return here and fill in your brief with the email you paid with. We review within 24 hours and deliver in 7 days.', webCta: 'Start your project',
     faqTitle: 'Frequently Asked Questions',
     faqDesc: 'Answers about AplusZ — how it finds the lowest fares, why it is free, how booking works, languages, and offline use.',
     faq: [
@@ -72,14 +71,11 @@ const CONTENT = {
     fbBug: 'Bug', fbIdea: 'Idea', fbPlaceholder: 'Describe the bug or your idea…',
     fbEmailLabel: 'Your email (optional)', fbEmailPlaceholder: 'you@example.com',
     fbSend: 'Send', fbSending: 'Sending…', fbOk: 'Thank you — your feedback was sent.',
-    fbErr: 'Could not send. Please try again.', fbEmpty: 'Please write a short message first.'
-    webTitle: 'Web Design - AplusZ.app', webDesc: 'Professional website built in 7 days. Custom design, mobile-ready, SEO-optimized, hosting setup. EUR299 one-time.', webH1: 'Web Design',,
+    fbErr: 'Could not send. Please try again.', fbEmpty: 'Please write a short message first.',
   },
 };
 
 CONTENT.fr = {
-  webIntro: 'Un site web professionnel conçu sur mesure et livré en 7 jours. Adapté mobile, optimisé SEO, hébergement inclus. De 699€, maintenant 299€ — paiement unique, sans abonnement.', webInclTitle: 'Ce qui est inclus', webInclBody: 'Design sur mesure adapté à votre marque et votre public. Mobile d’abord, entièrement responsive. Base SEO. Formulaire de contact. Hébergement et connexion du domaine. 1 mois de support. Remise complète.', webHowTitle: 'Comment ça marche', webHowBody: 'Payez une fois sur Stripe, revenez ici et remplissez votre brief avec l’e-mail utilisé pour le paiement. Nous examinons sous 24 heures et livrons en 7 jours.', webCta: 'Démarrer votre projet',
-  webTitle: 'Création de site web - AplusZ.app', webDesc: 'Site web professionnel livré en 7 jours. Design sur mesure, adapté mobile, optimisé SEO, hébergement inclus. 299€ une seule fois.', webH1: 'Création de site web',
   faqTitle: 'Foire aux questions',
   faqDesc: 'Réponses sur AplusZ — comment il trouve les tarifs les plus bas, pourquoi il est gratuit, comment réserver, les langues et l’usage hors ligne.',
   faq: [
@@ -110,8 +106,6 @@ CONTENT.fr = {
 };
 
 CONTENT.es = {
-  webIntro: 'Un sitio web profesional diseñado a medida y entregado en 7 días. Adaptado a móvil, optimizado para SEO, con alojamiento incluido. De 699€, ahora 299€ — pago único, sin suscripción.', webInclTitle: 'Qué incluye', webInclBody: 'Diseño a medida adaptado a tu marca y público. Mobile-first, totalmente responsive. Base SEO. Formulario de contacto. Alojamiento y conexión de dominio. 1 mes de soporte. Entrega completa.', webHowTitle: 'Cómo funciona', webHowBody: 'Paga una vez en Stripe, vuelve aquí y completa tu brief con el correo con el que pagaste. Revisamos en 24 horas y entregamos en 7 días.', webCta: 'Inicia tu proyecto',
-  webTitle: 'Diseño web - AplusZ.app', webDesc: 'Sitio web profesional en 7 días. Diseño a medida, móvil, optimizado para SEO, alojamiento incluido. 299€ pago único.', webH1: 'Diseño web',
   faqTitle: 'Preguntas frecuentes',
   faqDesc: 'Respuestas sobre AplusZ: cómo encuentra las tarifas más bajas, por qué es gratis, cómo reservar, idiomas y uso sin conexión.',
   faq: [
@@ -142,8 +136,6 @@ CONTENT.es = {
 };
 
 CONTENT.de = {
-  webIntro: 'Eine professionelle, maßgeschneiderte Website, in 7 Tagen erstellt und geliefert. Mobiloptimiert, SEO-optimiert, inkl. Hosting-Einrichtung. Von 699€, jetzt 299€ — Einmalzahlung, kein Abo.', webInclTitle: 'Was enthalten ist', webInclBody: 'Maßgeschneidertes Design für Ihre Marke und Zielgruppe. Mobile-first, voll responsiv. SEO-Grundlage. Kontaktformular. Hosting und Domain-Anbindung. 1 Monat Support. Vollständige Übergabe.', webHowTitle: 'So funktioniert es', webHowBody: 'Einmal über Stripe bezahlen, hierher zurückkehren und Ihr Briefing mit der Zahlungs-E-Mail ausfüllen. Wir prüfen innerhalb von 24 Stunden und liefern in 7 Tagen.', webCta: 'Projekt starten',
-  webTitle: 'Webdesign - AplusZ.app', webDesc: 'Professionelle Website in 7 Tagen. Maßgeschneidertes Design, mobiloptimiert, SEO-optimiert, Hosting inklusive. 299€ einmalig.', webH1: 'Webdesign',
   faqTitle: 'Häufige Fragen',
   faqDesc: 'Antworten zu AplusZ — wie es die günstigsten Tarife findet, warum es kostenlos ist, wie das Buchen funktioniert, Sprachen und Offline-Nutzung.',
   faq: [
@@ -174,8 +166,6 @@ CONTENT.de = {
 };
 
 CONTENT.it = {
-  webIntro: 'Un sito web professionale su misura, realizzato e consegnato in 7 giorni. Ottimizzato per mobile e SEO, con hosting incluso. Da 699€, ora 299€ — pagamento unico, nessun abbonamento.', webInclTitle: 'Cosa è incluso', webInclBody: 'Design su misura per il tuo brand e pubblico. Mobile-first, completamente responsive. Base SEO. Modulo di contatto. Hosting e collegamento del dominio. 1 mese di supporto. Consegna completa.', webHowTitle: 'Come funziona', webHowBody: 'Paga una volta su Stripe, torna qui e compila il brief con l’email usata per il pagamento. Esaminiamo entro 24 ore e consegniamo in 7 giorni.', webCta: 'Avvia il tuo progetto',
-  webTitle: 'Web design - AplusZ.app', webDesc: 'Sito web professionale in 7 giorni. Design su misura, ottimizzato per mobile e SEO, hosting incluso. 299€ una tantum.', webH1: 'Web design',
   faqTitle: 'Domande frequenti',
   faqDesc: 'Risposte su AplusZ — come trova le tariffe più basse, perché è gratuito, come prenotare, lingue e uso offline.',
   faq: [
@@ -206,8 +196,6 @@ CONTENT.it = {
 };
 
 CONTENT.pt = {
-  webIntro: 'Um site profissional com design personalizado, criado e entregue em 7 dias. Adaptado a móvel, otimizado para SEO, com hospedagem incluída. De 699€, agora 299€ — pagamento único, sem assinatura.', webInclTitle: 'O que está incluído', webInclBody: 'Design personalizado para a sua marca e público. Mobile-first, totalmente responsivo. Base de SEO. Formulário de contato. Hospedagem e conexão de domínio. 1 mês de suporte. Entrega completa.', webHowTitle: 'Como funciona', webHowBody: 'Pague uma vez no Stripe, volte aqui e preencha o seu briefing com o e-mail usado no pagamento. Avaliamos em 24 horas e entregamos em 7 dias.', webCta: 'Inicie o seu projeto',
-  webTitle: 'Web design - AplusZ.app', webDesc: 'Site profissional em 7 dias. Design personalizado, otimizado para móvel e SEO, hospedagem incluída. 299€ pagamento único.', webH1: 'Web design',
   faqTitle: 'Perguntas frequentes',
   faqDesc: 'Respostas sobre o AplusZ — como encontra as tarifas mais baixas, por que é grátis, como reservar, idiomas e uso offline.',
   faq: [
@@ -238,8 +226,6 @@ CONTENT.pt = {
 };
 
 CONTENT.nl = {
-  webIntro: 'Een professionele website op maat, gebouwd en geleverd in 7 dagen. Mobielklaar, SEO-geoptimaliseerd, inclusief hostingconfiguratie. Van 699€, nu 299€ — eenmalige betaling, geen abonnement.', webInclTitle: 'Wat is inbegrepen', webInclBody: 'Op maat ontworpen voor jouw merk en publiek. Mobile-first, volledig responsive. SEO-basis. Contactformulier. Hosting en domeinkoppeling. 1 maand support. Volledige overdracht.', webHowTitle: 'Hoe het werkt', webHowBody: 'Betaal eenmalig via Stripe, kom terug en vul je briefing in met het e-mailadres waarmee je betaalde. We beoordelen binnen 24 uur en leveren in 7 dagen.', webCta: 'Start je project',
-  webTitle: 'Webdesign - AplusZ.app', webDesc: 'Professionele website in 7 dagen. Op maat ontworpen, mobielklaar, SEO-geoptimaliseerd, hosting inbegrepen. 299€ eenmalig.', webH1: 'Webdesign',
   faqTitle: 'Veelgestelde vragen',
   faqDesc: 'Antwoorden over AplusZ — hoe het de laagste tarieven vindt, waarom het gratis is, hoe boeken werkt, talen en offline gebruik.',
   faq: [
@@ -270,8 +256,6 @@ CONTENT.nl = {
 };
 
 CONTENT.pl = {
-  webIntro: 'Profesjonalna strona zaprojektowana na zamówienie, zbudowana i dostarczona w 7 dni. Mobilna, zoptymalizowana pod SEO, z konfiguracją hostingu. Z 699€, teraz 299€ — jednorazowa płatność, bez subskrypcji.', webInclTitle: 'Co obejmuje', webInclBody: 'Projekt na zamówienie dopasowany do Twojej marki i odbiorców. Mobile-first, w pełni responsywny. Podstawy SEO. Formularz kontaktowy. Hosting i podłączenie domeny. 1 miesiąc wsparcia. Pełne przekazanie.', webHowTitle: 'Jak to działa', webHowBody: 'Zapłać raz przez Stripe, wróć tutaj i wypełnij brief e-mailem użytym do płatności. Sprawdzamy w 24 godziny i dostarczamy w 7 dni.', webCta: 'Rozpocznij projekt',
-  webTitle: 'Projektowanie stron - AplusZ.app', webDesc: 'Profesjonalna strona w 7 dni. Projekt na zamówienie, mobilna, zoptymalizowana pod SEO, hosting w cenie. 299€ jednorazowo.', webH1: 'Projektowanie stron',
   faqTitle: 'Najczęstsze pytania',
   faqDesc: 'Odpowiedzi o AplusZ — jak znajduje najniższe ceny, dlaczego jest darmowy, jak rezerwować, języki i tryb offline.',
   faq: [
@@ -302,8 +286,6 @@ CONTENT.pl = {
 };
 
 CONTENT.ru = {
-  webIntro: 'Профессиональный сайт с индивидуальным дизайном, готовый за 7 дней. Мобильная версия, SEO, настройка хостинга. Было 699€, теперь 299€ — разовый платёж, без подписки.', webInclTitle: 'Что включено', webInclBody: 'Индивидуальный дизайн под ваш бренд и аудиторию. Mobile-first, полностью адаптивный. Основа SEO. Форма обратной связи. Хостинг и подключение домена. 1 месяц поддержки. Полная передача.', webHowTitle: 'Как это работает', webHowBody: 'Оплатите один раз через Stripe, вернитесь сюда и заполните бриф с тем же e-mail. Мы проверяем в течение 24 часов и сдаём за 7 дней.', webCta: 'Начать проект',
-  webTitle: 'Создание сайтов - AplusZ.app', webDesc: 'Профессиональный сайт за 7 дней. Индивидуальный дизайн, мобильная версия, SEO, хостинг. 299€ единоразово.', webH1: 'Создание сайтов',
   faqTitle: 'Частые вопросы',
   faqDesc: 'Ответы об AplusZ — как он находит самые низкие цены, почему он бесплатный, как бронировать, языки и работа офлайн.',
   faq: [
@@ -334,8 +316,6 @@ CONTENT.ru = {
 };
 
 CONTENT.tr = {
-  webIntro: '7 günde hazırlanan ve teslim edilen profesyonel, özel tasarım web sitesi. Mobil uyumlu, SEO optimize, hosting kurulumu dahil. 699€’dan, şimdi 299€ — tek seferlik ödeme, abonelik yok.', webInclTitle: 'Neler dahil', webInclBody: 'Markanıza ve kitlenize özel tasarım. Mobil öncelikli, tam responsive. SEO temeli. İletişim formu. Hosting ve alan adı bağlantısı. 1 ay destek. Tam devir.', webHowTitle: 'Nasıl çalışır', webHowBody: 'Stripe üzerinden bir kez ödeyin, buraya dönün ve ödeme yaptığınız e-postayla brief’inizi doldurun. 24 saat içinde inceler, 7 günde teslim ederiz.', webCta: 'Projenizi başlatın',
-  webTitle: 'Web tasarım - AplusZ.app', webDesc: '7 günde profesyonel web sitesi. Özel tasarım, mobil uyumlu, SEO optimize, hosting dahil. Tek seferlik 299€.', webH1: 'Web tasarım',
   faqTitle: 'Sıkça Sorulan Sorular',
   faqDesc: 'AplusZ hakkında yanıtlar — en düşük ücretleri nasıl bulur, neden ücretsiz, rezervasyon nasıl çalışır, diller ve çevrimdışı kullanım.',
   faq: [
@@ -366,8 +346,6 @@ CONTENT.tr = {
 };
 
 CONTENT.ar = {
-  webIntro: 'موقع ويب احترافي بتصميم مخصص، يُبنى ويُسلّم في 7 أيام. متوافق مع الجوال، محسّن لمحركات البحث، مع إعداد الاستضافة. من 699€، الآن 299€ — دفعة واحدة، دون اشتراك.', webInclTitle: 'ما الذي يتضمنه', webInclBody: 'تصميم مخصص يناسب علامتك وجمهورك. يعطي الأولوية للجوال، متجاوب بالكامل. أساس SEO. نموذج اتصال. إعداد استضافة وربط نطاق. شهر دعم. تسليم كامل.', webHowTitle: 'كيف يعمل', webHowBody: 'ادفع مرة واحدة عبر Stripe، ثم عد هنا واملأ موجزك بالبريد الإلكتروني الذي دفعت به. نراجع خلال 24 ساعة ونسلّم في 7 أيام.', webCta: 'ابدأ مشروعك',
-  webTitle: 'تصميم الويب - AplusZ.app', webDesc: 'موقع احترافي في 7 أيام. تصميم مخصص، متوافق مع الجوال، محسّن لمحركات البحث، استضافة مضمنة. 299€ دفعة واحدة.', webH1: 'تصميم الويب',
   faqTitle: 'الأسئلة الشائعة',
   faqDesc: 'إجابات حول AplusZ — كيف يجد أقل الأسعار، ولماذا هو مجاني، وكيف يتم الحجز، واللغات والاستخدام دون اتصال.',
   faq: [
@@ -398,8 +376,6 @@ CONTENT.ar = {
 };
 
 CONTENT.fa = {
-  webIntro: 'یک وب‌سایت حرفه‌ای با طراحی اختصاصی، ساخته و تحویل در ۷ روز. سازگار با موبایل، بهینه برای SEO، با راه‌اندازی میزبانی. از 699€، اکنون 299€ — پرداخت یک‌باره، بدون اشتراک.', webInclTitle: 'چه چیزی شامل است', webInclBody: 'طراحی اختصاصی متناسب با برند و مخاطبان شما. موبایل‌اول، کاملاً واکنش‌گرا. پایه SEO. فرم تماس. راه‌اندازی میزبانی و اتصال دامنه. ۱ ماه پشتیبانی. تحویل کامل.', webHowTitle: 'چگونه کار می‌کند', webHowBody: 'یک بار در Stripe پرداخت کنید، به اینجا بازگردید و با همان ایمیل پرداخت، بریف خود را پر کنید. در عرض 24 ساعت بررسی و در 7 روز تحویل می‌دهیم.', webCta: 'پروژه خود را شروع کنید',
-  webTitle: 'طراحی وب - AplusZ.app', webDesc: 'وب‌سایت حرفه‌ای در ۷ روز. طراحی اختصاصی، سازگار با موبایل، بهینه برای SEO، میزبانی شامل. ۲۹۹€ یک‌بار.', webH1: 'طراحی وب',
   faqTitle: 'پرسش‌های متداول',
   faqDesc: 'پاسخ‌هایی درباره AplusZ — چگونه ارزان‌ترین قیمت‌ها را می‌یابد، چرا رایگان است، رزرو چگونه است، زبان‌ها و استفاده آفلاین.',
   faq: [
@@ -430,8 +406,6 @@ CONTENT.fa = {
 };
 
 CONTENT.hi = {
-  webIntro: '7 दिनों में बना और डिलीवर किया गया एक पेशेवर, कस्टम-डिज़ाइन किया वेबसाइट। मोबाइल-तैयार, SEO-अनुकूलित, होस्टिंग सेटअप सहित। 699€ से, अब 299€ — एकबार भुगतान, कोई सब्सक्रिप्शन नहीं।', webInclTitle: 'इसमें क्या शामिल है', webInclBody: 'आपके ब्रांड और दर्शकों के अनुसार कस्टम डिज़ाइन। मोबाइल-पहला, पूरी तरह रिस्पॉन्सिव। SEO आधार। संपर्क फ़ॉर्म। होस्टिंग सेटअप और डोमेन कनेक्शन। 1 महीने का सपोर्ट। पूर्ण हैंडओवर।', webHowTitle: 'यह कैसे काम करता है', webHowBody: 'Stripe पर एक बार भुगतान करें, यहां वापस आएं और जिस ईमेल से भुगतान किया उससे अपना ब्रीफ भरें। हम 24 घंटे में समीक्षा करते हैं और 7 दिनों में डिलीवर करते हैं।', webCta: 'अपना प्रोजेक्ट शुरू करें',
-  webTitle: 'वेब डिज़ाइन - AplusZ.app', webDesc: '7 दिनों में पेशेवर वेबसाइट। कस्टम डिज़ाइन, मोबाइल-तैयार, SEO-अनुकूलित, होस्टिंग शामिल। 299€ एकबारगी।', webH1: 'वेब डिज़ाइन',
   faqTitle: 'अक्सर पूछे जाने वाले प्रश्न',
   faqDesc: 'AplusZ के बारे में उत्तर — यह सबसे कम किराया कैसे ढूँढता है, यह मुफ़्त क्यों है, बुकिंग कैसे होती है, भाषाएँ और ऑफ़लाइन उपयोग।',
   faq: [
@@ -462,8 +436,6 @@ CONTENT.hi = {
 };
 
 CONTENT.bn = {
-  webIntro: '7 দিনে তৈরি এবং ডেলিভার করা একটি পেশাদার, কাস্টম-ডিজাইন ওয়েবসাইট। মোবাইল-রেডি, SEO-অপ্টিমাইজড, হোস্টিং সেটআপসহ। 699€ থেকে, এখন 299€ — একবারের পেমেন্ট, কোনো সাবস্ক্রিপশন নেই।', webInclTitle: 'কী অন্তর্ভুক্ত', webInclBody: 'আপনার ব্র্যান্ড এবং দর্শকের জন্য কাস্টম ডিজাইন। মোবাইল-ফার্স্ট, সম্পূর্ণ রেসপন্সিভ। SEO ভিত্তি। যোগাযোগ ফরম। হোস্টিং সেটআপ এবং ডোমেইন সংযোগ। 1 মাসের সাপোর্ট। সম্পূর্ণ হ্যান্ডওভার।', webHowTitle: 'এটি কীভাবে কাজ করে', webHowBody: 'Stripe-এ একবার পেমেন্ট করুন, এখানে ফিরে আসুন এবং যে ইমেইল দিয়ে পেমেন্ট করেছেন তা দিয়ে আপনার ব্রিফ পূরণ করুন। আমরা 24 ঘণ্টার মধ্যে পর্যালোচনা করি এবং 7 দিনে ডেলিভার করি।', webCta: 'আপনার প্রজেক্ট শুরু করুন',
-  webTitle: 'ওয়েব ডিজাইন - AplusZ.app', webDesc: '৭ দিনে পেশাদার ওয়েবসাইট। কাস্টম ডিজাইন, মোবাইল-রেডি, SEO-অপ্টিমাইজড, হোস্টিং অন্তর্ভুক্ত। 299€ একবার।', webH1: 'ওয়েব ডিজাইন',
   faqTitle: 'প্রায়শই জিজ্ঞাসিত প্রশ্ন',
   faqDesc: 'AplusZ সম্পর্কে উত্তর — এটি কীভাবে সর্বনিম্ন ভাড়া খুঁজে পায়, কেন এটি বিনামূল্যে, বুকিং কীভাবে হয়, ভাষা ও অফলাইন ব্যবহার।',
   faq: [
@@ -494,8 +466,6 @@ CONTENT.bn = {
 };
 
 CONTENT.th = {
-  webIntro: 'เว็บไซต์มืออาชีพที่ออกแบบเฉพาะ สร้างและส่งมอบภายใน 7 วัน รองรับมือถือ ปรับแต่ง SEO รวมตั้งค่าโฮสติง จาก 699€ ตอนนี้ 299€ — จ่ายครั้งเดียว ไม่มีระบบสมาชิก', webInclTitle: 'สิ่งที่รวมอยู่', webInclBody: 'ออกแบบเฉพาะสำหรับแบรนด์และกลุ่มเป้าหมายของคุณ มือถือมาก่อน รองรับทุกหน้าจอ พื้นฐาน SEO แบบฟอร์มติดต่อ ตั้งค่าโฮสติงและเชื่อมต่อโดเมน สนับสนุน 1 เดือน ส่งมอบงานครบถ้วน', webHowTitle: 'วิธีการทำงาน', webHowBody: 'จ่ายครั้งเดียวผ่าน Stripe กลับมาที่นี่และกรอกบรีฟของคุณด้วยอีเมลที่ใช้จ่ายเงิน เราตรวจสอบภายใน 24 ชั่วโมงและส่งมอบภายใน 7 วัน', webCta: 'เริ่มโปรเจกต์ของคุณ',
-  webTitle: 'ออกแบบเว็บ - AplusZ.app', webDesc: 'เว็บไซต์มืออาชีพใน 7 วัน ออกแบบเฉพาะ รองรับมือถือ ปรับแต่ง SEO รวมโฮสติง 299€ จ่ายครั้งเดียว', webH1: 'ออกแบบเว็บ',
   faqTitle: 'คำถามที่พบบ่อย',
   faqDesc: 'คำตอบเกี่ยวกับ AplusZ — วิธีหาตั๋วถูกที่สุด ทำไมจึงฟรี การจองทำงานอย่างไร ภาษา และการใช้งานออฟไลน์',
   faq: [
@@ -526,8 +496,6 @@ CONTENT.th = {
 };
 
 CONTENT.vi = {
-  webIntro: 'Một trang web chuyên nghiệp, thiết kế riêng, xây dựng và bàn giao trong 7 ngày. Tương thích di động, tối ưu SEO, kèm cài đặt hosting. Từ 699€, nay 299€ — thanh toán một lần, không đăng ký thuê bao.', webInclTitle: 'Bao gồm những gì', webInclBody: 'Thiết kế riêng phù hợp với thương hiệu và khán giả của bạn. Ưu tiên di động, hoàn toàn responsive. Nền tảng SEO. Biểu mẫu liên hệ. Cài đặt hosting và kết nối tên miền. 1 tháng hỗ trợ. Bàn giao đầy đủ.', webHowTitle: 'Cách hoạt động', webHowBody: 'Thanh toán một lần trên Stripe, quay lại đây và điền thông tin dự án bằng email bạn đã thanh toán. Chúng tôi xem xét trong 24 giờ và bàn giao trong 7 ngày.', webCta: 'Bắt đầu dự án của bạn',
-  webTitle: 'Thiết kế web - AplusZ.app', webDesc: 'Trang web chuyên nghiệp trong 7 ngày. Thiết kế riêng, tương thích di động, tối ưu SEO, kèm hosting. 299€ thanh toán một lần.', webH1: 'Thiết kế web',
   faqTitle: 'Câu hỏi thường gặp',
   faqDesc: 'Giải đáp về AplusZ — cách tìm vé rẻ nhất, vì sao miễn phí, cách đặt vé, ngôn ngữ và dùng ngoại tuyến.',
   faq: [
@@ -558,8 +526,6 @@ CONTENT.vi = {
 };
 
 CONTENT.id = {
-  webIntro: 'Situs web profesional dengan desain khusus, dibangun dan dikirim dalam 7 hari. Siap seluler, dioptimalkan SEO, dengan penyiapan hosting. Dari 699€, sekarang 299€ — pembayaran sekali, tanpa langganan.', webInclTitle: 'Yang termasuk', webInclBody: 'Desain khusus sesuai merek dan audiens Anda. Mobile-first, sepenuhnya responsif. Fondasi SEO. Formulir kontak. Penyiapan hosting dan koneksi domain. Dukungan 1 bulan. Serah terima penuh.', webHowTitle: 'Cara kerjanya', webHowBody: 'Bayar sekali di Stripe, kembali ke sini dan isi brief Anda dengan email yang Anda gunakan untuk membayar. Kami meninjau dalam 24 jam dan mengirim dalam 7 hari.', webCta: 'Mulai proyek Anda',
-  webTitle: 'Desain web - AplusZ.app', webDesc: 'Situs web profesional dalam 7 hari. Desain khusus, siap seluler, dioptimalkan SEO, hosting termasuk. 299€ sekali bayar.', webH1: 'Desain web',
   faqTitle: 'Pertanyaan Umum',
   faqDesc: 'Jawaban tentang AplusZ — cara menemukan tarif termurah, mengapa gratis, cara memesan, bahasa, dan penggunaan offline.',
   faq: [
@@ -590,8 +556,6 @@ CONTENT.id = {
 };
 
 CONTENT.ja = {
-  webIntro: '7日で制作・納品するプロ仕様のカスタムデザインウェブサイト。モバイル対応、SEO最適化、ホスティング設定込み。699€から、今なら299€ — 一回払い、サブスクなし。', webInclTitle: '含まれるもの', webInclBody: 'ブランドと読者に合わせたカスタムデザイン。モバイルファースト、完全レスポンシブ。SEO基盤。お問い合わせフォーム。ホスティング設定とドメイン接続。1ヶ月のサポート。完全な引き渡し。', webHowTitle: '仕組み', webHowBody: 'Stripeで一度お支払いいただき、こちらに戻ってお支払いに使ったメールでブリーフを記入してください。24時間以内に確認し7日で納品します。', webCta: 'プロジェクトを始める',
-  webTitle: 'ウェブデザイン - AplusZ.app', webDesc: '7日でプロのウェブサイトを制作。カスタムデザイン、モバイル対応、SEO最適化、ホスティング設定込み。299€一回限り。', webH1: 'ウェブデザイン',
   faqTitle: 'よくある質問',
   faqDesc: 'AplusZ について — 最安値の見つけ方、無料の理由、予約の仕組み、対応言語、オフライン利用の回答。',
   faq: [
@@ -622,8 +586,6 @@ CONTENT.ja = {
 };
 
 CONTENT.ko = {
-  webIntro: '7일 만에 제작·납품하는 전문 맞춤 디자인 웹사이트. 모바일 대응, SEO 최적화, 호스팅 설정 포함. 699€에서 지금 299€ — 일회성 결제, 구독 없음.', webInclTitle: '포함 사항', webInclBody: '브랜드와 관객에 맞춘 맞춤 디자인. 모바일 우선, 완전 반응형. SEO 기반. 문의 양식. 호스팅 설정 및 도메인 연결. 1개월 지원. 완전 인계.', webHowTitle: '진행 방식', webHowBody: 'Stripe에서 한 번 결제하고 여기로 돌아와 결제한 이메일로 브리프를 작성하세요. 24시간 이내 검토하고 7일 만에 납품합니다.', webCta: '프로젝트 시작하기',
-  webTitle: '웹 디자인 - AplusZ.app', webDesc: '7일 만에 전문 웹사이트 제작. 맞춤 디자인, 모바일 대응, SEO 최적화, 호스팅 포함. 299€ 일회성.', webH1: '웹 디자인',
   faqTitle: '자주 묻는 질문',
   faqDesc: 'AplusZ에 대한 답변 — 최저 항공권을 찾는 방법, 무료인 이유, 예약 방식, 지원 언어, 오프라인 사용.',
   faq: [
@@ -654,8 +616,6 @@ CONTENT.ko = {
 };
 
 CONTENT.zh = {
-  webIntro: '7天内打造并交付的专业定制设计网站。适配移动端、SEO优化、含主机设置。原价699€，现价299€ — 一次性付款，无需订阅。', webInclTitle: '包含内容', webInclBody: '量身定制的设计，贴合您的品牌与受众。移动优先，完全响应式。SEO基础。联系表单。主机设置与域名连接。1个月支持。完整交接。', webHowTitle: '运作方式', webHowBody: '在Stripe上一次性付款，返回此处并用付款邮箱填写您的需求。我们在24小时内审核并在7天内交付。', webCta: '开始您的项目',
-  webTitle: '网页设计 - AplusZ.app', webDesc: '7天打造专业网站。定制设计、适配移动端、SEO优化、含主机设置。299€一次性。', webH1: '网页设计',
   faqTitle: '常见问题',
   faqDesc: '关于 AplusZ 的解答——如何找到最低票价、为何免费、如何预订、支持语言以及离线使用。',
   faq: [
@@ -707,11 +667,11 @@ function shell({ lang, page, title, desc, inner }) {
 <meta property="og:description" content="${esc(desc)}"><meta property="og:url" content="${canonical}">
 <link rel="stylesheet" href="/assets/bundle.css">
 <style>.rg{max-width:760px;margin:0 auto;padding:28px 18px;font-family:system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.6;color:#0f172a}.rg h1{font-size:1.7rem;margin:.2em 0 .6em}.rg h2,.rg h3{font-size:1.08rem;margin:1.2em 0 .25em}.rg p{margin:.5em 0}.rg-foot{max-width:760px;margin:36px auto 24px;padding:18px;border-top:1px solid #e5e7eb;font-size:.85rem;color:#555;text-align:center}.rg-foot a{color:#1558d6;text-decoration:none}.rg-foot-c{margin-top:8px;color:#777}.fb-toggle{display:inline-flex;border:1px solid #cbd5e1;border-radius:10px;overflow:hidden;margin:.4em 0}.fb-toggle button{border:0;background:#fff;padding:10px 20px;font-size:.95rem;cursor:pointer;color:#334155}.fb-toggle button.on{background:#1558d6;color:#fff}.fb-field{margin:.7em 0}.fb-field label{display:block;font-size:.85rem;color:#475569;margin-bottom:5px}.fb-field textarea,.fb-field input{width:100%;box-sizing:border-box;border:1px solid #cbd5e1;border-radius:10px;padding:12px 14px;font-size:1rem;font-family:inherit}.fb-field textarea{min-height:120px;resize:vertical}.fb-send{background:#1558d6;color:#fff;border:0;border-radius:10px;padding:13px 26px;font-size:1rem;font-weight:600;cursor:pointer;margin-top:6px}.fb-msg{margin-top:12px;font-size:.9rem;min-height:18px}.fb-msg.ok{color:#0a7d33}.fb-msg.err{color:#c0341d}</style>
-<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-995108846"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');</script></head><body><header class="topbar"><a class="brand" id="brand-home" href="/" aria-label="AplusZ home"><span class="brand-mark">A+Z</span><span class="brand-name"><span class="bn-az">A</span><span class="bn-plus">plus</span><span class="bn-az">Z</span><span class="bn-app">.app</span></span></a><nav class="topnav"><button class="icon-btn tier-badge" id="tier-badge" type="button" aria-label="Free"><span class="tb-ic">&#x1F193;</span><span class="tb-nm">Free</span></button><button class="icon-btn" id="theme-toggle" aria-label="Theme">&#9728;</button><button class="icon-btn" id="lang-btn" aria-label="Language">&#127760;</button><button class="icon-btn" id="menu-btn" aria-label="Profile">&#9776;</button></nav></header><main class="rg">
+<!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=AW-995108846"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');</script></head><body><main class="rg">
 ${inner}
 </main>
 ${footer(lang)}
-<script defer src="/assets/detect.js"></script><script defer src="/assets/config.js"></script><script defer src="/assets/i18n.js"></script><script defer src="/assets/billing.js"></script><script defer src="/assets/app.js"></script></body></html>`;
+</body></html>`;
 }
 
 export function buildFaqPage(lang) {
@@ -775,16 +735,4 @@ export function buildFeedbackPage(lang) {
 })();
 </script>`;
   return shell({ lang, page: 'feedback', title: c.fbTitle, desc: c.fbDesc, inner });
-}
-
-export function buildWebPage(lang) {
-  const c = C(lang);
-  const inner = `<h1>${esc(c.webH1 || 'Web Design')}</h1>
-<p>${esc(c.webIntro || '')}</p>
-<h2>${esc(c.webInclTitle || 'What is included')}</h2>
-<p>${esc(c.webInclBody || '')}</p>
-<h2>${esc(c.webHowTitle || 'How it works')}</h2>
-<p>${esc(c.webHowBody || '')}</p>
-<a href="/web" style="display:inline-block;margin-top:20px;padding:12px 24px;background:#f5b942;color:#0f172a;border-radius:12px;font-weight:700;text-decoration:none;">${esc(c.webCta || 'Start your project')} \u2192</a>`;
-  return shell({ lang, page: 'web', title: c.webTitle || 'Web Design - AplusZ.app', desc: c.webDesc || 'Professional website built in 7 days.', inner });
 }
