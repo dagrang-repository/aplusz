@@ -18,6 +18,9 @@ id = "d5aa91ac64c340848c409e47f3e88b97"
 APP_URL = "https://aplusz.app"
 OWNER_EMAIL = "dagrang@gmail.com"
 
+[triggers]
+crons = ["37 14 * * *"]
+
 # SECRETS — never put values here. Set them with:
 #   npx wrangler secret put STRIPE_SECRET
 #   npx wrangler secret put STRIPE_WEBHOOK_SECRET

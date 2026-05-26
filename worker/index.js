@@ -213,9 +213,36 @@ async function sendCapNotices(env, reason) {
 }
 
 /* ============================================================
+   DAILY GIFT — cron auto-generates one 30-day code per day
+   at a random minute. Stored as KV dailygift:current.
+   Roulette — global counter: 1 win per 1,500 spins.
+   ============================================================ */
+
+function giftRandCode() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let c = '';
+  const bytes = crypto.getRandomValues(new Uint8Array(10));
+  for (const b of bytes) c += chars[b % chars.length];
+  return c.slice(0,4) + '-' + c.slice(4,8) + '-' + c.slice(8);
+}
+
+async function rotateDailyGift(env) {
+  const code = giftRandCode();
+  await env.AZKV.put('dailygift:current', JSON.stringify({
+    code, created: Math.floor(Date.now() / 1000), claimed: false
+  }));
+  await env.AZKV.put('roulette:spins', '0');
+}
+
+/* ============================================================
    ROUTER
    ============================================================ */
 export default {
+  /* ---- cron: fires daily at a random-offset time (see wrangler.toml) ---- */
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(rotateDailyGift(env));
+  },
+
   async fetch(req, env) {
     const url = new URL(req.url);
     const origin = req.headers.get('origin') || env.APP_URL || '*';
@@ -225,6 +252,31 @@ export default {
       /* ---- public status (drives cap banner + global unlock) ---- */
       if (url.pathname === '/status') {
         return json({ capOn: await capOn(env), year: year() }, 200, origin);
+      }
+
+      /* ---- daily gift: return current code if unclaimed ---- */
+      if (url.pathname === '/daily-gift' && req.method === 'GET') {
+        const raw = await env.AZKV.get('dailygift:current');
+        if (!raw) return json({ code: null }, 200, origin);
+        let g; try { g = JSON.parse(raw); } catch { return json({ code: null }, 200, origin); }
+        if (g.claimed) return json({ code: null }, 200, origin);
+        return json({ code: g.code }, 200, origin);
+      }
+
+      /* ---- roulette spin: global 1-in-1500 win counter ---- */
+      if (url.pathname === '/roulette-spin' && req.method === 'POST') {
+        const spinCount = parseInt((await env.AZKV.get('roulette:spins')) || '0', 10) + 1;
+        await env.AZKV.put('roulette:spins', String(spinCount));
+        const isWin = (spinCount % 1500 === 0);
+        if (isWin) {
+          // generate a fresh roulette-win code (separate from daily gift)
+          const code = giftRandCode();
+          await env.AZKV.put('roulette:wincode:' + spinCount, JSON.stringify({
+            code, created: Math.floor(Date.now() / 1000)
+          }));
+          return json({ win: true, code }, 200, origin);
+        }
+        return json({ win: false }, 200, origin);
       }
 
       /* ---- start checkout (email-first) ---- */
