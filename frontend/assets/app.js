@@ -43,7 +43,7 @@
         opt.dataset.code = codeItem;
         opt.textContent = name;
         opt.addEventListener('click', function () {
-          (i18n.setLang ? i18n.setLang(codeItem) : window.APlusZ.detect.setLang(codeItem));
+          var _m = location.pathname.match(/^\/([a-z]{2})\/(faq|about|feedback)\b/); if (_m) { try { localStorage.setItem('aplusz-lang', codeItem); } catch (e) {} location.pathname = '/' + codeItem + '/' + _m[2]; return; } (i18n.setLang ? i18n.setLang(codeItem) : window.APlusZ.detect.setLang(codeItem));
           closeMenu();
         });
         menu.appendChild(opt);

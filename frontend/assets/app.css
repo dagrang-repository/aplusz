@@ -1,4 +1,4 @@
-/* ============================================================
+﻿/* ============================================================
    APlusZ — App Styles (mobile + desktop responsive)
    File: frontend/assets/app.css
    Save: D:\Destop\AplusZ\frontend\assets\app.css
@@ -231,7 +231,7 @@ a:hover { text-decoration: underline; }
    Row 2 = Legal + © (centered, side by side). */
 .footer {
   text-align: center;
-  padding: clamp(var(--sp-6), 6vw, var(--sp-12)) var(--sp-3);
+  padding: clamp(var(--sp-6), 6vw, var(--sp-12)) var(--sp-3) 80px;
   color: var(--text-dim);
   font-size: var(--fs-sm);
   display: flex;
