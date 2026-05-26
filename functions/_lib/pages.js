@@ -711,7 +711,7 @@ function shell({ lang, page, title, desc, inner }) {
 ${inner}
 </main>
 ${footer(lang)}
-<script defer src="/assets/detect.js"></script><script defer src="/assets/config.js"></script><script defer src="/assets/i18n.js"></script><script defer src="/assets/billing.js"></script><script defer src="/assets/profile.js"></script><script defer src="/assets/app.js"></script></body></html>`;
+<script defer src="/assets/detect.js"></script><script defer src="/assets/config.js"></script><script defer src="/assets/i18n.js"></script><script defer src="/assets/billing.js"></script><script defer src="/assets/alerts.js"></script><script defer src="/assets/profile.js"></script><script defer src="/assets/app.js"></script></body></html>`;
 }
 
 export function buildFaqPage(lang) {
