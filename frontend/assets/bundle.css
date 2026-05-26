@@ -1199,7 +1199,7 @@ a:hover { text-decoration: underline; }
   font-size: var(--fs-xl); font-weight: 800; letter-spacing: -0.02em;
   pointer-events: none;
 }
-.pd-close-wrap { flex: 1; display: flex; justify-content: center; padding-right: 20px; }  /* right half, X centered */
+.pd-close-wrap { flex: 1; display: flex; justify-content: flex-end; padding-right: var(--sp-4);}  /* right half, X centered */
 .pd-close {
   position: relative; z-index: 1;
   width: 40px; height: 40px;
