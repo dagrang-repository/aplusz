@@ -100,7 +100,7 @@ function cacheFirst(req, cacheName) {
     return cache.match(req).then(function (cached) {
       if (cached) return cached;
       return fetch(req).then(function (resp) {
-        if (resp && resp.ok && (resp.type === 'basic' || resp.type === 'cors')) cache.put(req, resp.clone());
+        if (resp && resp.ok && (resp.type === 'basic' || resp.type === 'cors')) { var copy = resp.clone(); cache.put(req, copy); }
         return resp;
       });
     });
@@ -121,7 +121,7 @@ function networkFirstNav(req) {
 
     fetch(req).then(function (resp) {
       if (done) return; done = true; clearTimeout(timer);
-      if (resp && resp.ok) caches.open(STATIC_CACHE).then(function (c) { c.put(req, resp.clone()); });
+      if (resp && resp.ok) { var copy = resp.clone(); caches.open(STATIC_CACHE).then(function (c) { c.put(req, copy); }); }
       resolve(resp);
     }).catch(function () {
       if (done) return; done = true; clearTimeout(timer);
