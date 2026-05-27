@@ -254,16 +254,9 @@ export default {
         return json({ capOn: await capOn(env), year: year() }, 200, origin);
       }
 
-      /* ---- ADMIN: manually fire the daily-gift rotation (test) ---- */
-      if (url.pathname === '/daily-gift/fire' && req.method === 'GET') {
-        if (url.searchParams.get('pass') !== env.ADMIN_PASS) return json({ error: 'forbidden' }, 403, origin);
-        await rotateDailyGift(env);
-        const raw = await env.AZKV.get('dailygift:current');
-        return json({ fired: true, gift: raw ? JSON.parse(raw) : null }, 200, origin);
-      }
-
       /* ---- daily gift: return current code if unclaimed ---- */
       if (url.pathname === '/daily-gift' && req.method === 'GET') {
+        const raw = await env.AZKV.get('dailygift:current');
         if (!raw) return json({ code: null }, 200, origin);
         let g; try { g = JSON.parse(raw); } catch { return json({ code: null }, 200, origin); }
         if (g.claimed) return json({ code: null }, 200, origin);
@@ -643,6 +636,17 @@ export default {
         return json({ paused: action === 'on' }, 200, origin);
       }
 
+      /* ---- admin: manually fire today's daily gift ---- */
+      if (url.pathname === '/admin/fire-gift' && req.method === 'POST') {
+        const reqBody = await req.json().catch(() => ({}));
+        const ok = (reqBody.pass && reqBody.pass === env.ADMIN_PASS)
+          || await validAdminCookie(env, req);
+        if (!ok) return json({ error: 'forbidden' }, 403, origin);
+        await rotateDailyGift(env);
+        const raw = await env.AZKV.get('dailygift:current');
+        return json({ fired: true, gift: raw ? JSON.parse(raw) : null }, 200, origin);
+      }
+
       return json({ error: 'not_found' }, 404, origin);
     } catch (err) {
       return json({ error: 'server', detail: String(err) }, 500, origin);
@@ -751,8 +755,15 @@ border-top-color:#fff;border-radius:50%;animation:s .7s linear infinite;vertical
         <div class="sub" style="margin-top:8px;text-align:center;color:var(--mut);font-size:.75rem">Send this link to your friend. First device to open it is bound for the full period · single use.</div>
       </div>
     </div>
+    <!-- ===== DAILY GIFT (scratch page) ===== -->
+    <div class="gift">
+      <label>Daily Gift · scratch page</label>
+      <button class="btn btn-go" id="fireGift" style="margin-top:8px">Fire today's gift now</button>
+      <div class="msg" id="fireGiftMsg"></div>
+      <div class="sub" style="margin-top:8px;text-align:center;color:var(--mut);font-size:.75rem">Generates today's code instantly (the cron does this automatically at 14:37 UTC). Visible at aplusz.app/gift.</div>
+    </div>
     <!-- ===== FLOW AI LINK SLOT · tell Claude where/label; replace below ===== -->
-    <!-- <div class="foot"><a href="FLOW_AI_URL">Open Flow AI ?</a></div> -->
+    <!-- <div class="foot"><a href="FLOW_AI_URL">Open Flow AI →</a></div> -->
     <div class="gift">
       <label>User feedback - bugs and ideas</label>
       <button class="btn btn-go" id="fbLoad" style="margin-top:8px">Load feedback</button>
@@ -855,6 +866,16 @@ $('giftCopy').onclick = () => {
   try { navigator.clipboard.writeText(i.value); $('giftCopy').textContent='Copied ✓';
         setTimeout(()=>$('giftCopy').textContent='Copy link',1500); }
   catch { document.execCommand('copy'); }
+};
+
+/* ===== DAILY GIFT FIRE ===== */
+$('fireGift').onclick = async () => {
+  const m = $('fireGiftMsg'); m.className='msg'; m.innerHTML='<span class="spin"></span>';
+  try {
+    const r = await api('/admin/fire-gift', {});
+    const code = r.gift && r.gift.code ? r.gift.code : '(unknown)';
+    m.className='msg ok'; m.textContent = 'Today gift is live: ' + code;
+  } catch { m.className='msg err'; m.textContent='Could not fire. Try again.'; }
 };
 
 /* ===== FEEDBACK INBOX ===== */

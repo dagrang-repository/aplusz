@@ -155,7 +155,8 @@
 
   /* Enter searches only once both cities are picked (lets autocomplete bind first) */
   ['origin', 'destination'].forEach(function (id) {
-    document.getElementById(id).addEventListener('keydown', function (e) {
+    var _el = document.getElementById(id); if (!_el) return;
+    _el.addEventListener('keydown', function (e) {
       if (e.key !== 'Enter') return;
       setTimeout(function () {
         var o = document.getElementById('origin').dataset.code;
