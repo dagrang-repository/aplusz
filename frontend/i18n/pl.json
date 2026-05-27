@@ -296,6 +296,11 @@
     "copied": "Skopiowano!",
     "btn_float": "Prezent",
     "spins_left": "Pozostałe próby dzisiaj: {n}",
-    "btn_redeem": "Aktywuj na tym urządzeniu"
+    "btn_redeem": "Aktywuj na tym urządzeniu",
+    "just_taken_title": "Ktoś właśnie to zgarnął!",
+    "just_taken_sub": "Nowy prezent pojawi się w ciągu 24 godzin. W międzyczasie spróbuj ruletki poniżej — tam możesz mieć więcej szczęścia.",
+    "redeemed_ok": "Pro+ aktywny! 👑",
+    "redeem_fail": "Spróbuj ponownie",
+    "retry": "Błąd sieci — zdrap ponownie"
   }
 }

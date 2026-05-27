@@ -296,6 +296,11 @@
     "copied": "¡Copiado!",
     "btn_float": "Regalo",
     "spins_left": "Giros restantes hoy: {n}",
-    "btn_redeem": "Canjear en este dispositivo"
+    "btn_redeem": "Canjear en este dispositivo",
+    "just_taken_title": "¡Alguien acaba de cogerlo!",
+    "just_taken_sub": "Un nuevo regalo aparece en menos de 24 horas. Mientras tanto, prueba la ruleta de abajo — quizás tengas más suerte ahí.",
+    "redeemed_ok": "¡Pro+ activado! 👑",
+    "redeem_fail": "Reintentar",
+    "retry": "Fallo de red — rasca otra vez"
   }
 }

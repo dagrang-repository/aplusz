@@ -296,6 +296,11 @@
     "copied": "已复制！",
     "btn_float": "礼品",
     "spins_left": "今日剩余次数：{n}",
-    "btn_redeem": "在此设备上兑换"
+    "btn_redeem": "在此设备上兑换",
+    "just_taken_title": "有人刚刚抢走了！",
+    "just_taken_sub": "新礼品将在 24 小时内出现。同时，试试下面的轮盘——也许那里你的运气更好。",
+    "redeemed_ok": "Pro+ 已激活！👑",
+    "redeem_fail": "重试",
+    "retry": "网络故障——再刮一次"
   }
 }

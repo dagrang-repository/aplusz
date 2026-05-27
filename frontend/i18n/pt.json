@@ -296,6 +296,11 @@
     "copied": "Copiado!",
     "btn_float": "Presente",
     "spins_left": "Giros restantes hoje: {n}",
-    "btn_redeem": "Resgatar neste dispositivo"
+    "btn_redeem": "Resgatar neste dispositivo",
+    "just_taken_title": "Alguém acabou de pegar!",
+    "just_taken_sub": "Um novo presente aparece em até 24 horas. Enquanto isso, tente a roleta abaixo — sua sorte pode ser melhor lá.",
+    "redeemed_ok": "Pro+ ativado! 👑",
+    "redeem_fail": "Tentar de novo",
+    "retry": "Falha de rede — raspe de novo"
   }
 }

@@ -296,6 +296,11 @@
     "copied": "Kopyalandı!",
     "btn_float": "Hediye",
     "spins_left": "Bugün kalan hak: {n}",
-    "btn_redeem": "Bu cihazda kullan"
+    "btn_redeem": "Bu cihazda kullan",
+    "just_taken_title": "Biri az önce kaptı!",
+    "just_taken_sub": "Yeni hediye 24 saat içinde çıkar. Bu arada aşağıdaki ruleti dene — orada şansın daha iyi olabilir.",
+    "redeemed_ok": "Pro+ etkin! 👑",
+    "redeem_fail": "Tekrar dene",
+    "retry": "Ağ hatası — tekrar kazı"
   }
 }

@@ -296,6 +296,11 @@
     "copied": "Đã sao chép!",
     "btn_float": "Quà",
     "spins_left": "Lượt còn lại hôm nay: {n}",
-    "btn_redeem": "Đổi trên thiết bị này"
+    "btn_redeem": "Đổi trên thiết bị này",
+    "just_taken_title": "Ai đó vừa lấy mất rồi!",
+    "just_taken_sub": "Quà mới xuất hiện trong vòng 24 giờ. Trong lúc đó, thử roulette bên dưới — biết đâu may mắn hơn.",
+    "redeemed_ok": "Đã kích hoạt Pro+! 👑",
+    "redeem_fail": "Thử lại",
+    "retry": "Lỗi mạng — cào lại"
   }
 }

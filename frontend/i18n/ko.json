@@ -296,6 +296,11 @@
     "copied": "복사됨!",
     "btn_float": "선물",
     "spins_left": "오늘 남은 횟수: {n}",
-    "btn_redeem": "이 기기에서 사용"
+    "btn_redeem": "이 기기에서 사용",
+    "just_taken_title": "방금 누군가 가져갔어요!",
+    "just_taken_sub": "새 선물이 24시간 이내에 나타납니다. 그동안 아래 룰렛을 돌려보세요 — 거기서 운이 더 좋을지도 몰라요.",
+    "redeemed_ok": "Pro+ 활성화! 👑",
+    "redeem_fail": "다시 시도",
+    "retry": "네트워크 오류 — 다시 긁어주세요"
   }
 }

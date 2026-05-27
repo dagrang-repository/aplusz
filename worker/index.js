@@ -230,14 +230,13 @@ async function rotateDailyGift(env) {
   const code = giftRandCode();
   const now = Math.floor(Date.now() / 1000);
   await env.AZKV.put('dailygift:current', JSON.stringify({
-    code, created: now, claimed: false
+    code, created: now, claimed: false, claimedAt: null
   }));
   // ALSO register as a redeemable gift code (30 days, single-device) so /redeem accepts it.
   // 40-day KV TTL outlives the 30-day grant, then self-cleans.
   await env.AZKV.put('gift:' + code, JSON.stringify({
     used: 0, deviceId: null, days: 30, exp: null, created: now
   }), { expirationTtl: 40 * 86400 });
-  await env.AZKV.put('roulette:spins', '0');
 }
 
 /* ============================================================
@@ -246,7 +245,10 @@ async function rotateDailyGift(env) {
 export default {
   /* ---- cron: fires daily at a random-offset time (see wrangler.toml) ---- */
   async scheduled(event, env, ctx) {
-    ctx.waitUntil(rotateDailyGift(env));
+    ctx.waitUntil((async () => {
+      await rotateDailyGift(env);
+      await env.AZKV.put('roulette:spins', '0');   // global roulette resets once per day, with the cron only
+    })());
   },
 
   async fetch(req, env) {
@@ -260,13 +262,48 @@ export default {
         return json({ capOn: await capOn(env), year: year() }, 200, origin);
       }
 
-      /* ---- daily gift: return current code if unclaimed ---- */
+      /* ---- daily gift: is a gift AVAILABLE? (never returns the code) ----
+         The code is handed out only by /daily-gift/claim, to the winner.
+         Reset: a code waits forever until claimed; once claimed it stays
+         gone until 24h after the claim, then the next read regenerates. */
       if (url.pathname === '/daily-gift' && req.method === 'GET') {
         const raw = await env.AZKV.get('dailygift:current');
-        if (!raw) return json({ code: null }, 200, origin);
-        let g; try { g = JSON.parse(raw); } catch { return json({ code: null }, 200, origin); }
-        if (g.claimed) return json({ code: null }, 200, origin);
-        return json({ code: g.code }, 200, origin);
+        if (!raw) return json({ available: false }, 200, origin);
+        let g; try { g = JSON.parse(raw); } catch { return json({ available: false }, 200, origin); }
+        if (g.claimed) {
+          const now = Math.floor(Date.now() / 1000);
+          if (g.claimedAt && (now - g.claimedAt) >= 86400) {
+            await rotateDailyGift(env);                 // 24h since claim -> fresh code
+            return json({ available: true }, 200, origin);
+          }
+          return json({ available: false }, 200, origin);
+        }
+        return json({ available: true }, 200, origin);
+      }
+
+      /* ---- daily gift: claim (first scratch wins, atomic, global) ----
+         Returns the code ONLY to the first caller; everyone else gets taken. */
+      if (url.pathname === '/daily-gift/claim' && req.method === 'POST') {
+        const raw = await env.AZKV.get('dailygift:current');
+        if (!raw) return json({ claimed: false, error: 'none' }, 200, origin);
+        let g; try { g = JSON.parse(raw); } catch { return json({ claimed: false, error: 'none' }, 200, origin); }
+        if (g.claimed) {
+          const now = Math.floor(Date.now() / 1000);
+          // if 24h passed since claim, regenerate then award the fresh one to this caller
+          if (g.claimedAt && (now - g.claimedAt) >= 86400) {
+            await rotateDailyGift(env);
+            const fresh = await env.AZKV.get('dailygift:current');
+            let fg; try { fg = JSON.parse(fresh); } catch { return json({ claimed: false, error: 'none' }, 200, origin); }
+            fg.claimed = true; fg.claimedAt = now;
+            await env.AZKV.put('dailygift:current', JSON.stringify(fg));
+            return json({ claimed: true, code: fg.code }, 200, origin);
+          }
+          return json({ claimed: false, error: 'taken' }, 200, origin);
+        }
+        g.claimed = true;
+        g.claimedAt = Math.floor(Date.now() / 1000);
+        await env.AZKV.put('dailygift:current', JSON.stringify(g));
+        return json({ claimed: true, code: g.code }, 200, origin);
       }
 
       /* ---- roulette spin: global 1-in-1500 win counter ---- */

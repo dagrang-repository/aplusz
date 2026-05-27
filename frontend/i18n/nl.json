@@ -296,6 +296,11 @@
     "copied": "Gekopieerd!",
     "btn_float": "Cadeau",
     "spins_left": "Pogingen over vandaag: {n}",
-    "btn_redeem": "Inwisselen op dit apparaat"
+    "btn_redeem": "Inwisselen op dit apparaat",
+    "just_taken_title": "Iemand was net sneller!",
+    "just_taken_sub": "Een nieuw cadeau verschijnt binnen 24 uur. Probeer ondertussen de roulette hieronder — daar heb je misschien meer geluk.",
+    "redeemed_ok": "Pro+ geactiveerd! 👑",
+    "redeem_fail": "Opnieuw",
+    "retry": "Netwerkfout — kras opnieuw"
   }
 }

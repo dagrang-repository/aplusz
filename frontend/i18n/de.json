@@ -296,6 +296,11 @@
     "copied": "Kopiert!",
     "btn_float": "Geschenk",
     "spins_left": "Verbleibende Drehungen heute: {n}",
-    "btn_redeem": "Auf diesem Gerät einlösen"
+    "btn_redeem": "Auf diesem Gerät einlösen",
+    "just_taken_title": "Jemand war schneller!",
+    "just_taken_sub": "Ein neues Geschenk erscheint innerhalb von 24 Stunden. Versuche solange die Roulette unten — dort hast du vielleicht mehr Glück.",
+    "redeemed_ok": "Pro+ aktiviert! 👑",
+    "redeem_fail": "Erneut versuchen",
+    "retry": "Netzwerkfehler — nochmal kratzen"
   }
 }

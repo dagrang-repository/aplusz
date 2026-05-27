@@ -296,6 +296,11 @@
     "copied": "Copié !",
     "btn_float": "Cadeau",
     "spins_left": "Tours restants aujourd'hui : {n}",
-    "btn_redeem": "Activer sur cet appareil"
+    "btn_redeem": "Activer sur cet appareil",
+    "just_taken_title": "Quelqu'un vient de le prendre !",
+    "just_taken_sub": "Un nouveau cadeau apparaît dans les 24 heures. En attendant, tentez la roulette ci-dessous — votre chance y sera peut-être meilleure.",
+    "redeemed_ok": "Pro+ activé ! 👑",
+    "redeem_fail": "Réessayer",
+    "retry": "Problème réseau — grattez à nouveau"
   }
 }

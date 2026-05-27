@@ -296,6 +296,11 @@
     "copied": "Copied!",
     "btn_float": "Gift",
     "spins_left": "Spins left today: {n}",
-    "btn_redeem": "Redeem on this device"
+    "btn_redeem": "Redeem on this device",
+    "just_taken_title": "Someone just grabbed it!",
+    "just_taken_sub": "A new gift appears within 24 hours. Meanwhile, try the roulette below — your luck might be better there.",
+    "redeemed_ok": "Pro+ activated! 👑",
+    "redeem_fail": "Try again",
+    "retry": "Network hiccup — scratch again"
   }
 }

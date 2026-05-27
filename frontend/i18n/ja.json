@@ -296,6 +296,11 @@
     "copied": "コピーしました！",
     "btn_float": "ギフト",
     "spins_left": "本日の残り回数：{n}",
-    "btn_redeem": "この端末で引き換える"
+    "btn_redeem": "この端末で引き換える",
+    "just_taken_title": "誰かが先に取りました！",
+    "just_taken_sub": "新しいギフトは24時間以内に現れます。それまで下のルーレットをお試しを — そちらの方が運がいいかも。",
+    "redeemed_ok": "Pro+ 有効化！👑",
+    "redeem_fail": "再試行",
+    "retry": "通信エラー — もう一度スクラッチ"
   }
 }

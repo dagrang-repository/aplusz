@@ -134,6 +134,7 @@
 .gift-btn:active { transform: scale(.96); }
 .gift-btn-redeem { background: linear-gradient(90deg,#f5b942,#ffcf6b); color: #1a1200; font-weight: 800; }
 .gift-btn-redeem:hover { box-shadow: 0 8px 20px -4px rgba(245,185,66,.5); }
+.spin-dot { display:inline-block; width:14px; height:14px; border:2px solid rgba(0,0,0,.25); border-top-color:#1a1200; border-radius:50%; animation:spin .7s linear infinite; vertical-align:middle; }
 .gift-btn-copy { background: #2563eb; color: #fff; }
 .gift-btn-copy:hover { box-shadow: 0 8px 20px -4px rgba(37,99,235,.5); }
 .gift-btn-share { background: rgba(255,255,255,.07); color: #e2e8f0; border: 1px solid rgba(255,255,255,.1); }
@@ -209,8 +210,8 @@
   z-index: 2;
 }
 .reel-col {
-  width: 52px;
-  height: 56px;
+  width: 68px;
+  height: 74px;
   overflow: hidden;
   border-radius: 8px;
   background: rgba(255,255,255,.03);
@@ -223,12 +224,12 @@
   will-change: transform;
 }
 .reel-item {
-  width: 52px;
-  height: 56px;
+  width: 68px;
+  height: 74px;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.8rem;
+  font-size: 2.3rem;
   flex-shrink: 0;
 }
 
@@ -481,17 +482,23 @@ function recordSpin(){ var d=getSpinData(); d.spins++; saveSpinData(d); }
 function show(id){ var el=document.getElementById(id); if(el) el.style.display=''; }
 function hide(id){ var el=document.getElementById(id); if(el) el.style.display='none'; }
 function showLoading(){ show('gift-loading'); hide('scratch-section'); hide('gift-claimed'); }
-function showScratch(code){
+function showScratch(){
   hide('gift-loading');
-  document.getElementById('scratch-code-text').textContent = code;
+  document.getElementById('scratch-code-text').textContent = '••••••••';  // masked until won
   document.getElementById('scratch-section').style.display = '';
   hide('gift-claimed');
   // wait for layout so the stage has real dimensions before sizing the canvas
-  requestAnimationFrame(function(){ requestAnimationFrame(function(){ initScratchCanvas(code); }); });
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ initScratchCanvas(); }); });
 }
-function showClaimed(){
+function showClaimed(justTaken){
   hide('gift-loading');
   hide('scratch-section');
+  if(justTaken){
+    var title=document.querySelector('#gift-claimed .gift-claimed-title');
+    var sub=document.querySelector('#gift-claimed .gift-claimed-sub');
+    if(title) title.textContent = t('gift.just_taken_title');
+    if(sub) sub.textContent = t('gift.just_taken_sub');
+  }
   document.getElementById('gift-claimed').classList.add('show');
 }
 
@@ -539,7 +546,7 @@ function launchConfetti(){
 }
 
 /* ── SCRATCH CANVAS ── */
-function initScratchCanvas(code){
+function initScratchCanvas(){
   var stage=document.getElementById('scratch-stage');
   var canvas=document.getElementById('scratch-canvas');
   var ctx=canvas.getContext('2d');
@@ -580,17 +587,36 @@ function initScratchCanvas(code){
     if(cleared/total>.45) fullyReveal();
   }
   function fullyReveal(){
+    if(revealed) return;
     revealed=true;
     scratchRevealed=true;
-    canvas.style.transition='opacity .4s';
-    canvas.style.opacity='0';
-    setTimeout(function(){ canvas.style.display='none'; },400);
-    document.getElementById('scratch-hint').classList.add('hidden');
-    var actions=document.getElementById('gift-actions');
-    actions.classList.remove('hidden');
-    actions.classList.add('pop-in');
-    document.getElementById('transfer-note').classList.remove('hidden');
-    launchConfetti();
+    // Scratch = claim. Fire the atomic claim FIRST. The code never exists
+    // in the page until the worker confirms THIS device won it.
+    fetch(API+'/daily-gift/claim', { method:'POST', headers:{'content-type':'application/json'}, body:'{}' })
+      .then(function(r){ return r.json(); })
+      .then(function(d){
+        if(d.claimed && d.code){
+          currentCode = d.code;
+          document.getElementById('scratch-code-text').textContent = d.code;  // inject only now
+          canvas.style.transition='opacity .4s'; canvas.style.opacity='0';
+          setTimeout(function(){ canvas.style.display='none'; },400);
+          document.getElementById('scratch-hint').classList.add('hidden');
+          var actions=document.getElementById('gift-actions');
+          actions.classList.remove('hidden'); actions.classList.add('pop-in');
+          document.getElementById('transfer-note').classList.remove('hidden');
+          launchConfetti();
+        } else {
+          // someone grabbed it first — no code for this device; show gone + roulette
+          showClaimed(true);
+        }
+      })
+      .catch(function(){
+        // network failure: do NOT hand out a code; let them retry
+        revealed=false;
+        var h=document.getElementById('scratch-hint');
+        h.classList.remove('hidden');
+        h.querySelector('span:last-child').textContent = t('gift.retry') || 'Network hiccup — scratch again';
+      });
   }
 
   canvas.addEventListener('mousedown',function(e){ scratching=true; var p=getPos(e); scratch(p.x,p.y); });
@@ -607,7 +633,34 @@ function redeemLink(){ return 'https://aplusz.app/legal/?code=' + encodeURICompo
 
 document.getElementById('btn-redeem').addEventListener('click', function(){
   if(!currentCode) return;
-  window.location.href = redeemLink();
+  var btn=document.getElementById('btn-redeem');
+  var orig=btn.innerHTML;
+  btn.innerHTML='<span class="spin-dot"></span>';
+  btn.disabled=true;
+  var dev='';
+  try{ dev=localStorage.getItem('aplusz-gift-device')||''; }catch(e){}
+  fetch(API+'/redeem',{ method:'POST', headers:{'content-type':'application/json'}, body:JSON.stringify({code:currentCode, deviceId:dev}) })
+    .then(function(r){ return r.json(); })
+    .then(function(d){
+      if(d.valid && d.token){
+        // activate Pro+ on this device — same keys + path the legal page uses
+        try{
+          localStorage.setItem('aplusz-token', d.token);
+          localStorage.setItem('aplusz-tier', d.tier||'proplus');
+          if(d.deviceId) localStorage.setItem('aplusz-gift-device', d.deviceId);
+          if(window.APlusZ && APlusZ.billing && APlusZ.billing.setTier){ APlusZ.billing.setTier(d.tier||'proplus', d.token); }
+        }catch(e){}
+        btn.innerHTML='<span>👑</span> <span>'+t('gift.redeemed_ok')+'</span>';
+        launchConfetti();
+      } else {
+        btn.disabled=false;
+        btn.innerHTML='<span>👑</span> <span>'+t('gift.redeem_fail')+'</span>';
+        setTimeout(function(){ btn.innerHTML=orig; },2200);
+      }
+    })
+    .catch(function(){
+      btn.disabled=false; btn.innerHTML=orig;
+    });
 });
 
 document.getElementById('btn-copy').addEventListener('click', function(){
@@ -634,9 +687,8 @@ function loadGift(){
   fetch(API+'/daily-gift')
     .then(function(r){ return r.json(); })
     .then(function(d){
-      if(d.code){
-        currentCode=d.code;
-        showScratch(d.code);
+      if(d.available){
+        showScratch();           // code is fetched only on claim-win
       } else {
         showClaimed();
       }
@@ -674,7 +726,7 @@ function spinReels(winIndex){
   for(var r=0;r<3;r++){
     (function(reel){
       var strip=document.getElementById('reel-'+reel);
-      var itemH=56;
+      var itemH=74;
       var totalItems=20;
       /* pick landing item */
       var landItem;
@@ -738,7 +790,13 @@ document.getElementById('spin-btn').addEventListener('click', function(){
           msg.textContent=t('gift.roulette_win');
           currentCode=d.code;
           launchConfetti();
-          showScratch(d.code);
+          hide('gift-loading'); hide('gift-claimed');
+          document.getElementById('scratch-code-text').textContent=d.code;
+          document.getElementById('scratch-section').style.display='';
+          var sc=document.getElementById('scratch-canvas'); if(sc) sc.style.display='none';
+          document.getElementById('scratch-hint').classList.add('hidden');
+          var ra=document.getElementById('gift-actions'); ra.classList.remove('hidden'); ra.classList.add('pop-in');
+          document.getElementById('transfer-note').classList.remove('hidden');
           window.scrollTo({top:0,behavior:'smooth'});
         } else {
           msg.className='roulette-msg loss';

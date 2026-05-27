@@ -296,6 +296,11 @@
     "copied": "Disalin!",
     "btn_float": "Hadiah",
     "spins_left": "Sisa putaran hari ini: {n}",
-    "btn_redeem": "Tukarkan di perangkat ini"
+    "btn_redeem": "Tukarkan di perangkat ini",
+    "just_taken_title": "Seseorang baru saja mengambilnya!",
+    "just_taken_sub": "Hadiah baru muncul dalam 24 jam. Sementara itu, coba roulette di bawah — keberuntunganmu mungkin lebih baik di sana.",
+    "redeemed_ok": "Pro+ aktif! 👑",
+    "redeem_fail": "Coba lagi",
+    "retry": "Gangguan jaringan — gores lagi"
   }
 }

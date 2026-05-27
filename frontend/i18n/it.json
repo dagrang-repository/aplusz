@@ -296,6 +296,11 @@
     "copied": "Copiato!",
     "btn_float": "Regalo",
     "spins_left": "Giri rimasti oggi: {n}",
-    "btn_redeem": "Riscatta su questo dispositivo"
+    "btn_redeem": "Riscatta su questo dispositivo",
+    "just_taken_title": "Qualcuno l'ha appena preso!",
+    "just_taken_sub": "Un nuovo regalo appare entro 24 ore. Nel frattempo prova la roulette qui sotto — magari lì sei più fortunato.",
+    "redeemed_ok": "Pro+ attivato! 👑",
+    "redeem_fail": "Riprova",
+    "retry": "Problema di rete — gratta di nuovo"
   }
 }
