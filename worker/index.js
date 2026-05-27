@@ -254,9 +254,16 @@ export default {
         return json({ capOn: await capOn(env), year: year() }, 200, origin);
       }
 
+      /* ---- ADMIN: manually fire the daily-gift rotation (test) ---- */
+      if (url.pathname === '/daily-gift/fire' && req.method === 'GET') {
+        if (url.searchParams.get('pass') !== env.ADMIN_PASS) return json({ error: 'forbidden' }, 403, origin);
+        await rotateDailyGift(env);
+        const raw = await env.AZKV.get('dailygift:current');
+        return json({ fired: true, gift: raw ? JSON.parse(raw) : null }, 200, origin);
+      }
+
       /* ---- daily gift: return current code if unclaimed ---- */
       if (url.pathname === '/daily-gift' && req.method === 'GET') {
-        const raw = await env.AZKV.get('dailygift:current');
         if (!raw) return json({ code: null }, 200, origin);
         let g; try { g = JSON.parse(raw); } catch { return json({ code: null }, 200, origin); }
         if (g.claimed) return json({ code: null }, 200, origin);
