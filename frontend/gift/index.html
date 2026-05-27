@@ -140,7 +140,7 @@
 .gift-btn-share { background: rgba(255,255,255,.07); color: #e2e8f0; border: 1px solid rgba(255,255,255,.1); }
 .gift-btn-share:hover { background: rgba(255,255,255,.12); }
 
-/* Claimed / no gift state */
+/* Claimed / no gift state (legacy separate block — kept but unused) */
 .gift-claimed {
   padding-left: 20px; padding-right: 20px;
   text-align: center;
@@ -151,6 +151,22 @@
 .gift-claimed-icon { font-size: 2.4rem; margin-bottom: 12px; }
 .gift-claimed-title { font-size: 1.1rem; font-weight: 700; margin-bottom: 8px; }
 .gift-claimed-sub { font-size: .88rem; color: #64748b; line-height: 1.6; }
+
+/* Claimed-in-box: keeps scratch-wrap visible, swaps inner content */
+.scratch-claimed-in-box {
+  display: none;
+  padding: 14px 12px 4px;
+  text-align: center;
+}
+.scratch-claimed-in-box.show { display: block; }
+.scratch-claimed-in-box .scib-icon { font-size: 2.2rem; margin-bottom: 12px; }
+.scratch-claimed-in-box .scib-msg {
+  font-size: .92rem;
+  color: #94a3b8;
+  line-height: 1.6;
+  max-width: 340px;
+  margin: 0 auto;
+}
 
 /* Transferable note */
 .gift-transfer-note {
@@ -346,6 +362,12 @@
         <span>👆</span> <span data-i18n="gift.scratch_hint">Scratch here to reveal your code</span>
       </div>
 
+      <!-- Claimed-in-box (shown when today's gift was already taken; keeps the box visible) -->
+      <div class="scratch-claimed-in-box" id="scratch-claimed-in-box">
+        <div class="scib-icon">🎁</div>
+        <div class="scib-msg" id="scib-msg"></div>
+      </div>
+
       <!-- Actions (hidden until revealed) -->
       <div class="gift-actions hidden" id="gift-actions">
         <button class="gift-btn gift-btn-redeem" id="btn-redeem">
@@ -393,9 +415,7 @@
     </button>
     <div class="roulette-spins-left" id="spins-left" style="display:none"></div>
     <div class="roulette-msg" id="roulette-msg"></div>
-  </div>
-
-</div><!-- /roulette-wrap -->
+  </div><!-- /roulette-wrap -->
 
 <footer class="footer">
   <a href="/en/faq" data-i18n="nav.faq">FAQ</a>
@@ -490,17 +510,69 @@ function showScratch(){
   // wait for layout so the stage has real dimensions before sizing the canvas
   requestAnimationFrame(function(){ requestAnimationFrame(function(){ initScratchCanvas(); }); });
 }
+/* ── 20-lang inline copy for the claimed-in-box message
+   (kept inline so the box always speaks the right language even
+   before / without i18n.js loading this key) ── */
+var CLAIMED_I18N = {
+  ar: "تمت المطالبة بهدية اليوم — تُعاد في وقت عشوائي خلال 24 ساعة من آخر مطالبة.",
+  bn: "আজকের উপহার নেওয়া হয়ে গেছে — শেষ গ্রহণের ২৪ ঘণ্টার মধ্যে এলোমেলো সময়ে রিসেট হবে।",
+  de: "Das heutige Geschenk wurde bereits eingelöst — es erscheint zu einer zufälligen Zeit innerhalb von 24 Stunden nach der letzten Einlösung erneut.",
+  en: "Today's gift has been claimed — resets at a random time within 24h from the last claim.",
+  es: "El regalo de hoy ya fue reclamado — se reinicia en un momento aleatorio dentro de las 24 h desde el último reclamo.",
+  fa: "هدیه امروز دریافت شده است — در زمانی تصادفی طی ۲۴ ساعت پس از آخرین دریافت بازنشانی می‌شود.",
+  fr: "Le cadeau du jour a été réclamé — il revient à un moment aléatoire dans les 24 h suivant la dernière prise.",
+  hi: "आज का गिफ़्ट लिया जा चुका है — पिछले क्लेम के 24 घंटे के भीतर किसी रैंडम समय पर रीसेट होगा।",
+  id: "Hadiah hari ini sudah diambil — akan diatur ulang pada waktu acak dalam 24 jam sejak pengambilan terakhir.",
+  it: "Il regalo di oggi è già stato ritirato — si reimposta a un orario casuale entro 24 h dall'ultimo ritiro.",
+  ja: "本日のギフトは受け取られました — 最後の受取から24時間以内のランダムな時刻にリセットされます。",
+  ko: "오늘의 선물은 이미 수령되었습니다 — 마지막 수령 후 24시간 이내의 임의 시점에 재설정됩니다.",
+  nl: "Het cadeau van vandaag is al opgehaald — het verschijnt opnieuw op een willekeurig moment binnen 24 uur na de laatste keer.",
+  pl: "Dzisiejszy prezent został już odebrany — pojawi się ponownie w losowym momencie w ciągu 24 godzin od ostatniego odbioru.",
+  pt: "O presente de hoje já foi resgatado — reinicia em um horário aleatório dentro de 24 h após o último resgate.",
+  ru: "Сегодняшний подарок уже забрали — он сбросится в случайное время в течение 24 часов с момента последнего получения.",
+  th: "ของขวัญวันนี้ถูกรับไปแล้ว — จะรีเซ็ตในเวลาสุ่มภายใน 24 ชม. นับจากการรับครั้งล่าสุด",
+  tr: "Bugünün hediyesi zaten alındı — son alımdan itibaren 24 saat içinde rastgele bir zamanda sıfırlanır.",
+  vi: "Quà hôm nay đã được nhận — sẽ làm mới vào một thời điểm ngẫu nhiên trong vòng 24 giờ kể từ lần nhận cuối.",
+  zh: "今日礼物已被领取 — 将在上次领取后 24 小时内的随机时间重置。"
+};
+function claimedMsg(){
+  try{
+    // Prefer i18n.js key if present (lets translators override later without code change)
+    var k = window.APlusZ && APlusZ.i18n && APlusZ.i18n.t && APlusZ.i18n.t('gift.claimed_in_box');
+    if(k && k !== 'gift.claimed_in_box') return k;
+  }catch(e){}
+  var l = '';
+  try{ l = (localStorage.getItem('aplusz-lang') || navigator.language || 'en').slice(0,2).toLowerCase(); }catch(e){ l = 'en'; }
+  return CLAIMED_I18N[l] || CLAIMED_I18N.en;
+}
+
 function showClaimed(justTaken){
   hide('gift-loading');
-  hide('scratch-section');
-  if(justTaken){
-    var title=document.querySelector('#gift-claimed .gift-claimed-title');
-    var sub=document.querySelector('#gift-claimed .gift-claimed-sub');
-    if(title) title.textContent = t('gift.just_taken_title');
-    if(sub) sub.textContent = t('gift.just_taken_sub');
-  }
-  document.getElementById('gift-claimed').classList.add('show');
+  // KEEP scratch box visible — swap its inner content to a claimed message.
+  var section = document.getElementById('scratch-section');
+  if(section) section.style.display = '';
+  // hide the active gift bits inside the box
+  var stage = document.getElementById('scratch-stage');     if(stage) stage.style.display = 'none';
+  var hint  = document.getElementById('scratch-hint');      if(hint)  hint.style.display  = 'none';
+  var label = document.querySelector('#scratch-section .scratch-label'); if(label) label.style.display = 'none';
+  var acts  = document.getElementById('gift-actions');      if(acts)  acts.classList.add('hidden');
+  // reveal claimed-in-box with localized message
+  var box = document.getElementById('scratch-claimed-in-box');
+  var msg = document.getElementById('scib-msg');
+  if(msg) msg.textContent = claimedMsg();
+  if(box) box.classList.add('show');
+  // suppress the old separate claimed block (kept in DOM for backward compat)
+  var legacy = document.getElementById('gift-claimed');
+  if(legacy) legacy.classList.remove('show');
 }
+// Refresh message when language changes
+document.addEventListener('aplusz:lang', function(){
+  var box = document.getElementById('scratch-claimed-in-box');
+  if(box && box.classList.contains('show')){
+    var msg = document.getElementById('scib-msg');
+    if(msg) msg.textContent = claimedMsg();
+  }
+});
 
 /* ── confetti / crackers ── */
 function launchConfetti(){
