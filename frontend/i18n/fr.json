@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 jours · grattez pour révéler",
     "code_hint": "votre code",
     "scratch_hint": "Grattez ici pour révéler votre code",
-    "btn_copy": "Copier le code",
+    "btn_copy": "Copier le lien",
     "btn_share": "Partager",
     "transfer_note": "Ce code fonctionne sur n'importe quel appareil — le vôtre, celui d'un ami, n'importe qui. Transmettez-le et il s'active là où il est ouvert en premier.",
     "claimed_title": "Le cadeau du jour est parti.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Vous avez utilisé vos essais du jour. Revenez demain !",
     "copied": "Copié !",
     "btn_float": "Cadeau",
-    "spins_left": "Tours restants aujourd'hui : {n}"
+    "spins_left": "Tours restants aujourd'hui : {n}",
+    "btn_redeem": "Activer sur cet appareil"
   }
 }

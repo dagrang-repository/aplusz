@@ -228,9 +228,15 @@ function giftRandCode() {
 
 async function rotateDailyGift(env) {
   const code = giftRandCode();
+  const now = Math.floor(Date.now() / 1000);
   await env.AZKV.put('dailygift:current', JSON.stringify({
-    code, created: Math.floor(Date.now() / 1000), claimed: false
+    code, created: now, claimed: false
   }));
+  // ALSO register as a redeemable gift code (30 days, single-device) so /redeem accepts it.
+  // 40-day KV TTL outlives the 30-day grant, then self-cleans.
+  await env.AZKV.put('gift:' + code, JSON.stringify({
+    used: 0, deviceId: null, days: 30, exp: null, created: now
+  }), { expirationTtl: 40 * 86400 });
   await env.AZKV.put('roulette:spins', '0');
 }
 
@@ -270,9 +276,11 @@ export default {
         const isWin = (spinCount % 1500 === 0);
         if (isWin) {
           const code = giftRandCode();
-          await env.AZKV.put('roulette:wincode:' + spinCount, JSON.stringify({
-            code, created: Math.floor(Date.now() / 1000)
-          }));
+          const now = Math.floor(Date.now() / 1000);
+          // register as a redeemable 30-day single-device gift code
+          await env.AZKV.put('gift:' + code, JSON.stringify({
+            used: 0, deviceId: null, days: 30, exp: null, created: now
+          }), { expirationTtl: 40 * 86400 });
           return json({ win: true, code }, 200, origin);
         }
         return json({ win: false }, 200, origin);

@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 dagen · kras om te onthullen",
     "code_hint": "jouw code",
     "scratch_hint": "Kras hier om je code te onthullen",
-    "btn_copy": "Code kopiëren",
+    "btn_copy": "Link kopiëren",
     "btn_share": "Delen",
     "transfer_note": "Deze code werkt op elk apparaat. Geef hem door — hij activeert zich op het eerste apparaat dat hem opent.",
     "claimed_title": "Het cadeau van vandaag is weg.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Je hebt je pogingen van vandaag gebruikt. Kom morgen terug!",
     "copied": "Gekopieerd!",
     "btn_float": "Cadeau",
-    "spins_left": "Pogingen over vandaag: {n}"
+    "spins_left": "Pogingen over vandaag: {n}",
+    "btn_redeem": "Inwisselen op dit apparaat"
   }
 }

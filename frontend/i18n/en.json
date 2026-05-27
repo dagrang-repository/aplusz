@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 days · scratch to reveal",
     "code_hint": "your code",
     "scratch_hint": "Scratch here to reveal your code",
-    "btn_copy": "Copy code",
+    "btn_copy": "Copy link",
     "btn_share": "Share",
     "transfer_note": "This code works on any device — yours, a friend's, anyone's. Just pass it on and it activates wherever it's first opened.",
     "claimed_title": "Today's gift is gone.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "You've had your tries for today. Come back tomorrow!",
     "copied": "Copied!",
     "btn_float": "Gift",
-    "spins_left": "Spins left today: {n}"
+    "spins_left": "Spins left today: {n}",
+    "btn_redeem": "Redeem on this device"
   }
 }

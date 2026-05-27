@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 ngày · cào để lộ",
     "code_hint": "mã của bạn",
     "scratch_hint": "Cào đây để lộ mã của bạn",
-    "btn_copy": "Sao chép mã",
+    "btn_copy": "Sao chép liên kết",
     "btn_share": "Chia sẻ",
     "transfer_note": "Mã này dùng được trên bất kỳ thiết bị nào. Chuyển cho ai cũng được — nó kích hoạt ở thiết bị đầu tiên mở nó.",
     "claimed_title": "Quà hôm nay đã được lấy rồi.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Bạn đã dùng hết lượt hôm nay. Quay lại ngày mai nhé!",
     "copied": "Đã sao chép!",
     "btn_float": "Quà",
-    "spins_left": "Lượt còn lại hôm nay: {n}"
+    "spins_left": "Lượt còn lại hôm nay: {n}",
+    "btn_redeem": "Đổi trên thiết bị này"
   }
 }

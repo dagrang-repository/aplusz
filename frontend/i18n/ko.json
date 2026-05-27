@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30일 · 긁어서 공개",
     "code_hint": "내 코드",
     "scratch_hint": "여기를 긁어서 코드를 공개하세요",
-    "btn_copy": "코드 복사",
+    "btn_copy": "링크 복사",
     "btn_share": "공유",
     "transfer_note": "이 코드는 어떤 기기에서도 사용할 수 있어요. 전달하면 처음 열린 곳에서 활성화됩니다.",
     "claimed_title": "오늘의 선물이 없어졌어요.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "오늘 시도를 모두 사용했습니다. 내일 다시 오세요!",
     "copied": "복사됨!",
     "btn_float": "선물",
-    "spins_left": "오늘 남은 횟수: {n}"
+    "spins_left": "오늘 남은 횟수: {n}",
+    "btn_redeem": "이 기기에서 사용"
   }
 }

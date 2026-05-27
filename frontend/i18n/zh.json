@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 天 · 刮开即可",
     "code_hint": "你的代码",
     "scratch_hint": "在此刮开以揭示你的代码",
-    "btn_copy": "复制代码",
+    "btn_copy": "复制链接",
     "btn_share": "分享",
     "transfer_note": "此代码可在任何设备上使用。传给任何人，它会在第一次打开的地方激活。",
     "claimed_title": "今日礼品已被领取。",
@@ -295,6 +295,7 @@
     "roulette_maxed": "你今天的机会已用完。明天再来！",
     "copied": "已复制！",
     "btn_float": "礼品",
-    "spins_left": "今日剩余次数：{n}"
+    "spins_left": "今日剩余次数：{n}",
+    "btn_redeem": "在此设备上兑换"
   }
 }

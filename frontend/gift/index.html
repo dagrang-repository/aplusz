@@ -132,6 +132,8 @@
   transition: transform .15s, box-shadow .15s;
 }
 .gift-btn:active { transform: scale(.96); }
+.gift-btn-redeem { background: linear-gradient(90deg,#f5b942,#ffcf6b); color: #1a1200; font-weight: 800; }
+.gift-btn-redeem:hover { box-shadow: 0 8px 20px -4px rgba(245,185,66,.5); }
 .gift-btn-copy { background: #2563eb; color: #fff; }
 .gift-btn-copy:hover { box-shadow: 0 8px 20px -4px rgba(37,99,235,.5); }
 .gift-btn-share { background: rgba(255,255,255,.07); color: #e2e8f0; border: 1px solid rgba(255,255,255,.1); }
@@ -345,8 +347,11 @@
 
       <!-- Actions (hidden until revealed) -->
       <div class="gift-actions hidden" id="gift-actions">
+        <button class="gift-btn gift-btn-redeem" id="btn-redeem">
+          <span>👑</span> <span data-i18n="gift.btn_redeem">Redeem on this device</span>
+        </button>
         <button class="gift-btn gift-btn-copy" id="btn-copy">
-          <span>📋</span> <span data-i18n="gift.btn_copy">Copy code</span>
+          <span>📋</span> <span data-i18n="gift.btn_copy">Copy link</span>
         </button>
         <button class="gift-btn gift-btn-share" id="btn-share">
           <span>🔗</span> <span data-i18n="gift.btn_share">Share</span>
@@ -481,7 +486,8 @@ function showScratch(code){
   document.getElementById('scratch-code-text').textContent = code;
   document.getElementById('scratch-section').style.display = '';
   hide('gift-claimed');
-  initScratchCanvas(code);
+  // wait for layout so the stage has real dimensions before sizing the canvas
+  requestAnimationFrame(function(){ requestAnimationFrame(function(){ initScratchCanvas(code); }); });
 }
 function showClaimed(){
   hide('gift-loading');
@@ -596,9 +602,18 @@ function initScratchCanvas(code){
 }
 
 /* ── Copy & Share ── */
+/* ── Redeem / Copy / Share (all use the one-tap redeem link) ── */
+function redeemLink(){ return 'https://aplusz.app/legal/?code=' + encodeURIComponent(currentCode || ''); }
+
+document.getElementById('btn-redeem').addEventListener('click', function(){
+  if(!currentCode) return;
+  window.location.href = redeemLink();
+});
+
 document.getElementById('btn-copy').addEventListener('click', function(){
   if(!currentCode) return;
-  try{ navigator.clipboard.writeText(currentCode); }catch(e){ var ta=document.createElement('textarea'); ta.value=currentCode; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
+  var link = redeemLink();
+  try{ navigator.clipboard.writeText(link); }catch(e){ var ta=document.createElement('textarea'); ta.value=link; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); }
   var btn=document.getElementById('btn-copy');
   var orig=btn.innerHTML;
   btn.innerHTML='<span>✓</span> <span>'+t('gift.copied')+'</span>';
@@ -607,8 +622,9 @@ document.getElementById('btn-copy').addEventListener('click', function(){
 
 document.getElementById('btn-share').addEventListener('click', function(){
   if(!currentCode) return;
-  var shareText = currentCode + ' — https://aplusz.app';
-  if(navigator.share){ navigator.share({ title:'AplusZ.app — Free Pro+', text: shareText, url:'https://aplusz.app' }); }
+  var link = redeemLink();
+  var shareText = link + ' — https://aplusz.app';
+  if(navigator.share){ navigator.share({ title:'AplusZ.app — Free Pro+', text: shareText, url: link }); }
   else { try{ navigator.clipboard.writeText(shareText); }catch(e){} var btn=document.getElementById('btn-share'); var orig=btn.innerHTML; btn.innerHTML='<span>✓</span> <span>'+t('gift.copied')+'</span>'; setTimeout(function(){ btn.innerHTML=orig; },1800); }
 });
 

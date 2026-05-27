@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 dias · raspe para revelar",
     "code_hint": "seu código",
     "scratch_hint": "Raspe aqui para revelar seu código",
-    "btn_copy": "Copiar código",
+    "btn_copy": "Copiar link",
     "btn_share": "Compartilhar",
     "transfer_note": "Este código funciona em qualquer dispositivo. Passe para qualquer pessoa — ele ativa onde for aberto primeiro.",
     "claimed_title": "O presente de hoje se foi.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Você usou suas tentativas de hoje. Volte amanhã!",
     "copied": "Copiado!",
     "btn_float": "Presente",
-    "spins_left": "Giros restantes hoje: {n}"
+    "spins_left": "Giros restantes hoje: {n}",
+    "btn_redeem": "Resgatar neste dispositivo"
   }
 }

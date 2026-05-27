@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 Tage · kratzen zum Enthüllen",
     "code_hint": "dein Code",
     "scratch_hint": "Hier kratzen, um deinen Code zu enthüllen",
-    "btn_copy": "Code kopieren",
+    "btn_copy": "Link kopieren",
     "btn_share": "Teilen",
     "transfer_note": "Dieser Code funktioniert auf jedem Gerät — deinem, dem eines Freundes, jedem beliebigen. Einfach weitergeben und er aktiviert sich, wo er zuerst geöffnet wird.",
     "claimed_title": "Das heutige Geschenk ist weg.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Du hast deine heutigen Versuche verbraucht. Komm morgen wieder!",
     "copied": "Kopiert!",
     "btn_float": "Geschenk",
-    "spins_left": "Verbleibende Drehungen heute: {n}"
+    "spins_left": "Verbleibende Drehungen heute: {n}",
+    "btn_redeem": "Auf diesem Gerät einlösen"
   }
 }

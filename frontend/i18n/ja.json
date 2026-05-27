@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30日間 · スクラッチして公開",
     "code_hint": "あなたのコード",
     "scratch_hint": "ここをスクラッチしてコードを公開",
-    "btn_copy": "コードをコピー",
+    "btn_copy": "リンクをコピー",
     "btn_share": "シェア",
     "transfer_note": "このコードはどのデバイスでも使えます。渡すだけで、最初に開いたデバイスで有効になります。",
     "claimed_title": "本日のギフトはもうありません。",
@@ -295,6 +295,7 @@
     "roulette_maxed": "今日の分を使い切りました。明日また来てください！",
     "copied": "コピーしました！",
     "btn_float": "ギフト",
-    "spins_left": "本日の残り回数：{n}"
+    "spins_left": "本日の残り回数：{n}",
+    "btn_redeem": "この端末で引き換える"
   }
 }

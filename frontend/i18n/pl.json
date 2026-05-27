@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 dni · zdrap, by odkryć",
     "code_hint": "twój kod",
     "scratch_hint": "Zdrap tutaj, aby odkryć swój kod",
-    "btn_copy": "Skopiuj kod",
+    "btn_copy": "Kopiuj link",
     "btn_share": "Udostępnij",
     "transfer_note": "Ten kod działa na każdym urządzeniu. Przekaż go komukolwiek — aktywuje się tam, gdzie zostanie po raz pierwszy otwarty.",
     "claimed_title": "Dzisiejszy prezent już zniknął.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Wykorzystałeś swoje próby na dziś. Wróć jutro!",
     "copied": "Skopiowano!",
     "btn_float": "Prezent",
-    "spins_left": "Pozostałe próby dzisiaj: {n}"
+    "spins_left": "Pozostałe próby dzisiaj: {n}",
+    "btn_redeem": "Aktywuj na tym urządzeniu"
   }
 }

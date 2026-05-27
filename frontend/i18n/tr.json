@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 gün · kazı kazan",
     "code_hint": "kodunuz",
     "scratch_hint": "Kodunuzu görmek için burayı kazıyın",
-    "btn_copy": "Kodu kopyala",
+    "btn_copy": "Bağlantıyı kopyala",
     "btn_share": "Paylaş",
     "transfer_note": "Bu kod herhangi bir cihazda çalışır. İstediğiniz kişiye gönderin — ilk açıldığı yerde aktive olur.",
     "claimed_title": "Bugünün hediyesi gitti.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Bugünkü denemelerini kullandın. Yarın tekrar gel!",
     "copied": "Kopyalandı!",
     "btn_float": "Hediye",
-    "spins_left": "Bugün kalan hak: {n}"
+    "spins_left": "Bugün kalan hak: {n}",
+    "btn_redeem": "Bu cihazda kullan"
   }
 }

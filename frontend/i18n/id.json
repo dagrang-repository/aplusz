@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 hari · gores untuk ungkap",
     "code_hint": "kode Anda",
     "scratch_hint": "Gores di sini untuk mengungkap kode Anda",
-    "btn_copy": "Salin kode",
+    "btn_copy": "Salin tautan",
     "btn_share": "Bagikan",
     "transfer_note": "Kode ini bisa dipakai di perangkat mana saja. Kirimkan ke siapa saja — aktif di perangkat pertama yang membukanya.",
     "claimed_title": "Hadiah hari ini sudah diambil.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Anda sudah menggunakan semua percobaan hari ini. Kembali besok!",
     "copied": "Disalin!",
     "btn_float": "Hadiah",
-    "spins_left": "Sisa putaran hari ini: {n}"
+    "spins_left": "Sisa putaran hari ini: {n}",
+    "btn_redeem": "Tukarkan di perangkat ini"
   }
 }

@@ -282,7 +282,7 @@
     "scratch_label": "Pro+ 👑 · 30 días · rasca para revelar",
     "code_hint": "tu código",
     "scratch_hint": "Rasca aquí para revelar tu código",
-    "btn_copy": "Copiar código",
+    "btn_copy": "Copiar enlace",
     "btn_share": "Compartir",
     "transfer_note": "Este código funciona en cualquier dispositivo — el tuyo, el de un amigo, cualquiera. Pásalo y se activa donde se abra primero.",
     "claimed_title": "El regalo de hoy ya se fue.",
@@ -295,6 +295,7 @@
     "roulette_maxed": "Has usado tus intentos de hoy. ¡Vuelve mañana!",
     "copied": "¡Copiado!",
     "btn_float": "Regalo",
-    "spins_left": "Giros restantes hoy: {n}"
+    "spins_left": "Giros restantes hoy: {n}",
+    "btn_redeem": "Canjear en este dispositivo"
   }
 }
