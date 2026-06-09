@@ -7,6 +7,35 @@
 (function () {
   'use strict';
 
+  /* trip-toggle-wire: One-way | Return segmented control */
+  (function () {
+    var ow = document.getElementById('trip-oneway');
+    var rt = document.getElementById('trip-return');
+    if (!ow || !rt) return;
+    function L(k) { return (window.APlusZ && window.APlusZ.rt) ? window.APlusZ.rt(k) : null; }
+    function paint() {
+      var on = rt.getAttribute('aria-selected') === 'true';
+      ow.style.background = on ? 'transparent' : 'var(--accent)';
+      ow.style.color = on ? 'var(--text)' : 'var(--bg)';
+      ow.style.fontWeight = on ? '600' : '700';
+      rt.style.background = on ? 'var(--accent)' : 'transparent';
+      rt.style.color = on ? 'var(--bg)' : 'var(--text)';
+      rt.style.fontWeight = on ? '700' : '600';
+    }
+    function setReturn(on) {
+      rt.setAttribute('aria-selected', on ? 'true' : 'false');
+      ow.setAttribute('aria-selected', on ? 'false' : 'true');
+      paint();
+    }
+    function relabel() { var a = L('oneway'), b = L('round'); if (a) ow.textContent = a; if (b) rt.textContent = b; }
+    ow.addEventListener('click', function () { setReturn(false); });
+    rt.addEventListener('click', function () { setReturn(true); });
+    document.addEventListener('aplusz:lang', relabel);
+    relabel();
+    try { if (new URLSearchParams(location.search).get('rt')) setReturn(true); else paint(); }
+    catch (e) { paint(); }
+  })();
+
   var THEME_CYCLE = ['dark-glass', 'light-expressive', 'sepia-reader', 'sepia-night'];
 
   var _y = document.getElementById('year'); if (_y) _y.textContent = new Date().getFullYear();
@@ -130,8 +159,25 @@
     }
     clearHint();
 
-    // url-state: persist route to URL so refresh restores cities + re-fetches price
-    try { history.replaceState(null, '', location.pathname + '?o=' + encodeURIComponent(origin) + '&d=' + encodeURIComponent(dest)); } catch (e) {}
+    // url-state: persist route (+ trip type) to URL so refresh restores cities + re-fetches price
+    var _rt = (function () { var b = document.getElementById('trip-return'); return !!(b && b.getAttribute('aria-selected') === 'true'); })();
+    try { history.replaceState(null, '', location.pathname + '?o=' + encodeURIComponent(origin) + '&d=' + encodeURIComponent(dest) + (_rt ? '&rt=1' : '')); } catch (e) {}
+
+    if (_rt) {
+      var btnR = document.getElementById('search-btn');
+      btnR.disabled = true; btnR.textContent = '\u2026';
+      Promise.all([window.APlusZ.data.search(origin, dest), window.APlusZ.data.search(dest, origin)])
+        .then(function (r) {
+          btnR.disabled = false; btnR.textContent = window.APlusZ.i18n.t('search.button');
+          if (!r[0] && !r[1]) { window.APlusZ.result.renderEmpty(); return; }
+          window.APlusZ.result.renderRound(r[0], r[1]);
+        })
+        .catch(function () {
+          btnR.disabled = false; btnR.textContent = window.APlusZ.i18n.t('search.button');
+          window.APlusZ.result.renderEmpty(window.APlusZ.i18n.t('errors.generic'));
+        });
+      return;
+    }
 
     var btn = document.getElementById('search-btn');
     btn.disabled = true;

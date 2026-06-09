@@ -14,6 +14,7 @@
 
 <script defer src="assets/detect.js"></script>
 <script defer src="assets/config.js"></script>
+<script defer src="assets/rt-i18n.js"></script>
 
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-MX8K89ED1G"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');gtag('config','G-MX8K89ED1G');</script><script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
   (function () {
@@ -66,6 +67,10 @@
         data-i18n-attr="placeholder:search.placeholder_destination">
     </div>
 
+    <div class="trip-toggle" id="trip-toggle" role="tablist" aria-label="Trip type" style="display:flex;gap:6px;margin:0 0 var(--sp-3);background:var(--surface);border:1px solid var(--border);border-radius:var(--r-pill);padding:4px;">
+      <button type="button" class="trip-opt" id="trip-oneway" role="tab" aria-selected="true" style="flex:1;padding:8px 12px;border:0;border-radius:var(--r-pill);background:var(--accent);color:var(--bg);font-weight:700;font-size:var(--fs-sm);cursor:pointer;">One-way</button>
+      <button type="button" class="trip-opt" id="trip-return" role="tab" aria-selected="false" style="flex:1;padding:8px 12px;border:0;border-radius:var(--r-pill);background:transparent;color:var(--text);font-weight:600;font-size:var(--fs-sm);cursor:pointer;">Return</button>
+    </div>
     <button class="primary-btn" id="search-btn" data-i18n="search.button">
       Find lowest fare
     </button>

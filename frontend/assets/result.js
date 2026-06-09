@@ -311,6 +311,63 @@
     });
   }
 
+  /* round-trip renderer: two legs + combined total */
+  function legPriceNum(d) {
+    return (d && typeof d.priceBase === 'number' && !d.livePrice) ? d.priceBase : null;
+  }
+  function legBlock(d, head) {
+    var t = window.APlusZ.i18n.t;
+    var headHtml = '<div class="rt-leg-head" style="font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;margin-bottom:var(--sp-2);">' + head + '</div>';
+    if (!d) {
+      return '<div class="rt-leg">' + headHtml + '<div class="result-empty">' + t('errors.no_data') + '</div></div>';
+    }
+    var primaryBook = d.book || tpBook(d.origin, d.destination, d.bestDeparture);
+    var routeHtml = '<div class="route-line"><span class="city">' + cityLabel(d.origin) + '</span><span class="arrow">\u2192</span><span class="city">' + cityLabel(d.destination) + '</span></div>';
+    var body;
+    if (d.livePrice) {
+      body = '<div class="price-row"><div><div class="price-label">' + t('result.price_label') + '</div><div class="price-value price-live">' + t('result.check_live') + '</div></div></div>';
+    } else {
+      d.priceFormatted = window.APlusZ.detect.formatPrice(d.priceBase, d.currency);
+      body =
+        '<div class="dates">' +
+          '<div class="date-block date-departure"><div class="date-label">' + t('result.best_departure') + '</div><div class="date-value">' + formatDate(d.bestDeparture) + '</div><div class="date-meta">' + t('result.days_out').replace('{n}', daysFromNow(d.bestDeparture)) + '</div></div>' +
+          '<div class="date-block date-booking"><div class="date-label">' + t('result.best_booking') + '</div><div class="date-value">' + formatDate(d.bestBooking) + '</div></div>' +
+        '</div>' +
+        lowBanner(d) +
+        '<div class="price-row"><div><div class="price-label">' + t('result.price_label') + '</div><div class="price-value">' + d.priceFormatted + '</div></div>' + confidenceBadge(d.confidence) + '</div>';
+    }
+    return '<div class="rt-leg">' + headHtml + routeHtml + body +
+      '<a class="cta-book" href="' + primaryBook + '" target="_blank" rel="noopener nofollow">' + t('result.cta_book') + '</a></div>';
+  }
+  function renderRound(out, back) {
+    var t = window.APlusZ.i18n.t;
+    var rtl = function (k) { return (window.APlusZ && window.APlusZ.rt) ? window.APlusZ.rt(k) : k; };
+    var box = document.getElementById('result');
+    if (!box) return;
+    var on = legPriceNum(out), bn = legPriceNum(back);
+    var totalHtml = '';
+    if (on != null && bn != null) {
+      var cur = (out && out.currency) || (back && back.currency) || 'EUR';
+      totalHtml = '<div class="price-row" style="border-top:1px solid var(--border);"><div><div class="price-label">' + rtl('total') + '</div><div class="price-value">' + window.APlusZ.detect.formatPrice(on + bn, cur) + '</div></div></div>';
+    }
+    var affBase = out || back;
+    box.innerHTML =
+      '<article class="result-card">' +
+      legBlock(out, rtl('out')) +
+      '<div style="height:1px;background:var(--border);margin:2px 0;"></div>' +
+      legBlock(back, rtl('back')) +
+      totalHtml +
+      affiliateRow(affBase) +
+      '<div class="share-row"><div class="share-info"><div class="share-title">' + t('result.share_title') + '</div><div class="share-sub">' + t('result.share_sub') + '</div></div><button class="share-btn" id="share-btn">\u2197 ' + t('result.share_btn') + '</button></div>' +
+      '<div class="plan-hint">' + planHint(t) + '</div>' +
+      '</article>';
+    box.classList.remove('hidden');
+    var shareBtn = document.getElementById('share-btn');
+    if (shareBtn) shareBtn.addEventListener('click', function () {
+      if (window.APlusZ.referral) window.APlusZ.referral.share();
+    });
+  }
+
   function renderEmpty(msg) {
     var box = document.getElementById('result');
     if (!box) return;
@@ -319,6 +376,6 @@
   }
 
   window.APlusZ = window.APlusZ || {};
-  window.APlusZ.result = { render: render, renderEmpty: renderEmpty, formatDate: formatDate };
+  window.APlusZ.result = { render: render, renderRound: renderRound, renderEmpty: renderEmpty, formatDate: formatDate };
 
 })();
