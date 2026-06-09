@@ -15,6 +15,18 @@
 <script defer src="assets/detect.js"></script>
 <script defer src="assets/config.js"></script>
 <script defer src="assets/rt-i18n.js"></script>
+<style id="rt-styles">
+.trip-toggle{display:flex;gap:6px;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-pill);padding:4px;}
+.trip-opt{flex:1;padding:8px 12px;border:0;border-radius:var(--r-pill);background:transparent;color:var(--text);font-weight:600;font-size:var(--fs-sm);cursor:pointer;transition:background .15s ease,color .15s ease;}
+.trip-opt[aria-selected="true"]{background:var(--accent);color:var(--bg);font-weight:700;}
+.rt-leg{display:flex;flex-direction:column;gap:var(--sp-3);}
+.rt-leg-head{font-size:var(--fs-xs);text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);font-weight:600;text-align:center;}
+.rt-leg .price-value{font-size:var(--fs-xl);}
+.rt-total .price-value{font-size:var(--fs-3xl);}
+@media (max-width:420px){.rt-total .price-value{font-size:var(--fs-2xl);}}
+@media (min-width:720px){.rt-total .price-value{font-size:var(--fs-hero);}}
+</style>
+<script defer src="assets/rt-i18n.js"></script>
 
 <!-- Google tag (gtag.js) --><script async src="https://www.googletagmanager.com/gtag/js?id=G-MX8K89ED1G"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','AW-995108846');gtag('config','G-MX8K89ED1G');</script><script nowprocket data-noptimize="1" data-cfasync="false" data-wpfc-render="false" seraph-accel-crit="1" data-no-defer="1">
   (function () {
