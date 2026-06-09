@@ -164,11 +164,17 @@
     msgEl.className = 'azb-msg' + (kind ? ' azb-' + kind : '');
   }
 
+  /* MF: read the referral code the visitor arrived with (vref cookie) */
+  function mfGate() {
+    try { var m = (document.cookie || '').match(/(?:^|; )vref=([^;]*)/); return m ? decodeURIComponent(m[1]) : ''; }
+    catch (e) { return ''; }
+  }
+
   function submit() {
     var email = emailEl.value.trim();
     if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)) { say(t('billing.invalid_email'), 'err'); return; }
     busy(true);
-    post('/checkout', { email: email, tier: currentTier }).then(function (r) {
+    post('/checkout', { email: email, tier: currentTier, gate: mfGate() }).then(function (r) {
       busy(false);
       if (r.url) { window.location.href = r.url; return; }
       if (r.existing) { say(t('billing.have_plan', { tier: tierName(r.existing) }), 'ok'); return; }

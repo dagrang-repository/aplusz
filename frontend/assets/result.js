@@ -292,6 +292,7 @@
       if (window.APlusZ.alerts && window.APlusZ.alerts.save) {
         var ok = window.APlusZ.alerts.save(d);
         if (ok) {
+          if (window.mfSaveRoute) window.mfSaveRoute();   /* MF: saved route = paid action */
           saveBtn.classList.add('is-saved');
           var lbl = saveBtn.querySelector('.sr-lbl');
           if (lbl) lbl.textContent = savedWord();
