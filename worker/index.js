@@ -325,7 +325,7 @@ export default {
 
       /* ---- start checkout (email-first) ---- */
       if (url.pathname === '/checkout' && req.method === 'POST') {
-        const { email, tier } = await req.json();
+        const { email, tier, gate } = await req.json();
         const e = normEmail(email);
         if (!validEmail(e)) return json({ error: 'invalid_email' }, 400, origin);
         if (tier !== 'pro' && tier !== 'proplus') return json({ error: 'bad_tier' }, 400, origin);
@@ -340,7 +340,8 @@ export default {
         }
 
         const price = tier === 'proplus' ? env.PRICE_PROPLUS : env.PRICE_PRO;
-        const sess = await stripe(env, 'checkout/sessions', 'POST', {
+        const g = ('' + (gate || '')).trim().slice(0, 64);   // MF referral code (vref); empty = organic sale
+        const form = {
           mode: 'subscription',
           customer_email: e,
           'line_items[0][price]': price,
@@ -348,7 +349,12 @@ export default {
           'subscription_data[metadata][tier]': tier,
           success_url: env.APP_URL + '/?paid={CHECKOUT_SESSION_ID}',
           cancel_url: env.APP_URL + '/?cancelled=1'
-        });
+        };
+        if (g) {                                     // stamp the referrer so MF credits on checkout.session.completed
+          form['metadata[gate]'] = g;                // session-level — the exact field MF's webhook reads
+          form['subscription_data[metadata][gate]'] = g;
+        }
+        const sess = await stripe(env, 'checkout/sessions', 'POST', form);
         if (sess.url) return json({ url: sess.url }, 200, origin);
         return json({ error: 'stripe' }, 502, origin);
       }

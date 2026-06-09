@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    APlusZ — App Logic (Step 8/9/14/16/17 wired)
    File: frontend/assets/app.js
    Save: D:\Destop\AplusZ\frontend\assets\app.js
@@ -129,6 +129,9 @@
       return;
     }
     clearHint();
+
+    // url-state: persist route to URL so refresh restores cities + re-fetches price
+    try { history.replaceState(null, '', location.pathname + '?o=' + encodeURIComponent(origin) + '&d=' + encodeURIComponent(dest)); } catch (e) {}
 
     var btn = document.getElementById('search-btn');
     btn.disabled = true;
