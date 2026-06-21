@@ -424,6 +424,7 @@
       if (!planId) { mount.innerHTML = '<div style=\"font-size:12px;color:#dc2626\">Card option unavailable right now.</div>'; return; }
       try {
         window.paypal.Buttons({
+          fundingSource: window.paypal.FUNDING.CARD,
           style: { layout: 'vertical', shape: 'pill', label: 'subscribe', height: 44 },
           createSubscription: function (data, actions) { return actions.subscription.create({ plan_id: planId }); },
           onApprove: function (data) {
