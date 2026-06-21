@@ -302,7 +302,174 @@
     };
   }
 
-  APZ.billing = { buy: open, restore: restore, tier: tier, isCapOn: function () { return state.capOn; } };
+
+  /* ============================================================
+     Buyer view (multi-rail prepaid): duration + Wise/Wero QR.
+     Replaces the dead Stripe checkout. English-only by design;
+     full i18n pass deferred until explicit "Go". Reuses
+     post()/setTier()/storage + the /buy + /restore endpoints.
+     ============================================================ */
+  var buyModal, buyTier = 'pro', buyMonths = 1, buyEmailEl, buyGoEl, buyMsgEl,
+      buyTotalEl, buyPayEl, buyRefEl, buyWiseLink, buyWeroLink, buyTitleEl;
+  var BUY_PRICE = { pro: 4.99, proplus: 9.99 };
+  var BUY_MONTHS = [1, 3, 6, 12];
+
+  function buyLabel(tier) { return tier === 'proplus' ? 'Pro+ \u{1F451}' : 'Pro \u2B50'; }
+  function buyValidEmail(e) { return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e); }
+
+  function buildBuyModal() {
+    buyModal = document.createElement('div');
+    buyModal.id = 'az-buy';
+    var durBtns = BUY_MONTHS.map(function (m) {
+      return '<button class="azbuy-dur-b" data-m="' + m + '">' + m + ' mo</button>';
+    }).join('');
+    buyModal.innerHTML =
+      '<div class="azbuy-backdrop"></div>' +
+      '<div class="azbuy-card" role="dialog" aria-modal="true" aria-label="Upgrade">' +
+      '  <button class="azbuy-x" aria-label="Close">\u00D7</button>' +
+      '  <h3 class="azbuy-title"></h3>' +
+      '  <div class="azbuy-lbl">Duration</div>' +
+      '  <div class="azbuy-dur">' + durBtns + '</div>' +
+      '  <div class="azbuy-total"></div>' +
+      '  <input class="azbuy-email" type="email" autocomplete="email" inputmode="email" spellcheck="false" placeholder="your@email.com">' +
+      '  <button class="azbuy-go">Get access</button>' +
+      '  <div class="azbuy-pay" hidden>' +
+      '    <div class="azbuy-ref"></div>' +
+      '    <p class="azbuy-paynote">Pay the exact amount and put this reference in the payment note. Your access is emailed within minutes of confirmation.</p>' +
+      '    <div class="azbuy-rails">' +
+      '      <div class="azbuy-rail">' +
+      '        <img class="azbuy-qr" alt="Wise QR" src="assets/wise-qr.png">' +
+      '        <a class="azbuy-paybtn" target="_blank" rel="noopener">Pay with Wise \u25B8</a>' +
+      '      </div>' +
+      '      <div class="azbuy-rail">' +
+      '        <img class="azbuy-qr" alt="Wero QR" src="assets/wero-qr.png">' +
+      '        <a class="azbuy-paybtn" target="_blank" rel="noopener">Pay with Wero \u25B8</a>' +
+      '      </div>' +
+      '    </div>' +
+      '  </div>' +
+      '  <div class="azbuy-msg" aria-live="polite"></div>' +
+      '  <button class="azbuy-restore">Already paid? Restore my access</button>' +
+      '</div>';
+    document.body.appendChild(buyModal);
+
+    buyTitleEl = buyModal.querySelector('.azbuy-title');
+    buyTotalEl = buyModal.querySelector('.azbuy-total');
+    buyEmailEl = buyModal.querySelector('.azbuy-email');
+    buyGoEl = buyModal.querySelector('.azbuy-go');
+    buyMsgEl = buyModal.querySelector('.azbuy-msg');
+    buyPayEl = buyModal.querySelector('.azbuy-pay');
+    buyRefEl = buyModal.querySelector('.azbuy-ref');
+    var links = buyModal.querySelectorAll('.azbuy-paybtn');
+    buyWiseLink = links[0]; buyWeroLink = links[1];
+
+    buyModal.querySelector('.azbuy-x').addEventListener('click', closeBuy);
+    buyModal.querySelector('.azbuy-backdrop').addEventListener('click', closeBuy);
+    buyGoEl.addEventListener('click', buySubmit);
+    buyEmailEl.addEventListener('keydown', function (e) { if (e.key === 'Enter') buySubmit(); });
+    buyModal.querySelector('.azbuy-restore').addEventListener('click', buyRestore);
+    buyModal.querySelectorAll('.azbuy-dur-b').forEach(function (b) {
+      b.addEventListener('click', function () {
+        buyMonths = parseInt(b.getAttribute('data-m'), 10);
+        markDur(); renderTotal(); hidePay();
+      });
+    });
+
+    var css = document.createElement('style');
+    css.textContent = BUY_CSS;
+    document.head.appendChild(css);
+  }
+
+  function markDur() {
+    buyModal.querySelectorAll('.azbuy-dur-b').forEach(function (b) {
+      if (parseInt(b.getAttribute('data-m'), 10) === buyMonths) b.classList.add('on');
+      else b.classList.remove('on');
+    });
+  }
+  function renderTotal() {
+    var tot = (BUY_PRICE[buyTier] * buyMonths).toFixed(2);
+    buyTotalEl.textContent = 'Total: \u20AC' + tot;
+  }
+  function hidePay() { if (buyPayEl) buyPayEl.hidden = true; }
+  function buySay(text, kind) {
+    buyMsgEl.textContent = text;
+    buyMsgEl.className = 'azbuy-msg' + (kind ? ' azbuy-' + kind : '');
+  }
+  function buyBusy(on) {
+    buyGoEl.disabled = on;
+    buyGoEl.textContent = on ? 'Working\u2026' : 'Get access';
+  }
+
+  function openBuy(tierWanted) {
+    if (!buyModal) buildBuyModal();
+    buyTier = (tierWanted === 'proplus') ? 'proplus' : 'pro';
+    buyMonths = 1;
+    buyTitleEl.textContent = 'Upgrade to ' + buyLabel(buyTier);
+    markDur(); renderTotal(); hidePay();
+    buySay('', '');
+    var saved = '';
+    try { saved = localStorage.getItem(LS_EMAIL) || ''; } catch (e) {}
+    buyEmailEl.value = saved;
+    buyModal.classList.add('open');
+    setTimeout(function () { buyEmailEl.focus(); }, 50);
+  }
+  function closeBuy() { if (buyModal) buyModal.classList.remove('open'); }
+
+  function buySubmit() {
+    var email = buyEmailEl.value.trim();
+    if (!buyValidEmail(email)) { buySay('Please enter a valid email.', 'err'); return; }
+    buyBusy(true);
+    post('/buy', { tier: buyTier, months: buyMonths, email: email,
+                   gate: (typeof mfGate === 'function' ? mfGate() : '') }).then(function (r) {
+      buyBusy(false);
+      if (!r || !r.ref) { buySay('Something went wrong. Please try again.', 'err'); return; }
+      try { localStorage.setItem(LS_EMAIL, email); } catch (e) {}
+      buyRefEl.textContent = 'Reference: ' + r.ref + '  \u2022  \u20AC' + r.amount;
+      if (r.pay) {
+        if (r.pay.wise) buyWiseLink.href = r.pay.wise;
+        if (r.pay.wero) buyWeroLink.href = r.pay.wero;
+      }
+      buyPayEl.hidden = false;
+      buySay('', '');
+    }).catch(function () { buyBusy(false); buySay('Network error. Please try again.', 'err'); });
+  }
+
+  function buyRestore() {
+    var email = buyEmailEl.value.trim();
+    if (!buyValidEmail(email)) { buySay('Enter your email to restore access.', 'err'); return; }
+    post('/restore', { email: email }).then(function (r) {
+      if (r && r.found) buySay('Check your inbox for your access link.', 'ok');
+      else buySay('No access found for that email.', 'err');
+    }).catch(function () { buySay('Network error. Please try again.', 'err'); });
+  }
+
+  var BUY_CSS =
+    '#az-buy{position:fixed;inset:0;z-index:10001;display:none;align-items:center;justify-content:center;padding:16px}' +
+    '#az-buy.open{display:flex}' +
+    '#az-buy .azbuy-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.55)}' +
+    '#az-buy .azbuy-card{position:relative;width:100%;max-width:420px;max-height:90vh;overflow:auto;background:#fff;color:#0f172a;border-radius:16px;padding:22px 20px;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:system-ui,Segoe UI,Arial,sans-serif}' +
+    '#az-buy .azbuy-x{position:absolute;top:10px;right:12px;border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:#64748b}' +
+    '#az-buy .azbuy-title{margin:2px 0 16px;font-size:20px;font-weight:700}' +
+    '#az-buy .azbuy-lbl{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}' +
+    '#az-buy .azbuy-dur{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 14px}' +
+    '#az-buy .azbuy-dur-b{padding:10px 0;border:1px solid #e2e8f0;background:#f8fafc;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;color:#0f172a}' +
+    '#az-buy .azbuy-dur-b.on{background:#2563eb;border-color:#2563eb;color:#fff}' +
+    '#az-buy .azbuy-total{font-size:18px;font-weight:700;margin:0 0 16px}' +
+    '#az-buy .azbuy-email{width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin:0 0 12px}' +
+    '#az-buy .azbuy-go{width:100%;padding:13px 0;border:0;border-radius:10px;background:#2563eb;color:#fff;font-weight:700;font-size:15px;cursor:pointer}' +
+    '#az-buy .azbuy-go:disabled{opacity:.6;cursor:default}' +
+    '#az-buy .azbuy-pay{margin-top:18px;border-top:1px solid #e2e8f0;padding-top:16px}' +
+    '#az-buy .azbuy-ref{font-weight:700;font-size:15px;margin:0 0 6px}' +
+    '#az-buy .azbuy-paynote{font-size:13px;color:#475569;line-height:1.5;margin:0 0 16px}' +
+    '#az-buy .azbuy-rails{display:grid;grid-template-columns:1fr 1fr;gap:14px}' +
+    '#az-buy .azbuy-rail{text-align:center;border:1px solid #e2e8f0;border-radius:12px;padding:12px}' +
+    '#az-buy .azbuy-qr{width:100%;max-width:150px;height:auto;display:block;margin:0 auto 10px;image-rendering:pixelated}' +
+    '#az-buy .azbuy-paybtn{display:inline-block;width:100%;box-sizing:border-box;padding:9px 0;border-radius:8px;background:#0f172a;color:#fff;text-decoration:none;font-weight:600;font-size:13px;cursor:pointer}' +
+    '#az-buy .azbuy-msg{font-size:13px;margin-top:12px;min-height:1em}' +
+    '#az-buy .azbuy-err{color:#dc2626}' +
+    '#az-buy .azbuy-ok{color:#16a34a}' +
+    '#az-buy .azbuy-restore{display:block;width:100%;margin-top:14px;border:0;background:transparent;color:#64748b;font-size:13px;text-decoration:underline;cursor:pointer}';
+
+  APZ.billing = { buy: openBuy, restore: restore, tier: tier, isCapOn: function () { return state.capOn; } };
 
   if (document.readyState === 'loading')
     document.addEventListener('DOMContentLoaded', boot);

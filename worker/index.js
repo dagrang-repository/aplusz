@@ -30,8 +30,10 @@ const json = (o, status = 200, origin = '*') =>
   });
 const cors = (origin) => ({
   'access-control-allow-origin': origin,
+  'access-control-allow-credentials': 'true',
   'access-control-allow-methods': 'GET,POST,OPTIONS',
-  'access-control-allow-headers': 'content-type'
+  'access-control-allow-headers': 'content-type',
+  'vary': 'Origin'
 });
 const b64url = (buf) =>
   btoa(String.fromCharCode(...new Uint8Array(buf)))
