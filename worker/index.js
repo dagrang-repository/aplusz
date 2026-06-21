@@ -400,6 +400,134 @@ async function sendGrantEmail(env, to, tier, token, expiry) {
 
 
 /* ============================================================
+   PAYPAL SUBSCRIPTION RAIL (true auto-renew)
+   - /paypal/activate : called after buyer approves; verifies the
+       subscription server-side, mints token via grantTier, emails it.
+   - /paypal/webhook  : PayPal pings on each renewal / cancel.
+       renewal  -> re-mint ~33d token (access tracks payment)
+       cancel/suspend/expire -> let it lapse (rides out paid period)
+   Reuses TIERS / grantTier / createPurchase / sendGrantEmail / D1.
+   Secrets: PAYPAL_CLIENT_ID, PAYPAL_SECRET, PAYPAL_PLAN_PRO,
+            PAYPAL_PLAN_PROPLUS, PAYPAL_WEBHOOK_ID (added later).
+   ============================================================ */
+const PP_API = 'https://api-m.paypal.com';
+const PP_CYCLE_DAYS = 33; // 30-day plan + 3-day grace
+
+async function ppAccessToken(env) {
+  const cred = btoa(env.PAYPAL_CLIENT_ID + ':' + env.PAYPAL_SECRET);
+  const r = await fetch(PP_API + '/v1/oauth2/token', {
+    method: 'POST',
+    headers: { authorization: 'Basic ' + cred, 'content-type': 'application/x-www-form-urlencoded' },
+    body: 'grant_type=client_credentials'
+  });
+  const j = await r.json();
+  return j.access_token;
+}
+
+async function ppGetSubscription(env, subId) {
+  const tok = await ppAccessToken(env);
+  const r = await fetch(PP_API + '/v1/billing/subscriptions/' + encodeURIComponent(subId), {
+    headers: { authorization: 'Bearer ' + tok, 'content-type': 'application/json' }
+  });
+  if (!r.ok) return null;
+  return r.json();
+}
+
+// map a PayPal plan_id back to our tier
+function ppTierForPlan(env, planId) {
+  if (planId && planId === env.PAYPAL_PLAN_PROPLUS) return 'proplus';
+  if (planId && planId === env.PAYPAL_PLAN_PRO) return 'pro';
+  return null;
+}
+
+// shared: given a verified ACTIVE subscription object, grant + (optionally) email
+async function ppGrantFromSub(env, sub, doEmail) {
+  const tier = ppTierForPlan(env, sub.plan_id);
+  if (!tier) return { ok: false, reason: 'unknown_plan' };
+  const email = (sub.subscriber && sub.subscriber.email_address) ? normEmail(sub.subscriber.email_address) : '';
+  const id = 'PP-' + sub.id;            // idempotency key = subscription id
+  const amountCents = TIERS[tier];
+  // ledger row (idempotent); status flips to paid on each grant
+  await createPurchase(env, { id, rail: 'paypal', tier, days: PP_CYCLE_DAYS, email: email || null, amountCents, providerRef: sub.id });
+  const expiry = Math.floor(Date.now() / 1000) + PP_CYCLE_DAYS * 86400;
+  const token = await mintTierToken(env, email, tier, expiry);
+  // persist latest token + mark paid
+  await env.FARES_DB.prepare(
+    "UPDATE purchases SET status='paid', paid_at=?, token=?, email=COALESCE(?,email) WHERE id=?"
+  ).bind(Math.floor(Date.now() / 1000), token, email || null, id).run();
+  if (doEmail && email) { try { await sendGrantEmail(env, email, tier, token, expiry); } catch (e) {} }
+  return { ok: true, tier, email, token, expiry };
+}
+
+// POST /paypal/activate {subscriptionID}  (public, called right after approval)
+async function handlePaypalActivate(env, req, origin) {
+  const b = await req.json().catch(() => ({}));
+  const subId = ('' + (b.subscriptionID || b.subscription_id || '')).trim();
+  if (!subId) return json({ error: 'no_subscription' }, 400, origin);
+  const sub = await ppGetSubscription(env, subId);
+  if (!sub || !sub.id) return json({ error: 'not_found' }, 404, origin);
+  if (sub.status !== 'ACTIVE' && sub.status !== 'APPROVED') {
+    return json({ error: 'not_active', status: sub.status }, 200, origin);
+  }
+  const g = await ppGrantFromSub(env, sub, true);
+  if (!g.ok) return json({ error: g.reason }, 400, origin);
+  return json({ granted: true, tier: g.tier, email: g.email, token: g.token, expiry: g.expiry }, 200, origin);
+}
+
+// verify PayPal webhook signature (skips gracefully until WEBHOOK_ID is set)
+async function ppVerifyWebhook(env, req, rawBody) {
+  if (!env.PAYPAL_WEBHOOK_ID) return true; // not configured yet
+  const tok = await ppAccessToken(env);
+  const h = req.headers;
+  const payload = {
+    auth_algo: h.get('paypal-auth-algo'),
+    cert_url: h.get('paypal-cert-url'),
+    transmission_id: h.get('paypal-transmission-id'),
+    transmission_sig: h.get('paypal-transmission-sig'),
+    transmission_time: h.get('paypal-transmission-time'),
+    webhook_id: env.PAYPAL_WEBHOOK_ID,
+    webhook_event: JSON.parse(rawBody)
+  };
+  const r = await fetch(PP_API + '/v1/notifications/verify-webhook-signature', {
+    method: 'POST',
+    headers: { authorization: 'Bearer ' + tok, 'content-type': 'application/json' },
+    body: JSON.stringify(payload)
+  });
+  const j = await r.json().catch(() => ({}));
+  return j.verification_status === 'SUCCESS';
+}
+
+// POST /paypal/webhook  (PayPal calls this)
+async function handlePaypalWebhook(env, req, origin) {
+  const raw = await req.text();
+  const ok = await ppVerifyWebhook(env, req, raw);
+  if (!ok) return json({ error: 'bad_signature' }, 400, origin);
+  let ev; try { ev = JSON.parse(raw); } catch (e) { return json({ ok: true }, 200, origin); }
+  const type = ev.event_type || '';
+  const res = ev.resource || {};
+  // subscription id can arrive as resource.id (subscription events) or resource.billing_agreement_id (sale events)
+  const subId = res.billing_agreement_id
+    || (res.supplementary_data && res.supplementary_data.related_ids && res.supplementary_data.related_ids.subscription_id)
+    || res.id || '';
+
+  if (type === 'PAYMENT.SALE.COMPLETED' || type === 'PAYMENT.CAPTURE.COMPLETED' || type === 'BILLING.SUBSCRIPTION.ACTIVATED' || type === 'BILLING.SUBSCRIPTION.RE-ACTIVATED') {
+    if (subId) {
+      const sub = await ppGetSubscription(env, subId);
+      if (sub && sub.id && (sub.status === 'ACTIVE' || sub.status === 'APPROVED')) {
+        await ppGrantFromSub(env, sub, false); // renewal: refresh token, no email spam
+      }
+    }
+  } else if (type === 'BILLING.SUBSCRIPTION.CANCELLED' || type === 'BILLING.SUBSCRIPTION.SUSPENDED' || type === 'BILLING.SUBSCRIPTION.EXPIRED') {
+    if (subId) {
+      // mark cancelled; the already-minted token simply rides out its remaining days
+      await env.FARES_DB.prepare("UPDATE purchases SET status='cancelled' WHERE id=?").bind('PP-' + subId).run();
+    }
+  }
+  return json({ ok: true }, 200, origin);
+}
+
+
+/* ============================================================
    ROUTER
    ============================================================ */
 export default {
@@ -846,6 +974,18 @@ export default {
       }
       if (url.pathname === '/admin/markpaid' && req.method === 'POST') {
         return handleAdminMarkpaid(env, req, origin);
+      }
+
+
+      /* ---- paypal subscription rail ---- */
+      if (url.pathname === '/paypal/config' && req.method === 'GET') {
+        return json({ clientId: env.PAYPAL_CLIENT_ID || '', planPro: env.PAYPAL_PLAN_PRO || '', planProplus: env.PAYPAL_PLAN_PROPLUS || '' }, 200, origin);
+      }
+      if (url.pathname === '/paypal/activate' && req.method === 'POST') {
+        return handlePaypalActivate(env, req, origin);
+      }
+      if (url.pathname === '/paypal/webhook' && req.method === 'POST') {
+        return handlePaypalWebhook(env, req, origin);
       }
 
 

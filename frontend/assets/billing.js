@@ -328,6 +328,7 @@
       '<div class="azbuy-card" role="dialog" aria-modal="true" aria-label="Upgrade">' +
       '  <button class="azbuy-x" aria-label="Close">\u00D7</button>' +
       '  <h3 class="azbuy-title"></h3>' +
+      '  <div class="azbuy-pp"><div class="azbuy-pp-lbl">\ud83d\udcb3 Card</div><div id="az-pp-btns"></div></div>' +
       '  <div class="azbuy-lbl">Duration</div>' +
       '  <div class="azbuy-dur">' + durBtns + '</div>' +
       '  <div class="azbuy-total"></div>' +
@@ -404,6 +405,7 @@
     buyTier = (tierWanted === 'proplus') ? 'proplus' : 'pro';
     buyMonths = 1;
     buyTitleEl.textContent = 'Upgrade to ' + buyLabel(buyTier);
+    renderPayPal(buyTier);
     markDur(); renderTotal(); hidePay();
     buySay('', '');
     var saved = '';
@@ -412,6 +414,51 @@
     buyModal.classList.add('open');
     setTimeout(function () { buyEmailEl.focus(); }, 50);
   }
+  function renderPayPal(tier) {
+    var mount = document.getElementById('az-pp-btns');
+    if (!mount) return;
+    mount.innerHTML = '';
+    ppEnsureSdk(function (cfg) {
+      if (!cfg || !window.paypal) { mount.innerHTML = '<div style=\"font-size:12px;color:#dc2626\">Card option unavailable right now.</div>'; return; }
+      var planId = (tier === 'proplus') ? cfg.planProplus : cfg.planPro;
+      if (!planId) { mount.innerHTML = '<div style=\"font-size:12px;color:#dc2626\">Card option unavailable right now.</div>'; return; }
+      try {
+        window.paypal.Buttons({
+          style: { layout: 'vertical', shape: 'pill', label: 'subscribe', height: 44 },
+          createSubscription: function (data, actions) { return actions.subscription.create({ plan_id: planId }); },
+          onApprove: function (data) {
+            buySay('Activating\u2026', '');
+            post('/paypal/activate', { subscriptionID: data.subscriptionID }).then(function (r) {
+              if (r && r.granted) {
+                setTier(r.tier, r.token, r.email);
+                try { if (r.email) localStorage.setItem(LS_EMAIL, r.email); } catch (e) {}
+                buySay('Subscription active \u2713', 'ok');
+                setTimeout(closeBuy, 1300);
+              } else { buySay('Could not activate \u2014 contact support.', 'err'); }
+            }).catch(function () { buySay('Network error. Please try again.', 'err'); });
+          },
+          onError: function () { buySay('Card error. Please try again.', 'err'); }
+        }).render('#az-pp-btns');
+      } catch (e) { mount.innerHTML = '<div style=\"font-size:12px;color:#dc2626\">Card option unavailable right now.</div>'; }
+    });
+  }
+  var ppSdkState = 0, ppCfg = null, ppCbs = [];
+  function ppEnsureSdk(cb) {
+    if (ppSdkState === 2) { cb(ppCfg); return; }
+    ppCbs.push(cb);
+    if (ppSdkState === 1) return;
+    ppSdkState = 1;
+    fetch(API + '/paypal/config').then(function (r) { return r.json(); }).then(function (cfg) {
+      ppCfg = cfg;
+      if (!cfg || !cfg.clientId) { ppSdkState = 0; ppCbs.forEach(function (f) { f(null); }); ppCbs = []; return; }
+      var sc = document.createElement('script');
+      sc.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(cfg.clientId) + '&vault=true&intent=subscription&currency=EUR';
+      sc.onload = function () { ppSdkState = 2; ppCbs.forEach(function (f) { f(ppCfg); }); ppCbs = []; };
+      sc.onerror = function () { ppSdkState = 0; ppCbs.forEach(function (f) { f(null); }); ppCbs = []; };
+      document.head.appendChild(sc);
+    }).catch(function () { ppSdkState = 0; ppCbs.forEach(function (f) { f(null); }); ppCbs = []; });
+  }
+
   function closeBuy() { if (buyModal) buyModal.classList.remove('open'); }
 
   function buySubmit() {
@@ -467,7 +514,9 @@
     '#az-buy .azbuy-msg{font-size:13px;margin-top:12px;min-height:1em}' +
     '#az-buy .azbuy-err{color:#dc2626}' +
     '#az-buy .azbuy-ok{color:#16a34a}' +
-    '#az-buy .azbuy-restore{display:block;width:100%;margin-top:14px;border:0;background:transparent;color:#64748b;font-size:13px;text-decoration:underline;cursor:pointer}';
+    '#az-buy .azbuy-restore{display:block;width:100%;margin-top:14px;border:0;background:transparent;color:#64748b;font-size:13px;text-decoration:underline;cursor:pointer}' +
+    '#az-buy .azbuy-pp{margin:0 0 14px}' +
+    '#az-buy .azbuy-pp-lbl{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}';
 
   APZ.billing = { buy: openBuy, restore: restore, tier: tier, isCapOn: function () { return state.capOn; } };
 
