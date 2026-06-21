@@ -29,3 +29,9 @@ crons = ["37 14 * * *"]
 #   npx wrangler secret put RESEND_KEY
 #   npx wrangler secret put SIGNING_SECRET
 #   npx wrangler secret put ADMIN_PASS
+
+# Fare-intelligence moat
+[[d1_databases]]
+binding = "FARES_DB"
+database_name = "aplusz-fares"
+database_id = "37e7f77d-d242-4de3-a6c3-3faed3463518"

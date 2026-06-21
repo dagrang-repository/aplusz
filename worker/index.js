@@ -15,6 +15,8 @@
    never in this file or the repo. KV namespace binding: AZKV
    ============================================================ */
 
+import { fareRoutes } from "./fare-intelligence/routes.js";
+
 const CAP_CENTS = 6200000;          // €62,000
 const TOKEN_TTL = 30 * 86400;       // 30 days (seconds)
 const MAGIC_TTL = 30 * 60;          // magic link valid 30 min
@@ -239,6 +241,162 @@ async function rotateDailyGift(env) {
   }), { expirationTtl: 40 * 86400 });
 }
 
+// ===== Multi-rail payments — core spine (Phase 1) =============================
+// Paste this block into apluszworker/index.js, ABOVE the fetch handler (so it
+// shares scope with hmac() / b64url() / b64urlStr() / env.SIGNING_SECRET).
+// Credential-free: needs only SIGNING_SECRET (set) + D1 binding env.FARES_DB (live).
+// All four rails (PayPal, Wero, SEPA, crypto) funnel through grantTier().
+
+const TIERS     = { pro: 499, proplus: 999 };  // price in cents (server-authoritative source of truth)
+const DURATIONS = [1, 3, 6, 12];               // prepaid months offered to the buyer
+
+// --- Mint adapter -----------------------------------------------------------
+// Signs a {e,t,x} tier-token for ANY tier + ANY expiry. Inlines the exact same
+// payload + hmac + b64url pattern your makeToken/makeGiftToken already emit, so
+// /validate and billing.js accept these byte-for-byte. (Neither existing signer
+// can do tier+expiry both: makeToken fixes expiry, makeGiftToken fixes tier.)
+async function mintTierToken(env, email, tier, expiryUnix) {
+  const payload = { e: email || '', t: tier, x: expiryUnix };
+  const body = b64urlStr(JSON.stringify(payload));
+  const sig  = b64url(await hmac(env.SIGNING_SECRET, body));
+  return body + '.' + sig;
+}
+
+// --- grantTier: the shared mint every rail calls ----------------------------
+// Mints a prepaid time-block token: `tier` valid for `days` from now.
+async function grantTier(env, { email, tier, days }) {
+  if (!TIERS[tier])           throw new Error('bad tier: ' + tier);
+  if (!Number.isFinite(days)) throw new Error('bad days: ' + days);
+  const expiry = Math.floor(Date.now() / 1000) + days * 86400;
+  const token  = await mintTierToken(env, email, tier, expiry);
+  return { token, expiry, tier, email: email || '' };
+}
+
+// --- createPurchase: park a pending row (idempotent) ------------------------
+// Re-inserting the same id is a silent no-op (ON CONFLICT DO NOTHING).
+async function createPurchase(env, { id, rail, tier, days, email, amountCents, providerRef }) {
+  await env.FARES_DB.prepare(
+    `INSERT INTO purchases (id, rail, tier, days, email, amount_cents, status, provider_ref, created_at)
+     VALUES (?, ?, ?, ?, ?, ?, 'pending', ?, ?)
+     ON CONFLICT(id) DO NOTHING`
+  ).bind(id, rail, tier, days, email || null, amountCents, providerRef || null,
+         Math.floor(Date.now() / 1000)).run();
+  return { id, status: 'pending' };
+}
+
+// --- claimAndGrant: atomic exactly-once claim, then grant -------------------
+// Flips pending->paid for THIS id only. Under concurrent calls for the same id,
+// exactly one wins (changes===1); the rest no-op. Prevents double-grant.
+async function claimAndGrant(env, { id }) {
+  const now = Math.floor(Date.now() / 1000);
+  const upd = await env.FARES_DB.prepare(
+    `UPDATE purchases SET status='paid', paid_at=? WHERE id=? AND status='pending'`
+  ).bind(now, id).run();
+
+  if (!upd.meta || upd.meta.changes !== 1) {
+    return { granted: false, alreadyClaimed: true };   // lost the race, or unknown/paid id
+  }
+  const row = await env.FARES_DB.prepare(
+    `SELECT email, tier, days FROM purchases WHERE id=?`
+  ).bind(id).first();
+
+  const g = await grantTier(env, { email: row.email, tier: row.tier, days: row.days });
+  await env.FARES_DB.prepare(`UPDATE purchases SET token=? WHERE id=?`)
+    .bind(g.token, id).run();
+
+  return { granted: true, token: g.token, email: g.email, tier: g.tier, expiry: g.expiry };
+}
+// ===== end core spine =======================================================
+
+
+/* ============================================================
+   BANK / LINK RAIL (Wise + Wero) — manual-confirm prepaid time
+   ============================================================ */
+const RAILS = {
+  wise: 'https://wise.com/pay/business/sangdagrang',
+  wero: 'https://share.weropay.eu/p/1/c/C0J41ywjKp'
+};
+// months -> granted days (generous to the buyer, never short)
+const DURATION_DAYS = { 1: 31, 3: 92, 6: 184, 12: 366 };
+
+function newRef() {
+  const r = (randCode() + '').replace(/[^a-zA-Z0-9]/g, '');
+  return 'AZ-' + r.slice(0, 8).toUpperCase();
+}
+
+// POST /buy  {tier, months, email?}  (public) -> parks pending, returns pay instructions
+async function handleCheckout(env, req, origin) {
+  const b = await req.json().catch(() => ({}));
+  const tier = ('' + (b.tier || '')).trim();
+  const months = parseInt(b.months, 10);
+  const email = normEmail(b.email);
+  if (!TIERS[tier])            return json({ error: 'bad_tier' }, 400, origin);
+  if (!DURATION_DAYS[months])  return json({ error: 'bad_months' }, 400, origin);
+  if (email && !validEmail(email)) return json({ error: 'bad_email' }, 400, origin);
+
+  const amountCents = TIERS[tier] * months;
+  const days = DURATION_DAYS[months];
+  const ref = newRef();
+  await createPurchase(env, {
+    id: ref, rail: 'bank', tier, days,
+    email: email || null, amountCents, providerRef: null
+  });
+  return json({
+    ref, tier, months, days,
+    amount: (amountCents / 100).toFixed(2), currency: 'EUR',
+    pay: { wise: RAILS.wise, wero: RAILS.wero },
+    note: 'Pay the exact amount, then put ' + ref + ' in the payment reference/note. Your access is emailed once confirmed.'
+  }, 200, origin);
+}
+
+// GET /admin/pending?pass=...  (admin) -> list unpaid purchases
+async function handleAdminPending(env, req, origin, url) {
+  const pass = url.searchParams.get('pass') || '';
+  const ok = (pass && pass === env.ADMIN_PASS) || await validAdminCookie(env, req);
+  if (!ok) return json({ error: 'forbidden' }, 403, origin);
+  const rs = await env.FARES_DB.prepare(
+    `SELECT id, rail, tier, days, email, amount_cents, status, created_at
+       FROM purchases WHERE status='pending' ORDER BY created_at DESC LIMIT 100`
+  ).all();
+  return json({ pending: (rs && rs.results) || [] }, 200, origin);
+}
+
+// POST /admin/markpaid  {pass?, id}  (admin) -> exactly-once claim + grant, then email buyer
+async function handleAdminMarkpaid(env, req, origin) {
+  const b = await req.json().catch(() => ({}));
+  const ok = (b.pass && b.pass === env.ADMIN_PASS) || await validAdminCookie(env, req);
+  if (!ok) return json({ error: 'forbidden' }, 403, origin);
+  const id = ('' + (b.id || '')).trim();
+  if (!id) return json({ error: 'no_id' }, 400, origin);
+  const r = await claimAndGrant(env, { id });
+  let emailed = false;
+  if (r.granted && r.email) {
+    try { await sendGrantEmail(env, r.email, r.tier, r.token, r.expiry); emailed = true; }
+    catch (e) { emailed = false; }
+  }
+  return json(Object.assign({}, r, { emailed }), 200, origin);
+}
+
+// Buyer access email: branded, tier name+icon pair, self-contained ?grant= link.
+async function sendGrantEmail(env, to, tier, token, expiry) {
+  const label = tier === 'proplus' ? 'Pro+ \u{1F451}' : 'Pro \u2B50';
+  const link = (env.APP_URL || 'https://aplusz.app') + '/?grant=' + encodeURIComponent(token);
+  const until = new Date(expiry * 1000).toISOString().slice(0, 10);
+  const html =
+    '<div style="font-family:system-ui,Segoe UI,Arial,sans-serif;max-width:480px;margin:0 auto;color:#0f172a">' +
+      '<h2 style="margin:0 0 12px">Welcome to AplusZ ' + label + '</h2>' +
+      '<p style="margin:0 0 16px;line-height:1.5">Your access is active until <b>' + until + '</b>. Tap below to unlock it on this device:</p>' +
+      '<p style="margin:0 0 20px"><a href="' + link + '" style="display:inline-block;background:#2563eb;color:#fff;text-decoration:none;padding:12px 22px;border-radius:8px;font-weight:600">Unlock ' + label + '</a></p>' +
+      '<p style="margin:0 0 6px;font-size:13px;color:#475569">Or paste this link into your browser:</p>' +
+      '<p style="margin:0 0 20px;font-size:12px;word-break:break-all;color:#475569">' + link + '</p>' +
+      '<hr style="border:none;border-top:1px solid #e2e8f0;margin:20px 0">' +
+      '<p style="margin:0;font-size:12px;color:#94a3b8">AplusZ.app \u2014 the search is free as air, so you fly for less.</p>' +
+    '</div>';
+  const subject = 'Your AplusZ ' + label + ' access is live';
+  return sendMail(env, to, subject, html);
+}
+
+
 /* ============================================================
    ROUTER
    ============================================================ */
@@ -257,6 +415,8 @@ export default {
     if (req.method === 'OPTIONS') return new Response(null, { headers: cors(origin) });
 
     try {
+      { const fr = await fareRoutes(req, env); if (fr) return fr; }
+
       /* ---- public status (drives cap banner + global unlock) ---- */
       if (url.pathname === '/status') {
         return json({ capOn: await capOn(env), year: year() }, 200, origin);
@@ -675,7 +835,19 @@ export default {
         return json({ valid: true, token, deviceId, exp, tier: 'proplus' }, 200, origin);
       }
 
-      /* ---- manual pause / resume (owner only) ---- */
+            /* ---- bank/link rail: buy + admin confirm ---- */
+      if (url.pathname === '/buy' && req.method === 'POST') {
+        return handleCheckout(env, req, origin);
+      }
+      if (url.pathname === '/admin/pending' && req.method === 'GET') {
+        return handleAdminPending(env, req, origin, url);
+      }
+      if (url.pathname === '/admin/markpaid' && req.method === 'POST') {
+        return handleAdminMarkpaid(env, req, origin);
+      }
+
+
+/* ---- manual pause / resume (owner only) ---- */
       if (url.pathname === '/admin/pause' && req.method === 'POST') {
         const reqBody = await req.json().catch(() => ({}));
         const ok = (reqBody.pass && reqBody.pass === env.ADMIN_PASS)

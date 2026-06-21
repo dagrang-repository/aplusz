@@ -1,0 +1,7 @@
+# Add this block to apluszworker's wrangler.toml, then redeploy.
+# Get database_id from the output of:  npx wrangler d1 create aplusz-fares
+
+[[d1_databases]]
+binding       = "FARES_DB"          # referenced in code as env.FARES_DB
+database_name = "aplusz-fares"
+database_id   = ""                  # <-- paste the id printed by `wrangler d1 create`

@@ -199,7 +199,7 @@
   function cleanUrl() {
     try {
       var u = new URL(window.location.href);
-      ['paid', 'magic', 'cancelled'].forEach(function (p) { u.searchParams.delete(p); });
+      ['paid', 'magic', 'cancelled', 'grant'].forEach(function (p) { u.searchParams.delete(p); });
       history.replaceState({}, '', u.pathname + (u.search || '') + u.hash);
     } catch (e) {}
   }
@@ -232,6 +232,16 @@
       }).catch(cleanUrl);
       return bootStatus();
     }
+    // 2b) bank/link-rail grant: the signed token travels in the link itself
+    if (params.get('grant')) {
+      var gtok = params.get('grant');
+      post('/validate', { token: gtok }).then(function (r) {
+        if (r.valid) { setTier(r.tier, gtok, r.email); toast(t('billing.unlocked', { tier: tierName(r.tier) })); }
+        cleanUrl();
+      }).catch(cleanUrl);
+      return bootStatus();
+    }
+
     if (params.get('cancelled')) cleanUrl();
 
     // 3) validate stored token
