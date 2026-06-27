@@ -302,5 +302,10 @@
     "redeemed_ok": "Pro+ aktif! 👑",
     "redeem_fail": "Coba lagi",
     "retry": "Gangguan jaringan — gores lagi"
+  },
+  "consent": {
+    "msg": "Kami menggunakan cookie agar pencarian tetap gratis untuk semua orang.",
+    "ok": "Mengerti",
+    "reopen": "Cookie"
   }
 }

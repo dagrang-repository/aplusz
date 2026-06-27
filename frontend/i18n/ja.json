@@ -302,5 +302,10 @@
     "redeemed_ok": "Pro+ 有効化！👑",
     "redeem_fail": "再試行",
     "retry": "通信エラー — もう一度スクラッチ"
+  },
+  "consent": {
+    "msg": "すべての人が無料で検索できるよう、Cookieを使用しています。",
+    "ok": "了解",
+    "reopen": "Cookie"
   }
 }

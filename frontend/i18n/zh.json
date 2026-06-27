@@ -302,5 +302,10 @@
     "redeemed_ok": "Pro+ 已激活！👑",
     "redeem_fail": "重试",
     "retry": "网络故障——再刮一次"
+  },
+  "consent": {
+    "msg": "我们使用 Cookie，让所有人都能免费搜索。",
+    "ok": "知道了",
+    "reopen": "Cookie"
   }
 }

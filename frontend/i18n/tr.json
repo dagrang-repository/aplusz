@@ -302,5 +302,10 @@
     "redeemed_ok": "Pro+ etkin! 👑",
     "redeem_fail": "Tekrar dene",
     "retry": "Ağ hatası — tekrar kazı"
+  },
+  "consent": {
+    "msg": "Aramayı herkes için ücretsiz tutmak amacıyla çerezler kullanıyoruz.",
+    "ok": "Anladım",
+    "reopen": "Çerezler"
   }
 }

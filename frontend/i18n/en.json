@@ -302,5 +302,10 @@
     "redeemed_ok": "Pro+ activated! 👑",
     "redeem_fail": "Try again",
     "retry": "Network hiccup — scratch again"
+  },
+  "consent": {
+    "msg": "We use cookies to keep the search free for everyone.",
+    "ok": "Got it",
+    "reopen": "Cookies"
   }
 }
