@@ -475,6 +475,31 @@ a:hover { text-decoration: underline; }
 /* ============================================================
    TABLET (=720px)
    ============================================================ */
+
+/* === trip-toggle base appearance (off-inline, governs static look) === */
+.trip-toggle {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--r-pill);
+  padding: 4px;
+  gap: 6px;
+}
+.trip-opt {
+  border: 0;
+  border-radius: var(--r-pill);
+  background: transparent;
+  color: var(--text);
+  font-weight: 600;
+  font-size: var(--fs-sm);
+  cursor: pointer;
+  transition: background var(--dur-fast) var(--ease-spring), color var(--dur-fast) var(--ease-spring);
+}
+.trip-opt[aria-selected="true"] {
+  background: var(--accent);
+  color: var(--bg);
+  font-weight: 700;
+}
+
 @media (min-width: 720px) {
   .topbar { padding: var(--sp-4) var(--sp-8); }
 
@@ -507,17 +532,58 @@ a:hover { text-decoration: underline; }
   /* Horizontal pill search bar */
   .search-card {
     flex-direction: row;
-    align-items: stretch;
+    align-items: center;
     gap: var(--sp-2);
     padding: var(--sp-3);
     border-radius: var(--r-pill);
-    max-width: 880px;
+    max-width: 720px;
     margin: 0 auto;
   }
   .search-card .field {
-    flex: 1;
+    flex: 1 1 0;
+    min-width: 0;
     border-radius: var(--r-pill);
     padding: var(--sp-3) var(--sp-6);
+  }
+  /* trip toggle: size to its two buttons, never stretch */
+  .search-card .trip-toggle {
+    flex: 0 0 auto;
+    margin: 0 !important;
+    align-self: stretch;
+    display: flex;
+    align-items: center;
+  }
+  .search-card .trip-opt {
+    flex: 0 0 auto !important;
+    white-space: nowrap;
+    padding: 8px 16px !important;
+  }
+  /* return-days: small number box, not sentence-wide */
+  .search-card .rt-gap-row {
+    flex: 0 0 116px;
+    margin: 0 !important;
+    align-self: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+  .search-card .rt-gap-row .rt-gap-lbl {
+    font-size: 10px;
+    line-height: 1.15;
+    margin: 0 0 4px;
+    white-space: normal;
+  }
+  .search-card #rt-gap {
+    width: 100%;
+    padding: 9px 10px;
+    text-align: center;
+  }
+  /* readable field text — not shrunk to minimum */
+  .search-card .field input {
+    font-size: var(--fs-base);
+  }
+  .search-card .field label {
+    font-size: var(--fs-xs);
   }
   .swap-btn {
     position: static;
@@ -565,7 +631,7 @@ a:hover { text-decoration: underline; }
     font-size: 1.6rem;
     margin-bottom: var(--sp-16);
   }
-  .search-card { max-width: 960px; }
+  .search-card { max-width: 800px; }
   .result { max-width: 800px; }
 }
 
