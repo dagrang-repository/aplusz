@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "Upgrade to",
     "card_monthly": "💳 Card — renews monthly",
-    "cancel_line": "Not happy? <a href=\"{mail}\">Email me “I want to cancel”</a> — cancelled right away, no questions asked.",
+    "cancel_line": "Cancel anytime — <a href=\"{mail}\">email \"I want to cancel\"</a>, no questions asked.",
     "or_prepay": "or prepay & save 20%",
-    "prepay_lbl": "Prepay (save 20%)"
+    "prepay_lbl": "Prepay (save 20%)",
+    "prepay_optional": "Optional · 20% off",
+    "one_year": "1 year",
+    "n_years": "{n} years",
+    "save20": "save 20%",
+    "per_month": "/ month",
+    "restore": "Already paid? Restore my access",
+    "paynote": "Pay the exact amount and put this reference in the payment note. Your access is emailed within minutes of confirmation."
   }
 }

@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "Yükselt:",
     "card_monthly": "💳 Kart — aylık yenilenir",
-    "cancel_line": "Memnun değil misiniz? <a href=\"{mail}\">Bana \"İptal etmek istiyorum\" yazın</a> — hemen iptal, soru sorulmaz.",
+    "cancel_line": "İstediğin zaman iptal et — <a href=\"{mail}\">\"İptal etmek istiyorum\" yaz</a>, soru sorulmaz.",
     "or_prepay": "veya peşin ödeyip %20 tasarruf edin",
-    "prepay_lbl": "Peşin (−%20)"
+    "prepay_lbl": "Peşin (−%20)",
+    "prepay_optional": "İsteğe bağlı · %20 indirim",
+    "one_year": "1 yıl",
+    "n_years": "{n} yıl",
+    "save20": "%20 indirim",
+    "per_month": "/ ay",
+    "restore": "Zaten ödediniz mi? Erişimi geri yükle",
+    "paynote": "Tam tutarı ödeyin ve bu referansı ödeme notuna ekleyin. Erişiminiz onaydan birkaç dakika sonra e-postayla gönderilir."
   }
 }

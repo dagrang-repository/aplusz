@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "Upgraden naar",
     "card_monthly": "💳 Kaart — wordt maandelijks verlengd",
-    "cancel_line": "Niet tevreden? <a href=\"{mail}\">Mail mij \"Ik wil opzeggen\"</a> — direct opgezegd, geen vragen.",
+    "cancel_line": "Altijd opzegbaar — <a href=\"{mail}\">mail \"Ik wil opzeggen\"</a>, geen vragen.",
     "or_prepay": "of vooruitbetalen & 20% besparen",
-    "prepay_lbl": "Vooruitbetalen (−20%)"
+    "prepay_lbl": "Vooruitbetalen (−20%)",
+    "prepay_optional": "Optioneel · −20%",
+    "one_year": "1 jaar",
+    "n_years": "{n} jaar",
+    "save20": "−20%",
+    "per_month": "/ maand",
+    "restore": "Al betaald? Toegang herstellen",
+    "paynote": "Betaal het exacte bedrag en zet deze referentie in de betalingsnotitie. Je toegang wordt enkele minuten na bevestiging gemaild."
   }
 }

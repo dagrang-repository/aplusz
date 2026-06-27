@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "升级到",
     "card_monthly": "💳 卡 — 每月续订",
-    "cancel_line": "不满意？<a href=\"{mail}\">给我发邮件「我要取消」</a> — 立即取消，不问缘由。",
+    "cancel_line": "随时取消 — <a href=\"{mail}\">发邮件「我要取消」</a>，不问缘由。",
     "or_prepay": "或预付并省 20%",
-    "prepay_lbl": "预付（省20%）"
+    "prepay_lbl": "预付（省20%）",
+    "prepay_optional": "可选 · 省20%",
+    "one_year": "1 年",
+    "n_years": "{n} 年",
+    "save20": "省20%",
+    "per_month": "/ 月",
+    "restore": "已付款？恢复访问",
+    "paynote": "请支付确切金额并在付款备注中填写此编号。确认后几分钟内通过邮件发送访问权限。"
   }
 }

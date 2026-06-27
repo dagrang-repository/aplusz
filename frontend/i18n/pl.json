@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "Przejdź na",
     "card_monthly": "💳 Karta — odnawia się co miesiąc",
-    "cancel_line": "Niezadowolony? <a href=\"{mail}\">Napisz mi „Chcę anulować\"</a> — anulowane od razu, bez pytań.",
+    "cancel_line": "Anuluj w każdej chwili — <a href=\"{mail}\">napisz „Chcę anulować\"</a>, bez pytań.",
     "or_prepay": "lub zapłać z góry i zaoszczędź 20%",
-    "prepay_lbl": "Z góry (−20%)"
+    "prepay_lbl": "Z góry (−20%)",
+    "prepay_optional": "Opcjonalnie · −20%",
+    "one_year": "1 rok",
+    "n_years": "{n} lata",
+    "save20": "−20%",
+    "per_month": "/ miesiąc",
+    "restore": "Już zapłacono? Przywróć dostęp",
+    "paynote": "Zapłać dokładną kwotę i podaj ten numer w tytule płatności. Dostęp wyślemy e-mailem w ciągu kilku minut od potwierdzenia."
   }
 }

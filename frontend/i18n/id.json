@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "Tingkatkan ke",
     "card_monthly": "💳 Kartu — diperpanjang bulanan",
-    "cancel_line": "Tidak puas? <a href=\"{mail}\">Email saya «Saya ingin batal»</a> — langsung dibatalkan, tanpa pertanyaan.",
+    "cancel_line": "Batalkan kapan saja — <a href=\"{mail}\">email «Saya ingin batal»</a>, tanpa pertanyaan.",
     "or_prepay": "atau bayar di muka & hemat 20%",
-    "prepay_lbl": "Bayar di muka (−20%)"
+    "prepay_lbl": "Bayar di muka (−20%)",
+    "prepay_optional": "Opsional · diskon 20%",
+    "one_year": "1 tahun",
+    "n_years": "{n} tahun",
+    "save20": "diskon 20%",
+    "per_month": "/ bulan",
+    "restore": "Sudah bayar? Pulihkan akses",
+    "paynote": "Bayar jumlah yang tepat dan cantumkan referensi ini di catatan pembayaran. Akses Anda dikirim via email beberapa menit setelah konfirmasi."
   }
 }

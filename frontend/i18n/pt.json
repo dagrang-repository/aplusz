@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "Atualizar para",
     "card_monthly": "💳 Cartão — renova mensalmente",
-    "cancel_line": "Não satisfeito? <a href=\"{mail}\">Envie-me «Quero cancelar»</a> — cancelado de imediato, sem perguntas.",
+    "cancel_line": "Cancele quando quiser — <a href=\"{mail}\">envie «Quero cancelar»</a>, sem perguntas.",
     "or_prepay": "ou pague adiantado e poupe 20%",
-    "prepay_lbl": "Adiantado (−20%)"
+    "prepay_lbl": "Adiantado (−20%)",
+    "prepay_optional": "Opcional · −20%",
+    "one_year": "1 ano",
+    "n_years": "{n} anos",
+    "save20": "−20%",
+    "per_month": "/ mês",
+    "restore": "Já pagou? Restaurar o meu acesso",
+    "paynote": "Pague o valor exato e coloque esta referência na nota de pagamento. O seu acesso é enviado por email minutos após a confirmação."
   }
 }

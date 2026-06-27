@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "Nâng cấp lên",
     "card_monthly": "💳 Thẻ — gia hạn hằng tháng",
-    "cancel_line": "Không hài lòng? <a href=\"{mail}\">Gửi email cho tôi «Tôi muốn hủy»</a> — hủy ngay, không hỏi gì.",
+    "cancel_line": "Hủy bất cứ lúc nào — <a href=\"{mail}\">gửi email «Tôi muốn hủy»</a>, không hỏi gì.",
     "or_prepay": "hoặc trả trước & tiết kiệm 20%",
-    "prepay_lbl": "Trả trước (−20%)"
+    "prepay_lbl": "Trả trước (−20%)",
+    "prepay_optional": "Tùy chọn · giảm 20%",
+    "one_year": "1 năm",
+    "n_years": "{n} năm",
+    "save20": "giảm 20%",
+    "per_month": "/ tháng",
+    "restore": "Đã thanh toán? Khôi phục quyền truy cập",
+    "paynote": "Thanh toán đúng số tiền và ghi mã này vào ghi chú thanh toán. Quyền truy cập được gửi qua email vài phút sau khi xác nhận."
   }
 }

@@ -313,8 +313,15 @@
   "buy": {
     "upgrade_to": "Upgrade auf",
     "card_monthly": "💳 Karte — verlängert sich monatlich",
-    "cancel_line": "Nicht zufrieden? <a href=\"{mail}\">Schreib mir „Ich möchte kündigen\"</a> — sofort gekündigt, ohne Nachfragen.",
+    "cancel_line": "Jederzeit kündbar — <a href=\"{mail}\">schreib „Ich möchte kündigen\"</a>, ohne Nachfragen.",
     "or_prepay": "oder im Voraus zahlen & 20 % sparen",
-    "prepay_lbl": "Vorauszahlung (−20 %)"
+    "prepay_lbl": "Vorauszahlung (−20 %)",
+    "prepay_optional": "Optional · −20 %",
+    "one_year": "1 Jahr",
+    "n_years": "{n} Jahre",
+    "save20": "−20 %",
+    "per_month": "/ Monat",
+    "restore": "Schon bezahlt? Zugang wiederherstellen",
+    "paynote": "Zahle den genauen Betrag und gib diese Referenz im Verwendungszweck an. Dein Zugang wird wenige Minuten nach Bestätigung per E-Mail gesendet."
   }
 }
