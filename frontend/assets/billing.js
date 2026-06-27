@@ -310,10 +310,11 @@
      post()/setTier()/storage + the /buy + /restore endpoints.
      ============================================================ */
   var buyModal, buyTier = 'pro', buyMonths = 12, buyEmailEl, buyGoEl, buyMsgEl,
-      buyTotalEl, buyPayEl, buyRefEl, buyWiseLink, buyWeroLink, buyTitleEl;
+      buyTotalEl, buyPayEl, buyRefEl, buyWiseLink, buyWeroLink, buyTitleEl,
+      buyHeroPriceEl, buyPrepayBody;
   var BUY_PRICE = { pro: 4.99, proplus: 9.99 };
-  var BUY_MONTHS = [12, 24];           // prepay blocks (years) for Wise/Wero
-  var BUY_DISCOUNT = 0.8;              // 20% off prepaid
+  var BUY_MONTHS = [12, 24];     // prepay year blocks (Wise/Wero)
+  var BUY_DISCOUNT = 0.8;        // 20% off prepaid
 
   function buyLabel(tier) { return tier === 'proplus' ? 'Pro+ \u{1F451}' : 'Pro \u2B50'; }
   function buyValidEmail(e) { return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e); }
@@ -324,35 +325,41 @@
     var durBtns = BUY_MONTHS.map(function (m) {
       var yrs = m / 12;
       var lbl = yrs === 1 ? '1 year' : yrs + ' years';
-      return '<button class="azbuy-dur-b" data-m="' + m + '">' + lbl + '</button>';
+      return '<button class="azbuy-dur-b" data-m="' + m + '" data-lbl="' + lbl + '">' + lbl + '</button>';
     }).join('');
     buyModal.innerHTML =
       '<div class="azbuy-backdrop"></div>' +
       '<div class="azbuy-card" role="dialog" aria-modal="true" aria-label="Upgrade">' +
       '  <button class="azbuy-x" aria-label="Close">\u00D7</button>' +
       '  <h3 class="azbuy-title"></h3>' +
-      '  <div class="azbuy-pp"><div class="azbuy-pp-lbl">\ud83d\udcb3 Card</div><div id="az-pp-btns"></div></div>' +
-      '  <div class="azbuy-lbl">Duration</div>' +
-      '  <div class="azbuy-dur">' + durBtns + '</div>' +
-      '  <div class="azbuy-total"></div>' +
-      '  <input class="azbuy-email" type="email" autocomplete="email" inputmode="email" spellcheck="false" placeholder="your@email.com">' +
-      '  <button class="azbuy-go">Get access</button>' +
-      '  <div class="azbuy-pay" hidden>' +
-      '    <div class="azbuy-ref"></div>' +
-      '    <p class="azbuy-paynote">Pay the exact amount and put this reference in the payment note. Your access is emailed within minutes of confirmation.</p>' +
-      '    <div class="azbuy-rails">' +
-      '      <div class="azbuy-rail">' +
-      '        <img class="azbuy-qr" alt="Wise QR" src="assets/wise-qr.png">' +
-      '        <a class="azbuy-paybtn" target="_blank" rel="noopener">Pay with Wise \u25B8</a>' +
-      '      </div>' +
-      '      <div class="azbuy-rail">' +
-      '        <img class="azbuy-qr" alt="Wero QR" src="assets/wero-qr.png">' +
-      '        <a class="azbuy-paybtn" target="_blank" rel="noopener">Pay with Wero \u25B8</a>' +
+      // --- TOP: small, muted, optional prepay (Wise/Wero) ---
+      '  <div class="azbuy-prepay">' +
+      '    <div class="azbuy-prepay-lbl"><span data-i18n="buy.prepay_optional">Optional \u00B7 20% off</span></div>' +
+      '    <div class="azbuy-dur">' + durBtns + '</div>' +
+      '    <div class="azbuy-prepay-body" hidden>' +
+      '      <div class="azbuy-total"></div>' +
+      '      <input class="azbuy-email" type="email" autocomplete="email" inputmode="email" spellcheck="false" placeholder="your@email.com">' +
+      '      <button class="azbuy-go">Get access</button>' +
+      '      <div class="azbuy-pay" hidden>' +
+      '        <div class="azbuy-ref"></div>' +
+      '        <p class="azbuy-paynote" data-i18n="buy.paynote">Pay the exact amount and put this reference in the payment note. Your access is emailed within minutes of confirmation.</p>' +
+      '        <div class="azbuy-rails">' +
+      '          <div class="azbuy-rail"><img class="azbuy-qr" alt="Wise QR" src="assets/wise-qr.png"><a class="azbuy-paybtn" target="_blank" rel="noopener">Pay with Wise \u25B8</a></div>' +
+      '          <div class="azbuy-rail"><img class="azbuy-qr" alt="Wero QR" src="assets/wero-qr.png"><a class="azbuy-paybtn" target="_blank" rel="noopener">Pay with Wero \u25B8</a></div>' +
+      '        </div>' +
       '      </div>' +
       '    </div>' +
       '  </div>' +
+      // --- divider ---
+      '  <div class="azbuy-sep"></div>' +
+      // --- CENTER STAGE: big bold monthly PayPal (the hero) ---
+      '  <div class="azbuy-hero">' +
+      '    <div class="azbuy-hero-price"></div>' +
+      '    <div id="az-pp-btns"></div>' +
+      '    <div class="azbuy-cancel" data-i18n-html="buy.cancel_line"></div>' +
+      '  </div>' +
       '  <div class="azbuy-msg" aria-live="polite"></div>' +
-      '  <button class="azbuy-restore">Already paid? Restore my access</button>' +
+      '  <button class="azbuy-restore" data-i18n="buy.restore">Already paid? Restore my access</button>' +
       '</div>';
     document.body.appendChild(buyModal);
 
@@ -374,6 +381,7 @@
     buyModal.querySelectorAll('.azbuy-dur-b').forEach(function (b) {
       b.addEventListener('click', function () {
         buyMonths = parseInt(b.getAttribute('data-m'), 10);
+        if (buyPrepayBody) buyPrepayBody.hidden = false;   // reveal email + Get access on first year pick
         markDur(); renderTotal(); hidePay();
       });
     });
@@ -390,11 +398,16 @@
     });
   }
   function renderTotal() {
-    var full = BUY_PRICE[buyTier] * buyMonths;
-    var tot = (full * BUY_DISCOUNT).toFixed(2);
+    if (!buyTotalEl) return;
     var yrs = buyMonths / 12;
-    var per = yrs === 1 ? '1 year' : yrs + ' years';
-    buyTotalEl.innerHTML = '\u20AC' + tot + ' <span class="azbuy-save">save 20%</span> <span class="azbuy-per">/ ' + per + '</span>';
+    var per = yrs === 1 ? (t('buy.one_year') || '1 year') : (t('buy.n_years') || '{n} years').replace('{n}', yrs);
+    var tot = (BUY_PRICE[buyTier] * buyMonths * BUY_DISCOUNT).toFixed(2);
+    buyTotalEl.innerHTML = per + ' \u2014 \u20AC' + tot + ' <span class="azbuy-save">' + (t('buy.save20') || 'save 20%') + '</span>';
+  }
+  function renderHeroPrice() {
+    if (!buyHeroPriceEl) return;
+    var mo = t('buy.per_month') || '/ month';
+    buyHeroPriceEl.innerHTML = '\u20AC' + BUY_PRICE[buyTier].toFixed(2) + ' <span class="azbuy-hero-mo">' + mo + '</span>';
   }
   function hidePay() { if (buyPayEl) buyPayEl.hidden = true; }
   function buySay(text, kind) {
@@ -410,10 +423,12 @@
     if (!buyModal) return;
     var mail = 'mailto:dagrang@gmail.com?subject=' + encodeURIComponent('I want to cancel') + '&body=' + encodeURIComponent('I want to cancel');
     var defaults = {
-      'buy.card_monthly': '\ud83d\udcb3 Card \u2014 renews monthly',
-      'buy.cancel_line': 'Not happy? <a href="' + mail + '">Email me \u201CI want to cancel\u201D</a> \u2014 cancelled right away, no questions asked.',
-      'buy.or_prepay': 'or prepay & save 20%',
-      'buy.prepay_lbl': 'Prepay (save 20%)'
+      'buy.prepay_optional': 'Optional \u00B7 20% off',
+      'buy.per_month': '/ month',
+      'buy.save20': 'save 20%',
+      'buy.cancel_line': 'Cancel anytime \u2014 <a href="' + mail + '">email \u201CI want to cancel\u201D</a>, no questions asked.',
+      'buy.restore': 'Already paid? Restore my access',
+      'buy.paynote': 'Pay the exact amount and put this reference in the payment note. Your access is emailed within minutes of confirmation.'
     };
     buyModal.querySelectorAll('[data-i18n]').forEach(function (el) {
       var k = el.getAttribute('data-i18n'); var v = t(k);
@@ -423,18 +438,26 @@
     buyModal.querySelectorAll('[data-i18n-html]').forEach(function (el) {
       var k = el.getAttribute('data-i18n-html'); var v = t(k);
       if (v === k && defaults[k]) v = defaults[k];
-      // inject mailto into the cancel line (translations use {mail} placeholder)
-      if (k === 'buy.cancel_line') { v = (v || defaults[k]).replace('{mail}', mail); }
+      if (k === 'buy.cancel_line') v = (v || defaults[k]).replace('{mail}', mail);
       if (v && v !== k) el.innerHTML = v;
+    });
+    // re-render the year button labels in the active language
+    buyModal.querySelectorAll('.azbuy-dur-b').forEach(function (b) {
+      var m = parseInt(b.getAttribute('data-m'), 10), yrs = m / 12;
+      var lbl = yrs === 1 ? (t('buy.one_year') || '1 year') : (t('buy.n_years') || '{n} years').replace('{n}', yrs);
+      b.textContent = lbl;
     });
   }
 
   function openBuy(tierWanted) {
     if (!buyModal) buildBuyModal();
     buyTier = (tierWanted === 'proplus') ? 'proplus' : 'pro';
-    buyMonths = 1;
-    buyTitleEl.textContent = 'Upgrade to ' + buyLabel(buyTier);
+    buyMonths = 12;
+    buyTitleEl.textContent = (t('buy.upgrade_to') || 'Upgrade to') + ' ' + buyLabel(buyTier);
+    renderHeroPrice();
+    translateBuyModal();
     renderPayPal(buyTier);
+    if (buyPrepayBody) buyPrepayBody.hidden = true;   // collapse prepay until a year is picked
     markDur(); renderTotal(); hidePay();
     buySay('', '');
     var saved = '';
@@ -525,7 +548,7 @@
     '#az-buy .azbuy-backdrop{position:absolute;inset:0;background:rgba(15,23,42,.55)}' +
     '#az-buy .azbuy-card{position:relative;width:100%;max-width:420px;max-height:90vh;overflow:auto;background:#fff;color:#0f172a;border-radius:16px;padding:22px 20px;box-shadow:0 20px 60px rgba(0,0,0,.3);font-family:system-ui,Segoe UI,Arial,sans-serif}' +
     '#az-buy .azbuy-x{position:absolute;top:10px;right:12px;border:0;background:transparent;font-size:22px;line-height:1;cursor:pointer;color:#64748b}' +
-    '#az-buy .azbuy-title{margin:2px 0 16px;font-size:20px;font-weight:700}' +
+    '#az-buy .azbuy-title{margin:2px 0 16px;font-size:20px;font-weight:700;text-align:center}' +
     '#az-buy .azbuy-lbl{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}' +
     '#az-buy .azbuy-dur{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 14px}' +
     '#az-buy .azbuy-dur-b{padding:10px 0;border:1px solid #e2e8f0;background:#f8fafc;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;color:#0f172a}' +
@@ -547,14 +570,19 @@
     '#az-buy .azbuy-restore{display:block;width:100%;margin-top:14px;border:0;background:transparent;color:#64748b;font-size:13px;text-decoration:underline;cursor:pointer}' +
     '#az-buy .azbuy-pp{margin:0 0 14px}' +
     '#az-buy .azbuy-pp-lbl{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}' +
-    '#az-buy .azbuy-cancel{font-size:12px;color:#64748b;line-height:1.5;margin:2px 0 6px;text-align:center}' +
-    '#az-buy .azbuy-cancel a{color:#2563eb;text-decoration:underline;font-weight:600}' +
-    '#az-buy .azbuy-orsep{display:flex;align-items:center;text-align:center;color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 10px}' +
-    '#az-buy .azbuy-orsep::before,#az-buy .azbuy-orsep::after{content:"";flex:1;height:1px;background:#e2e8f0}' +
-    '#az-buy .azbuy-orsep span{padding:0 10px}' +
-    '#az-buy .azbuy-save{display:inline-block;font-size:11px;font-weight:700;color:#16a34a;background:rgba(22,163,74,.12);padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:4px}' +
-    '#az-buy .azbuy-per{font-size:13px;color:#64748b;font-weight:600}' +
-    '#az-buy .azbuy-dur{grid-template-columns:repeat(2,1fr)}';
+    '#az-buy .azbuy-prepay{margin:0 0 4px}' +
+    '#az-buy .azbuy-prepay-lbl{text-align:center;font-size:11px;color:#94a3b8;font-weight:600;text-transform:uppercase;letter-spacing:.05em;margin:0 0 8px}' +
+    '#az-buy .azbuy-dur{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin:0 0 10px}' +
+    '#az-buy .azbuy-dur-b{padding:8px 0;border:1px solid #e2e8f0;background:#f8fafc;border-radius:9px;font-weight:600;font-size:13px;cursor:pointer;color:#475569}' +
+    '#az-buy .azbuy-dur-b.on{background:#0f172a;border-color:#0f172a;color:#fff}' +
+    '#az-buy .azbuy-total{font-size:14px;font-weight:700;margin:6px 0 10px;text-align:center}' +
+    '#az-buy .azbuy-save{display:inline-block;font-size:10px;font-weight:700;color:#16a34a;background:rgba(22,163,74,.12);padding:2px 7px;border-radius:999px;margin-left:4px}' +
+    '#az-buy .azbuy-sep{height:1px;background:#e2e8f0;margin:14px 0}' +
+    '#az-buy .azbuy-hero{text-align:center}' +
+    '#az-buy .azbuy-hero-price{font-size:30px;font-weight:800;color:#0f172a;margin:0 0 12px;letter-spacing:-.5px}' +
+    '#az-buy .azbuy-hero-mo{font-size:15px;font-weight:600;color:#64748b}' +
+    '#az-buy .azbuy-cancel{font-size:12px;color:#64748b;line-height:1.5;margin:10px 0 2px}' +
+    '#az-buy .azbuy-cancel a{color:#2563eb;text-decoration:underline;font-weight:600}';
 
   APZ.billing = { buy: openBuy, restore: restore, tier: tier, isCapOn: function () { return state.capOn; } };
 
