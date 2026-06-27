@@ -29,7 +29,9 @@
     "button": "Cari tarif terendah",
     "swap": "Tukar",
     "pick": "Pilih kota dari saran.",
-    "live": "Harga langsung"
+    "live": "Harga langsung",
+    "rt_gap_label": "Pulang X hari setelah berangkat (opsional)",
+    "rt_gap_ph": "mis. 7"
   },
   "result": {
     "best_departure": "Tanggal keberangkatan optimal",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ aktif! 👑",
     "redeem_fail": "Coba lagi",
     "retry": "Gangguan jaringan — gores lagi"
+  },
+  "consent": {
+    "msg": "Kami menggunakan cookie agar pencarian tetap gratis untuk semua orang.",
+    "ok": "Mengerti",
+    "reopen": "Cookie"
   },
   "buy": {
     "upgrade_to": "Tingkatkan ke",

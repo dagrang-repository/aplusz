@@ -29,7 +29,9 @@
     "button": "Trouver le tarif le plus bas",
     "swap": "Inverser",
     "pick": "Choisissez vos villes dans les suggestions.",
-    "live": "Prix en direct"
+    "live": "Prix en direct",
+    "rt_gap_label": "Retour X jours après le départ (facultatif)",
+    "rt_gap_ph": "ex. 7"
   },
   "result": {
     "best_departure": "Date de départ optimale",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ activé ! 👑",
     "redeem_fail": "Réessayer",
     "retry": "Problème réseau — grattez à nouveau"
+  },
+  "consent": {
+    "msg": "Nous utilisons des cookies pour que la recherche reste gratuite pour tous.",
+    "ok": "J'ai compris",
+    "reopen": "Cookies"
   },
   "buy": {
     "upgrade_to": "Passer à",

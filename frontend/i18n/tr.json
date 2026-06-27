@@ -29,7 +29,9 @@
     "button": "En düşük ücreti bul",
     "swap": "Değiştir",
     "pick": "Şehirleri önerilerden seçin.",
-    "live": "Canlı fiyat"
+    "live": "Canlı fiyat",
+    "rt_gap_label": "Kalkıştan X gün sonra dönüş (isteğe bağlı)",
+    "rt_gap_ph": "örn. 7"
   },
   "result": {
     "best_departure": "En uygun kalkış tarihi",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ etkin! 👑",
     "redeem_fail": "Tekrar dene",
     "retry": "Ağ hatası — tekrar kazı"
+  },
+  "consent": {
+    "msg": "Aramayı herkes için ücretsiz tutmak amacıyla çerezler kullanıyoruz.",
+    "ok": "Anladım",
+    "reopen": "Çerezler"
   },
   "buy": {
     "upgrade_to": "Yükselt:",

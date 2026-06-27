@@ -29,7 +29,9 @@
     "button": "Tìm giá thấp nhất",
     "swap": "Hoán đổi",
     "pick": "Chọn thành phố từ gợi ý.",
-    "live": "Giá trực tiếp"
+    "live": "Giá trực tiếp",
+    "rt_gap_label": "Về sau khi đi X ngày (tùy chọn)",
+    "rt_gap_ph": "vd. 7"
   },
   "result": {
     "best_departure": "Ngày khởi hành tối ưu",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Đã kích hoạt Pro+! 👑",
     "redeem_fail": "Thử lại",
     "retry": "Lỗi mạng — cào lại"
+  },
+  "consent": {
+    "msg": "Chúng tôi sử dụng cookie để giữ cho việc tìm kiếm miễn phí cho mọi người.",
+    "ok": "Đã hiểu",
+    "reopen": "Cookie"
   },
   "buy": {
     "upgrade_to": "Nâng cấp lên",

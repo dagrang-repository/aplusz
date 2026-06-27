@@ -29,7 +29,9 @@
     "button": "查找最低票价",
     "swap": "交换",
     "pick": "请从建议中选择城市。",
-    "live": "实时价格"
+    "live": "实时价格",
+    "rt_gap_label": "出发后第 X 天返程（可选）",
+    "rt_gap_ph": "如 7"
   },
   "result": {
     "best_departure": "最佳出发日期",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ 已激活！👑",
     "redeem_fail": "重试",
     "retry": "网络故障——再刮一次"
+  },
+  "consent": {
+    "msg": "我们使用 Cookie，让所有人都能免费搜索。",
+    "ok": "知道了",
+    "reopen": "Cookie"
   },
   "buy": {
     "upgrade_to": "升级到",

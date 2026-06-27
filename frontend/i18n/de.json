@@ -29,7 +29,9 @@
     "button": "Günstigsten Tarif finden",
     "swap": "Tauschen",
     "pick": "Wähle deine Städte aus den Vorschlägen.",
-    "live": "Live-Preis"
+    "live": "Live-Preis",
+    "rt_gap_label": "Rückflug X Tage nach Abflug (optional)",
+    "rt_gap_ph": "z. B. 7"
   },
   "result": {
     "best_departure": "Optimales Abflugdatum",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ aktiviert! 👑",
     "redeem_fail": "Erneut versuchen",
     "retry": "Netzwerkfehler — nochmal kratzen"
+  },
+  "consent": {
+    "msg": "Wir verwenden Cookies, damit die Suche für alle kostenlos bleibt.",
+    "ok": "Verstanden",
+    "reopen": "Cookies"
   },
   "buy": {
     "upgrade_to": "Upgrade auf",

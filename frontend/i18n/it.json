@@ -29,7 +29,9 @@
     "button": "Trova la tariffa più bassa",
     "swap": "Inverti",
     "pick": "Scegli le città tra i suggerimenti.",
-    "live": "Prezzo live"
+    "live": "Prezzo live",
+    "rt_gap_label": "Ritorno X giorni dopo la partenza (facoltativo)",
+    "rt_gap_ph": "es. 7"
   },
   "result": {
     "best_departure": "Data di partenza ottimale",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ attivato! 👑",
     "redeem_fail": "Riprova",
     "retry": "Problema di rete — gratta di nuovo"
+  },
+  "consent": {
+    "msg": "Usiamo i cookie per mantenere la ricerca gratuita per tutti.",
+    "ok": "Ho capito",
+    "reopen": "Cookie"
   },
   "buy": {
     "upgrade_to": "Passa a",

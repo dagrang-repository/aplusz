@@ -29,7 +29,9 @@
     "button": "최저가 찾기",
     "swap": "교체",
     "pick": "추천 목록에서 도시를 선택하세요.",
-    "live": "실시간 가격"
+    "live": "실시간 가격",
+    "rt_gap_label": "출발 X일 후 돌아오기 (선택)",
+    "rt_gap_ph": "예: 7"
   },
   "result": {
     "best_departure": "최적 출발일",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ 활성화! 👑",
     "redeem_fail": "다시 시도",
     "retry": "네트워크 오류 — 다시 긁어주세요"
+  },
+  "consent": {
+    "msg": "모두가 무료로 검색할 수 있도록 쿠키를 사용합니다.",
+    "ok": "확인",
+    "reopen": "쿠키"
   },
   "buy": {
     "upgrade_to": "업그레이드:",

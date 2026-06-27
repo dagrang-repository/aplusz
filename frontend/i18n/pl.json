@@ -29,7 +29,9 @@
     "button": "Znajdź najniższą cenę",
     "swap": "Zamień",
     "pick": "Wybierz miasta z podpowiedzi.",
-    "live": "Cena na żywo"
+    "live": "Cena na żywo",
+    "rt_gap_label": "Powrót X dni po wylocie (opcjonalnie)",
+    "rt_gap_ph": "np. 7"
   },
   "result": {
     "best_departure": "Optymalna data wylotu",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ aktywny! 👑",
     "redeem_fail": "Spróbuj ponownie",
     "retry": "Błąd sieci — zdrap ponownie"
+  },
+  "consent": {
+    "msg": "Używamy plików cookie, aby wyszukiwanie pozostało bezpłatne dla wszystkich.",
+    "ok": "Rozumiem",
+    "reopen": "Pliki cookie"
   },
   "buy": {
     "upgrade_to": "Przejdź na",

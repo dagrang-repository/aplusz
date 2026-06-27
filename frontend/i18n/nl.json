@@ -29,7 +29,9 @@
     "button": "Laagste tarief vinden",
     "swap": "Wisselen",
     "pick": "Kies je steden uit de suggesties.",
-    "live": "Live prijs"
+    "live": "Live prijs",
+    "rt_gap_label": "Terugreis X dagen na vertrek (optioneel)",
+    "rt_gap_ph": "bijv. 7"
   },
   "result": {
     "best_departure": "Optimale vertrekdatum",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ geactiveerd! 👑",
     "redeem_fail": "Opnieuw",
     "retry": "Netwerkfout — kras opnieuw"
+  },
+  "consent": {
+    "msg": "We gebruiken cookies om het zoeken voor iedereen gratis te houden.",
+    "ok": "Begrepen",
+    "reopen": "Cookies"
   },
   "buy": {
     "upgrade_to": "Upgraden naar",

@@ -29,7 +29,9 @@
     "button": "最安値を探す",
     "swap": "入れ替え",
     "pick": "候補から都市を選んでください。",
-    "live": "ライブ価格"
+    "live": "ライブ価格",
+    "rt_gap_label": "出発のX日後に復路（任意）",
+    "rt_gap_ph": "例: 7"
   },
   "result": {
     "best_departure": "最適な出発日",
@@ -302,6 +304,11 @@
     "redeemed_ok": "Pro+ 有効化！👑",
     "redeem_fail": "再試行",
     "retry": "通信エラー — もう一度スクラッチ"
+  },
+  "consent": {
+    "msg": "すべての人が無料で検索できるよう、Cookieを使用しています。",
+    "ok": "了解",
+    "reopen": "Cookie"
   },
   "buy": {
     "upgrade_to": "アップグレード:",
