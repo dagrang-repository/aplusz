@@ -303,9 +303,11 @@
     "redeem_fail": "Réessayer",
     "retry": "Problème réseau — grattez à nouveau"
   },
-  "consent": {
-    "msg": "Nous utilisons des cookies pour que la recherche reste gratuite pour tous.",
-    "ok": "J'ai compris",
-    "reopen": "Cookies"
+  "buy": {
+    "upgrade_to": "Passer à",
+    "card_monthly": "💳 Carte — renouvellement mensuel",
+    "cancel_line": "Pas satisfait ? <a href=\"{mail}\">Écrivez-moi « Je veux annuler »</a> — annulé aussitôt, sans aucune question.",
+    "or_prepay": "ou prépayer et économiser 20 %",
+    "prepay_lbl": "Prépayer (−20 %)"
   }
 }

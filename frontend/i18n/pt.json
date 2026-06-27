@@ -303,9 +303,11 @@
     "redeem_fail": "Tentar de novo",
     "retry": "Falha de rede — raspe de novo"
   },
-  "consent": {
-    "msg": "Usamos cookies para manter a pesquisa gratuita para todos.",
-    "ok": "Entendi",
-    "reopen": "Cookies"
+  "buy": {
+    "upgrade_to": "Atualizar para",
+    "card_monthly": "💳 Cartão — renova mensalmente",
+    "cancel_line": "Não satisfeito? <a href=\"{mail}\">Envie-me «Quero cancelar»</a> — cancelado de imediato, sem perguntas.",
+    "or_prepay": "ou pague adiantado e poupe 20%",
+    "prepay_lbl": "Adiantado (−20%)"
   }
 }

@@ -309,10 +309,11 @@
      full i18n pass deferred until explicit "Go". Reuses
      post()/setTier()/storage + the /buy + /restore endpoints.
      ============================================================ */
-  var buyModal, buyTier = 'pro', buyMonths = 1, buyEmailEl, buyGoEl, buyMsgEl,
+  var buyModal, buyTier = 'pro', buyMonths = 12, buyEmailEl, buyGoEl, buyMsgEl,
       buyTotalEl, buyPayEl, buyRefEl, buyWiseLink, buyWeroLink, buyTitleEl;
   var BUY_PRICE = { pro: 4.99, proplus: 9.99 };
-  var BUY_MONTHS = [1, 3, 6, 12];
+  var BUY_MONTHS = [12, 24];           // prepay blocks (years) for Wise/Wero
+  var BUY_DISCOUNT = 0.8;              // 20% off prepaid
 
   function buyLabel(tier) { return tier === 'proplus' ? 'Pro+ \u{1F451}' : 'Pro \u2B50'; }
   function buyValidEmail(e) { return /^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(e); }
@@ -321,7 +322,9 @@
     buyModal = document.createElement('div');
     buyModal.id = 'az-buy';
     var durBtns = BUY_MONTHS.map(function (m) {
-      return '<button class="azbuy-dur-b" data-m="' + m + '">' + m + ' mo</button>';
+      var yrs = m / 12;
+      var lbl = yrs === 1 ? '1 year' : yrs + ' years';
+      return '<button class="azbuy-dur-b" data-m="' + m + '">' + lbl + '</button>';
     }).join('');
     buyModal.innerHTML =
       '<div class="azbuy-backdrop"></div>' +
@@ -387,8 +390,11 @@
     });
   }
   function renderTotal() {
-    var tot = (BUY_PRICE[buyTier] * buyMonths).toFixed(2);
-    buyTotalEl.textContent = 'Total: \u20AC' + tot;
+    var full = BUY_PRICE[buyTier] * buyMonths;
+    var tot = (full * BUY_DISCOUNT).toFixed(2);
+    var yrs = buyMonths / 12;
+    var per = yrs === 1 ? '1 year' : yrs + ' years';
+    buyTotalEl.innerHTML = '\u20AC' + tot + ' <span class="azbuy-save">save 20%</span> <span class="azbuy-per">/ ' + per + '</span>';
   }
   function hidePay() { if (buyPayEl) buyPayEl.hidden = true; }
   function buySay(text, kind) {
@@ -398,6 +404,29 @@
   function buyBusy(on) {
     buyGoEl.disabled = on;
     buyGoEl.textContent = on ? 'Working\u2026' : 'Get access';
+  }
+
+  function translateBuyModal() {
+    if (!buyModal) return;
+    var mail = 'mailto:dagrang@gmail.com?subject=' + encodeURIComponent('I want to cancel') + '&body=' + encodeURIComponent('I want to cancel');
+    var defaults = {
+      'buy.card_monthly': '\ud83d\udcb3 Card \u2014 renews monthly',
+      'buy.cancel_line': 'Not happy? <a href="' + mail + '">Email me \u201CI want to cancel\u201D</a> \u2014 cancelled right away, no questions asked.',
+      'buy.or_prepay': 'or prepay & save 20%',
+      'buy.prepay_lbl': 'Prepay (save 20%)'
+    };
+    buyModal.querySelectorAll('[data-i18n]').forEach(function (el) {
+      var k = el.getAttribute('data-i18n'); var v = t(k);
+      if (v === k && defaults[k]) v = defaults[k];
+      if (v && v !== k) el.textContent = v;
+    });
+    buyModal.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+      var k = el.getAttribute('data-i18n-html'); var v = t(k);
+      if (v === k && defaults[k]) v = defaults[k];
+      // inject mailto into the cancel line (translations use {mail} placeholder)
+      if (k === 'buy.cancel_line') { v = (v || defaults[k]).replace('{mail}', mail); }
+      if (v && v !== k) el.innerHTML = v;
+    });
   }
 
   function openBuy(tierWanted) {
@@ -517,7 +546,15 @@
     '#az-buy .azbuy-ok{color:#16a34a}' +
     '#az-buy .azbuy-restore{display:block;width:100%;margin-top:14px;border:0;background:transparent;color:#64748b;font-size:13px;text-decoration:underline;cursor:pointer}' +
     '#az-buy .azbuy-pp{margin:0 0 14px}' +
-    '#az-buy .azbuy-pp-lbl{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}';
+    '#az-buy .azbuy-pp-lbl{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}' +
+    '#az-buy .azbuy-cancel{font-size:12px;color:#64748b;line-height:1.5;margin:2px 0 6px;text-align:center}' +
+    '#az-buy .azbuy-cancel a{color:#2563eb;text-decoration:underline;font-weight:600}' +
+    '#az-buy .azbuy-orsep{display:flex;align-items:center;text-align:center;color:#94a3b8;font-size:11px;text-transform:uppercase;letter-spacing:.05em;margin:14px 0 10px}' +
+    '#az-buy .azbuy-orsep::before,#az-buy .azbuy-orsep::after{content:"";flex:1;height:1px;background:#e2e8f0}' +
+    '#az-buy .azbuy-orsep span{padding:0 10px}' +
+    '#az-buy .azbuy-save{display:inline-block;font-size:11px;font-weight:700;color:#16a34a;background:rgba(22,163,74,.12);padding:2px 8px;border-radius:999px;vertical-align:middle;margin-left:4px}' +
+    '#az-buy .azbuy-per{font-size:13px;color:#64748b;font-weight:600}' +
+    '#az-buy .azbuy-dur{grid-template-columns:repeat(2,1fr)}';
 
   APZ.billing = { buy: openBuy, restore: restore, tier: tier, isCapOn: function () { return state.capOn; } };
 

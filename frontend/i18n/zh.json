@@ -303,9 +303,11 @@
     "redeem_fail": "重试",
     "retry": "网络故障——再刮一次"
   },
-  "consent": {
-    "msg": "我们使用 Cookie，让所有人都能免费搜索。",
-    "ok": "知道了",
-    "reopen": "Cookie"
+  "buy": {
+    "upgrade_to": "升级到",
+    "card_monthly": "💳 卡 — 每月续订",
+    "cancel_line": "不满意？<a href=\"{mail}\">给我发邮件「我要取消」</a> — 立即取消，不问缘由。",
+    "or_prepay": "或预付并省 20%",
+    "prepay_lbl": "预付（省20%）"
   }
 }

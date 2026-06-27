@@ -303,9 +303,11 @@
     "redeem_fail": "Coba lagi",
     "retry": "Gangguan jaringan — gores lagi"
   },
-  "consent": {
-    "msg": "Kami menggunakan cookie agar pencarian tetap gratis untuk semua orang.",
-    "ok": "Mengerti",
-    "reopen": "Cookie"
+  "buy": {
+    "upgrade_to": "Tingkatkan ke",
+    "card_monthly": "💳 Kartu — diperpanjang bulanan",
+    "cancel_line": "Tidak puas? <a href=\"{mail}\">Email saya «Saya ingin batal»</a> — langsung dibatalkan, tanpa pertanyaan.",
+    "or_prepay": "atau bayar di muka & hemat 20%",
+    "prepay_lbl": "Bayar di muka (−20%)"
   }
 }

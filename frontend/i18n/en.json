@@ -303,9 +303,11 @@
     "redeem_fail": "Try again",
     "retry": "Network hiccup — scratch again"
   },
-  "consent": {
-    "msg": "We use cookies to keep the search free for everyone.",
-    "ok": "Got it",
-    "reopen": "Cookies"
+  "buy": {
+    "upgrade_to": "Upgrade to",
+    "card_monthly": "💳 Card — renews monthly",
+    "cancel_line": "Not happy? <a href=\"{mail}\">Email me “I want to cancel”</a> — cancelled right away, no questions asked.",
+    "or_prepay": "or prepay & save 20%",
+    "prepay_lbl": "Prepay (save 20%)"
   }
 }

@@ -303,9 +303,11 @@
     "redeem_fail": "Tekrar dene",
     "retry": "Ağ hatası — tekrar kazı"
   },
-  "consent": {
-    "msg": "Aramayı herkes için ücretsiz tutmak amacıyla çerezler kullanıyoruz.",
-    "ok": "Anladım",
-    "reopen": "Çerezler"
+  "buy": {
+    "upgrade_to": "Yükselt:",
+    "card_monthly": "💳 Kart — aylık yenilenir",
+    "cancel_line": "Memnun değil misiniz? <a href=\"{mail}\">Bana \"İptal etmek istiyorum\" yazın</a> — hemen iptal, soru sorulmaz.",
+    "or_prepay": "veya peşin ödeyip %20 tasarruf edin",
+    "prepay_lbl": "Peşin (−%20)"
   }
 }

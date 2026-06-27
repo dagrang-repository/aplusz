@@ -303,9 +303,11 @@
     "redeem_fail": "Opnieuw",
     "retry": "Netwerkfout — kras opnieuw"
   },
-  "consent": {
-    "msg": "We gebruiken cookies om het zoeken voor iedereen gratis te houden.",
-    "ok": "Begrepen",
-    "reopen": "Cookies"
+  "buy": {
+    "upgrade_to": "Upgraden naar",
+    "card_monthly": "💳 Kaart — wordt maandelijks verlengd",
+    "cancel_line": "Niet tevreden? <a href=\"{mail}\">Mail mij \"Ik wil opzeggen\"</a> — direct opgezegd, geen vragen.",
+    "or_prepay": "of vooruitbetalen & 20% besparen",
+    "prepay_lbl": "Vooruitbetalen (−20%)"
   }
 }

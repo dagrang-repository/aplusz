@@ -303,9 +303,11 @@
     "redeem_fail": "Thử lại",
     "retry": "Lỗi mạng — cào lại"
   },
-  "consent": {
-    "msg": "Chúng tôi sử dụng cookie để giữ cho việc tìm kiếm miễn phí cho mọi người.",
-    "ok": "Đã hiểu",
-    "reopen": "Cookie"
+  "buy": {
+    "upgrade_to": "Nâng cấp lên",
+    "card_monthly": "💳 Thẻ — gia hạn hằng tháng",
+    "cancel_line": "Không hài lòng? <a href=\"{mail}\">Gửi email cho tôi «Tôi muốn hủy»</a> — hủy ngay, không hỏi gì.",
+    "or_prepay": "hoặc trả trước & tiết kiệm 20%",
+    "prepay_lbl": "Trả trước (−20%)"
   }
 }

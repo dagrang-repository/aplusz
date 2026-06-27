@@ -303,9 +303,11 @@
     "redeem_fail": "Erneut versuchen",
     "retry": "Netzwerkfehler — nochmal kratzen"
   },
-  "consent": {
-    "msg": "Wir verwenden Cookies, damit die Suche für alle kostenlos bleibt.",
-    "ok": "Verstanden",
-    "reopen": "Cookies"
+  "buy": {
+    "upgrade_to": "Upgrade auf",
+    "card_monthly": "💳 Karte — verlängert sich monatlich",
+    "cancel_line": "Nicht zufrieden? <a href=\"{mail}\">Schreib mir „Ich möchte kündigen\"</a> — sofort gekündigt, ohne Nachfragen.",
+    "or_prepay": "oder im Voraus zahlen & 20 % sparen",
+    "prepay_lbl": "Vorauszahlung (−20 %)"
   }
 }

@@ -303,9 +303,11 @@
     "redeem_fail": "再試行",
     "retry": "通信エラー — もう一度スクラッチ"
   },
-  "consent": {
-    "msg": "すべての人が無料で検索できるよう、Cookieを使用しています。",
-    "ok": "了解",
-    "reopen": "Cookie"
+  "buy": {
+    "upgrade_to": "アップグレード:",
+    "card_monthly": "💳 カード — 毎月更新",
+    "cancel_line": "ご不満ですか？ <a href=\"{mail}\">「解約したい」とメールしてください</a> — すぐに解約、質問は一切なし。",
+    "or_prepay": "または前払いで20%お得",
+    "prepay_lbl": "前払い (−20%)"
   }
 }
