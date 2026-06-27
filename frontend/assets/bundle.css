@@ -103,8 +103,8 @@
   --text-muted: #4b5563;
   --text-dim: #9ca3af;
 
-  --accent: #c8941a;
-  --accent-hover: #a87d14;
+  --accent: #0066cc;
+  --accent-hover: #0052a3;
   --link: #2563eb;
   --success: #16a34a;
   --warning: #ea580c;
@@ -189,8 +189,8 @@
     --text: #1a1a1a;
     --text-muted: #4b5563;
     --text-dim: #9ca3af;
-    --accent: #c8941a;
-    --accent-hover: #a87d14;
+    --accent: #0066cc;
+    --accent-hover: #0052a3;
     --link: #2563eb;
     --success: #16a34a;
     --warning: #ea580c;
@@ -395,8 +395,9 @@ a:hover { text-decoration: underline; }
   margin: calc(-1 * var(--sp-2) - 4px) 0;
   width: 44px; height: 44px;
   border-radius: var(--r-pill);
-  background: var(--accent);
-  color: var(--bg);
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
   font-size: 1.2rem; font-weight: 700;
   display: grid; place-items: center;
   box-shadow: var(--shadow-md);
@@ -406,8 +407,9 @@ a:hover { text-decoration: underline; }
 .swap-btn:hover { transform: rotate(180deg); }
 
 .primary-btn {
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-  color: var(--bg);
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
   padding: var(--sp-4);
   border-radius: var(--r-md);
   font-size: var(--fs-base);
@@ -815,8 +817,9 @@ a:hover { text-decoration: underline; }
 
 .cta-book {
   display: block;
-  background: linear-gradient(135deg, var(--accent) 0%, var(--accent-hover) 100%);
-  color: var(--bg);
+  background: transparent;
+  color: var(--accent);
+  border: 1px solid var(--accent);
   text-align: center;
   padding: var(--sp-4);
   border-radius: var(--r-md);
