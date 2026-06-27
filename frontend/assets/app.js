@@ -7,50 +7,9 @@
 (function () {
   'use strict';
 
-  /* ============================================================
-     Round-trip date pairing — Rule 1 (unbreakable): the return is
-     ALWAYS on or after the departure. Anything the reverse route
-     would place before departure is invisible.
-       - departure = outbound route's real best day (out.bestDeparture)
-       - return    = reverse route's real best day (back.bestDeparture)
-                     IF it is >= departure  -> use it (real data)
-                     ELSE                    -> departure + 7 (rule B/7)
-       - if the client typed "N days after departure" (gapDays), that
-         overrides everything: return = departure + N.
-     The reverse leg object is mutated so its bestDeparture/date shown
-     is the corrected return date; its price (priceBase) stays real.
-     ============================================================ */
-  function addDaysISO(iso, n) {
-    var d = new Date(iso + 'T00:00:00Z');
-    if (isNaN(d.getTime())) return iso;
-    d.setUTCDate(d.getUTCDate() + n);
-    return d.toISOString().slice(0, 10);
-  }
-  function cmpISO(a, b) { return a < b ? -1 : (a > b ? 1 : 0); }  // 'YYYY-MM-DD' sorts lexically
-  function pairReturnDate(out, back, gapDays) {
-    if (!out || !out.bestDeparture) return;          // no departure anchor -> leave as-is
-    var dep = out.bestDeparture;
-    if (!back) return;                               // no reverse leg at all
-    var ret;
-    if (gapDays != null) {
-      // client explicitly chose the gap
-      ret = addDaysISO(dep, gapDays);
-    } else {
-      var revBest = back.bestDeparture;
-      if (revBest && cmpISO(revBest, dep) >= 0) {
-        ret = revBest;                               // reverse best day is valid (>= departure) -> real data
-      } else {
-        ret = addDaysISO(dep, 7);                    // rule B/7 fallback
-      }
-    }
-    // final guard: return can never be before departure
-    if (cmpISO(ret, dep) < 0) ret = addDaysISO(dep, 7);
-    back.bestDeparture = ret;
-    // keep the reverse booking date sane: book by the day before return at latest, or its own if earlier
-    if (!back.bestBooking || cmpISO(back.bestBooking, ret) > 0) {
-      back.bestBooking = back.bestBooking && cmpISO(back.bestBooking, dep) <= 0 ? back.bestBooking : dep;
-    }
-  }
+  function addDaysISO(iso, n){var d=new Date(iso+'T00:00:00Z');if(isNaN(d.getTime()))return iso;d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);}
+  function cmpISO(a,b){return a<b?-1:(a>b?1:0);}
+  function pairReturnDate(out,back,gapDays){if(!out||!out.bestDeparture||!back)return;var dep=out.bestDeparture,ret;if(gapDays!=null){ret=addDaysISO(dep,gapDays);}else{var rb=back.bestDeparture;ret=(rb&&cmpISO(rb,dep)>=0)?rb:addDaysISO(dep,7);}if(cmpISO(ret,dep)<0)ret=addDaysISO(dep,7);back.bestDeparture=ret;}
 
   /* trip-toggle-wire: One-way | Return segmented control */
   (function () {
@@ -60,19 +19,19 @@
     function L(k) { return (window.APlusZ && window.APlusZ.rt) ? window.APlusZ.rt(k) : null; }
     function paint() {
       var on = rt.getAttribute('aria-selected') === 'true';
-      ow.style.background = on ? 'transparent' : 'var(--accent)';
-      ow.style.color = on ? 'var(--text)' : 'var(--bg)';
-      ow.style.fontWeight = on ? '600' : '700';
-      rt.style.background = on ? 'var(--accent)' : 'transparent';
-      rt.style.color = on ? 'var(--bg)' : 'var(--text)';
-      rt.style.fontWeight = on ? '700' : '600';
+      // active label via CSS [aria-selected]. Indicator: tick on One-way, days input on Return.
+      var tick = document.getElementById('trip-tick');
+      var days = document.getElementById('rt-gap');
+      var info = document.getElementById('rt-gap-info');
+      if (tick) tick.hidden = on;
+      if (days) days.hidden = !on;
+      if (info) info.hidden = !on;
     }
     function setReturn(on) {
       rt.setAttribute('aria-selected', on ? 'true' : 'false');
       ow.setAttribute('aria-selected', on ? 'false' : 'true');
-      var gapRow = document.getElementById('rt-gap-row');
-      if (gapRow) gapRow.hidden = !on;   // show the optional return-gap input only for Return trips
       paint();
+      if (on) { var d = document.getElementById('rt-gap'); if (d) setTimeout(function(){ d.focus(); }, 60); }
     }
     function relabel() { var a = L('oneway'), b = L('round'); if (a) ow.textContent = a; if (b) rt.textContent = b; }
     ow.addEventListener('click', function () { setReturn(false); });
@@ -213,15 +172,14 @@
     if (_rt) {
       var btnR = document.getElementById('search-btn');
       btnR.disabled = true; btnR.textContent = '\u2026';
-      // read optional "return N days after departure" input (empty -> use rule B/7 default logic)
-      var gapField = document.getElementById('rt-gap');
-      var gapDays = gapField ? parseInt(gapField.value, 10) : NaN;
-      if (isNaN(gapDays) || gapDays < 1) gapDays = null;   // null => no explicit gap
+      var gf = document.getElementById('rt-gap');
+      var gd = gf ? parseInt(gf.value, 10) : NaN;
+      if (isNaN(gd) || gd < 1) gd = null;
       Promise.all([window.APlusZ.data.search(origin, dest), window.APlusZ.data.search(dest, origin)])
         .then(function (r) {
           btnR.disabled = false; btnR.textContent = window.APlusZ.i18n.t('search.button');
           if (!r[0] && !r[1]) { window.APlusZ.result.renderEmpty(); return; }
-          pairReturnDate(r[0], r[1], gapDays);   // enforce Rule 1: return always >= departure
+          pairReturnDate(r[0], r[1], gd);
           window.APlusZ.result.renderRound(r[0], r[1]);
         })
         .catch(function () {
@@ -304,5 +262,8 @@
       }
     } catch (e) {}
   })();
+
+
+  (function(){document.addEventListener('DOMContentLoaded',function(){try{var info=document.getElementById('rt-gap-info');if(!info)return;info.addEventListener('click',function(e){e.preventDefault();var msg=info.getAttribute('title')||'Return days after departure';var t=document.getElementById('trip-gap-tip');if(!t){t=document.createElement('div');t.id='trip-gap-tip';t.className='trip-gap-tip';document.body.appendChild(t);}t.textContent=msg;var r=info.getBoundingClientRect();t.style.top=(r.bottom+6+window.scrollY)+'px';t.style.left=Math.max(8,r.left+window.scrollX-80)+'px';t.classList.add('show');clearTimeout(t._h);t._h=setTimeout(function(){t.classList.remove('show');},2600);});}catch(err){}});})();
 
 })();

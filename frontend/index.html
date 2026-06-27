@@ -83,12 +83,15 @@
     </div>
 
     <div class="trip-toggle" id="trip-toggle" role="tablist" aria-label="Trip type">
-      <button type="button" class="trip-opt" id="trip-oneway" role="tab" aria-selected="true">One-way</button>
-      <button type="button" class="trip-opt" id="trip-return" role="tab" aria-selected="false">Return</button>
-    </div>
-    <div class="rt-gap-row" id="rt-gap-row" hidden>
-      <label for="rt-gap" class="rt-gap-lbl" data-i18n="search.rt_gap_label" style="display:block;font-size:var(--fs-xs);color:var(--text-dim);margin:0 0 6px;">Return days after departure (optional)</label>
-      <input type="number" id="rt-gap" min="1" max="365" inputmode="numeric" placeholder="e.g. 7" data-i18n-attr="placeholder:search.rt_gap_ph" style="width:100%;box-sizing:border-box;padding:10px 12px;border:1px solid var(--border);border-radius:var(--r-md,12px);background:var(--surface);color:var(--text);font-size:var(--fs-sm);">
+      <div class="trip-labels">
+        <button type="button" class="trip-opt" id="trip-oneway" role="tab" aria-selected="true" data-i18n="search.oneway">One-way</button>
+        <button type="button" class="trip-opt" id="trip-return" role="tab" aria-selected="false" data-i18n="search.round">Return</button>
+      </div>
+      <div class="trip-indicator">
+        <span class="trip-tick" id="trip-tick" aria-hidden="true">&#10003;</span>
+        <input type="number" id="rt-gap" class="trip-days" min="1" max="365" inputmode="numeric" placeholder="7" title="Return days after departure" hidden>
+        <button type="button" class="trip-days-info" id="rt-gap-info" aria-label="Info" title="Return days after departure" hidden>i</button>
+      </div>
     </div>
     <button class="primary-btn" id="search-btn" data-i18n="search.button">
       Find lowest fare
