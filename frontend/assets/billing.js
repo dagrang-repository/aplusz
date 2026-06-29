@@ -325,13 +325,15 @@
     var durBtns = BUY_MONTHS.map(function (m) {
       var yrs = m / 12;
       var lbl = yrs === 1 ? '1 year' : yrs + ' years';
-      return '<button class="azbuy-dur-b" data-m="' + m + '" data-lbl="' + lbl + '">' + lbl + '</button>';
+      return '<button class="azbuy-dur-b" data-m="' + m + '" data-lbl="' + lbl + '">' +
+             '<span class="azbuy-dur-lbl">' + lbl + '</span>' +
+             '<span class="azbuy-dur-price"></span>' +
+             '</button>';
     }).join('');
     buyModal.innerHTML =
       '<div class="azbuy-backdrop"></div>' +
       '<div class="azbuy-card" role="dialog" aria-modal="true" aria-label="Upgrade">' +
       '  <button class="azbuy-x" aria-label="Close">\u00D7</button>' +
-      '  <h3 class="azbuy-title"></h3>' +
       // --- TOP: small, muted, optional prepay (Wise/Wero) ---
       '  <div class="azbuy-prepay">' +
       '    <div class="azbuy-prepay-lbl"><span data-i18n="buy.prepay_optional">Optional \u00B7 20% off</span></div>' +
@@ -354,6 +356,7 @@
       '  <div class="azbuy-sep"></div>' +
       // --- CENTER STAGE: big bold monthly PayPal (the hero) ---
       '  <div class="azbuy-hero">' +
+      '    <h3 class="azbuy-title"></h3>' +
       '    <div class="azbuy-hero-price"></div>' +
       '    <div id="az-pp-btns"></div>' +
       '    <div class="azbuy-cancel" data-i18n-html="buy.cancel_line"></div>' +
@@ -370,6 +373,8 @@
     buyMsgEl = buyModal.querySelector('.azbuy-msg');
     buyPayEl = buyModal.querySelector('.azbuy-pay');
     buyRefEl = buyModal.querySelector('.azbuy-ref');
+    buyHeroPriceEl = buyModal.querySelector('.azbuy-hero-price');
+    buyPrepayBody = buyModal.querySelector('.azbuy-prepay-body');
     var links = buyModal.querySelectorAll('.azbuy-paybtn');
     buyWiseLink = links[0]; buyWeroLink = links[1];
 
@@ -408,6 +413,15 @@
     if (!buyHeroPriceEl) return;
     var mo = t('buy.per_month') || '/ month';
     buyHeroPriceEl.innerHTML = '\u20AC' + BUY_PRICE[buyTier].toFixed(2) + ' <span class="azbuy-hero-mo">' + mo + '</span>';
+  }
+  function renderDurPrices() {
+    if (!buyModal) return;
+    buyModal.querySelectorAll('.azbuy-dur-b').forEach(function (btn) {
+      var m = parseInt(btn.getAttribute('data-m'), 10);
+      var tot = (BUY_PRICE[buyTier] * m * BUY_DISCOUNT).toFixed(2);
+      var slot = btn.querySelector('.azbuy-dur-price');
+      if (slot) slot.textContent = '\u20AC' + tot;
+    });
   }
   function hidePay() { if (buyPayEl) buyPayEl.hidden = true; }
   function buySay(text, kind) {
@@ -455,6 +469,7 @@
     buyMonths = 12;
     buyTitleEl.textContent = (t('buy.upgrade_to') || 'Upgrade to') + ' ' + buyLabel(buyTier);
     renderHeroPrice();
+    renderDurPrices();
     translateBuyModal();
     renderPayPal(buyTier);
     if (buyPrepayBody) buyPrepayBody.hidden = true;   // collapse prepay until a year is picked
@@ -552,6 +567,9 @@
     '#az-buy .azbuy-lbl{font-size:12px;font-weight:600;color:#64748b;text-transform:uppercase;letter-spacing:.04em;margin:0 0 8px}' +
     '#az-buy .azbuy-dur{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:0 0 14px}' +
     '#az-buy .azbuy-dur-b{padding:10px 0;border:1px solid #e2e8f0;background:#f8fafc;border-radius:10px;font-weight:600;font-size:14px;cursor:pointer;color:#0f172a}' +
+      '#az-buy .azbuy-dur-b{display:flex;flex-direction:column;align-items:center;gap:2px;line-height:1.1}' +
+      '#az-buy .azbuy-dur-price{font-size:12px;font-weight:700;opacity:.85}' +
+      '#az-buy .azbuy-dur-lbl{font-size:13px}' +
     '#az-buy .azbuy-dur-b.on{background:#2563eb;border-color:#2563eb;color:#fff}' +
     '#az-buy .azbuy-total{font-size:18px;font-weight:700;margin:0 0 16px}' +
     '#az-buy .azbuy-email{width:100%;box-sizing:border-box;padding:12px 14px;border:1px solid #cbd5e1;border-radius:10px;font-size:15px;margin:0 0 12px}' +
