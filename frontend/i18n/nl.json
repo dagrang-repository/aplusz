@@ -29,7 +29,9 @@
     "button": "Laagste tarief vinden",
     "swap": "Wisselen",
     "pick": "Kies je steden uit de suggesties.",
-    "live": "Live prijs"
+    "live": "Live prijs",
+    "rt_gap_label": "Terugreis X dagen na vertrek (optioneel)",
+    "rt_gap_ph": "bijv. 7"
   },
   "result": {
     "best_departure": "Optimale vertrekdatum",
@@ -302,5 +304,24 @@
     "redeemed_ok": "Pro+ geactiveerd! 👑",
     "redeem_fail": "Opnieuw",
     "retry": "Netwerkfout — kras opnieuw"
+  },
+  "consent": {
+    "msg": "We gebruiken cookies om het zoeken voor iedereen gratis te houden.",
+    "ok": "Begrepen",
+    "reopen": "Cookies"
+  },
+  "buy": {
+    "upgrade_to": "Upgraden naar",
+    "card_monthly": "💳 Kaart — wordt maandelijks verlengd",
+    "cancel_line": "Altijd opzegbaar — <a href=\"{mail}\">mail \"Ik wil opzeggen\"</a>, geen vragen.",
+    "or_prepay": "of vooruitbetalen & 20% besparen",
+    "prepay_lbl": "Vooruitbetalen (−20%)",
+    "prepay_optional": "Optioneel · −20%",
+    "one_year": "1 jaar",
+    "n_years": "{n} jaar",
+    "save20": "−20%",
+    "per_month": "/ maand",
+    "restore": "Al betaald? Toegang herstellen",
+    "paynote": "Betaal het exacte bedrag en zet deze referentie in de betalingsnotitie. Je toegang wordt enkele minuten na bevestiging gemaild."
   }
 }

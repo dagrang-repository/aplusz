@@ -1,4 +1,4 @@
-﻿/* -- Below-footer Scroll-Reveal Card -- */
+/* -- Below-footer Scroll-Reveal Card -- */
 .reveal-wrap {
   position: fixed; bottom: 0; left: 0; right: 0; z-index: 80;
   pointer-events: none;
@@ -11,21 +11,21 @@
 }
 .reveal-card {
   max-width: 680px; margin: 0 auto;
-  background: rgba(15,23,42,0.97);
+  background: var(--surface);
   backdrop-filter: blur(20px);
-  border: 1px solid rgba(255,255,255,0.08);
+  border: 1px solid var(--border);
   border-bottom: none;
   border-radius: 24px 24px 0 0;
   padding: 28px 24px 32px;
-  color: #e8eef7;
+  color: var(--text);
   max-height: 85vh; overflow-y: auto;
 }
 .reveal-close {
   position: absolute; top: 12px; right: 16px;
-  background: none; border: none; color: #64748b;
+  background: none; border: none; color: var(--text-dim);
   font-size: 24px; cursor: pointer; line-height: 1;
 }
-.reveal-close:hover { color: #fff; }
+.reveal-close:hover { color: var(--text); }
 .reveal-mission {
   text-align: center; margin-bottom: 20px;
 }
@@ -34,83 +34,83 @@
   margin-bottom: 8px; line-height: 1.4;
 }
 .reveal-statement {
-  font-size: 0.88rem; color: #94a3b8; line-height: 1.6;
+  font-size: 0.88rem; color: var(--text-muted); line-height: 1.6;
 }
 .reveal-stats {
   display: flex; flex-wrap: wrap; gap: 10px;
   justify-content: center; margin: 16px 0;
 }
 .reveal-stat {
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.08);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
   border-radius: 10px; padding: 8px 14px;
-  font-size: 0.82rem; color: #cbd5e1; text-align: center;
+  font-size: 0.82rem; color: var(--text-muted); text-align: center;
 }
 .reveal-stat strong { display: block; font-size: 1rem; color: #f5b942; }
 .reveal-free {
-  text-align: center; font-size: 0.85rem; color: #94a3b8;
+  text-align: center; font-size: 0.85rem; color: var(--text-muted);
   margin: 12px 0; padding: 12px;
   border: 1px solid rgba(245,185,66,0.2);
   border-radius: 12px; background: rgba(245,185,66,0.05);
 }
 .reveal-founder {
-  font-size: 0.85rem; color: #64748b; text-align: center;
+  font-size: 0.85rem; color: var(--text-dim); text-align: center;
   font-style: italic; margin: 12px 0;
 }
 .reveal-share {
   text-align: center; margin: 14px 0;
 }
 .reveal-share-btn {
-  background: var(--accent); color: #0f172a;
+  background: #f5b942; color: #0f172a;
   border: none; border-radius: 12px;
   padding: 10px 22px; font-weight: 700; font-size: 0.9rem;
   cursor: pointer; transition: background 0.2s;
 }
 .reveal-share-btn:hover { background: #e8a832; }
 .reveal-divider {
-  border: none; border-top: 1px solid rgba(255,255,255,0.07);
+  border: none; border-top: 1px solid var(--border);
   margin: 18px 0;
 }
 .reveal-section-title {
   font-size: 0.75rem; font-weight: 700; letter-spacing: 0.08em;
-  text-transform: uppercase; color: #475569; margin-bottom: 12px;
+  text-transform: uppercase; color: var(--text-dim); margin-bottom: 12px;
 }
 .reveal-press {
-  background: rgba(255,255,255,0.03); border-radius: 12px;
+  background: var(--bg-elevated); border-radius: 12px;
   padding: 14px 16px; margin-bottom: 16px;
 }
-.reveal-press p { font-size: 0.87rem; color: #94a3b8; margin: 0 0 10px; }
+.reveal-press p { font-size: 0.87rem; color: var(--text-muted); margin: 0 0 10px; }
 .reveal-press-link {
   display: inline-block; color: #f5b942; font-weight: 600;
   font-size: 0.87rem; text-decoration: none;
 }
 .reveal-press-link:hover { text-decoration: underline; }
 .reveal-press-gift {
-  font-size: 0.78rem; color: #475569; margin-top: 6px;
+  font-size: 0.78rem; color: var(--text-dim); margin-top: 6px;
 }
 .reveal-comments { margin-top: 4px; }
 .reveal-comment-form { margin-bottom: 16px; }
 .reveal-comment-form input,
 .reveal-comment-form textarea {
   width: 100%; box-sizing: border-box;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid rgba(255,255,255,0.1);
+  background: var(--bg-elevated);
+  border: 1px solid var(--border);
   border-radius: 10px; padding: 10px 12px;
-  color: #e8eef7; font-size: 0.87rem; font-family: inherit;
+  color: var(--text); font-size: 0.87rem; font-family: inherit;
   margin-bottom: 8px; resize: vertical;
 }
 .reveal-comment-form textarea { min-height: 72px; }
 .reveal-comment-submit {
   width: 100%; padding: 10px; border: none; border-radius: 10px;
-  background: rgba(255,255,255,0.08); color: #cbd5e1;
+  background: var(--bg-elevated); color: var(--text-muted);
   font-weight: 600; font-size: 0.87rem; cursor: pointer;
 }
-.reveal-comment-submit:hover { background: rgba(255,255,255,0.14); }
+.reveal-comment-submit:hover { background: var(--border); }
 .reveal-comment-gift {
-  font-size: 0.78rem; color: #475569; text-align: center; margin-bottom: 12px;
+  font-size: 0.78rem; color: var(--text-dim); text-align: center; margin-bottom: 12px;
 }
 .reveal-approved-comment {
-  background: rgba(255,255,255,0.03); border-radius: 12px;
+  background: var(--bg-elevated); border-radius: 12px;
   padding: 12px 14px; margin-bottom: 10px;
   border-left: 3px solid rgba(245,185,66,0.3);
 }
@@ -118,9 +118,9 @@
   font-size: 0.78rem; font-weight: 700; color: #f5b942; margin-bottom: 4px;
 }
 .reveal-approved-comment .rc-text {
-  font-size: 0.87rem; color: #94a3b8; line-height: 1.5;
+  font-size: 0.87rem; color: var(--text-muted); line-height: 1.5;
 }
-.reveal-msg { font-size: 0.82rem; color: #64748b; text-align: center; margin: 6px 0; }
+.reveal-msg { font-size: 0.82rem; color: var(--text-dim); text-align: center; margin: 6px 0; }
 
 /* reveal hint tab */
 .reveal-hint{position:fixed;left:0;right:0;margin:0 auto;width:max-content;max-width:90vw;transform:translateY(120%);z-index:79;background:rgba(245,185,66,.95);color:#0f172a;border:none;border-radius:14px;padding:9px 20px;bottom:10px;font-size:.82rem;font-weight:700;font-family:inherit;cursor:pointer;box-shadow:0 -4px 20px rgba(0,0,0,.3);transition:transform .35s cubic-bezier(.34,1.4,.64,1);white-space:nowrap;text-align:center;}

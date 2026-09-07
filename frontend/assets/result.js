@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    APlusZ — Result Card Renderer (Step 9 + 12 + 16)
    File: frontend/assets/result.js
    Save: D:\Destop\AplusZ\frontend\assets\result.js
@@ -237,10 +237,6 @@
       '      <div class="date-value">' + formatDate(d.bestDeparture) + '</div>',
       '      <div class="date-meta">' + t('result.days_out').replace('{n}', daysOut) + '</div>',
       '    </div>',
-      '    <div class="date-block date-booking">',
-      '      <div class="date-label">' + t('result.best_booking') + '</div>',
-      '      <div class="date-value">' + formatDate(d.bestBooking) + '</div>',
-      '    </div>',
       '  </div>',
 
       lowBanner(d),
@@ -331,8 +327,7 @@
       body =
         '<div class="dates">' +
           '<div class="date-block date-departure"><div class="date-label">' + t('result.best_departure') + '</div><div class="date-value">' + formatDate(d.bestDeparture) + '</div><div class="date-meta">' + t('result.days_out').replace('{n}', daysFromNow(d.bestDeparture)) + '</div></div>' +
-          '<div class="date-block date-booking"><div class="date-label">' + t('result.best_booking') + '</div><div class="date-value">' + formatDate(d.bestBooking) + '</div></div>' +
-        '</div>' +
+          '</div>' +
         lowBanner(d) +
         '<div class="price-row"><div><div class="price-label">' + t('result.price_label') + '</div><div class="price-value">' + d.priceFormatted + '</div></div>' + confidenceBadge(d.confidence) + '</div>';
     }

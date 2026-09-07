@@ -29,7 +29,9 @@
     "button": "Trova la tariffa più bassa",
     "swap": "Inverti",
     "pick": "Scegli le città tra i suggerimenti.",
-    "live": "Prezzo live"
+    "live": "Prezzo live",
+    "rt_gap_label": "Ritorno X giorni dopo la partenza (facoltativo)",
+    "rt_gap_ph": "es. 7"
   },
   "result": {
     "best_departure": "Data di partenza ottimale",
@@ -302,5 +304,24 @@
     "redeemed_ok": "Pro+ attivato! 👑",
     "redeem_fail": "Riprova",
     "retry": "Problema di rete — gratta di nuovo"
+  },
+  "consent": {
+    "msg": "Usiamo i cookie per mantenere la ricerca gratuita per tutti.",
+    "ok": "Ho capito",
+    "reopen": "Cookie"
+  },
+  "buy": {
+    "upgrade_to": "Passa a",
+    "card_monthly": "💳 Carta — si rinnova ogni mese",
+    "cancel_line": "Annulla quando vuoi — <a href=\"{mail}\">scrivi «Voglio annullare»</a>, senza domande.",
+    "or_prepay": "o paga in anticipo e risparmia il 20%",
+    "prepay_lbl": "Anticipato (−20%)",
+    "prepay_optional": "Facoltativo · −20%",
+    "one_year": "1 anno",
+    "n_years": "{n} anni",
+    "save20": "−20%",
+    "per_month": "/ mese",
+    "restore": "Già pagato? Ripristina il mio accesso",
+    "paynote": "Paga l'importo esatto e inserisci questo riferimento nella causale. L'accesso ti arriva via email pochi minuti dopo la conferma."
   }
 }

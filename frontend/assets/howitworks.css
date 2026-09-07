@@ -9,7 +9,7 @@
 .hiw-link:hover{opacity:1}
 
 #hiw-modal{
-  border:none;padding:0;background:transparent;color:#e8eef7;
+  border:none;padding:0;background:transparent;color:var(--text);
   width:min(440px,calc(100vw - 32px));
   max-width:none;max-height:calc(100dvh - 40px);
   margin:auto;overflow:visible;
@@ -22,9 +22,9 @@
 #hiw-modal[open]::backdrop{opacity:1}
 
 .hiw-card{
-  background:rgba(15,23,42,.92);         /* index page tone #0f172a + opacity */
+  background:var(--surface);         /* index page tone #0f172a + opacity */
   backdrop-filter:blur(14px);
-  border:1px solid rgba(255,255,255,.08);
+  border:1px solid var(--border);
   border-radius:18px;padding:24px 24px 20px;
   box-shadow:0 24px 60px rgba(0,0,0,.45);
   max-height:calc(100dvh - 40px);overflow-y:auto;
@@ -54,25 +54,25 @@
 .hiw-route .arr{color:#f5b942}
 
 /* card 3 demo */
-.hiw-demo{margin-top:14px;border:1px solid rgba(255,255,255,.08);border-radius:12px;padding:13px 15px;background:rgba(255,255,255,.04)}
+.hiw-demo{margin-top:14px;border:1px solid var(--border);border-radius:12px;padding:13px 15px;background:var(--bg-elevated)}
 .hiw-demo-route{display:flex;align-items:center;gap:10px;font-size:1.05rem;font-weight:700;margin-bottom:8px;transition:opacity .8s ease}
 .hiw-demo-route .arr{color:#f5b942}
 .hiw-price{font-size:1.7rem;font-weight:800;color:#f5b942;line-height:1.1;transition:opacity .8s ease}
 .hiw-date{font-size:.9rem;opacity:.8;margin-top:2px;transition:opacity .8s ease}
 .hiw-timer{font-size:.8rem;opacity:.55;margin-top:6px}
 .hiw-demo.fading .hiw-price,.hiw-demo.fading .hiw-demo-route,.hiw-demo.fading .hiw-date{opacity:0}  /* Telegram-delete fade */
-.hiw-book{margin-top:11px;width:100%;border:none;border-radius:10px;background:#2563eb;color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:12px;cursor:pointer;transition:filter .2s ease}
+.hiw-book{margin-top:11px;width:100%;border:none;border-radius:10px;background:var(--accent);color:#fff;font:inherit;font-size:1rem;font-weight:700;padding:12px;cursor:pointer;transition:filter .2s ease}
 .hiw-book:hover{filter:brightness(1.08)}
 
 .hiw-nav{display:flex;align-items:center;justify-content:space-between;margin-top:20px;gap:10px}
 .hiw-dots{display:flex;gap:7px;flex:1;justify-content:center}
-.hiw-dot{width:7px;height:7px;border-radius:50%;background:#33415c;transition:background .4s ease,width .4s ease}
+.hiw-dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:background .4s ease,width .4s ease}
 .hiw-dot.on{background:#f5b942;width:18px;border-radius:4px}
-.hiw-back,.hiw-next{background:none;border:1px solid #1f2c41;color:inherit;border-radius:9px;padding:8px 18px;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;transition:background .2s ease;min-width:78px}
-.hiw-back:hover,.hiw-next:hover{background:rgba(255,255,255,.05)}
+.hiw-back,.hiw-next{background:none;border:1px solid var(--border);color:inherit;border-radius:9px;padding:8px 18px;font:inherit;font-size:.95rem;font-weight:600;cursor:pointer;transition:background .2s ease;min-width:78px}
+.hiw-back:hover,.hiw-next:hover{background:var(--bg-elevated)}
 .hiw-back[hidden]{visibility:hidden}
 
-.hiw-foot{margin-top:18px;padding-top:14px;border-top:1px solid #1f2c41;font-size:.85rem;opacity:.6;line-height:1.45}
+.hiw-foot{margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-size:.85rem;opacity:.6;line-height:1.45}
 
 /* RTL (Arabic, Persian): mirror text, but keep A→B route order intact */
 #hiw-modal[dir=rtl]{text-align:right}

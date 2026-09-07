@@ -1,4 +1,4 @@
-﻿/* ============================================================
+/* ============================================================
    APlusZ — Result Card Styles (Step 9 + desktop adapt)
    File: frontend/assets/result.css
    Save: D:\Destop\AplusZ\frontend\assets\result.css
@@ -31,7 +31,7 @@
 
 .dates {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: var(--sp-3);
 }
 .date-block {
