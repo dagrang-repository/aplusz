@@ -605,6 +605,11 @@ export const OPENSEARCH = `<?xml version="1.0" encoding="UTF-8"?>
 </OpenSearchDescription>
 `;
 
+// ── MCP registry HTTP domain proof ─────────────────────────────────────────
+// NEVER DELETE. Removing this route breaks re-authentication for every future
+// registry publish. Private key lives outside the repo.
+export const MCP_REGISTRY_AUTH = 'v=MCPv1; k=ed25519; p=VoiwsBl5EkEvqP7Lh8tAYFBxuBQ2ZcsOvxntMTrOdP4=' + String.fromCharCode(10);
+
 // ── sha256 helper for the skill digest (computed from the served bytes) ────
 async function sha256Hex(s) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
@@ -681,6 +686,8 @@ export async function agentRoute(p) {
       return out(JSON.stringify(API_CATALOG, null, 2), 'application/linkset+json; charset=utf-8');
     case '/opensearch.xml':
       return out(OPENSEARCH, 'application/opensearchdescription+xml; charset=utf-8');
+    case '/.well-known/mcp-registry-auth':
+      return txt(MCP_REGISTRY_AUTH);
     case '/.well-known/probe.txt':
       return txt('ok\n');
     default:
