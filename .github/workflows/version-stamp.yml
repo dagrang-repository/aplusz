@@ -12,11 +12,13 @@ jobs:
   stamp:
     runs-on: ubuntu-latest
     # Skip when the push was the bot's own stamp commit (avoids loops).
-    # Uses [bot-stamp] — NOT [skip ci] — so Cloudflare Pages still deploys.
+    # Uses [bot-stamp] - NOT [skip ci] - so Cloudflare Pages still deploys.
     if: ${{ !contains(github.event.head_commit.message, '[bot-stamp]') }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
       - name: Write version.json
         run: |
           SHA=$(git rev-parse --short HEAD)
@@ -30,7 +32,19 @@ jobs:
           git add frontend/version.json
           if git diff --staged --quiet; then
             echo "No version change"
-          else
-            git commit -m "version stamp [bot-stamp]"
-            git push
+            exit 0
           fi
+          git commit -m "version stamp [bot-stamp]"
+          # A human push landing between checkout and push makes this
+          # non-fast-forward. Rebase onto whatever is there now and retry.
+          for i in 1 2 3 4 5; do
+            if git push; then
+              echo "pushed on attempt $i"
+              exit 0
+            fi
+            echo "push rejected, rebasing (attempt $i)"
+            git pull --rebase origin main || exit 1
+            sleep 3
+          done
+          echo "::error::could not push version stamp after 5 attempts"
+          exit 1
