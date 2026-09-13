@@ -58,12 +58,53 @@ export function buildRoutePage({ lang, from, to, route, related = [] }) {
     `<link rel="alternate" hreflang="x-default" href="${url('en', fs, ts)}">`;
 
   const faq = FAQ.map(f => ({ q: fill(f.q, v), a: fill(f.a, v) }));
+  // aplusz-agent-graph : ONE JSON-LD @graph per page, stable @ids, cross-referenced.
+  const mdUrl = `${CONFIG.SITE}/en/flights/${fs}-to-${ts}.md`;
+  const today = new Date().toISOString().slice(0, 10);
+  const ORG = `${CONFIG.SITE}/#org`, SITEID = `${CONFIG.SITE}/#site`, APIID = `${CONFIG.SITE}/#api`;
   const ld = {
     '@context': 'https://schema.org', '@graph': [
-      { '@type': 'BreadcrumbList', itemListElement: [
+      { '@type': 'Organization', '@id': ORG, name: CONFIG.BRAND, legalName: 'AplusZ (A+Z).app',
+        url: `${CONFIG.SITE}/`, email: 'dagrang@gmail.com',
+        identifier: [
+          { '@type': 'PropertyValue', name: 'SIREN', value: '927924621' },
+          { '@type': 'PropertyValue', name: 'SIRET', value: '92792462100018' } ],
+        sameAs: [ 'https://recherche-entreprises.api.gouv.fr/search?q=927924621',
+                  'https://github.com/dagrang-repository/aplusz' ] },
+      { '@type': 'WebSite', '@id': SITEID, url: `${CONFIG.SITE}/`, name: CONFIG.BRAND,
+        inLanguage: lang, publisher: { '@id': ORG },
+        potentialAction: { '@type': 'SearchAction',
+          target: { '@type': 'EntryPoint', urlTemplate: `${CONFIG.SITE}/v1/fare?from={from}&to={to}` },
+          'query-input': [
+            { '@type': 'PropertyValueSpecification', valueRequired: true, valueName: 'from' },
+            { '@type': 'PropertyValueSpecification', valueRequired: true, valueName: 'to' } ] } },
+      { '@type': 'WebAPI', '@id': APIID, name: 'AplusZ fare API',
+        description: 'Cheapest observed fare, six-month low and best departure date for a city pair.',
+        url: `${CONFIG.SITE}/v1/fare`, documentation: `${CONFIG.SITE}/openapi.json`,
+        termsOfService: `${CONFIG.SITE}/license.xml`, provider: { '@id': ORG } },
+      { '@type': 'WebPage', '@id': `${canonical}#page`, url: canonical,
+        name: t(lang, 'title', v), description: t(lang, 'desc', v), inLanguage: lang,
+        isPartOf: { '@id': SITEID }, about: { '@id': `${canonical}#record` },
+        dateModified: today,
+        encoding: { '@type': 'MediaObject', encodingFormat: 'text/markdown', url: mdUrl },
+        breadcrumb: { '@id': `${canonical}#crumb` }, mainEntity: { '@id': `${canonical}#faq` } },
+      { '@type': 'Dataset', '@id': `${canonical}#record`,
+        name: `Cheapest observed fare: ${from.name} to ${to.name}`,
+        description: `I want to fly from ${from.name} to ${to.name} - what is the cheapest fare, what was the 6-month low, and which date is cheapest to book? Cached snapshot, not a live quote.`,
+        dateModified: today, isAccessibleForFree: true,
+        license: `${CONFIG.SITE}/license.xml`, creator: { '@id': ORG },
+        includedInDataCatalog: { '@id': APIID },
+        distribution: [
+          { '@type': 'DataDownload', encodingFormat: 'application/json',
+            contentUrl: `${CONFIG.SITE}/v1/fare?from=${from.iata}&to=${to.iata}` },
+          { '@type': 'DataDownload', encodingFormat: 'text/markdown', contentUrl: mdUrl } ],
+        variableMeasured: [
+          { '@type': 'PropertyValue', name: 'cheapest_observed_fare',
+            value: Math.round(route.price), unitText: route.currency || 'EUR' } ] },
+      { '@type': 'BreadcrumbList', '@id': `${canonical}#crumb`, itemListElement: [
         { '@type': 'ListItem', position: 1, name: CONFIG.BRAND, item: CONFIG.SITE },
         { '@type': 'ListItem', position: 2, name: t(lang, 'h1', v), item: canonical } ] },
-      { '@type': 'FAQPage', mainEntity: faq.map(f => ({
+      { '@type': 'FAQPage', '@id': `${canonical}#faq`, mainEntity: faq.map(f => ({
         '@type': 'Question', name: f.q,
         acceptedAnswer: { '@type': 'Answer', text: f.a } })) } ] };
 
@@ -79,6 +120,7 @@ export function buildRoutePage({ lang, from, to, route, related = [] }) {
 <title>${esc(t(lang, 'title', v))}</title>
 <meta name="description" content="${esc(t(lang, 'desc', v))}">
 <link rel="canonical" href="${canonical}">${alts}
+<link rel="alternate" type="text/markdown" href="${CONFIG.SITE}/en/flights/${fs}-to-${ts}.md">
 <meta name="robots" content="index,follow,max-image-preview:large">
 <meta property="og:type" content="website"><meta property="og:title" content="${esc(t(lang, 'title', v))}">
 <meta property="og:description" content="${esc(t(lang, 'desc', v))}"><meta property="og:url" content="${canonical}">
