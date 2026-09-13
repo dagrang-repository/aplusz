@@ -99,5 +99,11 @@ export async function mdRoute(p, url, request) {
   if (!accept.includes('text/markdown')) return null;
   const body = await twinFor(r[2], r[3]);
   if (!body) return null;
-  return mdResponse(body, { 'content-location': `${S}/en/flights/${r[2]}-to-${r[3]}.md` });
+  // Cloudflare ignores Vary: Accept, so a cached markdown variant would then be
+  // served to the next human visitor. The negotiated response never enters the
+  // edge cache; the distinct .md URL stays fully cacheable.
+  return mdResponse(body, {
+    'content-location': `${S}/en/flights/${r[2]}-to-${r[3]}.md`,
+    'cache-control': 'private, no-store',
+  });
 }
