@@ -9,7 +9,7 @@
 #   https://aplusz.app/.well-known/api-catalog
 # Live data:  https://aplusz.app/v1/fare?from=PAR&to=BKK
 # Tools:      https://aplusz.app/mcp   (streamable-http)
-# Markdown twins: add .md to any route page, or send Accept: text/markdown.
+# Markdown twins: add .md to any route page.
 # Licence:    https://aplusz.app/license.xml
 # Contact:    dagrang@gmail.com
 #

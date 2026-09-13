@@ -71,7 +71,7 @@ Indexed core: 30 global hub origins x their top 40 priced destinations x 20 lang
 
 ## Where to get it
 
-- [Markdown twin pattern](${S}/en/flights/paris-to-bangkok.md): add .md to any route page, or send Accept: text/markdown
+- [Markdown twin pattern](${S}/en/flights/paris-to-bangkok.md): add .md to any route page for the same facts with zero chrome
 - [OpenAPI](${S}/openapi.json): GET /v1/fare?from=PAR&to=BKK
 - [MCP server card](${S}/.well-known/mcp.json): live tools on ${S}/mcp, same resolver as the pages
 - [Agent skill](${S}/.well-known/agent-skills/flight-fare-lookup/SKILL.md): when to call, which argument combinations are invalid
@@ -139,7 +139,7 @@ ${ID.brand} is a free flight fare finder. It scans fares across roughly 2,000 ai
 ## URL grammar
 
 - Human page: \`${S}/{lang}/flights/{from-slug}-to-{to-slug}\`
-- Markdown twin: the English page plus \`.md\`, or send \`Accept: text/markdown\` to any route page
+- Markdown twin: the English page plus \`.md\`. There is no Accept-header negotiation: the twin has its own URL, so a cache can never serve the wrong representation.
 - Fare record: \`${S}/v1/fare?from={IATA}&to={IATA}\`
 - All destinations from an origin: \`${S}/v1/routes?from={IATA}\`
 - Covered cities: \`${S}/v1/cities\`

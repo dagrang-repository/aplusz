@@ -12,7 +12,7 @@ AplusZ is a free flight fare finder: it scans fares across roughly 2,000 airport
 | `functions/_middleware.js` | The single insertion point for the whole AI/agent layer |
 | `functions/_lib/agent-files.js` | Every declarative file: llms.txt, cards, licence, OpenAPI, skill |
 | `functions/_lib/agent-api.js` | Keyless REST `/v1/*` and the MCP tool server at `/mcp` |
-| `functions/_lib/agent-md.js` | Markdown twins and `Accept: text/markdown` negotiation |
+| `functions/_lib/agent-md.js` | Markdown twins at their own `.md` URLs |
 | `functions/_lib/config.js` | Site constants, languages, origin allow-list, affiliate deep link |
 | `functions/_lib/data.js` | **The shared resolver.** `loadCities` / `loadRoutes` |
 | `functions/_lib/page.js` | Route-page HTML builder and its JSON-LD graph |
@@ -30,6 +30,7 @@ AplusZ is a free flight fare finder: it scans fares across roughly 2,000 airport
 7. **CSS goes to both the source file and `bundle.css`.** `index.html` loads only `assets/bundle.css`.
 8. **Every partner-booking link is affiliate-wrapped** via `CONFIG.appLink`. Never emit a bare booking URL.
 9. **Bump `frontend/version.json` in the same change** as anything cached at the edge.
+10. **Never serve two representations from one URL.** Cloudflare caches by URL and ignores `Vary: Accept`, so the first variant cached is served to everyone afterwards. Prevents: a human shown raw Markdown, or an agent shown HTML.
 
 ## Data model
 
@@ -53,4 +54,4 @@ Cloudflare Pages auto-builds from `main`. Worker changes: `cd worker && npx wran
 
 ## Verification after touching the agent layer
 
-Every declared path returns 200 with the right `Content-Type`; `Accept: text/markdown` on a route page returns `text/markdown` with `Vary: Accept`; `/mcp` survives `initialize`, `tools/list` and `tools/call`; and two different city pairs return two different prices. Uniform output across inputs that should diverge is the classic silent failure.
+Every declared path returns 200 with the right `Content-Type`; a `.md` twin returns `text/markdown` while its HTML page stays `text/html`; `/mcp` survives `initialize`, `tools/list` and `tools/call`; and two different city pairs return two different prices. Uniform output across inputs that should diverge is the classic silent failure.

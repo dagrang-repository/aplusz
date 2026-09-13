@@ -26,7 +26,7 @@ function decorate(res, p) {
   if (alt) links.push(`<${alt}>; rel="alternate"; type="text/markdown"`);
   h.set('link', links.join(', '));
   h.set('x-robots-tag', 'max-snippet:-1, max-image-preview:large, max-video-preview:-1');
-  h.set('vary', 'Accept, Accept-Language');
+  h.set('vary', 'Accept-Language');
   h.set('content-signal', 'search=yes, ai-input=yes, ai-train=yes');
   return new Response(res.body, { status: res.status, statusText: res.statusText, headers: h });
 }

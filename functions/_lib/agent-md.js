@@ -2,6 +2,12 @@
 // Same facts as the route page, zero chrome, zero scripts.
 // Language policy: ONE authoritative language (English) with 301s from the
 // others. A half-translated twin is less honest than an English one.
+//
+// NO Accept-header negotiation. Cloudflare caches a route page by URL
+// and ignores Vary: Accept, so whichever variant is cached first is served to
+// everyone after it - a human gets Markdown, or an agent gets HTML, at random.
+// The twin lives at its own URL instead, advertised by the rel=alternate Link
+// header, the JSON-LD encoding node and llms.txt. One URL, one representation.
 
 import { fareRecord } from './agent-api.js';
 import { ID, CORS } from './agent-files.js';
@@ -81,7 +87,7 @@ async function twinFor(fromSlug, toSlug) {
   return buildTwin(r.record);
 }
 
-// Handles:  /{lang}/flights/x-to-y.md   and   Accept: text/markdown on the page
+// Handles:  /{lang}/flights/x-to-y.md  -  non-English langs 301 to the English twin
 export async function mdRoute(p, url, request) {
   const m = RE_MD.exec(p);
   if (m) {
@@ -93,17 +99,5 @@ export async function mdRoute(p, url, request) {
     return mdResponse(body);
   }
 
-  const r = RE_ROUTE.exec(p);
-  if (!r) return null;
-  const accept = (request.headers.get('accept') || '').toLowerCase();
-  if (!accept.includes('text/markdown')) return null;
-  const body = await twinFor(r[2], r[3]);
-  if (!body) return null;
-  // Cloudflare ignores Vary: Accept, so a cached markdown variant would then be
-  // served to the next human visitor. The negotiated response never enters the
-  // edge cache; the distinct .md URL stays fully cacheable.
-  return mdResponse(body, {
-    'content-location': `${S}/en/flights/${r[2]}-to-${r[3]}.md`,
-    'cache-control': 'private, no-store',
-  });
+  return null;
 }
