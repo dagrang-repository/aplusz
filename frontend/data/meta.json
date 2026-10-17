@@ -1,7 +1,7 @@
 {
-  "generated": "2026-10-16T07:56:09.828Z",
-  "origins_ok": 2509,
-  "origins_failed": 1005,
-  "total_routes": 138199,
+  "generated": "2026-10-17T07:37:03.237Z",
+  "origins_ok": 2495,
+  "origins_failed": 1019,
+  "total_routes": 137814,
   "marker": "set"
 }
