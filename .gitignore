@@ -53,4 +53,8 @@ logs/
 *.bak* 
 functions/[lang]/ 
 if 
-worker/.wrangler/ 
+worker/.wrangler/
+
+# stray secrets
+worker/rk.txt
+*.secret.txt

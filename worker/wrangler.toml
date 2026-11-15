@@ -35,3 +35,7 @@ crons = ["37 14 * * *"]
 binding = "FARES_DB"
 database_name = "aplusz-fares"
 database_id = "37e7f77d-d242-4de3-a6c3-3faed3463518"
+
+[[services]]
+binding = "MF"
+service = "marketing-foundation"

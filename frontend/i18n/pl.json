@@ -323,5 +323,8 @@
     "per_month": "/ miesiąc",
     "restore": "Już zapłacono? Przywróć dostęp",
     "paynote": "Zapłać dokładną kwotę i podaj ten numer w tytule płatności. Dostęp wyślemy e-mailem w ciągu kilku minut od potwierdzenia."
+  },
+  "news": {
+    "btn_float": "Wiadomości"
   }
 }

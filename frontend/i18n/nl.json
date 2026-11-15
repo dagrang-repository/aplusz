@@ -323,5 +323,8 @@
     "per_month": "/ maand",
     "restore": "Al betaald? Toegang herstellen",
     "paynote": "Betaal het exacte bedrag en zet deze referentie in de betalingsnotitie. Je toegang wordt enkele minuten na bevestiging gemaild."
+  },
+  "news": {
+    "btn_float": "Nieuws"
   }
 }

@@ -236,7 +236,7 @@
     if (params.get('grant')) {
       var gtok = params.get('grant');
       post('/validate', { token: gtok }).then(function (r) {
-        if (r.valid) { setTier(r.tier, gtok, r.email); toast(t('billing.unlocked', { tier: tierName(r.tier) })); }
+        if (r.valid) { setTier(r.tier, r.token || gtok, r.email); toast(t('billing.unlocked', { tier: tierName(r.tier) })); }
         cleanUrl();
       }).catch(cleanUrl);
       return bootStatus();
@@ -255,7 +255,7 @@
       if (local) setTier(local.t, null, local.e);
 
       post('/validate', { token: saved }).then(function (r) {
-        if (r.valid) setTier(r.tier, null, r.email);
+        if (r.valid) setTier(r.tier, r.token || null, r.email);
         else if (!local) setTier('free');   // only downgrade if the token is genuinely bad/expired
       }).catch(function () {
         // offline / server hiccup: keep last known tier, never downgrade
@@ -496,7 +496,7 @@
           createSubscription: function (data, actions) { return actions.subscription.create({ plan_id: planId }); },
           onApprove: function (data) {
             buySay('Activating\u2026', '');
-            post('/paypal/activate', { subscriptionID: data.subscriptionID }).then(function (r) {
+            post('/paypal/activate', { subscriptionID: data.subscriptionID, gate: (typeof mfGate === 'function' ? mfGate() : '') }).then(function (r) {
               if (r && r.granted) {
                 setTier(r.tier, r.token, r.email);
                 try { if (r.email) localStorage.setItem(LS_EMAIL, r.email); } catch (e) {}

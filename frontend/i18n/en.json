@@ -323,5 +323,8 @@
     "per_month": "/ month",
     "restore": "Already paid? Restore my access",
     "paynote": "Pay the exact amount and put this reference in the payment note. Your access is emailed within minutes of confirmation."
+  },
+  "news": {
+    "btn_float": "News"
   }
 }

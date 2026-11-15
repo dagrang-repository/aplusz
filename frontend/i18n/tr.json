@@ -323,5 +323,8 @@
     "per_month": "/ ay",
     "restore": "Zaten ödediniz mi? Erişimi geri yükle",
     "paynote": "Tam tutarı ödeyin ve bu referansı ödeme notuna ekleyin. Erişiminiz onaydan birkaç dakika sonra e-postayla gönderilir."
+  },
+  "news": {
+    "btn_float": "Haberler"
   }
 }

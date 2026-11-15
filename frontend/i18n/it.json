@@ -323,5 +323,8 @@
     "per_month": "/ mese",
     "restore": "Già pagato? Ripristina il mio accesso",
     "paynote": "Paga l'importo esatto e inserisci questo riferimento nella causale. L'accesso ti arriva via email pochi minuti dopo la conferma."
+  },
+  "news": {
+    "btn_float": "Notizie"
   }
 }

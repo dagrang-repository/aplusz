@@ -323,5 +323,8 @@
     "per_month": "/ Monat",
     "restore": "Schon bezahlt? Zugang wiederherstellen",
     "paynote": "Zahle den genauen Betrag und gib diese Referenz im Verwendungszweck an. Dein Zugang wird wenige Minuten nach Bestätigung per E-Mail gesendet."
+  },
+  "news": {
+    "btn_float": "News"
   }
 }

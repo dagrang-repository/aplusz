@@ -323,5 +323,8 @@
     "per_month": "/ bulan",
     "restore": "Sudah bayar? Pulihkan akses",
     "paynote": "Bayar jumlah yang tepat dan cantumkan referensi ini di catatan pembayaran. Akses Anda dikirim via email beberapa menit setelah konfirmasi."
+  },
+  "news": {
+    "btn_float": "Berita"
   }
 }

@@ -323,5 +323,8 @@
     "per_month": "/ mes",
     "restore": "¿Ya pagaste? Restaurar mi acceso",
     "paynote": "Paga el importe exacto e incluye esta referencia en la nota de pago. Tu acceso se envía por correo a los pocos minutos de confirmarse."
+  },
+  "news": {
+    "btn_float": "Noticias"
   }
 }

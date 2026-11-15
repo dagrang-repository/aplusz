@@ -323,5 +323,8 @@
     "per_month": "/ tháng",
     "restore": "Đã thanh toán? Khôi phục quyền truy cập",
     "paynote": "Thanh toán đúng số tiền và ghi mã này vào ghi chú thanh toán. Quyền truy cập được gửi qua email vài phút sau khi xác nhận."
+  },
+  "news": {
+    "btn_float": "Tin tức"
   }
 }
