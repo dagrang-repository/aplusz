@@ -283,12 +283,7 @@ async function tierForEmail(env, email) {
     if (ent) return ent.tier;
   } catch (e) {
   }
-  if (!env.STRIPE_SECRET) return "free";
-  try {
-    return await tierForEmailStripe(env, email);
-  } catch (e) {
-    return "free";
-  }
+  return "free";
 }
 __name(tierForEmail, "tierForEmail");
 async function tierForEmailStripe(env, email) {
@@ -353,7 +348,7 @@ async function pauseAllSubs(env, reason) {
     await ppSuspendAll(env);
   } catch (e) {
   }
-  if (!env.STRIPE_SECRET) return sendCapNotices(env, reason);
+  return sendCapNotices(env, reason);
   let starting = null, guard = 0;
   try {
   do {
@@ -379,13 +374,6 @@ async function sendCapNotices(env, reason) {
     ).bind(now).all();
     for (const r of rs && rs.results || []) if (r.email) emails.add(normEmail(r.email));
   } catch (e) {
-  }
-  if (env.STRIPE_SECRET) {
-    try {
-      const list = await stripe(env, "customers?limit=100");
-      for (const c of list.data || []) if (c.email) emails.add(normEmail(c.email));
-    } catch (e) {
-    }
   }
   for (const email of emails) {
     const c = { email };
@@ -653,6 +641,58 @@ async function ppResumeAll(env) {
   return ids.length - left.length;
 }
 __name(ppResumeAll, "ppResumeAll");
+var WEB_PRICE = "299.00";
+async function handleWebOrder(env, req, origin) {
+  const tok = await ppAccessToken(env);
+  const r = await fetch(PP_API + "/v2/checkout/orders", {
+    method: "POST",
+    headers: { authorization: "Bearer " + tok, "content-type": "application/json" },
+    body: JSON.stringify({
+      intent: "CAPTURE",
+      purchase_units: [{ reference_id: "web", description: "AplusZ custom website - one-time", amount: { currency_code: "EUR", value: WEB_PRICE } }],
+      application_context: { brand_name: "AplusZ", shipping_preference: "NO_SHIPPING", user_action: "PAY_NOW" }
+    })
+  });
+  const j = await r.json().catch(() => ({}));
+  if (!j.id) return json2({ error: "paypal" }, 502, origin);
+  return json2({ id: j.id }, 200, origin);
+}
+__name(handleWebOrder, "handleWebOrder");
+async function handleWebCapture(env, req, origin) {
+  const b = await req.json().catch(() => ({}));
+  const orderId = ("" + (b.orderID || "")).trim();
+  if (!/^[A-Z0-9]{8,40}$/i.test(orderId)) return json2({ error: "bad_order" }, 400, origin);
+  const tok = await ppAccessToken(env);
+  const r = await fetch(PP_API + "/v2/checkout/orders/" + encodeURIComponent(orderId) + "/capture", {
+    method: "POST",
+    headers: { authorization: "Bearer " + tok, "content-type": "application/json", "paypal-request-id": "aplusz-web-" + orderId }
+  });
+  let j = await r.json().catch(() => ({}));
+  if (!j.status || j.name) {
+    const g = await fetch(PP_API + "/v2/checkout/orders/" + encodeURIComponent(orderId), {
+      headers: { authorization: "Bearer " + tok, "content-type": "application/json" }
+    });
+    j = await g.json().catch(() => ({}));
+  }
+  const pu = j.purchase_units && j.purchase_units[0] || {};
+  const cap = pu.payments && pu.payments.captures && pu.payments.captures[0];
+  if (j.status !== "COMPLETED" || !cap || cap.status !== "COMPLETED" || !cap.amount || cap.amount.currency_code !== "EUR" || cap.amount.value !== WEB_PRICE) {
+    return json2({ ok: false, error: "not_completed" }, 402, origin);
+  }
+  const emails = [...new Set([normEmail(j.payer && j.payer.email_address), normEmail(b.email)].filter((e) => e && validEmail(e)))];
+  for (const e of emails) await env.AZKV.put("paid_web:" + e, "1", { expirationTtl: 365 * 86400 });
+  const id = "PPW-" + cap.id;
+  const cp = await createPurchase(env, { id, rail: "paypal_web", tier: "web", days: 0, email: emails[0] || null, amountCents: 29900, providerRef: orderId });
+  if (cp.isNew) {
+    await env.FARES_DB.prepare("UPDATE purchases SET status='paid', paid_at=? WHERE id=?").bind(Math.floor(Date.now() / 1e3), id).run();
+    try {
+      await addRevenue(env, 29900);
+    } catch (e) {
+    }
+  }
+  return json2({ ok: true, email: emails[0] || "" }, 200, origin);
+}
+__name(handleWebCapture, "handleWebCapture");
 async function ppGrantFromSub(env, sub, doEmail, gate) {
   const tier = ppTierForPlan(env, sub.plan_id);
   if (!tier) return { ok: false, reason: "unknown_plan" };
@@ -849,6 +889,7 @@ var index_default = {
         return json2({ win: false }, 200, origin);
       }
       if (url.pathname === "/checkout" && req.method === "POST") {
+        return json2({ error: "paypal_only" }, 410, origin);
         const { email, tier, gate } = await req.json();
         const e = normEmail(email);
         if (!validEmail(e)) return json2({ error: "invalid_email" }, 400, origin);
@@ -879,6 +920,7 @@ var index_default = {
         return json2({ error: "stripe" }, 502, origin);
       }
       if (url.pathname === "/confirm" && req.method === "POST") {
+        return json2({ error: "paypal_only" }, 410, origin);
         const { session } = await req.json();
         if (!session) return json2({ error: "no_session" }, 400, origin);
         const s = await stripe(env, "checkout/sessions/" + encodeURIComponent(session));
@@ -1039,7 +1081,7 @@ var index_default = {
           const email = (body.email || "").toLowerCase().trim();
           if (!email) return json2({ ok: false, error: "missing email" }, 400, origin);
           let paid = await env.KV.get("paid_web:" + email);
-          if (!paid && env.STRIPE_WEB_KEY) {
+          if (false) {
             try {
               const sr = await fetch("https://api.stripe.com/v1/checkout/sessions?limit=20", { headers: { "Authorization": "Bearer " + env.STRIPE_WEB_KEY } });
               const sd = await sr.json();
@@ -1085,6 +1127,7 @@ var index_default = {
         return json2({ ok: true }, 200, origin);
       }
       if (url.pathname === "/webhook" && req.method === "POST") {
+        return json2({ error: "paypal_only" }, 410, origin);
         const raw = await req.text();
         const sigHeader = req.headers.get("stripe-signature") || "";
         if (!await verifyStripeSig(env, raw, sigHeader))
@@ -1226,7 +1269,7 @@ var index_default = {
         return json2({ valid: true, token, deviceId, exp, tier: "proplus" }, 200, origin);
       }
       if (url.pathname === "/buy" && req.method === "POST") {
-        return handleCheckout(env, req, origin);
+        return json2({ error: "paypal_only" }, 410, origin);
       }
       if (url.pathname === "/admin/pending" && req.method === "GET") {
         return handleAdminPending(env, req, origin, url);
@@ -1236,6 +1279,12 @@ var index_default = {
       }
       if (url.pathname === "/paypal/config" && req.method === "GET") {
         return json2({ clientId: env.PAYPAL_CLIENT_ID || "", planPro: env.PAYPAL_PLAN_PRO || "", planProplus: env.PAYPAL_PLAN_PROPLUS || "" }, 200, origin);
+      }
+      if (url.pathname === "/paypal/web-order" && req.method === "POST") {
+        return handleWebOrder(env, req, origin);
+      }
+      if (url.pathname === "/paypal/web-capture" && req.method === "POST") {
+        return handleWebCapture(env, req, origin);
       }
       if (url.pathname === "/paypal/activate" && req.method === "POST") {
         return handlePaypalActivate(env, req, origin);

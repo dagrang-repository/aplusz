@@ -223,7 +223,7 @@
     "hero_h1": "Trang web của bạn, đã hoàn thành.",
     "hero_sub": "Một trang web chuyên nghiệp, thiết kế riêng, giao trong 7 ngày. Tương thích di động, tối ưu SEO, với mọi thứ bạn cần để ra mắt.",
     "hero_cta": "Thanh toán 299 € và bắt đầu dự án của bạn →",
-    "hero_cta_note": "Thanh toán an toàn qua Stripe · Thanh toán một lần · Không đăng ký",
+    "hero_cta_note": "Thanh toán an toàn qua PayPal · Thanh toán một lần · Không đăng ký",
     "inc_title": "Những gì được bao gồm",
     "inc1": "Thiết kế riêng phù hợp với thương hiệu, ngành nghề và đối tượng của bạn",
     "inc2": "Ưu tiên di động, hoàn toàn tương thích trên mọi kích thước màn hình",
@@ -243,7 +243,7 @@
     "tl_t4": "Bàn giao, chuyển giao và trang web của bạn lên sóng.",
     "gate_title": "Bắt đầu dự án của bạn",
     "gate_sub": "Bản tóm tắt dự án của bạn được khóa với email thanh toán — nó trở thành mã dự án của bạn cho đến khi bàn giao.",
-    "gs1": "<strong>Thanh toán qua Stripe trước</strong> &mdash; nhấp vào nút phía trên. Mất 2 phút.",
+    "gs1": "<strong>Thanh toán qua PayPal trước</strong> &mdash; nhấp vào nút phía trên. Mất 2 phút.",
     "gs2": "<strong>Quay lại đây</strong> và nhập email bạn đã dùng để thanh toán. Biểu mẫu sẽ mở khóa.",
     "gs3": "<strong>Điền bản tóm tắt của bạn</strong> &mdash; chúng tôi xem xét trong vòng 24 giờ và khởi động dự án của bạn.",
     "f_email_lbl": "Email dùng để thanh toán *",
@@ -322,7 +322,9 @@
     "save20": "giảm 20%",
     "per_month": "/ tháng",
     "restore": "Đã thanh toán? Khôi phục quyền truy cập",
-    "paynote": "Thanh toán đúng số tiền và ghi mã này vào ghi chú thanh toán. Quyền truy cập được gửi qua email vài phút sau khi xác nhận."
+    "paynote": "Thanh toán đúng số tiền và ghi mã này vào ghi chú thanh toán. Quyền truy cập được gửi qua email vài phút sau khi xác nhận.",
+    "restore_go": "Gửi liên kết truy cập",
+    "members_only": "Tính năng Pro dành cho thành viên hiện tại."
   },
   "news": {
     "btn_float": "Tin tức"

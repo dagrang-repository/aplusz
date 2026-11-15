@@ -223,7 +223,7 @@
     "hero_h1": "Your website, built.",
     "hero_sub": "A professional, custom-designed website delivered in 7 days. Mobile-ready, SEO-optimized, with everything you need to launch.",
     "hero_cta": "Pay €299 & start your project →",
-    "hero_cta_note": "Secure checkout via Stripe · One-time payment · No subscription",
+    "hero_cta_note": "Secure checkout via PayPal · One-time payment · No subscription",
     "inc_title": "What's included",
     "inc1": "Custom design tailored to your brand, industry, and audience",
     "inc2": "Mobile-first, fully responsive across all screen sizes",
@@ -243,7 +243,7 @@
     "tl_t4": "Delivery, handover, and your site goes live.",
     "gate_title": "Start your project",
     "gate_sub": "Your project brief is locked to your payment email — it becomes your project ID until delivery.",
-    "gs1": "<strong>Pay on Stripe first</strong> &mdash; click the button above. Takes 2 minutes.",
+    "gs1": "<strong>Pay on PayPal first</strong> &mdash; click the button above. Takes 2 minutes.",
     "gs2": "<strong>Come back here</strong> and enter the email you used to pay. The form unlocks.",
     "gs3": "<strong>Fill in your brief</strong> &mdash; we review within 24 hours and kick off your project.",
     "f_email_lbl": "Email used to pay *",
@@ -322,7 +322,9 @@
     "save20": "save 20%",
     "per_month": "/ month",
     "restore": "Already paid? Restore my access",
-    "paynote": "Pay the exact amount and put this reference in the payment note. Your access is emailed within minutes of confirmation."
+    "paynote": "Pay the exact amount and put this reference in the payment note. Your access is emailed within minutes of confirmation.",
+    "restore_go": "Send my access link",
+    "members_only": "Pro features are available to existing members."
   },
   "news": {
     "btn_float": "News"

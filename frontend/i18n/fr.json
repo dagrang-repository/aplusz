@@ -223,7 +223,7 @@
     "hero_h1": "Votre site web, conçu.",
     "hero_sub": "Un site web professionnel et sur-mesure livré en 7 jours. Adapté au mobile, optimisé pour le référencement, avec tout ce qu'il faut pour vous lancer.",
     "hero_cta": "Payer 299 € et démarrer votre projet →",
-    "hero_cta_note": "Paiement sécurisé via Stripe · Paiement unique · Sans abonnement",
+    "hero_cta_note": "Paiement sécurisé via PayPal · Paiement unique · Sans abonnement",
     "inc_title": "Ce qui est inclus",
     "inc1": "Design sur-mesure adapté à votre marque, votre secteur et votre public",
     "inc2": "Mobile d'abord, entièrement responsive sur toutes les tailles d'écran",
@@ -243,7 +243,7 @@
     "tl_t4": "Livraison, transfert, et votre site est mis en ligne.",
     "gate_title": "Démarrez votre projet",
     "gate_sub": "Votre brief de projet est lié à votre e-mail de paiement — il devient l'identifiant de votre projet jusqu'à la livraison.",
-    "gs1": "<strong>Payez d'abord sur Stripe</strong> &mdash; cliquez sur le bouton ci-dessus. Cela prend 2 minutes.",
+    "gs1": "<strong>Payez d'abord sur PayPal</strong> &mdash; cliquez sur le bouton ci-dessus. Cela prend 2 minutes.",
     "gs2": "<strong>Revenez ici</strong> et saisissez l'e-mail utilisé pour payer. Le formulaire se débloque.",
     "gs3": "<strong>Remplissez votre brief</strong> &mdash; nous l'examinons sous 24 heures et lançons votre projet.",
     "f_email_lbl": "E-mail utilisé pour payer *",
@@ -322,7 +322,9 @@
     "save20": "−20 %",
     "per_month": "/ mois",
     "restore": "Déjà payé ? Restaurer mon accès",
-    "paynote": "Payez le montant exact et indiquez cette référence dans la note de paiement. Votre accès est envoyé par e-mail quelques minutes après confirmation."
+    "paynote": "Payez le montant exact et indiquez cette référence dans la note de paiement. Votre accès est envoyé par e-mail quelques minutes après confirmation.",
+    "restore_go": "Recevoir mon lien d'accès",
+    "members_only": "Les fonctions Pro sont réservées aux membres existants."
   },
   "news": {
     "btn_float": "Actus"

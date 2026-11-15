@@ -223,7 +223,7 @@
     "hero_h1": "Twoja strona, gotowa.",
     "hero_sub": "Profesjonalna, zaprojektowana na zamówienie strona dostarczona w 7 dni. Zoptymalizowana pod kątem urządzeń mobilnych i SEO, ze wszystkim, czego potrzebujesz do startu.",
     "hero_cta": "Zapłać 299 € i rozpocznij projekt →",
-    "hero_cta_note": "Bezpieczna płatność przez Stripe · Płatność jednorazowa · Bez subskrypcji",
+    "hero_cta_note": "Bezpieczna płatność przez PayPal · Płatność jednorazowa · Bez subskrypcji",
     "inc_title": "Co jest w cenie",
     "inc1": "Indywidualny projekt dopasowany do Twojej marki, branży i odbiorców",
     "inc2": "Mobile-first, w pełni responsywny na wszystkich rozmiarach ekranu",
@@ -243,7 +243,7 @@
     "tl_t4": "Dostarczenie, przekazanie i Twoja strona staje się dostępna online.",
     "gate_title": "Rozpocznij projekt",
     "gate_sub": "Twój brief jest powiązany z e-mailem płatności — staje się identyfikatorem projektu aż do dostarczenia.",
-    "gs1": "<strong>Najpierw zapłać w Stripe</strong> &mdash; kliknij przycisk powyżej. Zajmuje 2 minuty.",
+    "gs1": "<strong>Najpierw zapłać w PayPal</strong> &mdash; kliknij przycisk powyżej. Zajmuje 2 minuty.",
     "gs2": "<strong>Wróć tutaj</strong> i wpisz e-mail użyty do płatności. Formularz się odblokuje.",
     "gs3": "<strong>Wypełnij brief</strong> &mdash; sprawdzamy go w ciągu 24 godzin i ruszamy z projektem.",
     "f_email_lbl": "E-mail użyty do płatności *",
@@ -322,7 +322,9 @@
     "save20": "−20%",
     "per_month": "/ miesiąc",
     "restore": "Już zapłacono? Przywróć dostęp",
-    "paynote": "Zapłać dokładną kwotę i podaj ten numer w tytule płatności. Dostęp wyślemy e-mailem w ciągu kilku minut od potwierdzenia."
+    "paynote": "Zapłać dokładną kwotę i podaj ten numer w tytule płatności. Dostęp wyślemy e-mailem w ciągu kilku minut od potwierdzenia.",
+    "restore_go": "Wyślij link dostępu",
+    "members_only": "Funkcje Pro są dostępne dla obecnych członków."
   },
   "news": {
     "btn_float": "Wiadomości"

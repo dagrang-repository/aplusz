@@ -223,7 +223,7 @@
     "hero_h1": "Situs web Anda, selesai dibangun.",
     "hero_sub": "Situs web profesional yang dirancang khusus dan dikirim dalam 7 hari. Siap untuk seluler, dioptimalkan untuk SEO, dengan semua yang Anda perlukan untuk meluncur.",
     "hero_cta": "Bayar 299 € & mulai proyek Anda →",
-    "hero_cta_note": "Pembayaran aman melalui Stripe · Pembayaran sekali · Tanpa langganan",
+    "hero_cta_note": "Pembayaran aman melalui PayPal · Pembayaran sekali · Tanpa langganan",
     "inc_title": "Yang termasuk",
     "inc1": "Desain khusus yang disesuaikan dengan merek, industri, dan audiens Anda",
     "inc2": "Mobile-first, sepenuhnya responsif di semua ukuran layar",
@@ -243,7 +243,7 @@
     "tl_t4": "Pengiriman, serah terima, dan situs Anda tayang.",
     "gate_title": "Mulai proyek Anda",
     "gate_sub": "Brief proyek Anda terkunci pada email pembayaran Anda — menjadi ID proyek Anda hingga pengiriman.",
-    "gs1": "<strong>Bayar dulu di Stripe</strong> &mdash; klik tombol di atas. Hanya 2 menit.",
+    "gs1": "<strong>Bayar dulu di PayPal</strong> &mdash; klik tombol di atas. Hanya 2 menit.",
     "gs2": "<strong>Kembali ke sini</strong> dan masukkan email yang Anda gunakan untuk membayar. Formulir terbuka.",
     "gs3": "<strong>Isi brief Anda</strong> &mdash; kami tinjau dalam 24 jam dan memulai proyek Anda.",
     "f_email_lbl": "Email yang digunakan untuk membayar *",
@@ -322,7 +322,9 @@
     "save20": "diskon 20%",
     "per_month": "/ bulan",
     "restore": "Sudah bayar? Pulihkan akses",
-    "paynote": "Bayar jumlah yang tepat dan cantumkan referensi ini di catatan pembayaran. Akses Anda dikirim via email beberapa menit setelah konfirmasi."
+    "paynote": "Bayar jumlah yang tepat dan cantumkan referensi ini di catatan pembayaran. Akses Anda dikirim via email beberapa menit setelah konfirmasi.",
+    "restore_go": "Kirim tautan akses saya",
+    "members_only": "Fitur Pro tersedia untuk anggota yang sudah ada."
   },
   "news": {
     "btn_float": "Berita"

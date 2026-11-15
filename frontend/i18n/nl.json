@@ -223,7 +223,7 @@
     "hero_h1": "Uw website, gebouwd.",
     "hero_sub": "Een professionele, op maat ontworpen website, geleverd in 7 dagen. Mobielvriendelijk, SEO-geoptimaliseerd, met alles wat u nodig hebt om te lanceren.",
     "hero_cta": "Betaal € 299 en start uw project →",
-    "hero_cta_note": "Veilig afrekenen via Stripe · Eenmalige betaling · Geen abonnement",
+    "hero_cta_note": "Veilig afrekenen via PayPal · Eenmalige betaling · Geen abonnement",
     "inc_title": "Wat is inbegrepen",
     "inc1": "Ontwerp op maat, afgestemd op uw merk, branche en publiek",
     "inc2": "Mobile-first, volledig responsief op alle schermformaten",
@@ -243,7 +243,7 @@
     "tl_t4": "Oplevering, overdracht en uw site gaat live.",
     "gate_title": "Start uw project",
     "gate_sub": "Uw projectbriefing is gekoppeld aan uw betaal-e-mail — het wordt uw project-ID tot de oplevering.",
-    "gs1": "<strong>Betaal eerst via Stripe</strong> &mdash; klik op de knop hierboven. Duurt 2 minuten.",
+    "gs1": "<strong>Betaal eerst via PayPal</strong> &mdash; klik op de knop hierboven. Duurt 2 minuten.",
     "gs2": "<strong>Kom hier terug</strong> en voer het e-mailadres in waarmee u hebt betaald. Het formulier wordt ontgrendeld.",
     "gs3": "<strong>Vul uw briefing in</strong> &mdash; we bekijken het binnen 24 uur en starten uw project.",
     "f_email_lbl": "E-mailadres gebruikt om te betalen *",
@@ -322,7 +322,9 @@
     "save20": "−20%",
     "per_month": "/ maand",
     "restore": "Al betaald? Toegang herstellen",
-    "paynote": "Betaal het exacte bedrag en zet deze referentie in de betalingsnotitie. Je toegang wordt enkele minuten na bevestiging gemaild."
+    "paynote": "Betaal het exacte bedrag en zet deze referentie in de betalingsnotitie. Je toegang wordt enkele minuten na bevestiging gemaild.",
+    "restore_go": "Stuur mijn toegangslink",
+    "members_only": "Pro-functies zijn beschikbaar voor bestaande leden."
   },
   "news": {
     "btn_float": "Nieuws"

@@ -223,7 +223,7 @@
     "hero_h1": "O seu site, criado.",
     "hero_sub": "Um site profissional e personalizado entregue em 7 dias. Pronto para mobile, otimizado para SEO, com tudo o que precisa para lançar.",
     "hero_cta": "Pague 299 € e inicie o seu projeto →",
-    "hero_cta_note": "Pagamento seguro via Stripe · Pagamento único · Sem assinatura",
+    "hero_cta_note": "Pagamento seguro via PayPal · Pagamento único · Sem assinatura",
     "inc_title": "O que está incluído",
     "inc1": "Design personalizado adaptado à sua marca, setor e público",
     "inc2": "Mobile-first, totalmente responsivo em todos os tamanhos de ecrã",
@@ -243,7 +243,7 @@
     "tl_t4": "Entrega, transferência e o seu site fica online.",
     "gate_title": "Inicie o seu projeto",
     "gate_sub": "O seu briefing está vinculado ao seu e-mail de pagamento — torna-se o identificador do seu projeto até à entrega.",
-    "gs1": "<strong>Pague primeiro no Stripe</strong> &mdash; clique no botão acima. Demora 2 minutos.",
+    "gs1": "<strong>Pague primeiro no PayPal</strong> &mdash; clique no botão acima. Demora 2 minutos.",
     "gs2": "<strong>Volte aqui</strong> e insira o e-mail que usou para pagar. O formulário desbloqueia.",
     "gs3": "<strong>Preencha o seu briefing</strong> &mdash; analisamos dentro de 24 horas e iniciamos o seu projeto.",
     "f_email_lbl": "E-mail usado para pagar *",
@@ -322,7 +322,9 @@
     "save20": "−20%",
     "per_month": "/ mês",
     "restore": "Já pagou? Restaurar o meu acesso",
-    "paynote": "Pague o valor exato e coloque esta referência na nota de pagamento. O seu acesso é enviado por email minutos após a confirmação."
+    "paynote": "Pague o valor exato e coloque esta referência na nota de pagamento. O seu acesso é enviado por email minutos após a confirmação.",
+    "restore_go": "Enviar meu link de acesso",
+    "members_only": "Os recursos Pro estão disponíveis para membros atuais."
   },
   "news": {
     "btn_float": "Notícias"

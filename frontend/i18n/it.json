@@ -223,7 +223,7 @@
     "hero_h1": "Il tuo sito web, realizzato.",
     "hero_sub": "Un sito web professionale e su misura, consegnato in 7 giorni. Ottimizzato per mobile e per la SEO, con tutto ciò che serve per il lancio.",
     "hero_cta": "Paga 299 € e avvia il tuo progetto →",
-    "hero_cta_note": "Pagamento sicuro tramite Stripe · Pagamento unico · Nessun abbonamento",
+    "hero_cta_note": "Pagamento sicuro tramite PayPal · Pagamento unico · Nessun abbonamento",
     "inc_title": "Cosa è incluso",
     "inc1": "Design su misura adattato al tuo brand, settore e pubblico",
     "inc2": "Mobile-first, completamente responsive su tutte le dimensioni dello schermo",
@@ -243,7 +243,7 @@
     "tl_t4": "Consegna, passaggio di consegne e il tuo sito va online.",
     "gate_title": "Avvia il tuo progetto",
     "gate_sub": "Il tuo brief è collegato alla tua email di pagamento — diventa l'identificativo del tuo progetto fino alla consegna.",
-    "gs1": "<strong>Paga prima su Stripe</strong> &mdash; clicca il pulsante qui sopra. Bastano 2 minuti.",
+    "gs1": "<strong>Paga prima su PayPal</strong> &mdash; clicca il pulsante qui sopra. Bastano 2 minuti.",
     "gs2": "<strong>Torna qui</strong> e inserisci l'email che hai usato per pagare. Il modulo si sblocca.",
     "gs3": "<strong>Compila il tuo brief</strong> &mdash; lo esaminiamo entro 24 ore e avviamo il tuo progetto.",
     "f_email_lbl": "Email usata per pagare *",
@@ -322,7 +322,9 @@
     "save20": "−20%",
     "per_month": "/ mese",
     "restore": "Già pagato? Ripristina il mio accesso",
-    "paynote": "Paga l'importo esatto e inserisci questo riferimento nella causale. L'accesso ti arriva via email pochi minuti dopo la conferma."
+    "paynote": "Paga l'importo esatto e inserisci questo riferimento nella causale. L'accesso ti arriva via email pochi minuti dopo la conferma.",
+    "restore_go": "Invia il mio link di accesso",
+    "members_only": "Le funzioni Pro sono disponibili per i membri esistenti."
   },
   "news": {
     "btn_float": "Notizie"

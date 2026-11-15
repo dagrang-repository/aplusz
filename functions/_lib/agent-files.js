@@ -632,6 +632,13 @@ async function skillsIndex() {
 // ── router for the declarative surface ─────────────────────────────────────
 // Aliases are deliberate: the specs did not converge on one path (PART 11).
 // One handler, many URLs - never many cards that drift.
+// Digital Asset Links: lets the Play app (Fly for Less) open aplusz.app full-screen
+const ASSETLINKS = [{
+  relation: ['delegate_permission/common.handle_all_urls'],
+  target: { namespace: 'android_app', package_name: 'app.aplusz.flyforless',
+    sha256_cert_fingerprints: ['C6:A1:4F:98:7C:F6:B9:1C:55:FC:B2:DF:D5:02:FE:58:6C:B7:3A:F2:6F:74:0F:12:09:A8:7E:98:DB:0B:E6:F7'] }
+}];
+
 export async function agentRoute(p) {
   switch (p) {
     case '/llms.txt':
@@ -690,6 +697,8 @@ export async function agentRoute(p) {
       return txt(MCP_REGISTRY_AUTH);
     case '/.well-known/probe.txt':
       return txt('ok\n');
+    case '/.well-known/assetlinks.json':
+      return json(ASSETLINKS);
     default:
       return null;
   }

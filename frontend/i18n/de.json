@@ -223,7 +223,7 @@
     "hero_h1": "Ihre Website, fertig gebaut.",
     "hero_sub": "Eine professionelle, individuell gestaltete Website, geliefert in 7 Tagen. Mobil-optimiert, SEO-optimiert, mit allem, was Sie für den Start brauchen.",
     "hero_cta": "299 € zahlen & Ihr Projekt starten →",
-    "hero_cta_note": "Sichere Zahlung über Stripe · Einmalzahlung · Kein Abonnement",
+    "hero_cta_note": "Sichere Zahlung über PayPal · Einmalzahlung · Kein Abonnement",
     "inc_title": "Was enthalten ist",
     "inc1": "Individuelles Design, abgestimmt auf Ihre Marke, Branche und Zielgruppe",
     "inc2": "Mobile-First, vollständig responsiv auf allen Bildschirmgrößen",
@@ -243,7 +243,7 @@
     "tl_t4": "Lieferung, Übergabe, und Ihre Website geht live.",
     "gate_title": "Starten Sie Ihr Projekt",
     "gate_sub": "Ihr Projekt-Briefing ist an Ihre Zahlungs-E-Mail gebunden — sie wird bis zur Lieferung zu Ihrer Projekt-ID.",
-    "gs1": "<strong>Zahlen Sie zuerst über Stripe</strong> &mdash; klicken Sie oben auf den Button. Dauert 2 Minuten.",
+    "gs1": "<strong>Zahlen Sie zuerst über PayPal</strong> &mdash; klicken Sie oben auf den Button. Dauert 2 Minuten.",
     "gs2": "<strong>Kommen Sie hierher zurück</strong> und geben Sie die E-Mail ein, mit der Sie bezahlt haben. Das Formular wird freigeschaltet.",
     "gs3": "<strong>Füllen Sie Ihr Briefing aus</strong> &mdash; wir prüfen es innerhalb von 24 Stunden und starten Ihr Projekt.",
     "f_email_lbl": "Zum Bezahlen verwendete E-Mail *",
@@ -322,7 +322,9 @@
     "save20": "−20 %",
     "per_month": "/ Monat",
     "restore": "Schon bezahlt? Zugang wiederherstellen",
-    "paynote": "Zahle den genauen Betrag und gib diese Referenz im Verwendungszweck an. Dein Zugang wird wenige Minuten nach Bestätigung per E-Mail gesendet."
+    "paynote": "Zahle den genauen Betrag und gib diese Referenz im Verwendungszweck an. Dein Zugang wird wenige Minuten nach Bestätigung per E-Mail gesendet.",
+    "restore_go": "Zugangslink senden",
+    "members_only": "Pro-Funktionen sind für bestehende Mitglieder verfügbar."
   },
   "news": {
     "btn_float": "News"

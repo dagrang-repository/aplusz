@@ -135,8 +135,8 @@ a{color:var(--accent);text-decoration:none;}
     <div class="hero-badge" data-i18n="webpage.hero_badge">Web Design Service</div>
     <h1><span data-i18n="webpage.hero_h1">Your website, built.</span><br><span class="strike">&euro;699</span> &nbsp;<span class="price">&euro;299</span></h1>
     <p class="hero-sub" data-i18n="webpage.hero_sub">A professional, custom-designed website delivered in 7 days. Mobile-ready, SEO-optimized, with everything you need to launch.</p>
-    <a class="cta-btn" href="https://buy.stripe.com/5kQfZhex00FWbDGfJF5ZC0a" id="pay-btn" data-i18n="webpage.hero_cta">Pay &euro;299 &amp; start your project &rarr;</a>
-    <div class="cta-note" data-i18n="webpage.hero_cta_note">Secure checkout via Stripe &middot; One-time payment &middot; No subscription</div>
+    <a class="cta-btn" href="#form-not-paid" id="pay-btn" data-i18n="webpage.hero_cta">Pay &euro;299 &amp; start your project &rarr;</a>
+    <div class="cta-note" data-i18n="webpage.hero_cta_note">Secure checkout via PayPal &middot; One-time payment &middot; No subscription</div>
   </div>
 
   <!-- what's included -->
@@ -169,7 +169,7 @@ a{color:var(--accent);text-decoration:none;}
     <div class="gate-title" data-i18n="webpage.gate_title">Start your project</div>
     <div class="gate-sub" data-i18n="webpage.gate_sub">Your project brief is locked to your payment email &mdash; it becomes your project ID until delivery.</div>
     <div class="gate-steps">
-      <div class="gate-step"><div class="gs-num">1</div><div class="gs-text" data-i18n-html="webpage.gs1"><strong>Pay on Stripe first</strong> &mdash; click the button below. Takes 2 minutes.</div></div>
+      <div class="gate-step"><div class="gs-num">1</div><div class="gs-text" data-i18n-html="webpage.gs1"><strong>Pay with PayPal first</strong> &mdash; click the button below. Takes 2 minutes.</div></div>
       <div class="gate-step"><div class="gs-num">2</div><div class="gs-text" data-i18n-html="webpage.gs2"><strong>Come back here</strong> and enter the email you used to pay. The form unlocks.</div></div>
       <div class="gate-step"><div class="gs-num">3</div><div class="gs-text" data-i18n-html="webpage.gs3"><strong>Fill in your brief</strong> &mdash; we review within 24 hours and kick off your project.</div></div>
     </div>
@@ -217,7 +217,9 @@ a{color:var(--accent);text-decoration:none;}
     </div>
 
     <div id="form-not-paid" style="text-align:center;padding:8px 0 4px;">
-      <a class="cta-btn" href="https://buy.stripe.com/5kQfZhex00FWbDGfJF5ZC0a" style="font-size:0.95rem;padding:12px 24px;" data-i18n="webpage.np_pay">Pay &euro;299 first &rarr;</a>
+      <div class="cta-note" style="font-weight:700;margin-bottom:10px;" data-i18n="webpage.np_pay">Pay &euro;299 first &rarr;</div>
+      <div id="pp-web" style="max-width:340px;margin:0 auto;"></div>
+      <div id="pp-web-msg" class="cta-note" style="margin-top:8px;min-height:1em;"></div>
       <div class="cta-note" style="margin-top:8px;"><span data-i18n="webpage.np_already">Already paid?</span> <button onclick="showEmailField()" style="background:none;border:none;color:var(--accent);cursor:pointer;font-size:0.85rem;font-family:inherit;text-decoration:underline;" data-i18n="webpage.np_enter">Enter your payment email</button></div>
     </div>
   </div>
@@ -330,6 +332,41 @@ a{color:var(--accent);text-decoration:none;}
       btn.disabled = false; btn.textContent = 'Send project brief \u2192';
     });
   });
+})();
+</script>
+<script>
+/* EUR 299 web design: PayPal one-time checkout (order created and verified by the Worker) */
+(function(){
+  var API = 'https://api.aplusz.app';
+  var mount = document.getElementById('pp-web'); if (!mount) return;
+  var msg = document.getElementById('pp-web-msg');
+  function say(t, c){ if (msg) { msg.textContent = t; msg.style.color = c || ''; } }
+  function jpost(p, b){ return fetch(API + p, { method: 'POST', headers: { 'content-type': 'application/json' }, body: JSON.stringify(b || {}) }).then(function(r){ return r.json(); }); }
+  fetch(API + '/paypal/config').then(function(r){ return r.json(); }).then(function(cfg){
+    if (!cfg || !cfg.clientId) { say('Payment unavailable right now.', '#dc2626'); return; }
+    var sc = document.createElement('script');
+    sc.src = 'https://www.paypal.com/sdk/js?client-id=' + encodeURIComponent(cfg.clientId) + '&currency=EUR&intent=capture&components=buttons';
+    sc.setAttribute('data-namespace', 'paypalWeb');
+    sc.onload = function(){
+      window.paypalWeb.Buttons({
+        style: { layout: 'vertical', shape: 'pill', height: 44 },
+        createOrder: function(){ return jpost('/paypal/web-order').then(function(j){ if (!j.id) throw new Error('order'); return j.id; }); },
+        onApprove: function(data){
+          say('Confirming payment…');
+          var em = document.getElementById('f-email');
+          return jpost('/paypal/web-capture', { orderID: data.orderID, email: em ? em.value.trim() : '' }).then(function(j){
+            if (!j || !j.ok) { say('Payment not confirmed — contact dagrang@gmail.com', '#dc2626'); return; }
+            say('Payment received ✓', '#16a34a');
+            if (typeof showEmailField === 'function') showEmailField();
+            if (em) { if (!em.value && j.email) em.value = j.email; em.dispatchEvent(new Event('blur')); }
+          });
+        },
+        onError: function(){ say('Payment error. Please try again.', '#dc2626'); }
+      }).render('#pp-web');
+    };
+    sc.onerror = function(){ say('Payment unavailable right now.', '#dc2626'); };
+    document.head.appendChild(sc);
+  }).catch(function(){ say('Payment unavailable right now.', '#dc2626'); });
 })();
 </script>
 <footer class="footer">

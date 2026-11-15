@@ -223,7 +223,7 @@
     "hero_h1": "Web siteniz, hazır.",
     "hero_sub": "7 günde teslim edilen profesyonel, özel tasarımlı bir web sitesi. Mobil uyumlu, SEO optimizasyonlu, başlamak için ihtiyacınız olan her şeyle.",
     "hero_cta": "299 € öde ve projeni başlat →",
-    "hero_cta_note": "Stripe ile güvenli ödeme · Tek seferlik ödeme · Abonelik yok",
+    "hero_cta_note": "PayPal ile güvenli ödeme · Tek seferlik ödeme · Abonelik yok",
     "inc_title": "Neler dahil",
     "inc1": "Markanıza, sektörünüze ve kitlenize göre uyarlanmış özel tasarım",
     "inc2": "Mobil öncelikli, tüm ekran boyutlarında tam uyumlu",
@@ -243,7 +243,7 @@
     "tl_t4": "Teslimat, devir ve siteniz yayına girer.",
     "gate_title": "Projenizi başlatın",
     "gate_sub": "Proje brifiniz ödeme e-postanıza bağlıdır — teslimata kadar proje kimliğiniz olur.",
-    "gs1": "<strong>Önce Stripe ile ödeyin</strong> &mdash; yukarıdaki düğmeye tıklayın. 2 dakika sürer.",
+    "gs1": "<strong>Önce PayPal ile ödeyin</strong> &mdash; yukarıdaki düğmeye tıklayın. 2 dakika sürer.",
     "gs2": "<strong>Buraya geri dönün</strong> ve ödeme yaparken kullandığınız e-postayı girin. Form açılır.",
     "gs3": "<strong>Brifinizi doldurun</strong> &mdash; 24 saat içinde inceler ve projenizi başlatırız.",
     "f_email_lbl": "Ödeme için kullanılan e-posta *",
@@ -322,7 +322,9 @@
     "save20": "%20 indirim",
     "per_month": "/ ay",
     "restore": "Zaten ödediniz mi? Erişimi geri yükle",
-    "paynote": "Tam tutarı ödeyin ve bu referansı ödeme notuna ekleyin. Erişiminiz onaydan birkaç dakika sonra e-postayla gönderilir."
+    "paynote": "Tam tutarı ödeyin ve bu referansı ödeme notuna ekleyin. Erişiminiz onaydan birkaç dakika sonra e-postayla gönderilir.",
+    "restore_go": "Erişim bağlantımı gönder",
+    "members_only": "Pro özellikleri mevcut üyeler için kullanılabilir."
   },
   "news": {
     "btn_float": "Haberler"
